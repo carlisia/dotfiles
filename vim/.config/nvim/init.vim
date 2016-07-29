@@ -193,6 +193,8 @@ augroup END
 let mapleader = ","
 let g:mapleader = ","
 
+let g:go_metalinter_autosave = 1
+
 " This trigger takes advantage of the fact that the quickfix window can be
 " easily distinguished by its file-type, qf. The wincmd J command is
 " equivalent to the Ctrl+W, Shift+J shortcut telling Vim to move a window to

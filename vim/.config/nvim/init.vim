@@ -12,7 +12,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'unblevable/quick-scope'  
+Plug 'unblevable/quick-scope'
 Plug 'scrooloose/nerdtree'
 
 Plug 'SirVer/ultisnips'
@@ -56,11 +56,11 @@ if !has('nvim')
   set laststatus=2
   set encoding=utf-8              " Set default encoding to UTF-8
   set autoread                    " Automatically reread changed files without asking me anything
-  set autoindent                  
+  set autoindent
   set backspace=indent,eol,start  " Makes backspace key more powerful.
   set incsearch                   " Shows the match while typing
   set hlsearch                    " Highlight found searches
-  set mouse=a      
+  set mouse=a
 endif
 
 set noerrorbells             " No beeps
@@ -77,7 +77,7 @@ set noshowmatch              " Do not show matching brackets by flickering
 set nocursorcolumn
 set noshowmode               " We show the mode with airline or lightline
 set ignorecase               " Search case insensitive...
-set smartcase                " ... but not it begins with upper case 
+set smartcase                " ... but not it begins with upper case
 set completeopt=menu,menuone
 set nocursorcolumn           " speed up syntax highlighting
 set nocursorline
@@ -108,7 +108,7 @@ if has("gui_macvim")
   set guioptions-=R
 
   let macvim_skip_colorscheme=1
-"  colorscheme molokai
+  colorscheme molokai
 
   " Open goto symbol on current buffer
   nmap <D-r> :MyCtrlPTag<cr>
@@ -163,7 +163,7 @@ else
 
   let g:rehash256 = 1
   set background=dark
-"  colorscheme molokai
+  colorscheme molokai
 endif
 
 " open help vertically
@@ -410,11 +410,11 @@ nmap <C-b> :CtrlPCurWD<cr>
 imap <C-b> <esc>:CtrlPCurWD<cr>
 
 " ==================== delimitMate ====================
-let g:delimitMate_expand_cr = 1   
-let g:delimitMate_expand_space = 1    
-let g:delimitMate_smart_quotes = 1    
-let g:delimitMate_expand_inside_quotes = 0    
-let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'   
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_smart_quotes = 1
+let g:delimitMate_expand_inside_quotes = 0
+let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
@@ -425,8 +425,8 @@ let g:lightline = {
       \   'left': [ [ 'mode', 'paste'],
       \             [ 'fugitive', 'filename', 'modified', 'ctrlpmark' ],
       \             [ 'go'] ],
-      \   'right': [ [ 'lineinfo' ], 
-      \              [ 'percent' ], 
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'inactive': {

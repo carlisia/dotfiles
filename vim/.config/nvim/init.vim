@@ -1,4 +1,4 @@
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin()
 
 Plug 'fatih/vim-go'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -108,7 +108,7 @@ if has("gui_macvim")
   set guioptions-=R
 
   let macvim_skip_colorscheme=1
-  colorscheme molokai
+"  colorscheme molokai
 
   " Open goto symbol on current buffer
   nmap <D-r> :MyCtrlPTag<cr>
@@ -163,7 +163,7 @@ else
 
   let g:rehash256 = 1
   set background=dark
-  colorscheme molokai
+"  colorscheme molokai
 endif
 
 " open help vertically

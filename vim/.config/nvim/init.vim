@@ -10,10 +10,11 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-scriptease'
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'unblevable/quick-scope'
 Plug 'scrooloose/nerdtree'
+Plug 'tstelzer/welpe.vim'
 
 Plug 'SirVer/ultisnips'
 Plug 't9md/vim-choosewin'
@@ -29,7 +30,7 @@ endif
 " filetype plugins
 Plug 'vim-ruby/vim-ruby'
 Plug 'elzr/vim-json', {'for' : 'json'}
-Plug 'tejr/vim-tmux', {'for': 'tmux'}
+" Plug 'tejr/vim-tmux', {'for': 'tmux'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
 Plug 'corylanou/vim-present', {'for' : 'present'}
@@ -163,7 +164,7 @@ else
 
   let g:rehash256 = 1
   set background=dark
-  colorscheme molokai
+  colorscheme welpe
 endif
 
 " open help vertically
@@ -179,10 +180,10 @@ autocmd BufNewFile,BufRead *.vim setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType json setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 
-augroup filetypedetect
-  autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
-  autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
-augroup END
+" augroup filetypedetect
+""  autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
+""  autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
+" augroup END
 
 "=====================================================
 "===================== MAPPINGS ======================
@@ -193,7 +194,7 @@ augroup END
 let mapleader = ","
 let g:mapleader = ","
 
-let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave = 0
 
 " This trigger takes advantage of the fact that the quickfix window can be
 " easily distinguished by its file-type, qf. The wincmd J command is
@@ -423,6 +424,7 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 " ==================== Lightline ====================
 "
 let g:lightline = {
+      \ 'colorscheme': 'welpe',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste'],
       \             [ 'fugitive', 'filename', 'modified', 'ctrlpmark' ],

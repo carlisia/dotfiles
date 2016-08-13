@@ -5,7 +5,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'tomasr/molokai'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -14,13 +13,15 @@ Plug 'tpope/vim-scriptease'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'unblevable/quick-scope'
 Plug 'scrooloose/nerdtree'
-Plug 'tstelzer/welpe.vim'
 
 Plug 'SirVer/ultisnips'
 Plug 't9md/vim-choosewin'
 Plug 'garyburd/go-explorer'
 
 Plug 'airblade/vim-gitgutter'
+
+Plug 'chriskempson/base16-vim'
+let base16colorspace=256  " Access colors present in 256 colorspace
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim'
@@ -111,7 +112,7 @@ if has("gui_macvim")
   set guioptions-=R
 
   let macvim_skip_colorscheme=1
-  colorscheme molokai
+  colorscheme base16-green-screen
 
   " Open goto symbol on current buffer
   nmap <D-r> :MyCtrlPTag<cr>
@@ -166,7 +167,7 @@ else
 
   let g:rehash256 = 1
   set background=dark
-  colorscheme welpe
+  colorscheme  base16-green-screen
 endif
 
 " open help vertically
@@ -426,7 +427,7 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 " ==================== Lightline ====================
 "
 let g:lightline = {
-      \ 'colorscheme': 'welpe',
+      \ 'colorscheme': 'base16-green-screen',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste'],
       \             [ 'fugitive', 'filename', 'modified', 'ctrlpmark' ],
@@ -620,7 +621,7 @@ endif
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 
-" ==================== Various other plugin settingys ====================
+" ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)
 
 " Trigger a highlight in the appropriate direction when pressing these keys:

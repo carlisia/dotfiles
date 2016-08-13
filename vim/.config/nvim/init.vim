@@ -20,6 +20,8 @@ Plug 'SirVer/ultisnips'
 Plug 't9md/vim-choosewin'
 Plug 'garyburd/go-explorer'
 
+Plug 'airblade/vim-gitgutter'
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim'
   Plug 'zchee/deoplete-go', { 'do': 'make'}
@@ -618,7 +620,7 @@ endif
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 
-" ==================== Various other plugin settings ====================
+" ==================== Various other plugin settingys ====================
 nmap  -  <Plug>(choosewin)
 
 " Trigger a highlight in the appropriate direction when pressing these keys:
@@ -626,3 +628,7 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 
 " vim: sw=2 sw=2 et
+
+" ==================== Various other customizations ====================
+set cursorline        " highlight current line
+set cursorcolumn      " highlight current column

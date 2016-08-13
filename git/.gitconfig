@@ -1,0 +1,40 @@
+[push]
+	default = simple
+[user]
+	name = Carlisia Campos
+	email = carlisia@grokkingtech.io
+	signingkey = B15FFCF9
+[merge]
+	tool = vimdiff
+[mergetool]
+	keepBackup = true
+[core]
+	editor = nvim
+	excludesfile = /Users/ccampos/.gitignore_global
+
+[alias]
+  co = checkout
+  oops = reset --hard 'HEAD@{1}'
+  forgot = commit --amend -C HEAD
+
+[alias]
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg = !"git lg1"
+  l0 = log --graph --oneline --all --decorate
+[mergetool "kdiff3"]
+	path = /Applications/kdiff3.app/Contents/MacOS/kdiff3
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[commit]
+	gpgsign = true

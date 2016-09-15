@@ -3,7 +3,7 @@ To use any of my dotfiles as is, install [GNU stow](http://brandon.invergo.net/n
 
 ## To get neovim + go-vim up and running
 - If you don't have neovim installed: https://neovim.io/
-- Copy or clone this repository
+- Copy or clone this repository under your root `(~/)` directory
 - Run stow for nvim
 
 ```

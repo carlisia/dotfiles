@@ -362,6 +362,7 @@ let g:go_highlight_operators = 0
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_types = 1
 
+map <Leader>h :GoSameIdsAutoToggle<CR>
 nmap <C-g> :GoDecls<cr>
 imap <C-g> <esc>:<C-u>GoDecls<cr>
 

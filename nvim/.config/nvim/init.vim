@@ -21,6 +21,8 @@ Plug 'garyburd/go-explorer'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'chriskempson/base16-vim'
+Plug 'trevordmiller/nova-vim'
+
 let base16colorspace=256  " Access colors present in 256 colorspace
 
 if has('nvim')
@@ -112,7 +114,7 @@ if has("gui_macvim")
   set guioptions-=R
 
   let macvim_skip_colorscheme=1
-  colorscheme base16-green-screen
+  colorscheme base16-default-dark
 
   " Open goto symbol on current buffer
   nmap <D-r> :MyCtrlPTag<cr>
@@ -167,7 +169,7 @@ else
 
   let g:rehash256 = 1
   set background=dark
-  colorscheme  base16-green-screen
+  colorscheme base16-default-dark 
 endif
 
 " open help vertically
@@ -395,7 +397,7 @@ let g:ctrlp_cmd = 'CtrlPMRU'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_max_height = 10   " maxiumum height of match window
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
-let g:ctrlp_mruf_max=450    " number of recently opened files
+let g:ctrlp_mruf_max=450    " number of recent/y opened files
 let g:ctrlp_max_files=0     " do not limit the number of searchable files
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
@@ -430,7 +432,7 @@ imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 " ==================== Lightline ====================
 "
 let g:lightline = {
-      \ 'colorscheme': 'base16-green-screen',
+      \ 'colorscheme': 'base16-default-dark',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste'],
       \             [ 'fugitive', 'filename', 'modified', 'ctrlpmark' ],
@@ -636,3 +638,7 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " ==================== Various other customizations ====================
 set cursorline        " highlight current line
 set cursorcolumn      " highlight current column
+
+" :hi CursorLine   cterm=NONE ctermbg=darkgrey ctermfg=white guibg=darkgrey guifg=white
+" :hi CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=white guibg=darkgrey guifg=white
+" :nnoremap <Leader>cc :set cursorline! cursorcolumn!<CR>

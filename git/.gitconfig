@@ -16,12 +16,18 @@
   co = checkout
   oops = reset --hard 'HEAD@{1}'
   forgot = commit --amend -C HEAD
-
-[alias]
+  change = codereview change
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
   lg = !"git lg1"
   l0 = log --graph --oneline --all --decorate
+  gofmt = codereview gofmt
+  mail = codereview mail
+  pending = codereview pending
+  submit = codereview submit
+  sync = codereview sync
+  
+
 [mergetool "kdiff3"]
 	path = /Applications/kdiff3.app/Contents/MacOS/kdiff3
 [filter "media"]
@@ -38,3 +44,5 @@
 	required = true
 [commit]
 	gpgsign = true
+[http]
+	cookiefile = /Users/ccampos/.gitcookies

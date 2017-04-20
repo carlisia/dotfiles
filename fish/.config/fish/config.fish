@@ -13,13 +13,19 @@ source $OMF_PATH/init.fish
 set -x GOPATH "$HOME/work"
 
 # So we can run go commands and go programs we have compiled ourselves
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/ccampos /vault
 
 alias g "git status"
 alias l1 "git lg1"
 alias l2 "git lg2"
 alias l0 "git lg"
 alias gl "git l0"
+
+# ssh vm
+alias prod='ssh -A ccampos@bastion-slsjc1.hosts.fastly.net'
+alias astral1="ssh -A ccampos@astral-slwdc9060.hosts.fastly.net"
+alias astral2="ssh -A ccampos@astral-slwdc9061.hosts.fastly.net"
+alias ac1="ssh -A ccampos@astral-slwdc9062.hosts.fastly.net"
 
 
 # fish theme: bobthefish

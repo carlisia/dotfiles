@@ -1,16 +1,16 @@
 [push]
 	default = simple
 [user]
-	name = Carlisia Campos
+	name = Carlisia
 	email = carlisia@grokkingtech.io
-	signingkey = B15FFCF9
+	signingkey = EE2E6F4D2C4B7117
 [merge]
 	tool = vimdiff
 [mergetool]
 	keepBackup = true
 [core]
 	editor = nvim
-	excludesfile = /Users/ccampos/.gitignore_global
+	excludesfile = /Users/carlisia/.gitignore_global
 
 [alias]
   co = checkout
@@ -39,10 +39,12 @@
 	smudge = git hawser smudge %f
 	required = true
 [filter "lfs"]
-	clean = git lfs clean %f
+	clean = git lfs clean %
 	smudge = git lfs smudge %f
 	required = true
+[gpg]
+	program = /usr/local/bin/gpg
 [commit]
 	gpgsign = true
 [http]
-	cookiefile = /Users/ccampos/.gitcookies
+	cookiefile = /Users/carlisia/.gitcookies

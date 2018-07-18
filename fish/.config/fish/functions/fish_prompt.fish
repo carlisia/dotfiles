@@ -1,1 +1,1 @@
-/Users/ccampos/.local/share/omf/themes/bobthefish/fish_prompt.fish
+/Users/carlisia/.local/share/omf/themes/bobthefish/fish_prompt.fish

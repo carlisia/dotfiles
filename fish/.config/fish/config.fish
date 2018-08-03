@@ -46,6 +46,8 @@ end
 set -x SHELL /usr/local/bin/fish
 
 set -x KUBECONFIG $HOME/.kube/my-cluster
-set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
+# set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
+
+# set -x GIT_TERMINAL_PROMPT 1
 
 fish_vi_key_bindings

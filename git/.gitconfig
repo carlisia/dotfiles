@@ -48,3 +48,6 @@
 	gpgsign = true
 [http]
 	cookiefile = /Users/carlisia/.gitcookies
+
+[url "git@github.com:"]
+ insteadOf = https://github.com/

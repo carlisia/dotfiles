@@ -20,10 +20,10 @@ Plug 'garyburd/go-explorer'
 
 Plug 'airblade/vim-gitgutter'
 
-Plug 'chriskempson/base16-vim'
+" Plug 'chriskempson/base16-vim'
 Plug 'trevordmiller/nova-vim'
 
-let base16colorspace=256  " Access colors present in 256 colorspace
+" let base16colorspace=256  " Access colors present in 256 colorspace
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim'
@@ -114,7 +114,7 @@ if has("gui_macvim")
   set guioptions-=R
 
   let macvim_skip_colorscheme=1
-  colorscheme base16-default-dark
+  " colorscheme base16-default-dark
 
   " Open goto symbol on current buffer
   nmap <D-r> :MyCtrlPTag<cr>
@@ -169,7 +169,7 @@ else
 
   let g:rehash256 = 1
   set background=dark
-  colorscheme base16-default-dark 
+  " colorscheme base16-default-dark 
 endif
 
 " open help vertically
@@ -427,7 +427,7 @@ let g:delimitMate_smart_quotes = 1
 let g:delimitMate_expand_inside_quotes = 0
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
-imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
+" imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
 " ==================== Lightline ====================
 "
@@ -571,9 +571,9 @@ if has('nvim')
 
 
   " Use partial fuzzy matches like YouCompleteMe
-  call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
-  call deoplete#custom#set('_', 'converters', ['converter_remove_paren'])
-  call deoplete#custom#set('_', 'disabled_syntaxes', ['Comment', 'String'])
+  " call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+  " call deoplete#custom#set('_', 'converters', ['converter_remove_paren'])
+  " call deoplete#custom#set('_', 'disabled_syntaxes', ['Comment', 'String'])
 else
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_smart_case = 1
@@ -623,8 +623,8 @@ if !exists("g:UltiSnipsJumpBackwardTrigger")
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 endif
 
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+" au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+" au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 
 " ==================== Various other plugin settings ====================
 nmap  -  <Plug>(choosewin)

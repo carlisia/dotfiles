@@ -51,3 +51,7 @@ set -x KUBECONFIG $HOME/.kube/my-cluster
 # set -x GIT_TERMINAL_PROMPT 1
 
 fish_vi_key_bindings
+
+function fish_prompt
+    ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline 
+end

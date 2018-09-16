@@ -1,0 +1,45 @@
+#!/bin/sh
+
+SESSION="mobile-ark"
+
+sessions() {
+  echo tmux ls -F '#S'
+}
+
+if $(sessions) =~ $SESSION; then
+  if [ -n "$TMUX" ]; then
+      tmux -2 attach-session -t $SESSION
+  else
+      tmux switch-client -t $SESSION
+  fi
+else
+  echo creating session $SESSION
+  # Create the session (behave like attach-session if session-name already exists)
+  tmux -2 new-session -A -d -s $SESSION
+
+  # ark window (0)
+  tmux rename-window -t $SESSION:1 ark
+  tmux split-window -h -t $SESSION:1
+  # ark pane
+  tmux select-pane -t $SESSION:1.0
+  tmux resize-pane -R 30
+  tmux send-keys -t $SESSION:1.0 'cd /Users/carlisia/work/src/github.com/heptio/ark' C-m
+  tmux send-keys -t $SESSION:1.0 'clear' C-m
+  tmux send-keys -t $SESSION:1.0 'g' C-m
+  # kubectl pane
+  tmux select-pane -t $SESSION:1.1 
+  tmux send-keys -t $SESSION:1.1 'kube-shell' C-m
+  tmux send-keys -t $SESSION:1.1 'clear' C-m
+
+  tmux select-pane -t $SESSION:1.0 
+
+  # bare window (1)
+  tmux new-window -n bare -t $SESSION
+  tmux send-keys -t $SESSION:2 '~' C-m
+  tmux send-keys -t $SESSION:2 'clear' C-m
+
+  # Start out on the first window when we attach
+  tmux select-window -t $SESSION:1
+  tmux switch-client -t $SESSION
+  tmux -2 attach-session -t $SESSION:1
+fi

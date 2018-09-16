@@ -1,7 +1,7 @@
-if status is-interactive
-and not set -q TMUX
-    exec tmux
-end
+# if status is-interactive
+# and not set -q TMUX
+#     exec tmux
+# end
 
 # Path to Oh My Fish install.
 set -q XDG_DATA_HOME
@@ -16,6 +16,8 @@ source $OMF_PATH/init.fish
 
 set -x GOPATH "$HOME/work"
 
+set -x EDITOR " nvim"
+
 # So we can run go commands and go programs we have compiled ourselves
 set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisia
 
@@ -25,10 +27,10 @@ alias l2 "git lg2"
 alias l0 "git lg"
 alias gl "git l0"
 alias ks "kube-shell"
-alias t "teamocil"
+alias tam "eval sh /Users/carlisia/dotfiles/tmux-scripts/mobile-ark"
 
 alias k "kubectl"
-alias cp "aws-vault exec dev-cpinto"
+alias ct "aws-vault exec dev-cpinto"
 
 # ssh vm
 
@@ -44,7 +46,7 @@ set -g theme_show_exit_status yes
 set -g theme_color_scheme dark
 
 # Base16 Shell
-if status --is-interactive
+if status is-interactive
     eval sh $HOME/.config/base16-shell/scripts/base16-default-dark.sh
 end
 
@@ -58,5 +60,5 @@ set -x KUBECONFIG $HOME/.kube/my-cluster
 fish_vi_key_bindings
 
 function fish_prompt
-    ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline 
+    ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline
 end

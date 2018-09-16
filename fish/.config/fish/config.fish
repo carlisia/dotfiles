@@ -1,3 +1,8 @@
+if status is-interactive
+and not set -q TMUX
+    exec tmux
+end
+
 # Path to Oh My Fish install.
 set -q XDG_DATA_HOME
   and set -gx OMF_PATH "$XDG_DATA_HOME/omf"
@@ -5,7 +10,6 @@ set -q XDG_DATA_HOME
 
 # Customize Oh My Fish configuration path.
 # set -gx OMF_CONFIG "/Users/carlisia/.config/omf"
-
 set -x VAGRANT_DEFAULT_PROVIDER "virtualbox"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
@@ -20,12 +24,13 @@ alias l1 "git lg1"
 alias l2 "git lg2"
 alias l0 "git lg"
 alias gl "git l0"
+alias ks "kube-shell"
+alias t "teamocil"
 
 alias k "kubectl"
 alias cp "aws-vault exec dev-cpinto"
 
 # ssh vm
-
 
 # fish theme: bobthefish
 set -g theme_display_git_ahead_verbose yes

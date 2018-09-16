@@ -1,0 +1,9 @@
+windows:
+  - name: ark 
+    root: /Users/carlisia/work/src/github.com/heptio/ark
+    layout: even-horizontal
+    panes:
+      - g
+      - ks
+
+    

@@ -17,7 +17,7 @@ else
   # Create the session (behave like attach-session if session-name already exists)
   tmux -2 new-session -A -d -s $SESSION
 
-  # ark window (0)
+  # velero window (0)
   tmux rename-window -t $SESSION:1 velero
   tmux split-window -h -t $SESSION:1
   # ark pane
@@ -28,8 +28,7 @@ else
   tmux send-keys -t $SESSION:1.0 'g' C-m
   # kubectl pane
   tmux select-pane -t $SESSION:1.1 
-  tmux send-keys -t $SESSION:1.1 'kube-shell' C-m
-  tmux send-keys -t $SESSION:1.1 'clear' C-m
+  tmux send-keys -t $SESSION:1.1 'kube-prompt' C-m
 
   tmux select-pane -t $SESSION:1.0 
 

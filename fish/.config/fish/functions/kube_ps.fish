@@ -1,0 +1,1 @@
+../fish-kube-prompt/kube_ps.fish

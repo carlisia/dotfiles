@@ -1,0 +1,91 @@
+#!/bin/bash
+
+set -x SSH_KEY $HOME/.ssh/mykey.pem
+
+scp -i $SSH_KEY -o ProxyCommand="ssh -i \”{$SSH_KEY}\" ubuntu@18.144.62.35 nc %h %p" ubuntu@10.0.3.200:~/kubeconfig ./kubeconfig
+
+# scp -i $SSH_KEY -o ProxyCommand="ssh -i \"$SSH_KEY\" ubuntu@35.162.34.85 nc %h %p" ubuntu@10.0.29.120:~/kubeconfig ./kubeconfig
+scp -i $SSH_KEY -o ProxyCommand="ssh -i \"$SSH_KEY\" ubuntu@35.162.34.85 nc %h %p" ubuntu@10.0.29.120:~/kubeconfig ./kube/carlisia-ark
+
+scp -i $SSH_KEY -o ProxyCommand="ssh -i \"$SSH_KEY\" ubuntu@35.162.34.85 nc %h %p" ubuntu@10.0.29.120:~/kubeconfig $HOME/.kube
+
+
+
+echo "----------------------------------------------------"
+echo "Creating S3 bucket for ark"
+echo "----------------------------------------------------"
+
+aws s3api create-bucket \
+    --bucket bucket-for-ark \
+    --region us-west-2 \
+    --create-bucket-configuration LocationConstraint=us-west-2
+
+
+echo "----------------------------------------------------"
+echo "Creating IAM user"
+echo "----------------------------------------------------"
+
+aws iam create-user --user-name heptio-ark
+
+echo "----------------------------------------------------"
+echo "Attaching policies"
+echo "----------------------------------------------------"
+
+BUCKET=bucket-for-ark
+cat > heptio-ark-policy.json <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeVolumes",
+                "ec2:DescribeSnapshots",
+                "ec2:CreateTags",
+                "ec2:CreateVolume",
+                "ec2:CreateSnapshot",
+                "ec2:DeleteSnapshot"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:DeleteObject",
+                "s3:PutObject",
+                "s3:AbortMultipartUpload",
+                "s3:ListMultipartUploadParts"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${BUCKET}/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${BUCKET}"
+            ]
+        }
+    ]
+}
+EOF
+
+aws iam put-user-policy \
+  --user-name heptio-ark \
+  --policy-name heptio-ark \
+  --policy-document file://heptio-ark-policy.json
+
+
+echo "----------------------------------------------------"
+echo "Creating an access key for the user"
+echo "----------------------------------------------------"
+
+aws iam create-access-key --user-name heptio-ark
+
+scp -i $SSH_KEY -o ProxyCommand="ssh -i \"$SSH_KEY\" ubuntu@54.186.131.68 nc %h %p" ubuntu@10.0.10.221:~/kubeconfig .kube
+
+

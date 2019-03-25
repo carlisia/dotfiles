@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SESSION="mobile-ark"
+SESSION="mobile-velero"
 
 sessions() {
   echo tmux ls -F '#S'
@@ -18,12 +18,12 @@ else
   tmux -2 new-session -A -d -s $SESSION
 
   # ark window (0)
-  tmux rename-window -t $SESSION:1 ark
+  tmux rename-window -t $SESSION:1 velero
   tmux split-window -h -t $SESSION:1
   # ark pane
   tmux select-pane -t $SESSION:1.0
   tmux resize-pane -R 30
-  tmux send-keys -t $SESSION:1.0 'cd /Users/carlisia/work/src/github.com/heptio/ark' C-m
+  tmux send-keys -t $SESSION:1.0 'cd /Users/carlisia/work/src/github.com/heptio/velero' C-m
   tmux send-keys -t $SESSION:1.0 'clear' C-m
   tmux send-keys -t $SESSION:1.0 'g' C-m
   # kubectl pane
@@ -34,7 +34,12 @@ else
   tmux select-pane -t $SESSION:1.0 
 
   # bare window (1)
-  tmux new-window -n bare -t $SESSION
+  tmux new-window -n bare-1 -t $SESSION
+  tmux send-keys -t $SESSION:2 '~' C-m
+  tmux send-keys -t $SESSION:2 'clear' C-m
+
+  # bare window (2)
+  tmux new-window -n bare-2 -t $SESSION
   tmux send-keys -t $SESSION:2 '~' C-m
   tmux send-keys -t $SESSION:2 'clear' C-m
 

@@ -22,6 +22,7 @@ set -x EDITOR " nvim"
 set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisia
 
 alias g "git status"
+alias ll "git log --oneline"
 alias l1 "git lg1"
 alias l2 "git lg2"
 alias l0 "git lg"
@@ -30,7 +31,7 @@ alias ks "kube-shell"
 alias tam "eval sh /Users/carlisia/dotfiles/tmux-scripts/mobile-ark"
 
 alias k "kubectl"
-alias ct "aws-vault exec dev-cpinto"
+alias av "aws-vault exec dev-cpinto"
 
 # ssh vm
 
@@ -52,7 +53,11 @@ end
 
 set -x SHELL /usr/local/bin/fish
 
-set -x KUBECONFIG $HOME/.kube/my-cluster
+set -x KUBE_EDITOR "nvim"
+set -x KIND $HOME/.kube/kind-config-kind-cluster
+set -x AZURE $HOME/.kube/azure
+set -x KUBECONFIG $KIND:$AZURE
+
 # set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
 
 # set -x GIT_TERMINAL_PROMPT 1
@@ -61,4 +66,5 @@ fish_vi_key_bindings
 
 function fish_prompt
     ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline
+    echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
 end

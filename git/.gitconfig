@@ -2,7 +2,7 @@
 	default = simple
 [user]
 	name = Carlisia
-	email = carlisia@grokkingtech.io
+	email = carlisiac@vmware.com 
 	signingkey = EE2E6F4D2C4B7117
 [merge]
 	tool = vimdiff

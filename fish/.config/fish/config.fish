@@ -66,5 +66,5 @@ fish_vi_key_bindings
 
 function fish_prompt
     ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline
-    echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
+    # echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
 end

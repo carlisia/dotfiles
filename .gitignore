@@ -3,3 +3,5 @@ nvim/.config/nvim/tmp
 *.so
 *.swo
 *.swp
+
+google-cloud-sdk

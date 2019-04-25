@@ -21,6 +21,7 @@ set -x EDITOR " nvim"
 # So we can run go commands and go programs we have compiled ourselves
 set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisia
 
+
 alias g "git status"
 alias ll "git log --oneline"
 alias l1 "git lg1"
@@ -68,3 +69,8 @@ function fish_prompt
     ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline
     echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
 end
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/carlisia/dotfiles/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisia/dotfiles/google-cloud-sdk/path.fish.inc'; end
+
+# The next line enables shell command completion for gcloud.
+bass source '/Users/carlisia/dotfiles/google-cloud-sdk/completion.bash.inc'

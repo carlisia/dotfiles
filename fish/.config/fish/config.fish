@@ -29,7 +29,7 @@ alias l2 "git lg2"
 alias l0 "git lg"
 alias gl "git l0"
 alias ks "kube-shell"
-alias tam "eval sh /Users/carlisia/dotfiles/tmux-scripts/mobile-ark"
+alias tam "eval sh /Users/carlisia/dotfiles/tmux-scripts/dev-velero"
 
 alias k "kubectl"
 alias av "aws-vault exec dev-cpinto"

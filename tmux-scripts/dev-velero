@@ -1,0 +1,89 @@
+#!/bin/sh
+
+SESSION="mobile-velero"
+
+sessions() {
+  echo tmux ls -F '#S'
+}
+
+if $(sessions) =~ $SESSION; then
+  if [ -n "$TMUX" ]; then
+      tmux -2 attach-session -t $SESSION
+  else
+      tmux switch-client -t $SESSION
+  fi
+else
+  echo creating session $SESSION
+  # Create the session (behave like attach-session if session-name already exists)
+  tmux -2 new-session -A -d -s $SESSION
+
+  # VELERO WINDOW (1)
+  tmux new-window -n velero -t $SESSION
+  tmux rename-window -t $SESSION:1 velero
+  tmux send-keys -t $SESSION:1 '~' C-m
+  tmux send-keys -t $SESSION:1 'clear' C-m
+  tmux split-window -h -t $SESSION:1
+  # scripts window
+  tmux select-pane -t $SESSION:1.0
+  tmux resize-pane -R 30
+  tmux send-keys -t $SESSION:1.0 'cd /Users/carlisia/velero-scripts' C-m
+  tmux send-keys -t $SESSION:1.0 'clear' C-m
+  # velero window
+  tmux select-pane -t $SESSION:1.1 
+  tmux send-keys -t $SESSION:1.1 'cd /Users/carlisia/work/src/github.com/heptio/velero' C-m
+  tmux send-keys -t $SESSION:1.1 'g' C-m
+
+  # CLEAN WINDOW (2)
+  tmux new-window -n clean -t $SESSION
+  tmux rename-window -t $SESSION:2 clean
+
+  # KUBE-PROMPT-WINDOW (3)
+  tmux rename-window -t $SESSION:3 kube-prompt
+  tmux split-window -h -t $SESSION:3
+  # velero pane
+  tmux select-pane -t $SESSION:3.0
+  tmux resize-pane -R 30
+  tmux send-keys -t $SESSION:3.0 'cd /Users/carlisia/work/src/github.com/heptio/velero' C-m
+  tmux send-keys -t $SESSION:3.0 'clear' C-m
+  tmux send-keys -t $SESSION:3.0 'g' C-m
+  # kubectl pane
+  tmux select-pane -t $SESSION:3.1 
+  tmux send-keys -t $SESSION:3.1 'kube-prompt' C-m
+
+  # CLEAN: SUGARLOAF WINDOW (4)
+  tmux new-window -n sugarloaf -t $SESSION
+  tmux rename-window -t $SESSION:4 sugarloaf
+
+  # PLUGIN EXAMPLES WINDOW (5)
+  tmux new-window -n plugin-example -t $SESSION
+  tmux rename-window -t $SESSION:5 plugin-example
+  tmux send-keys -t $SESSION:5 'cd /Users/carlisia/work/src/github.com/heptio/velero-plugin-example' C-m
+  tmux send-keys -t $SESSION:5 'clear' C-m
+  tmux send-keys -t $SESSION:5 'g' C-m
+
+  # VELERO COMMUNITY WINDOW (6)
+  tmux new-window -n velero-community -t $SESSION
+  tmux rename-window -t $SESSION:6 velero-community
+  tmux send-keys -t $SESSION:6 'cd /Users/carlisia/work/src/github.com/heptio/velero-community' C-m
+  tmux send-keys -t $SESSION:6 'clear' C-m
+  tmux send-keys -t $SESSION:6 'g' C-m
+
+  # THE KUBELETS WINDOW (7)
+  tmux new-window -n kubelets -t $SESSION
+  tmux rename-window -t $SESSION:7 kubelets
+  tmux send-keys -t $SESSION:7 'cd /Users/carlisia/work/src/github.com/heptio/thekubelets' C-m
+  tmux send-keys -t $SESSION:7 'clear' C-m
+  tmux send-keys -t $SESSION:7 'g' C-m
+
+  # DOTFILES WINDOW (7)
+  tmux new-window -n dotfiles -t $SESSION
+  tmux rename-window -t $SESSION:8 dotfiles
+  tmux send-keys -t $SESSION:8 'cd /Users/carlisia/dotfiles' C-m
+  tmux send-keys -t $SESSION:8 'clear' C-m
+  tmux send-keys -t $SESSION:8 'g' C-m
+
+  # Start out on the first window when we attach
+  tmux select-window -t $SESSION:1
+  tmux switch-client -t $SESSION
+  tmux -2 attach-session -t $SESSION:1
+fi

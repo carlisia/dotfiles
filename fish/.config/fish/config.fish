@@ -55,9 +55,11 @@ end
 set -x SHELL /usr/local/bin/fish
 
 set -x KUBE_EDITOR "nvim"
-set -x KIND $HOME/.kube/kind-config-kind-cluster
-set -x AZURE $HOME/.kube/azure
-set -x KUBECONFIG $KIND:$AZURE
+# set -x KIND0 $HOME/.kube/kind-config-kind
+# set -x KIND1 $HOME/.kube/kind-config-development
+# set -x KIND2 $HOME/.kube/kind-config-staging
+# set -x AZURE $HOME/.kube/azure
+# set -x KUBECONFIG $KIND0:$KIND1:$KIND2
 
 # set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
 

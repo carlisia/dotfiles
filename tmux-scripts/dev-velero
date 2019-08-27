@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SESSION="mobile-velero"
+SESSION="velero"
 
 sessions() {
   echo tmux ls -F '#S'
@@ -34,53 +34,106 @@ else
   tmux send-keys -t $SESSION:1.1 'g' C-m
 
   # CLEAN WINDOW (2)
-  tmux new-window -n clean -t $SESSION
-  tmux rename-window -t $SESSION:2 clean
+  tmux new-window -n aws-staging -t $SESSION
+  tmux rename-window -t $SESSION:2 aws-staging
+  tmux send-keys -t $SESSION:2 'set -x KUBECONFIG $HOME/.kube/aws-staging' C-m
+  tmux send-keys -t $SESSION:2 'clear' C-m
 
-  # KUBE-PROMPT-WINDOW (3)
-  tmux rename-window -t $SESSION:3 kube-prompt
+  # KIND+KUBE-PROMPT-WINDOW (3)
+  tmux rename-window -t $SESSION:3 kind+kp
   tmux split-window -h -t $SESSION:3
-  # velero pane
+  # kind pane
   tmux select-pane -t $SESSION:3.0
   tmux resize-pane -R 30
-  tmux send-keys -t $SESSION:3.0 'cd /Users/carlisia/work/src/github.com/heptio/velero' C-m
   tmux send-keys -t $SESSION:3.0 'clear' C-m
   tmux send-keys -t $SESSION:3.0 'g' C-m
-  # kubectl pane
-  tmux select-pane -t $SESSION:3.1 
+  tmux send-keys -t $SESSION:3.0 'kind get clusters' C-m
+  # kube-prompt pane
   tmux send-keys -t $SESSION:3.1 'kube-prompt' C-m
 
-  # CLEAN: SUGARLOAF WINDOW (4)
-  tmux new-window -n sugarloaf -t $SESSION
-  tmux rename-window -t $SESSION:4 sugarloaf
-
-  # PLUGIN EXAMPLES WINDOW (5)
-  tmux new-window -n plugin-example -t $SESSION
-  tmux rename-window -t $SESSION:5 plugin-example
-  tmux send-keys -t $SESSION:5 'cd /Users/carlisia/work/src/github.com/heptio/velero-plugin-example' C-m
-  tmux send-keys -t $SESSION:5 'clear' C-m
-  tmux send-keys -t $SESSION:5 'g' C-m
-
-  # VELERO COMMUNITY WINDOW (6)
-  tmux new-window -n velero-community -t $SESSION
-  tmux rename-window -t $SESSION:6 velero-community
-  tmux send-keys -t $SESSION:6 'cd /Users/carlisia/work/src/github.com/heptio/velero-community' C-m
-  tmux send-keys -t $SESSION:6 'clear' C-m
-  tmux send-keys -t $SESSION:6 'g' C-m
-
-  # THE KUBELETS WINDOW (7)
-  tmux new-window -n kubelets -t $SESSION
-  tmux rename-window -t $SESSION:7 kubelets
-  tmux send-keys -t $SESSION:7 'cd /Users/carlisia/work/src/github.com/heptio/thekubelets' C-m
-  tmux send-keys -t $SESSION:7 'clear' C-m
-  tmux send-keys -t $SESSION:7 'g' C-m
-
-  # DOTFILES WINDOW (7)
+  # DOTFILES WINDOW (4)
   tmux new-window -n dotfiles -t $SESSION
-  tmux rename-window -t $SESSION:8 dotfiles
-  tmux send-keys -t $SESSION:8 'cd /Users/carlisia/dotfiles' C-m
-  tmux send-keys -t $SESSION:8 'clear' C-m
-  tmux send-keys -t $SESSION:8 'g' C-m
+  tmux rename-window -t $SESSION:4 dotfiles
+  tmux send-keys -t $SESSION:4 'cd /Users/carlisia/dotfiles' C-m
+  tmux send-keys -t $SESSION:4 'clear' C-m
+  tmux send-keys -t $SESSION:4 'g' C-m
+
+  # PLUGIN EXAMPLES + COMMUNITY WINDOW (5)
+  tmux new-window -n plugin+community -t $SESSION
+  tmux rename-window -t $SESSION:5 plugin+community
+  # plugin examples pane
+  tmux send-keys -t $SESSION:5.0 'cd /Users/carlisia/work/src/github.com/heptio/velero-plugin-example' C-m
+  tmux send-keys -t $SESSION:5.0 'clear' C-m
+  tmux send-keys -t $SESSION:5.0 'g' C-m
+  # velero community pane
+  tmux send-keys -t $SESSION:5.1 'cd /Users/carlisia/work/src/github.com/heptio/velero-community' C-m
+  tmux send-keys -t $SESSION:5.1 'clear' C-m
+  tmux send-keys -t $SESSION:5.1 'g' C-m
+
+  # DEVELOPMENT WINDOW (6)
+  tmux new-window -n DEVELOPMENT -t $SESSION
+  tmux rename-window -t $SESSION:6.0 DEVELOPMENT
+  tmux split-window -v -t $SESSION:6.0
+  # top 
+  tmux select-pane -t $SESSION:6.0
+  tmux resize-pane -R 80
+  tmux send-keys -t $SESSION:6.0 'cd /Users/carlisia/velero-scripts/local-minio' C-m
+  tmux send-keys -t $SESSION:6.0 'set -x KUBECONFIG $HOME/.kube/kind-config-development' C-m
+  tmux send-keys -t $SESSION:6.0 'clear' C-m
+  # bottom pane
+  tmux send-keys -t $SESSION:6.1 'cd /Users/carlisia/velero-scripts/local-minio' C-m
+  tmux send-keys -t $SESSION:6.1 'set -x KUBECONFIG $HOME/.kube/kind-config-development' C-m
+  tmux send-keys -t $SESSION:6.1 'clear' C-m
+  tmux select-pane -t $SESSION:6.0
+
+  # STAGING WINDOW (7)
+  tmux new-window -n STAGING -t $SESSION
+  tmux rename-window -t $SESSION:7.0 STAGING
+  tmux split-window -v -t $SESSION:7.0
+  # top 
+  tmux select-pane -t $SESSION:7.0
+  tmux resize-pane -R 80
+  tmux send-keys -t $SESSION:7.0 'cd /Users/carlisia/velero-scripts/local-minio' C-m
+  tmux send-keys -t $SESSION:7.0 'set -x KUBECONFIG $HOME/.kube/kind-config-staging' C-m
+  tmux send-keys -t $SESSION:7.0 'clear' C-m
+  # bottom pane
+  tmux send-keys -t $SESSION:7.1 'cd /Users/carlisia/velero-scripts/local-minio' C-m
+  tmux send-keys -t $SESSION:7.1 'set -x KUBECONFIG $HOME/.kube/kind-config-staging' C-m
+  tmux send-keys -t $SESSION:7.1 'clear' C-m
+  tmux select-pane -t $SESSION:7.0
+
+  # # THE KUBELETS WINDOW (7)
+  # tmux new-window -n kubelets -t $SESSION
+  # tmux rename-window -t $SESSION:7 kubelets
+  # tmux send-keys -t $SESSION:7 'cd /Users/carlisia/work/src/github.com/heptio/thekubelets' C-m
+  # tmux send-keys -t $SESSION:7 'clear' C-m
+  # tmux send-keys -t $SESSION:7 'g' C-m
+
+  # EKS WINDOW (8)
+  tmux new-window -n STAGING -t $SESSION
+  tmux rename-window -t $SESSION:7.0 STAGING
+  tmux split-window -v -t $SESSION:7.0
+  # top 
+  tmux select-pane -t $SESSION:7.0
+  tmux resize-pane -R 80
+  tmux send-keys -t $SESSION:7.0 'cd /Users/carlisia/velero-scripts/local-minio' C-m
+  tmux send-keys -t $SESSION:7.0 'set -x KUBECONFIG $HOME/.kube/kind-config-staging' C-m
+  tmux send-keys -t $SESSION:7.0 'clear' C-m
+  # bottom pane
+  tmux send-keys -t $SESSION:7.1 'cd /Users/carlisia/velero-scripts/local-minio' C-m
+  tmux send-keys -t $SESSION:7.1 'set -x KUBECONFIG $HOME/.kube/kind-config-staging' C-m
+  tmux send-keys -t $SESSION:7.1 'clear' C-m
+  tmux select-pane -t $SESSION:7.0
+
+  # CLEAN: OCTANT WINDOW (8)
+  tmux new-window -n sl -t $SESSION
+  tmux rename-window -t $SESSION:8 octant
+
+  # K9S WINDOW (9)
+  tmux new-window -n k9s -t $SESSION
+  tmux rename-window -t $SESSION:9 k9s
+  tmux send-keys -t $SESSION:9 'clear' C-m
+  tmux send-keys -t $SESSION:9 'k9s' C-m
 
   # Start out on the first window when we attach
   tmux select-window -t $SESSION:1

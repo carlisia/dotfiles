@@ -2,8 +2,8 @@
 	default = simple
 [user]
 	name = Carlisia
-	email = carlisiac@vmware.com 
-	signingkey = EE2E6F4D2C4B7117
+	email = carlisia@vmware.com 
+	signingkey = D7B7ACEC61F78637
 [merge]
 	tool = vimdiff
 [mergetool]

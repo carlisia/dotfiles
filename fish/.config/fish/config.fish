@@ -32,7 +32,11 @@ alias ks "kube-shell"
 alias tam "eval sh /Users/carlisia/dotfiles/tmux-scripts/dev-velero"
 
 alias k "kubectl"
-alias av "aws-vault exec dev-cpinto"
+alias gp "k get pods"
+alias gn "k get nodes"
+alias gd "k get deploy"
+alias gr "k get rs"
+alias gs "k get ns"
 
 # ssh vm
 

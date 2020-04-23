@@ -30,7 +30,7 @@ else
   tmux send-keys -t $SESSION:1.0 'clear' C-m
   # velero window
   tmux select-pane -t $SESSION:1.1 
-  tmux send-keys -t $SESSION:1.1 'cd /Users/carlisia/work/src/github.com/heptio/velero' C-m
+  tmux send-keys -t $SESSION:1.1 'cd /Users/carlisia/work/src/github.com/vmware-tanzu/velero' C-m
   tmux send-keys -t $SESSION:1.1 'g' C-m
 
   # CLEAN WINDOW (2)
@@ -62,11 +62,11 @@ else
   tmux new-window -n plugin+community -t $SESSION
   tmux rename-window -t $SESSION:5 plugin+community
   # plugin examples pane
-  tmux send-keys -t $SESSION:5.0 'cd /Users/carlisia/work/src/github.com/heptio/velero-plugin-example' C-m
+  tmux send-keys -t $SESSION:5.0 'cd /Users/carlisia/work/src/github.com/vmware-tanzu/velero-plugin-example' C-m
   tmux send-keys -t $SESSION:5.0 'clear' C-m
   tmux send-keys -t $SESSION:5.0 'g' C-m
   # velero community pane
-  tmux send-keys -t $SESSION:5.1 'cd /Users/carlisia/work/src/github.com/heptio/velero-community' C-m
+  tmux send-keys -t $SESSION:5.1 'cd /Users/carlisia/work/src/github.com/vmware-tanzu/velero-community' C-m
   tmux send-keys -t $SESSION:5.1 'clear' C-m
   tmux send-keys -t $SESSION:5.1 'g' C-m
 
@@ -105,7 +105,7 @@ else
   # # THE KUBELETS WINDOW (7)
   # tmux new-window -n kubelets -t $SESSION
   # tmux rename-window -t $SESSION:7 kubelets
-  # tmux send-keys -t $SESSION:7 'cd /Users/carlisia/work/src/github.com/heptio/thekubelets' C-m
+  # tmux send-keys -t $SESSION:7 'cd /Users/carlisia/work/src/github.com/vmware-tanzu/thekubelets' C-m
   # tmux send-keys -t $SESSION:7 'clear' C-m
   # tmux send-keys -t $SESSION:7 'g' C-m
 

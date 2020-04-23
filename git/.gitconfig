@@ -2,7 +2,7 @@
 	default = simple
 [user]
 	name = Carlisia
-	email = carlisia@vmware.com 
+	email = carlisia@vmware.com
 	signingkey = D7B7ACEC61F78637
 [merge]
 	tool = vimdiff
@@ -42,6 +42,7 @@
 	clean = git lfs clean %
 	smudge = git lfs smudge %f
 	required = true
+	process = git-lfs filter-process
 [gpg]
 	program = /usr/local/bin/gpg
 [commit]

@@ -39,6 +39,10 @@ alias gs "k get ns"
 
 alias pbk "pbpaste | kubectl apply -f -"
 
+alias s- "set -x KUBECONFIG $HOME/.kube/kind-config-staging ;and kubens velero"
+alias d- "set -x KUBECONFIG $HOME/.kube/kind-config-development;and kubens velero"
+
+
 alias v "/Users/carlisia/work/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
 
 alias knd "bass source /Users/carlisia/dotfiles/kind-with-registry.sh"
@@ -64,27 +68,23 @@ end
 set -x SHELL /usr/local/bin/fish
 
 set -x KUBE_EDITOR "nvim"
-set -x KIND0 $HOME/.kube/kind-config-kind
-set -x KIND1 $HOME/.kube/kind-config-development
-set -x KIND2 $HOME/.kube/kind-config-staging
-# set -x AZURE $HOME/.kube/azure
-set -x KUBECONFIG $KIND0:$KIND1:$KIND2
+# set -x KIND0 $HOME/.kube/kind-config-kind
+# set -x KIND1 $HOME/.kube/kind-config-development
+# set -x KIND2 $HOME/.kube/kind-config-staging
+# # set -x AZURE $HOME/.kube/azure
+# set -x KUBECONFIG $KIND0:$KIND1:$KIND2
 
 # set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
-
-alias s- "set -x KUBECONFIG $HOME/.kube/kind-config-staging ;and kubens velero"
-alias d- "set -x KUBECONFIG $HOME/.kube/kind-config-development;and kubens velero"
-alias pbk "pbpaste | k apply -f - "
 
 # set -x GIT_TERMINAL_PROMPT 1
 
 fish_vi_key_bindings
 
-function fish_prompt
-    ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline
-    # echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
-    echo -s (set_color blue) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
-end
+# function fish_prompt
+#     ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline
+#     # echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
+#     echo -s (set_color blue) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
+# end
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/carlisia/dotfiles/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisia/dotfiles/google-cloud-sdk/path.fish.inc'; end
@@ -94,4 +94,6 @@ bass source '/Users/carlisia/dotfiles/google-cloud-sdk/completion.bash.inc'
 
 # bass export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 #   bass [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-set -g fish_user_paths "/usr/local/opt/helm@2/bin" $fish_user_paths
+# set -g fish_user_paths "/usr/local/opt/helm@2/bin" $fish_user_paths
+
+starship init fish | source

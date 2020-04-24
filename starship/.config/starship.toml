@@ -1,0 +1,33 @@
+[directory]
+truncate_to_repo = false
+
+[kubernetes]
+style = "dimmed green"
+disabled = false
+[kubernetes.context_aliases]
+"dev.local.cluster.k8s" = "dev"
+
+[git_state]
+progress_divider = " of "
+
+[aws]
+disabled = true
+
+[git_status]
+disabled = false
+conflicted = "🏳 "
+ahead = "🏎 💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷<200d>"
+stashed = "📦"
+modified = "📝"
+staged.value = "++"
+staged.style = "green"
+staged_count.enabled = true
+staged_count.style = "green"
+renamed = "👅"
+deleted = "🗑 "
+
+[golang]
+disabled = true

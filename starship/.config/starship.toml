@@ -1,20 +1,26 @@
 [directory]
+# disabled = true 
 truncate_to_repo = false
 
 [kubernetes]
+# disabled = true 
 style = "dimmed green"
 disabled = false
 [kubernetes.context_aliases]
 "dev.local.cluster.k8s" = "dev"
 
+[git_branch]
+# disabled = true 
+
 [git_state]
+# disabled = true 
 progress_divider = " of "
 
 [aws]
 disabled = true
 
 [git_status]
-disabled = false
+# disabled = true 
 conflicted = "🏳 "
 ahead = "🏎 💨"
 behind = "😰"

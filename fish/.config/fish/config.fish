@@ -47,6 +47,9 @@ alias v "/Users/carlisia/work/src/github.com/vmware-tanzu/velero/_output/bin/dar
 
 alias knd "bass source /Users/carlisia/dotfiles/kind-with-registry.sh"
 
+alias vim="nvim"
+alias vi="nvim"
+
 # ssh vm
 
 # fish theme: bobthefish

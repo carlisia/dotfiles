@@ -26,11 +26,13 @@ Plug 'trevordmiller/nova-vim'
 " let base16colorspace=256  " Access colors present in 256 colorspace
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'zchee/deoplete-go', { 'do': 'make'}
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/neocomplete.vim'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
+let g:deoplete#enable_at_startup = 1
 
 " filetype plugins
 Plug 'vim-ruby/vim-ruby'

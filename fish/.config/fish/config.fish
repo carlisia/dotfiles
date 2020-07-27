@@ -19,9 +19,9 @@ set -x GOPATH "$HOME/work"
 set -x EDITOR " nvim"
 
 # So we can run go commands and go programs we have compiled ourselves
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisia /Users/carlisia/Kui-darwin-x64 /Users/carlisia/dotfiles
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisia /Users/carlisia/Kui-darwin-x64 /Users/carlisia/dotfiles /usr/local/bin/golangci-lint
 
-alias g "git status"
+alias g "git status -sb"
 alias ll "git log --oneline"
 alias l1 "git lg1"
 alias l2 "git lg2"
@@ -36,12 +36,6 @@ alias gn "k get nodes"
 alias gd "k get deploy"
 alias gr "k get rs"
 alias gs "k get ns"
-
-alias pbk "pbpaste | kubectl apply -f -"
-
-alias s- "set -x KUBECONFIG $HOME/.kube/kind-config-staging ;and kubens velero"
-alias d- "set -x KUBECONFIG $HOME/.kube/kind-config-development;and kubens velero"
-
 
 alias v "/Users/carlisia/work/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
 
@@ -71,11 +65,18 @@ end
 set -x SHELL /usr/local/bin/fish
 
 set -x KUBE_EDITOR "nvim"
-# set -x KIND0 $HOME/.kube/kind-config-kind
-# set -x KIND1 $HOME/.kube/kind-config-development
-# set -x KIND2 $HOME/.kube/kind-config-staging
+
+
+alias pbk "pbpaste | kubectl apply -f -"
+
+alias s- "set -x KUBECONFIG $HOME/.kube/kind-config-staging ;and kubens velero"
+alias d- "set -x KUBECONFIG $HOME/.kube/kind-config-development;and kubens velero"
+
+set -x KIND0 $HOME/.kube/velero-cluster-a.kubeconfig
+set -x KIND1 $HOME/.kube/velero-cluster-b.kubeconfig
+set -x KIND2 $HOME/.kube/config
 # # set -x AZURE $HOME/.kube/azure
-# set -x KUBECONFIG $KIND0:$KIND1:$KIND2
+set -x KUBECONFIG $KIND0:$KIND1:$KIND2
 
 # set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
 
@@ -97,6 +98,6 @@ bass source '/Users/carlisia/dotfiles/google-cloud-sdk/completion.bash.inc'
 
 # bass export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 #   bass [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-# set -g fish_user_paths "/usr/local/opt/helm@2/bin" $fish_user_paths
+set -g fish_user_paths "/usr/local/opt/helm@2/bin" $fish_user_paths
 
 starship init fish | source

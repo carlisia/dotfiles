@@ -4,6 +4,7 @@ truncate_to_repo = false
 
 [kubernetes]
 # disabled = true 
+symbol = "⛵ "
 style = "dimmed green"
 disabled = false
 [kubernetes.context_aliases]

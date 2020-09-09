@@ -9,7 +9,7 @@ set -q XDG_DATA_HOME
   or set -gx OMF_PATH "$HOME/.local/share/omf"
 
 # Customize Oh My Fish configuration path.
-# set -gx OMF_CONFIG "/Users/carlisia/.config/omf"
+# set -gx OMF_CONFIG "/Users/carlisiac/.config/omf"
 set -x VAGRANT_DEFAULT_PROVIDER "virtualbox"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
@@ -19,7 +19,13 @@ set -x GOPATH "$HOME/work"
 set -x EDITOR " nvim"
 
 # So we can run go commands and go programs we have compiled ourselves
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisia /Users/carlisia/Kui-darwin-x64 /Users/carlisia/dotfiles /usr/local/bin/golangci-lint
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin
+
+# To have ruby first in the PATH:
+set -g fish_user_paths "/usr/local/opt/ruby/bin" $fish_user_paths
+# For compilers to find ruby:
+set -gx LDFLAGS "-L/usr/local/opt/ruby/lib"
+set -gx CPPFLAGS "-I/usr/local/opt/ruby/include"
 
 alias g "git status -sb"
 alias ll "git log --oneline"
@@ -28,7 +34,7 @@ alias l2 "git lg2"
 alias l0 "git lg"
 alias gl "git l0"
 alias ks "kube-shell"
-alias tam "eval sh /Users/carlisia/dotfiles/tmux-scripts/dev-velero"
+alias tam "eval sh /Users/carlisiac/dotfiles/tmux-scripts/dev-velero"
 
 alias k "kubectl"
 alias gp "k get pods"
@@ -37,9 +43,9 @@ alias gd "k get deploy"
 alias gr "k get rs"
 alias gs "k get ns"
 
-alias v "/Users/carlisia/work/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
+alias v "/Users/carlisiac/work/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
 
-alias knd "bass source /Users/carlisia/dotfiles/kind-with-registry.sh"
+alias knd "bass source /Users/carlisiac/dotfiles/kind-with-registry.sh"
 
 alias vim="nvim"
 alias vi="nvim"
@@ -74,9 +80,10 @@ alias d- "set -x KUBECONFIG $HOME/.kube/kind-config-development;and kubens veler
 
 set -x KIND0 $HOME/.kube/velero-cluster-a.kubeconfig
 set -x KIND1 $HOME/.kube/velero-cluster-b.kubeconfig
-set -x KIND2 $HOME/.kube/config
+# set -x KIND2 $HOME/.kube/config
+set -x KIND3 $HOME/.kube/kind-config-development
 # # set -x AZURE $HOME/.kube/azure
-set -x KUBECONFIG $KIND0:$KIND1:$KIND2
+set -x KUBECONFIG $KIND0:$KIND1:$KIND3
 
 # set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
 
@@ -91,10 +98,10 @@ fish_vi_key_bindings
 # end
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/carlisia/dotfiles/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisia/dotfiles/google-cloud-sdk/path.fish.inc'; end
+# if [ -f '/Users/carlisiac/dotfiles/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisiac/dotfiles/google-cloud-sdk/path.fish.inc'; end
 
 # The next line enables shell command completion for gcloud.
-bass source '/Users/carlisia/dotfiles/google-cloud-sdk/completion.bash.inc'
+# bass source '/Users/carlisiac/dotfiles/google-cloud-sdk/completion.bash.inc'
 
 # bass export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 #   bass [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"

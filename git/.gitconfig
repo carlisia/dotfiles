@@ -10,7 +10,7 @@
 	keepBackup = true
 [core]
 	editor = nvim
-	excludesfile = /Users/carlisia/.gitignore_global
+	excludesfile = /Users/carlisiac/.gitignore_global
 
 [alias]
   co = checkout
@@ -44,11 +44,11 @@
 	required = true
 	process = git-lfs filter-process
 [gpg]
-	program = /usr/local/bin/gpg
+	# program = gpg
 [commit]
-	gpgsign = true
+	# gpgsign = true
 [http]
-	cookiefile = /Users/carlisia/.gitcookies
+	cookiefile = /Users/carlisiac/.gitcookies
 
 [url "git@github.com:"]
  insteadOf = https://github.com/

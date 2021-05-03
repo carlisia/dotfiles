@@ -2,7 +2,7 @@
 	default = simple
 [user]
 	name = Carlisia
-	email = carlisia@vmware.com
+	email = carlisia@grokkingtech.io
 	signingkey = D7B7ACEC61F78637
 [merge]
 	tool = vimdiff
@@ -26,6 +26,7 @@
   pending = codereview pending
   submit = codereview submit
   sync = codereview sync
+  wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
   
 
 [mergetool "kdiff3"]

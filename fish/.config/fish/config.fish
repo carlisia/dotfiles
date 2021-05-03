@@ -44,11 +44,14 @@ alias gr "k get rs"
 alias gs "k get ns"
 
 alias v "/Users/carlisiac/work/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
+alias t "/Users/carlisiac/work/src/github.com/vmware-tanzu/velero/_tiltbuild/local/velero"
 
 alias knd "bass source /Users/carlisiac/dotfiles/kind-with-registry.sh"
 
 alias vim="nvim"
 alias vi="nvim"
+
+alias ks="kube-shell"
 
 # ssh vm
 
@@ -78,12 +81,12 @@ alias pbk "pbpaste | kubectl apply -f -"
 alias s- "set -x KUBECONFIG $HOME/.kube/kind-config-staging ;and kubens velero"
 alias d- "set -x KUBECONFIG $HOME/.kube/kind-config-development;and kubens velero"
 
-set -x KIND0 $HOME/.kube/velero-cluster-a.kubeconfig
-set -x KIND1 $HOME/.kube/velero-cluster-b.kubeconfig
-# set -x KIND2 $HOME/.kube/config
+# set -x KIND0 $HOME/.kube/velero-cluster-a.kubeconfig
+# set -x KIND1 $HOME/.kube/velero-cluster-b.kubeconfig
+set -x KIND2 $HOME/.kube/config
 set -x KIND3 $HOME/.kube/kind-config-development
 # # set -x AZURE $HOME/.kube/azure
-set -x KUBECONFIG $KIND0:$KIND1:$KIND3
+set -x KUBECONFIG $KIND2:$KIND3
 
 # set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.aws/credentials
 
@@ -102,6 +105,10 @@ fish_vi_key_bindings
 
 # The next line enables shell command completion for gcloud.
 # bass source '/Users/carlisiac/dotfiles/google-cloud-sdk/completion.bash.inc'
+
+# To enable auto-switching of Rubies specified by .ruby-version files:
+bass source /usr/local/share/chruby/chruby.sh
+bass source /usr/local/opt/chruby/share/chruby/auto.sh
 
 # bass export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 #   bass [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"

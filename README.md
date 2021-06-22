@@ -3,6 +3,22 @@ To use any of my dotfiles as is, install [GNU stow](http://brandon.invergo.net/n
 
 ## Prerequisites
 
+### stow
+
+[Stow - GNU Project - Free Software Foundation - Install](https://www.gnu.org/software/stow/)
+
+[Invoking Stow (Stow)](https://www.gnu.org/software/stow/manual/html_node/Invoking-Stow.html#Invoking-Stow)
+
+`stow [options] [action flag] package …`
+
+stow directory: this dotfiles directory.
+
+stow target tree: points into a package in the stow directory.
+
+Example:
+
+stow -vv starship --target=$HOME
+
 ### Oh my fish
 
 curl -L https://get.oh-my.fish | fish
@@ -23,8 +39,8 @@ https://help.github.com/articles/generating-a-new-gpg-key/
 - Run stow for nvim
 
 ```
-cd ~/dotfiles
-stow -vv nvim
+cd <your-path>/dotfiles
+stow -vv nvim --target=$HOME
 ```
 
 The above will create the proper symlink for neovim. All you have to do is boot neovim and run `:PlugInstall` and `:GoInstallBinaries`  

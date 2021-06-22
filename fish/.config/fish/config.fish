@@ -14,9 +14,11 @@ set -x VAGRANT_DEFAULT_PROVIDER "virtualbox"
 # Load oh-my-fish configuration.
 source $OMF_PATH/init.fish
 
-set -x GOPATH "$HOME/work"
+set -U fish_user_paths /usr/local/bin $fish_user_paths
 
-set -x EDITOR " nvim"
+set -x -U GOPATH $HOME/working
+
+set -x EDITOR "nvim"
 
 # So we can run go commands and go programs we have compiled ourselves
 set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin
@@ -34,7 +36,7 @@ alias l2 "git lg2"
 alias l0 "git lg"
 alias gl "git l0"
 alias ks "kube-shell"
-alias tam "eval sh /Users/carlisiac/dotfiles/tmux-scripts/dev-velero"
+alias tam "eval sh /Users/carlisiac/working/src/github.com/carlisia/dotfiles/tmux-scripts/dev-velero"
 
 alias k "kubectl"
 alias gp "k get pods"
@@ -43,10 +45,10 @@ alias gd "k get deploy"
 alias gr "k get rs"
 alias gs "k get ns"
 
-alias v "/Users/carlisiac/work/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
-alias t "/Users/carlisiac/work/src/github.com/vmware-tanzu/velero/_tiltbuild/local/velero"
+alias v "/Users/carlisiac/working/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
+alias t "/Users/carlisiac/working/src/github.com/vmware-tanzu/velero/_tiltbuild/local/velero"
 
-alias knd "bass source /Users/carlisiac/dotfiles/kind-with-registry.sh"
+alias knd "bass source /Users/carlisiac/working/src/github.com/carlisia/dotfiles/kind-with-registry.sh"
 
 alias vim="nvim"
 alias vi="nvim"
@@ -92,11 +94,11 @@ set -x KUBECONFIG $KIND2:$KIND3
 
 # set -x GIT_TERMINAL_PROMPT 1
 
-fish_vi_key_bindings
+# fish_vi_key_bindings
 
 # function fish_prompt
 #     ~/work/bin/powerline-go -error $status -shell bare -colorize-hostname -newline
-#     # echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
+#     echo -s (set_color blue) (__kube_prompt) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
 #     echo -s (set_color blue) (set_color $fish_color_cwd) " " (prompt_pwd) (set_color normal) "> "
 # end
 
@@ -113,5 +115,11 @@ bass source /usr/local/opt/chruby/share/chruby/auto.sh
 # bass export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 #   bass [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 set -g fish_user_paths "/usr/local/opt/helm@2/bin" $fish_user_paths
+
+set -x LANG en_US.UTF-8
+
+[ -f /usr/local/share/autojump/autojump.fish ];
+source /usr/local/share/autojump/autojump.fish
+
 
 starship init fish | source

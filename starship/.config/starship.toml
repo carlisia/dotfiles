@@ -1,40 +1,143 @@
+
+format = """
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$custom\
+$cmd_duration\
+$line_break\
+$status\
+$shell\
+$character \
+"""
+
+command_timeout = 800
+
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[✗](bold red) "
+vicmd_symbol = "[V](bold green) "
+
+[cmd_duration]
+min_time = 5
+format = "took [$duration](bold yellow)"
+
+[hostname]
+ssh_only = true
+format =  "[$hostname](red) "
+trim_at = ".companyname.com"
+disabled = false
+
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "[$user]($style) "
+disabled = false
+show_always = false
+
+[gcloud]
+disabled = true
+symbol = "️"
+
+[aws]
+disabled = true
+format = "[$symbol $region]($style) "
+style = "bold blue"
+symbol = "🅰 "
+
 [directory]
 # disabled = true 
 truncate_to_repo = false
+home_symbol = "$HOME"
 
 [kubernetes]
-# disabled = true 
-symbol = "⛵ "
-style = "dimmed green"
+format = '[$context \($namespace\)](dimmed green) '
 disabled = false
 [kubernetes.context_aliases]
 "dev.local.cluster.k8s" = "dev"
 
+[helm]
+format = "(bold white) "
+
+[docker_context]
+format = "[🐋 $context](blue bold)"
+
+
 [git_branch]
-# disabled = true 
+symbol = "🌱 "
+format = "on [$symbol$branch]($style) "
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = "🔖 "
 
 [git_state]
-# disabled = true 
-progress_divider = " of "
-
-[aws]
-disabled = true
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
 
 [git_status]
-# disabled = true 
-conflicted = "🏳 "
-ahead = "🏎 💨"
+conflicted = "🏳"
+ahead = "🏎💨"
 behind = "😰"
 diverged = "😵"
-untracked = "🤷<200d>"
+untracked = "🤷‍"
 stashed = "📦"
 modified = "📝"
-staged.value = "++"
-staged.style = "green"
-staged_count.enabled = true
-staged_count.style = "green"
+staged = '[++\($count\)](green)'
 renamed = "👅"
-deleted = "🗑 "
+deleted = "🗑"
 
 [golang]
-disabled = true
+format = "[$version](bold cyan) "
+
+[time]
+disabled = false
+format = '🕙[\[ $time \]]($style) '
+time_format = "%T"
+utc_time_offset = "-5"
+time_range = "10:00:00-14:00:00"

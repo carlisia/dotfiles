@@ -3,6 +3,11 @@
 #     exec tmux
 # end
 
+# Base16 Shell
+if status is-interactive
+    eval sh $HOME/.config/base16-shell/scripts/base16-default-dark.sh
+end
+
 # Path to Oh My Fish install.
 set -q XDG_DATA_HOME
   and set -gx OMF_PATH "$XDG_DATA_HOME/omf"
@@ -68,11 +73,6 @@ set -g theme_nerd_fonts yes
 set -g theme_show_exit_status yes
 set -g theme_color_scheme dark
 
-# Base16 Shell
-if status is-interactive
-    eval sh $HOME/.config/base16-shell/scripts/base16-default-dark.sh
-end
-
 set -x SHELL /usr/local/bin/fish
 
 set -x KUBE_EDITOR "nvim"
@@ -109,8 +109,8 @@ set -x KUBECONFIG $KIND2:$KIND3
 # bass source '/Users/carlisiac/dotfiles/google-cloud-sdk/completion.bash.inc'
 
 # To enable auto-switching of Rubies specified by .ruby-version files:
-bass source /usr/local/share/chruby/chruby.sh
-bass source /usr/local/opt/chruby/share/chruby/auto.sh
+# bass source /usr/local/share/chruby/chruby.sh
+# bass source /usr/local/opt/chruby/share/chruby/auto.sh
 
 # bass export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
 #   bass [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"

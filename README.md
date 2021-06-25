@@ -155,11 +155,11 @@ Here are some dependencies that are configured in the [fish config](fish/.config
 
 1) tmux
 
-    With the included configuration, any new terminal window will create a new `tmux` server (subsequent terminal windows will attach to it). If you don't want to install tmux, or you do but this is not desirable, remove the configuration block that starts at line#1 of the file. Without this setting all terminals will open with a `fish` shell.
+    With the included configuration, any new terminal window will create a new `tmux` server (and a window with a session; any subsequent sessions will attach to it). If you don't want to install tmux, or you do but this is not desirable, remove the configuration block that starts at line#1 of the file. Without this setting all terminals will open with a `fish` shell. You can always type `tmux` to boot it up.`
 
 2) starship
 
-    There is this line in the configuration file: `starship init fish | source` that executes starship prompt.
+    There is this line in the configuration file: `starship init fish | source` that executes the starship prompt.
 
 3) base16-shell
 

@@ -73,8 +73,8 @@ It also mentions a (free) Mac app for managing and signing keys: [GPG Keychain M
 ###  3.1. <a name='VSCode'></a>VS Code
 My VS Code settings [in a gist file](https://gist.github.com/carlisia/a90177aabc317cc768cecb51787f6a4d) on GitHub. My VS Code is specifically configured to use:
 
-    - Go and  the `gopls` language server
-    - bash, fish, and tmux, defaults to tmux. You may change the default in the setting `"terminal.integrated.defaultProfile.osx": "tmux",`.
+ - Go and  the `gopls` language server
+- bash, fish, and tmux, defaults to tmux. You may change the default in the setting `"terminal.integrated.defaultProfile.osx": "tmux",`.
 
 ###  3.2. <a name='Otherconfigs'></a>Other configs
 iTerm and other configs are in the [other-configs](other-configs) directory.

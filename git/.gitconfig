@@ -1,9 +1,20 @@
 [push]
 	default = simple
+[pull]
+  ff = only
+
 [user]
-	name = Carlisia
+	name = Carlisia Thompson
 	email = carlisia@grokkingtech.io
-	signingkey = D7B7ACEC61F78637
+	signingkey = 94F47D53D87781F7F5E2F7DC32DFFCE1943363F6
+[gpg]
+	program = gpg2
+[commit]
+	gpsign = true
+	gpgsign = true
+[credential]
+	helper = osxkeychain
+
 [merge]
 	tool = vimdiff
 [mergetool]
@@ -21,16 +32,16 @@
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
   lg = !"git lg1"
   l0 = log --graph --oneline --all --decorate
+  wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
+
   gofmt = codereview gofmt
   mail = codereview mail
   pending = codereview pending
   submit = codereview submit
   sync = codereview sync
-  wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
-  
 
 [mergetool "kdiff3"]
-	path = /Applications/kdiff3.app/Contents/MacOS/kdiff3
+	path = /usr/local/bin/kdiff3
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -39,17 +50,19 @@
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
 	required = true
-[filter "lfs"]
-	clean = git lfs clean %
-	smudge = git lfs smudge %f
-	required = true
-	process = git-lfs filter-process
-[gpg]
-	# program = gpg
-[commit]
-	# gpgsign = true
+
 [http]
 	cookiefile = /Users/carlisiac/.gitcookies
-
 [url "git@github.com:"]
  insteadOf = https://github.com/
+
+[filter "lfs"]
+# First time:
+# 	brew install git-lfs
+# 	git lfs install
+# Configure per repo when you have large files in your repository and/or a lot of binaries:
+# 	https://mydeveloperplanet.com/2018/10/31/git-lfs-why-and-how-to-use/
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f

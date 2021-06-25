@@ -1,62 +1,25 @@
+command_timeout = 3500
 
-format = """
-$username\
-$hostname\
-$shlvl\
-$kubernetes\
-$directory\
-$vcsh\
-$git_branch\
-$git_commit\
-$git_state\
-$git_status\
-$hg_branch\
-$docker_context\
-$package\
-$cmake\
-$dart\
-$deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$golang\
-$helm\
-$java\
-$julia\
-$kotlin\
-$nim\
-$nodejs\
-$ocaml\
-$perl\
-$php\
-$purescript\
-$python\
-$red\
-$ruby\
-$rust\
-$scala\
-$swift\
-$terraform\
-$vlang\
-$vagrant\
-$zig\
-$nix_shell\
-$conda\
-$aws\
-$gcloud\
-$openstack\
-$env_var\
-$crystal\
-$custom\
-$cmd_duration\
-$line_break\
-$status\
-$shell\
-$character \
-"""
+# Comment/uncomment the lines below to toggle between a loaded and a very minimalist prompt. Good for doing code demos.
+# ############################### - from here
+# format = """
+# $directory \
+# $shell \
+# """
 
-command_timeout = 800
+# [shell]
+# fish_indicator = ""
+# powershell_indicator = "_"
+# unknown_indicator = "mystery shell"
+# disabled = false
+# ############################### - to here
+
+[status]
+style = "bg:black"
+symbol = "🔴"
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
 
 [character]
 success_symbol = "[➜](bold green) "
@@ -91,7 +54,7 @@ style = "bold blue"
 symbol = "🅰 "
 
 [directory]
-# disabled = true 
+# disabled = true
 truncate_to_repo = false
 home_symbol = "$HOME"
 
@@ -106,7 +69,6 @@ format = "(bold white) "
 
 [docker_context]
 format = "[🐋 $context](blue bold)"
-
 
 [git_branch]
 symbol = "🌱 "

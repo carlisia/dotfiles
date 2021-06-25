@@ -1,0 +1,41 @@
+#!/bin/sh
+
+SESSION="workspace"
+
+sessions() {
+  echo tmux ls -F '#S'
+}
+
+if $(sessions) =~ $SESSION; then
+  if [ -n "$TMUX" ]; then
+      tmux -2 attach-session -t $SESSION
+  else
+      tmux switch-client -t $SESSION
+  fi
+else
+  echo creating session $SESSION
+  # Create the session (behave like attach-session if session-name already exists)
+  tmux -2 new-session -A -d -s $SESSION
+  tmux rename-window -t $SESSION workspace
+  tmux split-window -h -t $SESSION
+
+  # CLEAN WINDOW (2)
+  tmux new-window -n clean-pad -t $SESSION
+  tmux rename-window -t $SESSION clean-pad
+
+  # k9s (3)
+  tmux new-window -n k9s -t $SESSION
+  tmux rename-window -t $SESSION k9s
+  tmux send-keys -t $SESSION 'clear' C-m
+  # tmux send-keys -t $SESSION 'k9s -A --write' C-m
+
+  # OCTANT WINDOW (4)
+  tmux new-window -n octant -t $SESSION
+  tmux rename-window -t $SESSION octant
+  tmux send-keys -t $SESSION 'clear' C-m
+
+  # Start out on the first window when we attach
+  tmux select-window -t $SESSION:1.0
+  tmux switch-client -t $SESSION:1.0
+  tmux -2 attach-session -t $SESSION:1.0
+fi

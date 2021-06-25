@@ -1,6 +1,6 @@
-call plug#begin()
+call plug#begin('~/.config/nvim/plugged')
 
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -171,7 +171,7 @@ else
 
   let g:rehash256 = 1
   set background=dark
-  " colorscheme base16-default-dark 
+  " colorscheme base16-default-dark
 endif
 
 " open help vertically

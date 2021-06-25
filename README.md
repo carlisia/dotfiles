@@ -77,14 +77,14 @@ My VS Code settings [in a gist file](https://gist.github.com/carlisia/a90177aabc
 - bash, fish, and tmux, defaults to tmux. You may change the default in the setting `"terminal.integrated.defaultProfile.osx": "tmux",`.
 
 ###  3.2. <a name='Otherconfigs'></a>Other configs
-iTerm and other configs are in the [other-configs](other-configs) directory.
+iTerm and other configs and scripts are in the [other-configs](other-configs) directory.
 
 Note: the configs for iTerm are almost irrelevant since all terminal configurations are driven by the packages in this repo. I only have a few window settings that I'd wish to recover if needed.
 
 ##  4. <a name='WarningaboutGomodulesandworkspaces'></a>‼️ Warning about Go modules and workspaces
 When you use any editor for Go code that is configured to use the `gopls` language server you cannot open multiple modules at the same time in your editor without a world of hurt!
 
-This would apply to both Vim and VS Code. See the official instructions for how to properly [setup your workspace](https://github.com/golang/tools/blob/master/gopls/doc/workspace.md#module-mode).
+This would apply to both vim-go and VS Code. See the official instructions for how to properly [setup your workspace](https://github.com/golang/tools/blob/master/gopls/doc/workspace.md#module-mode).
 
 ##  5. <a name='Stowforenvironmentandpackageconfigurationmanagement'></a>Stow for environment and package configuration management
 I use stow for managing all the configurations I care to keep recoverable and/or well organized. Stow permits both since I can keep all config files in this dotfiles directory, and stow will create the appropriate symlinks to them according to how the directory structure is created.
@@ -97,7 +97,7 @@ Some terminology:
 
 **Stow directory**: the directory that contains the packages. In this case, this `dotfiles` directory.
 
-**Stow target directory**: needs to be set with the `--target`, usually $HOME. Otherwise, it will default to the parent directory of the stow directory.
+**Stow target directory**: needs to be set with the `--target` flag, usually $HOME. Otherwise, it will default to the parent directory of the stow directory.
 
 
 When a package is stowed, it creates a symlink from `$HOME/.somedotconfig/package-X-config-dir` to the `<your-path>/dotfiles/package-X-dir/.somedotconfig/package-X-config-dir`.
@@ -215,7 +215,7 @@ Now you are ready to try out the many different shell color themes.
 ###  6.5. <a name='Tmux'></a>Tmux
 Tmux: [Home · tmux/tmux Wiki](https://github.com/tmux/tmux/wiki)
 
-The tmux configuration is in the [tmux.conf](tmux/.tmux.conf) file. It is currently configured to use this tmux theme and statusbar plugin: [Powerline Double Magenta - jimeh/tmux-themepack](https://github.com/jimeh/tmux-themepack#double). You can replace this by a different themed one. Only works for a shell running tmux.
+The tmux configuration is in the [tmux.conf](tmux/.tmux.conf) file. It is currently configured to use this tmux theme and statusbar plugin: [Powerline Double Magenta - jimeh/tmux-themepack](https://github.com/jimeh/tmux-themepack#double). You can replace this by a different themed one. Only works when a shell has the tmux server booted up.
 
 Stow the package:
 ```shell
@@ -223,7 +223,7 @@ cd <your-path>/dotfiles
 stow -vv tmux --target=$HOME
 ```
 
-Optional: entering the alias `dev` will automatically create a persistent `tmux` session with additional windows attached. It will look like the screenshot in the [Terminal windows](#Terminalwindows) section. This `dev` alias points to [a bourne script](other-configs/scripts/tmux-scripts) and it is being set in the [fish config](fish/.config/fish/config.fish) file.
+Optional: entering the alias `dev` will automatically create a persistent `tmux` session with boot up tmux. It will look like the screenshot in the [Terminal windows](#Terminalwindows) section. This `dev` alias points to [a bourne script](other-configs/scripts/tmux-scripts) and it is being set in the [fish config](fish/.config/fish/config.fish) file.
 
 Note: Eventually these tmux scrips will be moved into `fish` functions.
 

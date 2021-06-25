@@ -223,7 +223,7 @@ cd <your-path>/dotfiles
 stow -vv tmux --target=$HOME
 ```
 
-Optional: entering the alias `dev` will automatically create a persistent `tmux` session with boot up tmux. It will look like the screenshot in the [Terminal windows](#Terminalwindows) section. This `dev` alias points to [a bourne script](other-configs/scripts/tmux-scripts) and it is being set in the [fish config](fish/.config/fish/config.fish) file.
+Optional: entering the alias `dev` will start a tmux session with some pre-configured windows and panes setup. It will look like the screenshot in the [Terminal windows](#Terminalwindows) section. This `dev` alias points to [a bourne script](other-configs/scripts/tmux-scripts) and the alias is being set in the [fish config](fish/.config/fish/config.fish) file.
 
 Note: Eventually these tmux scrips will be moved into `fish` functions.
 

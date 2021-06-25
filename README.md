@@ -53,7 +53,7 @@ Changes to the configuration of any of these packages will apply to all terminal
 This configuration allows the signing of commits automatically, and without having to append the `-s` flag every time.
 
 ###  2.1. <a name='Whatitlookslike'></a>What it looks like
-    When you look at the commit log with the `--show-signature` flag, the full (public) signature information is shown:
+When you look at the commit log with the `--show-signature` flag, the full (public) signature information is shown:
 
 `git log --show-signature`
 
@@ -65,25 +65,26 @@ This configuration allows the signing of commits automatically, and without havi
 - A GPG key needs to be configured/generated and uploaded to GitHub.
 
 ###  2.3. <a name='SettinguptheGPGkey'></a>Setting up the GPG key
-    In the past I tried setting up my key and git config so that commits would be signed automatically without having to add the `-s` flag and didn't succeed. This SO answer on generating and signing a new key, and exporting it to GitHub, includes the step needed for that: [macos - git - gpg onto mac osx: error: gpg failed to sign the data - Stack Overflow](https://stackoverflow.com/questions/41502146/git-gpg-onto-mac-osx-error-gpg-failed-to-sign-the-data/55646482#55646482).
+In the past I've tried setting up my key and git config so that commits would be signed automatically without having to add the `-s` flag and didn't succeed. This SO answer on generating and signing a new key, and exporting it to GitHub, includes the step needed for that: [macos - git - gpg onto mac osx: error: gpg failed to sign the data - Stack Overflow](https://stackoverflow.com/questions/41502146/git-gpg-onto-mac-osx-error-gpg-failed-to-sign-the-data/55646482#55646482).
 
-    It also mentions a (free) Mac app for managing and signing keys: [GPG Keychain Mac](https://gpgtools.org/). This could be a nice complementary tool to the command line.
+It also mentions a (free) Mac app for managing and signing keys: [GPG Keychain Mac](https://gpgtools.org/). This could be a nice complementary tool to the command line.
 
 ##  3. <a name='Toolsettings'></a>Tool settings
 ###  3.1. <a name='VSCode'></a>VS Code
-    My VS Code settings [in a gist file](https://gist.github.com/carlisia/a90177aabc317cc768cecb51787f6a4d) on GitHub. My VS Code is specifically configured to use:
-        - Go and  the `gopls` language server
-        - bash, fish, and tmux, defaults to tmux. You may change the default in the setting `"terminal.integrated.defaultProfile.osx": "tmux",`.
+My VS Code settings [in a gist file](https://gist.github.com/carlisia/a90177aabc317cc768cecb51787f6a4d) on GitHub. My VS Code is specifically configured to use:
+
+    - Go and  the `gopls` language server
+    - bash, fish, and tmux, defaults to tmux. You may change the default in the setting `"terminal.integrated.defaultProfile.osx": "tmux",`.
 
 ###  3.2. <a name='Otherconfigs'></a>Other configs
-    iTerm and other configs are in the [other-configs](other-configs) directory.
+iTerm and other configs are in the [other-configs](other-configs) directory.
 
-    Note: the configs for iTerm are almost irrelevant since all terminal configurations are driven by the packages in this repo. I only have a few window settings that I'd wish to recover if needed.
+Note: the configs for iTerm are almost irrelevant since all terminal configurations are driven by the packages in this repo. I only have a few window settings that I'd wish to recover if needed.
 
 ##  4. <a name='WarningaboutGomodulesandworkspaces'></a>‼️ Warning about Go modules and workspaces
-    When you use any editor for Go code that is configured to use the `gopls` language server you cannot open multiple modules at the same time in your editor without a world of hurt!
+When you use any editor for Go code that is configured to use the `gopls` language server you cannot open multiple modules at the same time in your editor without a world of hurt!
 
-    This would apply to both Vim and VS Code. See the official instructions for how to properly [setup your workspace](https://github.com/golang/tools/blob/master/gopls/doc/workspace.md#module-mode).
+This would apply to both Vim and VS Code. See the official instructions for how to properly [setup your workspace](https://github.com/golang/tools/blob/master/gopls/doc/workspace.md#module-mode).
 
 ##  5. <a name='Stowforenvironmentandpackageconfigurationmanagement'></a>Stow for environment and package configuration management
 I use stow for managing all the configurations I care to keep recoverable and/or well organized. Stow permits both since I can keep all config files in this dotfiles directory, and stow will create the appropriate symlinks to them according to how the directory structure is created.
@@ -93,11 +94,11 @@ I use stow for managing all the configurations I care to keep recoverable and/or
 - This is a good and short article about how stow works: [Brandon Invergo - Using GNU Stow to manage your dotfiles](http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html)
 
 Some terminology:
-```
-Stow directory: the directory that contains the packages. In this case, this `dotfiles` directory.
 
-Stow target directory: needs to be set with the `--target`, usually $HOME. Otherwise, it will default to the parent directory of the stow directory.
-```
+**Stow directory**: the directory that contains the packages. In this case, this `dotfiles` directory.
+
+**Stow target directory**: needs to be set with the `--target`, usually $HOME. Otherwise, it will default to the parent directory of the stow directory.
+
 
 When a package is stowed, it creates a symlink from `$HOME/.somedotconfig/package-X-config-dir` to the `<your-path>/dotfiles/package-X-dir/.somedotconfig/package-X-config-dir`.
 

@@ -13,6 +13,8 @@ starship init fish | source
 
 set -x SHELL /usr/local/bin/fish
 
+set -x GIT_TERMINAL_PROMPT 1
+
 # For gpg keys
 set -gx GPG_TTY /dev/ttys054
 

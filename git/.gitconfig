@@ -53,8 +53,12 @@
 
 [http]
 	cookiefile = /Users/carlisiac/.gitcookies
+
 [url "git@github.com:"]
  insteadOf = https://github.com/
+
+[url "git@gitlab.com:"]
+ insteadOf = https://gitlab.com/
 
 [filter "lfs"]
 # First time:

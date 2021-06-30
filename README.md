@@ -50,7 +50,9 @@ No more fussing and googling around for different themes or plugins. The package
 Changes to the configuration of any of these packages will apply to all terminal applications (some after restart.) See the [installing packages](#Installingpackages) section for instructions.
 
 ##  2. <a name='Gitconfiguredtosigncommitsautomatically'></a>Git configured to sign commits automatically
-This configuration allows the signing of commits automatically, and without having to append the `-s` flag every time.
+This configuration allows the signing of commits automatically with a GPG key. Signed commits are labeled `Verified` if the identity of the committer can be verified.
+
+Note: for projects that require committers to adhere to the requirements of the [Developer Certificate of Origin](https://probot.github.io/apps/dco/) (DDO), adding the `-s` flag to commits to add a valid `Signed-off-by` line is a separate requirement.
 
 ###  2.1. <a name='Whatitlookslike'></a>What it looks like
 When you look at the commit log with the `--show-signature` flag, the full (public) signature information is shown:
@@ -65,7 +67,7 @@ When you look at the commit log with the `--show-signature` flag, the full (publ
 - A GPG key needs to be configured/generated and uploaded to GitHub.
 
 ###  2.3. <a name='SettinguptheGPGkey'></a>Setting up the GPG key
-In the past I've tried setting up my key and git config so that commits would be signed automatically without having to add the `-s` flag and didn't succeed. This SO answer on generating and signing a new key, and exporting it to GitHub, includes the step needed for that: [macos - git - gpg onto mac osx: error: gpg failed to sign the data - Stack Overflow](https://stackoverflow.com/questions/41502146/git-gpg-onto-mac-osx-error-gpg-failed-to-sign-the-data/55646482#55646482).
+In the past I've tried setting up my GPG key and had to go over multiple documents. This SO answer on generating and signing a new key, and exporting it to GitHub, includes all the step needed for that: [macos - git - gpg onto mac osx: error: gpg failed to sign the data - Stack Overflow](https://stackoverflow.com/questions/41502146/git-gpg-onto-mac-osx-error-gpg-failed-to-sign-the-data/55646482#55646482).
 
 It also mentions a (free) Mac app for managing and signing keys: [GPG Keychain Mac](https://gpgtools.org/). This could be a nice complementary tool to the command line.
 

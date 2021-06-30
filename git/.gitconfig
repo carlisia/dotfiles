@@ -40,6 +40,10 @@
   submit = codereview submit
   sync = codereview sync
 
+[delta]
+    line-numbers = true
+    zero-style = dim syntax
+
 [mergetool "kdiff3"]
 	path = /usr/local/bin/kdiff3
 [filter "media"]

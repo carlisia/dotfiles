@@ -5,3 +5,5 @@ nvim/.config/nvim/tmp
 *.swp
 
 google-cloud-sdk
+
+gh/.config/gh/hosts.yml

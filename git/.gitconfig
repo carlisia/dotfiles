@@ -20,8 +20,11 @@
 [mergetool]
 	keepBackup = true
 [core]
+    pager = "diff-so-fancy | less --tabs=4 -RFX"
 	editor = nvim
 	excludesfile = /Users/carlisiac/.gitignore_global
+[interactive]
+	diffFilter = "diff-so-fancy --patch"
 
 [alias]
   co = checkout

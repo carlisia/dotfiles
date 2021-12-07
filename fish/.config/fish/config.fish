@@ -1,3 +1,5 @@
+set -x SHELL /usr/local/bin/fish
+
 if status --is-interactive
 and not set -q TMUX
     exec tmux
@@ -10,8 +12,6 @@ if status --is-interactive
 end
 
 starship init fish | source
-
-set -x SHELL /usr/local/bin/fish
 
 set -x GIT_TERMINAL_PROMPT 1
 
@@ -52,6 +52,9 @@ alias gd "k get deploy"
 alias gr "k get rs"
 alias gs "k get ns"
 
+alias pka 'pbpaste | kubectl apply -f-'
+alias pkr 'pbpaste | kubectl delete -f-'
+
 alias v "/Users/carlisiac/working/src/github.com/vmware-tanzu/velero/_output/bin/darwin/amd64/velero"
 alias t "/Users/carlisiac/working/src/github.com/vmware-tanzu/velero/_tiltbuild/local/velero"
 
@@ -77,6 +80,13 @@ set -x KIND2 $HOME/.kube/config
 set -x KIND3 $HOME/.kube/kind-config-development
 # # set -x AZURE $HOME/.kube/azure
 set -x KUBECONFIG $KIND2:$KIND3
+
+set -x KIND_CLUSTER_NAME knative
+# set -x KO_DOCKER_REPO kind.local
+set -x KO_DOCKER_REPO carlisia
+
+# set -x GOROOT=(go env GOROOT)
+# set -x KO_FLAGS
 
 fish_vi_key_bindings
 

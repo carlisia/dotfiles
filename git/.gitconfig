@@ -7,11 +7,7 @@
 	name = Carlisia Thompson
 	email = carlisia@grokkingtech.io
 	signingkey = 94F47D53D87781F7F5E2F7DC32DFFCE1943363F6
-[gpg]
-	program = gpg2
-[commit]
-	gpsign = true
-	gpgsign = true
+
 [credential]
 	helper = osxkeychain
 

@@ -55,14 +55,9 @@ symbol = "🅰 "
 
 [directory]
 # disabled = true
-truncate_to_repo = false
+truncate_to_repo = true
 home_symbol = "$HOME"
 
-[kubernetes]
-format = '[$context \($namespace\)](dimmed green) '
-disabled = false
-[kubernetes.context_aliases]
-"dev.local.cluster.k8s" = "dev"
 
 [helm]
 format = "(bold white) "
@@ -94,12 +89,13 @@ staged = '[++\($count\)](green)'
 renamed = "👅"
 deleted = "🗑"
 
-[golang]
-format = "[$version](bold cyan) "
-
-[time]
+[kubernetes]
+# format = '[$context \($namespace\)](dimmed green) '
+format = '[$namespace](dimmed green) '
 disabled = false
-format = '🕙[\[ $time \]]($style) '
-time_format = "%T"
-utc_time_offset = "-5"
-time_range = "10:00:00-14:00:00"
+[kubernetes.context_aliases]
+"dev.local.cluster.k8s" = "dev"
+
+[golang]
+disabled = true
+format = "[$version](bold cyan) "

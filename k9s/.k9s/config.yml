@@ -14,17 +14,16 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: kind-development
-  currentCluster: kind-development
+  currentContext: gke_knative-carlisia_us-central1_cluster-2-bigger
+  currentCluster: gke_knative-carlisia_us-central1_cluster-2-bigger
   clusters:
-    kind-development:
+    gke_knative-carlisia_us-central1_cluster-2-bigger:
       namespace:
-        active: all
+        active: ""
         favorites:
-        - all
         - default
       view:
-        active: po all
+        active: po
       featureGates:
         nodeShell: false
       shellPod:

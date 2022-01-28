@@ -27,7 +27,7 @@ set -x -U GOPATH $HOME/working
 set -x EDITOR "nvim"
 
 # So we can run go commands and go programs we have compiled ourselves
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin
 
 # To have ruby first in the PATH:
 set -g fish_user_paths "/usr/local/opt/ruby/bin" $fish_user_paths
@@ -128,8 +128,6 @@ function fish_prompt
 
     fish_prompt_original;
 end
-
-set -gx PATH $PATH $HOME/.krew/bin
 
 ######
 

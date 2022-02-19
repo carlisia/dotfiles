@@ -27,7 +27,7 @@ set -x -U GOPATH $HOME/working
 set -x EDITOR "nvim"
 
 # So we can run go commands and go programs we have compiled ourselves
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin
 
 # To have ruby first in the PATH:
 set -g fish_user_paths "/usr/local/opt/ruby/bin" $fish_user_paths
@@ -133,3 +133,6 @@ end
 
 [ -f /usr/local/share/autojump/autojump.fish ];
 source /usr/local/share/autojump/autojump.fish
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc'; end

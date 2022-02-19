@@ -91,7 +91,7 @@ deleted = "🗑"
 
 [kubernetes]
 # format = '[$context \($namespace\)](dimmed green) '
-format = '[$namespace](dimmed green) '
+format = '[namespace: $namespace](dimmed green) '
 disabled = false
 [kubernetes.context_aliases]
 "dev.local.cluster.k8s" = "dev"

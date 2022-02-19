@@ -27,7 +27,7 @@ set -x -U GOPATH $HOME/working
 set -x EDITOR "nvim"
 
 # So we can run go commands and go programs we have compiled ourselves
-set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin
+set -x PATH $PATH /usr/local/go/bin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin /Users/carlisiac/.cargo/bin
 
 # To have ruby first in the PATH:
 set -g fish_user_paths "/usr/local/opt/ruby/bin" $fish_user_paths
@@ -60,10 +60,12 @@ alias t "/Users/carlisiac/working/src/github.com/vmware-tanzu/velero/_tiltbuild/
 
 alias knd "bass source /Users/carlisiac/working/src/github.com/carlisia/dotfiles/scripts/kind-with-registry.sh"
 
-alias vim="nvim"
-alias vi="nvim"
+alias vim "nvim"
+alias vi "nvim"
 
-alias ks="kube-shell"
+alias ks "kube-shell"
+
+alias ga "garden"
 
 # ssh vm
 
@@ -114,25 +116,9 @@ if [ ! -n "$__shhist_session" ]
     end
 end
 
-functions --copy fish_prompt fish_prompt_original
-function fish_prompt
-    set __shhist_status $status
-
-    if fish_is_root_user
-        set __shhist_user $SUDO_USER
-    else
-        set __shhist_user $LOGNAME
-    end
-
-    \history --show-time="%s " -1 | sudo --preserve-env --user $__shhist_user /Applications/ShellHistory.app/Contents/Helpers/shhist insert --session $__shhist_session --username $LOGNAME --hostname (hostname) --exit-code $__shhist_status --shell fish
-
-    fish_prompt_original;
-end
-
-######
 
 [ -f /usr/local/share/autojump/autojump.fish ];
 source /usr/local/share/autojump/autojump.fish
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc'; end
+if [ -f '/Users/carlisiac/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisiac/google-cloud-sdk/path.fish.inc'; end

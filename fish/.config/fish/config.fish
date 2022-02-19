@@ -65,7 +65,11 @@ alias vi "nvim"
 
 alias ks "kube-shell"
 
-alias ga "garden"
+alias gg "garden"
+
+ # https://github.com/isacikgoz/gitbatch/wiki/Controls
+alias bk "gitbatch -d /Users/carlisiac/working/src/github.com/knative -m pull -l error"
+alias bks "gitbatch -d /Users/carlisiac/working/src/github.com/knative-sandbox -m pull -l error"
 
 # ssh vm
 

@@ -1,0 +1,7 @@
+knative:site release website docs networking community dot-github-kn hack serving knative-cloudevents-controller pkg test-infra:/Users/carlisiac/working/src/github.com/knative
+
+knative-knative-party:site:/Users/carlisiac/working/src/github.com/knative/knative-party
+
+knative-salaboy:knative-cloudevents-controller:/Users/carlisiac/working/src/github.com/knative/salaboy
+
+knative-sandbox:net-gateway-api net-istio dot-github-kn-sandbox net-kourier knobots net-http01 net-contour net-certmanager:/Users/carlisiac/working/src/github.com/knative-sandbox

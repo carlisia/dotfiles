@@ -71,6 +71,8 @@ alias gg "garden"
 alias bk "gitbatch -d /Users/carlisiac/working/src/github.com/knative -m pull -l error"
 alias bks "gitbatch -d /Users/carlisiac/working/src/github.com/knative-sandbox -m pull -l error"
 
+alias gita "python3 -m gita"
+
 # ssh vm
 
 set -x KUBE_EDITOR "nvim"

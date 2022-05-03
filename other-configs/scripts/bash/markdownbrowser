@@ -1,0 +1,50 @@
+#!/usr/local/bin/bash
+
+# Find and browse GitHub Actions workflow definitions.
+# In addition to regular shell tools (such as sed), this
+# script uses gh and fzf.
+
+tests() {
+  # Takes owner type (org or user) and owner name.
+  # Returns tab-separated list of owner/repo/workflowfile/path.
+  local ownertype=$1
+  local owner=$2
+
+# https://api.github.com/repos/knative/serving/git/trees/main?recursive=1
+  # $..tree.*[?(@property === "path" && @.match(/\.md$/i) && !@.match(/^.github\//) && !@.match(/^vendor\//) )]
+
+  # gh api \
+  #   --method GET \
+  #   --paginate \
+  #   --cache "${GH_CACHETIME:-1h}" \
+  #   --field "q=$ownertype:$owner language:markdown" \
+  #   --jq '.items[] | ["\(.repository.full_name)/\(.name)", .repository.owner.login, .repository.name, .path] | @tsv' \
+  #   "/search/code"
+curl --location --request GET 'https://api.github.com/repos/knative/serving/git/trees/main?recursive=1' | jq '.tree | .[] | select(.path | endswith(".md")) | {path: .path}'
+
+gh api -X GET  --cache 1h --field "q=org:knative" "/search/code" --jq '.items[] | ["\(.repository.full_name)/\(.name)", .repository.owner.login, .repository.name]'
+}
+
+gh i -s open -o -u knative-sandbox && gh i -s open -o -u knative | code
+
+gh repo list -L 100 --public "knative"
+
+# jq .tree | .[] | select(.path | endswith(".md")) | {path: .path}
+# https://api.github.com/repos/knative/serving/git/trees/main?recursive=1
+
+main() {
+
+  # Calls tests for my org and user.
+
+  cat \
+    <(tests org knative) \
+    <(tests org knative-sandbox) \
+    | fzf \
+      --with-nth=1 \
+      --delimiter='\t' \
+      --preview='showgithubcontent {2} {3} {4} markdown always' \
+    | cut -f 2,3,4
+
+}
+
+main "$@"

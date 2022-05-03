@@ -19,7 +19,10 @@ commands:
     - git pull
   stash:
     - git stash
-
+  issue:
+    - gh issue list --mention carlisia
+  pr:
+    - gh pr list --search "mentions:carlisia"
 
 trees:
   community:

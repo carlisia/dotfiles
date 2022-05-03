@@ -116,7 +116,6 @@ if has("gui_macvim")
   set guioptions-=R
 
   let macvim_skip_colorscheme=1
-  " colorscheme base16-default-dark
 
   " Open goto symbol on current buffer
   nmap <D-r> :MyCtrlPTag<cr>
@@ -170,8 +169,6 @@ else
   endif
 
   let g:rehash256 = 1
-  set background=dark
-  " colorscheme base16-default-dark
 endif
 
 " open help vertically
@@ -434,7 +431,6 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 " ==================== Lightline ====================
 "
 let g:lightline = {
-      \ 'colorscheme': 'base16-default-dark',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste'],
       \             [ 'fugitive', 'filename', 'modified', 'ctrlpmark' ],
@@ -566,8 +562,6 @@ let g:vim_json_syntax_conceal = 0
 " I use deoplete for Neovim and neocomplete for Vim.
 if has('nvim')
   let g:deoplete#enable_at_startup = 1
-  let g:deoplete#ignore_sources = {}
-  let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
   let g:deoplete#sources#go#sort_class = ['func', 'type', 'var', 'const']
   let g:deoplete#sources#go#align_class = 1
 

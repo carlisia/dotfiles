@@ -1,0 +1,20 @@
+#!/usr/local/bin/bash
+
+# Takes owner, repo and path and shows content of that resource from GitHub.
+# Also accepts optional language and colour parameter.
+# Uses gh, base64 and bat.
+
+
+declare owner=$1
+declare repo=$2
+declare path=$3
+declare language="${4:-txt}"
+declare color="${5:-never}"
+
+gh api \
+  --cache "${GH_CACHETIME:-1h}" \
+  --jq '.content' \
+  "/repos/$owner/$repo/contents/$path" \
+  | base64 --decode -i - \
+  | bat --color "$color" --theme Nord --plain --language "$language" -
+

@@ -8,3 +8,6 @@ mainc.yaml
 valuesc.yaml
 
 .dccache
+.trunk
+code-review*
+devcontainer

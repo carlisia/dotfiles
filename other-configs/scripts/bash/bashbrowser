@@ -1,0 +1,42 @@
+#!/usr/local/bin/bash
+
+# Find and browse GitHub Actions workflow definitions.
+# In addition to regular shell tools (such as sed), this
+# script uses gh and fzf.
+
+tests() {
+
+  # Takes owner type (org or user) and owner name.
+
+  # Returns tab-separated list of owner/repo/workflowfile/path.
+
+  local ownertype=$1
+  local owner=$2
+
+  gh api \
+    --method GET \
+    --paginate \
+    --cache "${GH_CACHETIME:-1h}" \
+    --field "q=$ownertype:$owner path:/ filename:.sh language:bash" \
+    --jq '.items[] | ["\(.repository.full_name)/\(.name)", .repository.owner.login, .repository.name, .path] | @tsv' \
+    "/search/code"
+
+}
+
+main() {
+
+  # Calls tests for my org and user.
+
+  cat \
+    <(tests org knative) \
+    <(tests org knative-sandbox) \
+    <(tests user carlisia) \
+    | fzf \
+      --with-nth=1 \
+      --delimiter='\t' \
+      --preview='showgithubcontent {2} {3} {4} bash always' \
+    | cut -f 2,3,4
+
+}
+
+main "$@"

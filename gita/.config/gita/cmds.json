@@ -1,0 +1,19 @@
+{
+    "co": {
+        "cmd": "git checkout main",
+        "allow_all": true,
+        "help": "checkout the main branch"
+    },
+    "stat": {
+        "cmd": "git diff --stat",
+        "help": "show edit statistics"
+    },
+    "s": {
+        "cmd": "git status -sb",
+        "help": "status"
+    },
+    "lg": {
+        "cmd": "git lg -3",
+        "help": "log"
+    }
+}

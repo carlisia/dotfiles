@@ -1,2 +1,3 @@
 release:release website docs networking community dot-github-kn hack serving knative-cloudevents-controller pkg test-infra
-net: net-gateway-api net-istio net-kourier net-http01 net-contour net-certmanager gateway-api networking
+net: net-gateway-api net-istio net-kourier net-http01 net-contour net-certmanager
+

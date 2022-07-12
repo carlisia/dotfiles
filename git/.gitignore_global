@@ -11,3 +11,6 @@ valuesc.yaml
 .trunk
 code-review*
 devcontainer
+newrelic_agent.log
+
+/worktrees

@@ -6,21 +6,9 @@
 [user]
 	name = Carlisia Thompson
 	email = carlisia@grokkingtech.io
-	signingkey = 94F47D53D87781F7F5E2F7DC32DFFCE1943363F6
 
 [credential]
 	helper = osxkeychain
-
-[merge]
-	tool = vimdiff
-[mergetool]
-	keepBackup = true
-[core]
-    pager = "diff-so-fancy | less --tabs=4 -RFX"
-	editor = nvim
-	excludesfile = /Users/carlisiac/.gitignore_global
-[interactive]
-	diffFilter = "diff-so-fancy --patch"
 
 [alias]
   co = checkout
@@ -29,17 +17,32 @@
   lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
 
+[diff]
+    tool = default-difftool
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE # vscode
+[merge]
+	# tool = vimdiff
+[mergetool "kdiff3"]
+	keepBackup = true
+	# path = /usr/local/bin/kdiff3
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[core]
+    pager = "diff-so-fancy | less --tabs=4 -RFX"
+	editor = nvim
+	excludesfile = /Users/carlisiac/.gitignore_global
+[interactive]
+	diffFilter = "diff-so-fancy --patch"
+
 
 [delta]
     line-numbers = true
     zero-style = dim syntax
 
-[mergetool "kdiff3"]
-	path = /usr/local/bin/kdiff3
-[filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f

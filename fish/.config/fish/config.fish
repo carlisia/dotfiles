@@ -75,3 +75,6 @@ alias co="gh co"
 
 # iTerm2 shell integration
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc'; end

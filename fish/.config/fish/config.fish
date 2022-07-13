@@ -21,7 +21,7 @@ alias vim=nvim
 alias vi=nvim
 
 # So we can run go commands and go programs we have compiled ourselves
-set -x PATH $PATH /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin /Users/carlisiac/.cargo/bin fish fish_indent /Users/carlisiac/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script
+set -x PATH $PATH /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin /Users/carlisiac/.cargo/bin fish fish_indent /Users/carlisiac/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script /Users/carlisiac/.local/bin
 
 alias python="python3"
 alias g="git status -sb"

@@ -1,9 +1,14 @@
 set -x SHELL /usr/local/bin/fish
 
-if status --is-interactive
-    and not set -q TMUX
-    exec tmux
-end
+# prompt stuff
+set -x GIT_TERMINAL_PROMPT 1
+# alias zen=fish_greeting
+starship init fish | source
+
+# if status --is-interactive
+#     and not set -q TMUX
+#     exec tmux
+# end
 
 # Base16 Shell
 if status --is-interactive
@@ -45,11 +50,6 @@ alias pkr "pbpaste | kubectl delete -f-"
 
 alias ks kube-shell
 
-# prompt stuff
-set -x GIT_TERMINAL_PROMPT 1
-alias zen=fish_greeting
-starship init fish | source
-
 if [ ! -n "$__shhist_session" ]
     if [ -n "$TERM_SESSION_ID" ]
         set __shhist_session $TERM_SESSION_ID
@@ -58,11 +58,11 @@ if [ ! -n "$__shhist_session" ]
     end
 end
 
-function fish_greeting
-    echo The time is (set_color yellow; date +%T; set_color normal)
-    echo
-    gh zen
-end
+# function fish_greeting
+#     # echo The time is (set_color yellow; date +%T; set_color normal)
+#     # echo
+#     # gh zen
+# end
 
 # alias h="shhist search"
 alias h="history search"

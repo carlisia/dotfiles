@@ -7,7 +7,7 @@ Buffer bar info: https://github.com/romgrk/barbar.nvim
 
 -- Vim config {{{1
 -- vim.cmd('source ~/.config/lvim/user.vim')
-vim.cmd('source ~/.config/lvim/lua/user/lualine.lua')
+-- vim.cmd('source ~/.config/lvim/lua/user/lualine.lua')
 -- }}}1
 
 -- general
@@ -29,22 +29,23 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
-local _, actions = pcall(require, "telescope.actions")
-lvim.builtin.telescope.defaults.mappings = {
-  --   -- for input mode
-  i = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-    ["<C-n>"] = actions.cycle_history_next,
-    ["<C-p>"] = actions.cycle_history_prev,
-  },
-  -- for normal mode
-  n = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-  },
-}
+-- local _, actions = pcall(require, "telescope.actions")
+-- lvim.builtin.telescope.defaults.mappings = {
+--   --   -- for input mode
+--   i = {
+--     ["<C-j>"] = actions.move_selection_next,
+--     ["<C-k>"] = actions.move_selection_previous,
+--     ["<C-n>"] = actions.cycle_history_next,
+--     ["<C-p>"] = actions.cycle_history_prev,
+--   },
+--   -- for normal mode
+--   n = {
+--     ["<C-j>"] = actions.move_selection_next,
+--     ["<C-k>"] = actions.move_selection_previous,
+--   },
+-- }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -183,7 +184,7 @@ lvim.builtin.alpha.dashboard.section.buttons.entries = {
   { "SPC p", "  Recent Projects ", "<CMD>Telescope projects<CR>" },
   { "SPC u", "  Recently Used Files", "<CMD>Telescope oldfiles<CR>" },
   { "SPC s", "  Load last session", "<CMD>SessionLoad<CR>" },
-  { "SPC r", "  Ranger", "<CMD>RnvimrToggle<CR>" },
+  { "SPC r", "/  Ranger", "<CMD>RnvimrToggle<CR>" },
   { "SPC m", "  Marks              ", "<CMD>Telescope marks<CR>" },
   { "SPC w", "  Find Word", "<CMD>Telescope live_grep<CR>" },
   { "SPC c", "  Edit Configuration", "<CMD>e ~/.config/lvim/config.lua<CR>" },
@@ -193,12 +194,34 @@ lvim.builtin.alpha.dashboard.section.buttons.entries = {
 
 -- COLORS -----------------------------------
 
-lvim.builtin.lualine.options.theme = "moonfly"
+local components = require("lvim.core.lualine.components")
+
+lvim.builtin.lualine.sections.lualine_a = { "mode" }
+lvim.builtin.lualine.sections.lualine_c = { "diff" }
+lvim.builtin.lualine.sections.lualine_x = {
+  components.lsp,
+  components.diagnostics,
+  components.progress
+}
+lvim.builtin.lualine.sections.lualine_y = {
+  components.spaces,
+  components.location
+}
+
+-- lvim.builtin.lualine.style = "lvim"
+-- lvim.builtin.lualine.options.theme = "onedark"
 
 lvim.colorscheme = "onenord"
 
 -- Additional Plugins {{{1
 lvim.plugins = {
+  -- { "hkupty/foam.nvim" },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require('lspconfig').setup()
+    end,
+  },
   -- color
   { "Mofiqul/vscode.nvim" },
   { "lunarvim/colorschemes" },
@@ -259,8 +282,8 @@ lvim.plugins = {
           window_unfocussed_color = false, -- When the window is out of focus, change the normal background?
         },
         hlgroups = { -- Overriding the Comment highlight group
-          Comment = { fg = "#FF0000", bg = "#FFFF00", style = "italic" }, -- 1
-          -- Comment = { fg = "${my_new_red}" bg = "${yellow}", style = "bold,italic" }, -- 2
+          -- Comment = { fg = "#FF0000", bg = "#FFFF00", style = "italic" }, -- 1
+          Comment = { fg = "${my_new_red}", bg = "${yellow}", style = "bold,italic" }, -- 2
           -- Comment = { link = "Substitute" } -- 3
         },
         filetype_hlgroups = {
@@ -273,7 +296,7 @@ lvim.plugins = {
             TSConstructor = { fg = "${bg}", bg = "${red}" }
           }
         },
-        filetype_hlgroups_ignore = {
+        filetype_hlgrouips_ignore = {
           filetypes = {
             "^aerial$",
             "^alpha$",
@@ -307,7 +330,7 @@ lvim.plugins = {
         fade_nc = false, -- Fade non-current windows, making them more distinguishable
         -- Style that is applied to various groups: see `highlight-args` for options
         styles = {
-          comments = "NONE",
+          -- comments = "NONE",
           strings = "NONE",
           keywords = "NONE",
           functions = "NONE",
@@ -321,10 +344,14 @@ lvim.plugins = {
         },
         -- Inverse highlight for different groups
         inverse = {
-          match_paren = false,
+          match_paren = true,
         },
-        custom_highlights = {}, -- Overwrite default highlight groups
-        custom_colors = {}, -- Overwrite default colors
+        custom_highlights = {
+          TSConstructor = { fg = "dark_blue" },
+        },
+        custom_colors = {
+          red = "#ffffff",
+        },
       }
     end,
   },
@@ -379,9 +406,9 @@ lvim.plugins = {
     end,
   },
   -- Markers in margin. 'ma' adds marker
-  -- { "kshenoy/vim-signature",
-  --   event = "BufRead",
-  -- },
+  { "kshenoy/vim-signature",
+    event = "BufRead",
+  },
   -- Highlight URL's. http://www.vivaldi.com
   -- {
   --   "itchyny/vim-highlighturl",
@@ -397,15 +424,15 @@ lvim.plugins = {
   -- hop
   -- neovim motions on speed!
   -- Better motions
-  {
-    "phaazon/hop.nvim",
-    event = "BufRead",
-    config = function()
-      require("hop").setup()
-      vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true })
-      vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true })
-    end,
-  },
+  -- {
+  --   "phaazon/hop.nvim",
+  --   event = "BufRead",
+  --   config = function()
+  --     require("hop").setup()
+  --     vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true })
+  --     vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true })
+  --   end,
+  -- },
   -- numb
   -- jump to the line
   {
@@ -420,85 +447,85 @@ lvim.plugins = {
   },
   -- nvim-bqf
   -- better quickfix window
-  -- {
-  --   "kevinhwang91/nvim-bqf",
-  --   event = { "BufRead", "BufNew" },
-  --   config = function()
-  --     require("bqf").setup({
-  --       auto_enable = true,
-  --       preview = {
-  --         win_height = 12,
-  --         win_vheight = 12,
-  --         delay_syntax = 80,
-  --         border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
-  --       },
-  --       func_map = {
-  --         vsplit = "",
-  --         ptogglemode = "z,",
-  --         stoggleup = "",
-  --       },
-  --       filter = {
-  --         fzf = {
-  --           action_for = { ["ctrl-s"] = "split" },
-  --           extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
+  {
+    "kevinhwang91/nvim-bqf",
+    event = { "BufRead", "BufNew" },
+    config = function()
+      require("bqf").setup({
+        auto_enable = true,
+        preview = {
+          win_height = 12,
+          win_vheight = 12,
+          delay_syntax = 80,
+          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+        },
+        func_map = {
+          vsplit = "",
+          ptogglemode = "z,",
+          stoggleup = "",
+        },
+        filter = {
+          fzf = {
+            action_for = { ["ctrl-s"] = "split" },
+            extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+          },
+        },
+      })
+    end,
+  },
   -- nvim-colorizer
   -- color highlighter #ff0000, Blue, #f0f
-  -- {
-  --   "norcalli/nvim-colorizer.lua",
-  --   config = function()
-  --     require("colorizer").setup({ "*" }, {
-  --       names    = true, -- "Name" codes, see https://www.w3schools.com/colors/colors_hex.asp   Blue, HotPink, OldLace, Plum, LightGreen, Coral
-  --       RGB      = true, -- #RGB hex codes                                                      #f0f #FAB
-  --       RRGGBB   = true, -- #RRGGBB hex codes                                                   #ffff00 #FF00FF
-  --       RRGGBBAA = true, -- #RRGGBBAA hex codes                                                 #ffff00ff #AbCdEf
-  --       rgb_fn   = true, -- CSS rgb() and rgba() functions                                      rgb(100,200,50) rgba(255,255,255,1.0) rgb(100%, 0%, 0%)
-  --       hsl_fn   = true, -- CSS hsl() and hsla() functions                                      hsl(120,100%,50%) hsla(20,100%,40%,0.7)
-  --       css      = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-  --       css_fn   = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-  --       mode     = 'background'; -- Set the display mode.
-  --     })
-  --   end,
-  -- },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ "*" }, {
+        names    = true, -- "Name" codes, see https://www.w3schools.com/colors/colors_hex.asp   Blue, HotPink, OldLace, Plum, LightGreen, Coral
+        RGB      = true, -- #RGB hex codes                                                      #f0f #FAB
+        RRGGBB   = true, -- #RRGGBB hex codes                                                   #ffff00 #FF00FF
+        RRGGBBAA = true, -- #RRGGBBAA hex codes                                                 #ffff00ff #AbCdEf
+        rgb_fn   = true, -- CSS rgb() and rgba() functions                                      rgb(100,200,50) rgba(255,255,255,1.0) rgb(100%, 0%, 0%)
+        hsl_fn   = true, -- CSS hsl() and hsla() functions                                      hsl(120,100%,50%) hsla(20,100%,40%,0.7)
+        css      = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn   = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+        mode     = 'background'; -- Set the display mode.
+      })
+    end,
+  },
   -- a tree like view for symbols
-  -- {
-  --   "simrat39/symbols-outline.nvim",
-  --   cmd = "SymbolsOutline",
-  -- },
+  {
+    "simrat39/symbols-outline.nvim",
+    cmd = "SymbolsOutline",
+  },
   -- Enhanced increment/decrement : True, true, January
   -- dial.nvim
   -- extended incrementing/decrementing
-  -- {
-  --   "monaqa/dial.nvim",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("user.dial").config()
-  --   end,
-  -- },
+  {
+    "monaqa/dial.nvim",
+    event = "BufRead",
+    config = function()
+      require("user.dial").config()
+    end,
+  },
   -- neoscroll
   -- smooth scrolling
-  -- {
-  --   "karb94/neoscroll.nvim",
-  --   event = "WinScrolled",
-  --   config = function()
-  --     require('neoscroll').setup({
-  --       -- All these keys will be mapped to their corresponding default scrolling animation
-  --       mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
-  --       hide_cursor = true, -- Hide cursor while scrolling
-  --       stop_eof = true, -- Stop at <EOF> when scrolling downwards
-  --       use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-  --       respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-  --       cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-  --       easing_function = nil, -- Default easing function
-  --       pre_hook = nil, -- Function to run before the scrolling animation starts
-  --       post_hook = nil, -- Function to run after the scrolling animation ends
-  --     })
-  --   end
-  -- },
+  {
+    "karb94/neoscroll.nvim",
+    event = "WinScrolled",
+    config = function()
+      require('neoscroll').setup({
+        -- All these keys will be mapped to their corresponding default scrolling animation
+        mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+        hide_cursor = true, -- Hide cursor while scrolling
+        stop_eof = true, -- Stop at <EOF> when scrolling downwards
+        use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+        respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+        cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+        easing_function = nil, -- Default easing function
+        pre_hook = nil, -- Function to run before the scrolling animation starts
+        post_hook = nil, -- Function to run after the scrolling animation ends
+      })
+    end
+  },
   -- vim-repeat
   -- enable repeating supported plugin maps with "."
   { "tpope/vim-repeat" },
@@ -511,11 +538,15 @@ lvim.plugins = {
   -- vim-surround vim-surround
   -- mappings to delete, change and add surroundings
   -- Surroundings.  Try cs"'  in a string "with double quotes" to convert to single.
-  -- {
-  --   "tpope/vim-surround",
-  --   -- event = "BufRead",
-  --   --   keys = {"c", "d", "y"}
-  -- },
+  {
+    "tpope/vim-surround",
+    event = "BufRead",
+    keys = { "c", "d", "y" }
+  },
+  {
+    "ggandor/lightspeed.nvim",
+    event = "BufRead",
+  },
 
 
   { "jesseduffield/lazygit" },
@@ -561,26 +592,26 @@ lvim.plugins = {
       vim.g.gitblame_enabled = 0
     end,
   },
-  -- {
-  --   "ruifm/gitlinker.nvim",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("gitlinker").setup {
-  --       opts = {
-  --         -- remote = 'github', -- force the use of a specific remote
-  --         -- adds current line nr in the url for normal mode
-  --         add_current_line_on_normal_mode = true,
-  --         -- callback for what to do with the url
-  --         action_callback = require("gitlinker.actions").open_in_browser,
-  --         -- print the url after performing the action
-  --         print_url = false,
-  --         -- mapping to call url generation
-  --         mappings = "<leader>gy",
-  --       },
-  --     }
-  --   end,
-  --   requires = "nvim-lua/plenary.nvim",
-  -- },
+  {
+    "ruifm/gitlinker.nvim",
+    event = "BufRead",
+    config = function()
+      require("gitlinker").setup {
+        opts = {
+          -- remote = 'github', -- force the use of a specific remote
+          -- adds current line nr in the url for normal mode
+          add_current_line_on_normal_mode = true,
+          -- callback for what to do with the url
+          action_callback = require("gitlinker.actions").open_in_browser,
+          -- print the url after performing the action
+          print_url = false,
+          -- mapping to call url generation
+          mappings = "<leader>gy",
+        },
+      }
+    end,
+    requires = "nvim-lua/plenary.nvim",
+  },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",

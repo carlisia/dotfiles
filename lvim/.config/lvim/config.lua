@@ -175,6 +175,11 @@ lvim.plugins = {
   --   end,
   -- },
   {
+    -- https://github.com/ggandor/lightspeed.nvim
+    "ggandor/lightspeed.nvim",
+    event = "BufRead",
+  },
+  {
     "kevinhwang91/nvim-bqf",
     event = { "BufRead", "BufNew" },
     requires = {

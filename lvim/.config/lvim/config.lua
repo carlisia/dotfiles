@@ -144,6 +144,25 @@ lvim.builtin.which_key.mappings["t"] = {
 
 -- Additional Plugins
 lvim.plugins = {
+  { "lunarvim/colorschemes" },
+  {
+    "christianchiarulli/nvcode-color-schemes.vim",
+    config = function()
+      require 'nvim-treesitter.configs'.setup {
+        ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+        highlight = {
+          enable = true, -- false will disable the whole extension
+          disable = { "c", "rust" }, -- list of language that will be disabled
+        },
+      }
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require('lspconfig').setup()
+    end,
+  },
   {
     "Mofiqul/trld.nvim",
     config = function()
@@ -212,6 +231,17 @@ lvim.plugins = {
   {
     -- Dev docs
     "rhysd/devdocs.vim"
+  },
+  {
+    "simrat39/symbols-outline.nvim",
+    cmd = "SymbolsOutline",
+  },
+  {
+    "andymass/vim-matchup",
+    event = "CursorMoved",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
   },
   {
     -- jump to the line

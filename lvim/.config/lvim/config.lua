@@ -7,9 +7,12 @@ lvim.colorscheme = "onedarker"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
--- Overriding LunarVim's default keybindings
-local keybinding_prefix = lvim.keys.normal_mode
-keybinding_prefix["<C-s>"] = ":w<cr>"
+
+-- returns the require for use in `config` parameter of packer's use
+-- expects the name of the config file
+local function get_config(name)
+  return string.format('require("config/%s")', name)
+end
 
 -- ToggleTerm settings
 local terminal_prefix = lvim.builtin.terminal
@@ -27,6 +30,7 @@ alpha_prefix.dashboard.section.header.val = {
   "▌  ▌ ▌▌ ▌▞▀▌▌  ▝▞ ▐ ▌▐ ▌",
   "▀▀▘▝▀▘▘ ▘▝▀▘▘   ▘ ▀▘▘▝ ▘",
 }
+
 
 alpha_prefix.dashboard.section.buttons.entries = {
   { "SPC f", "  Find File", "<CMD>Telescope find_files<CR>" },
@@ -97,18 +101,6 @@ lvim.builtin.telescope.defaults.mappings = {
   },
 }
 
-lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-
-lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
-}
-
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 
@@ -142,8 +134,27 @@ lvim.builtin.which_key.mappings["t"] = {
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
 
+-- TODO:  THIS IS A TEST!
+-- HACK: ASDF
+
 -- Additional Plugins
 lvim.plugins = {
+  -- {
+  --   "ray-x/go.nvim",
+  --   config = function()
+  --     get_config("go")
+  --     ft = { "go" }
+  --   end,
+  -- },
+  -- {
+  --   "folke/todo-comments.nvim",
+  --   requires = "nvim-lua/plenary.nvim",
+  --   config = function()
+  --     get_config("todo")
+  --   end,
+  -- },
+
+  ---
   { "lunarvim/colorschemes" },
   {
     "christianchiarulli/nvcode-color-schemes.vim",
@@ -157,10 +168,40 @@ lvim.plugins = {
       }
     end,
   },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   config = function()
+  --     require('lspconfig').setup()
+  --   end,
+  -- },
   {
-    "neovim/nvim-lspconfig",
+    "kevinhwang91/nvim-bqf",
+    event = { "BufRead", "BufNew" },
+    requires = {
+      'junegunn/fzf',
+      'nvim-treesitter/nvim-treesitter',
+    },
     config = function()
-      require('lspconfig').setup()
+      require("bqf").setup({
+        auto_enable = true,
+        preview = {
+          win_height = 12,
+          win_vheight = 12,
+          delay_syntax = 80,
+          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+        },
+        func_map = {
+          vsplit = "",
+          ptogglemode = "z,",
+          stoggleup = "",
+        },
+        filter = {
+          fzf = {
+            action_for = { ["ctrl-s"] = "split" },
+            extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+          },
+        },
+      })
     end,
   },
   {
@@ -299,14 +340,63 @@ lvim.plugins = {
     event = "BufRead",
   },
   {
-    "nvim-telescope/telescope-fzy-native.nvim",
-    run = "make",
-    event = "BufRead",
+    "folke/trouble.nvim",
+    cmd = "TroubleToggle",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        position = "bottom", -- position of the list can be: bottom, top, left, right
+        height = 10, -- height of the trouble list when position is top or bottom
+        width = 50, -- width of the list when position is left or right
+        icons = true, -- use devicons for filenames
+        mode = "workspace_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
+        fold_open = "", -- icon used for open folds
+        fold_closed = "", -- icon used for closed folds
+        group = true, -- group results by file
+        padding = true, -- add an extra new line on top of the list
+        action_keys = { -- key mappings for actions in the trouble list
+          -- map to {} to remove a mapping, for example:
+          -- close = {},
+          close = "q", -- close the list
+          cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+          refresh = "r", -- manually refresh
+          jump = { "<cr>", "<tab>" }, -- jump to the diagnostic or open / close folds
+          open_split = { "<c-x>" }, -- open buffer in new split
+          open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
+          open_tab = { "<c-t>" }, -- open buffer in new tab
+          jump_close = { "o" }, -- jump to the diagnostic and close the list
+          toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+          toggle_preview = "P", -- toggle auto_preview
+          hover = "K", -- opens a small popup with the full multiline message
+          preview = "p", -- preview the diagnostic location
+          close_folds = { "zM", "zm" }, -- close all folds
+          open_folds = { "zR", "zr" }, -- open all folds
+          toggle_fold = { "zA", "za" }, -- toggle fold of current file
+          previous = "k", -- preview item
+          next = "j" -- next item
+        },
+        indent_lines = true, -- add an indent guide below the fold icons
+        auto_open = false, -- automatically open the list when you have diagnostics
+        auto_close = false, -- automatically close the list when you have no diagnostics
+        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+        auto_fold = false, -- automatically fold a file trouble list at creation
+        auto_jump = { "lsp_definitions" }, -- for the given modes, automatically jump if there is only a single result
+        signs = {
+          -- icons / text used for a diagnostic
+          error = "",
+          warning = "",
+          hint = "",
+          information = "",
+          other = "﫠"
+        },
+        use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
+      }
+    end,
   },
   {
     "nvim-telescope/telescope-project.nvim",
     event = "BufWinEnter",
-    setup = function()
+    config = function()
       vim.cmd [[packadd telescope.nvim]]
     end,
   },

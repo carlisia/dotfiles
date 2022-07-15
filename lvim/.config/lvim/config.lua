@@ -122,7 +122,6 @@ lvim.plugins = {
     end,
   },
   {
-    -- neoscroll
     -- smooth scrolling
     "karb94/neoscroll.nvim",
     event = "WinScrolled",
@@ -141,5 +140,39 @@ lvim.plugins = {
       })
     end
   },
-  { "tpope/vim-repeat" },
+  {
+    -- Markers in margin. 'ma' adds marker
+    "kshenoy/vim-signature",
+    event = "BufRead",
+  },
+  {
+    -- Highlight URL's. http://www.vivaldi.com
+    "itchyny/vim-highlighturl",
+    event = "BufRead",
+  },
+  {
+    -- Dev docs
+    "rhysd/devdocs.vim"
+  },
+  {
+    -- jump to the line
+    "nacro90/numb.nvim",
+    event = "BufRead",
+    config = function()
+      require("numb").setup {
+        show_numbers = true, -- Enable 'number' for the window while peeking
+        show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+      }
+    end,
+  },
+  { "jesseduffield/lazygit" },
+  {
+    "kevinhwang91/rnvimr",
+    cmd = "RnvimrToggle",
+    config = function()
+      vim.g.rnvimr_draw_border = 1
+      vim.g.rnvimr_pick_enable = 1
+      vim.g.rnvimr_bw_enable = 1
+    end,
+  },
 }

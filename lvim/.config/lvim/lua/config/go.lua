@@ -17,9 +17,9 @@ require("go").setup({
   -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
   --   lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
   lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
-  lsp_on_attach = function(client, bufnr)
-    require("functions").custom_lsp_attach(client, bufnr)
-  end, -- nil: use on_attach function defined in go/lsp.lua,
+ -- lsp_on_attach = function(client, bufnr)
+ --   require("functions").custom_lsp_attach(client, bufnr)
+ -- end, -- nil: use on_attach function defined in go/lsp.lua,
   --      when lsp_cfg is true
   -- if lsp_on_attach is a function: use this function as on_attach function for gopls
   lsp_codelens = true, -- set to false to disable codelens, true by default
@@ -45,3 +45,4 @@ require("go").setup({
   -- float term recommended if you use richgo/ginkgo with terminal color
 })
 
+ft = { "go" }

@@ -8,12 +8,6 @@ lvim.colorscheme = "onedarker"
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 
--- returns the require for use in `config` parameter of packer's use
--- expects the name of the config file
-local function get_config(name)
-  return string.format('require("config/%s")', name)
-end
-
 -- ToggleTerm settings
 local terminal_prefix = lvim.builtin.terminal
 terminal_prefix.active = true
@@ -134,25 +128,23 @@ lvim.builtin.which_key.mappings["t"] = {
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
 
--- TODO:  THIS IS A TEST!
--- HACK: ASDF
 
 -- Additional Plugins
 lvim.plugins = {
-  -- {
-  --   "ray-x/go.nvim",
-  --   config = function()
-  --     get_config("go")
-  --     ft = { "go" }
-  --   end,
-  -- },
-  -- {
-  --   "folke/todo-comments.nvim",
-  --   requires = "nvim-lua/plenary.nvim",
-  --   config = function()
-  --     get_config("todo")
-  --   end,
-  -- },
+  {
+    "ray-x/go.nvim",
+    config = function()
+      require('config.go')
+    end,
+  },
+  {
+    -- https://github.com/folke/todo-comments.nvim
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+     require('config.todo')
+    end,
+  },
 
   ---
   { "lunarvim/colorschemes" },
@@ -168,12 +160,6 @@ lvim.plugins = {
       }
     end,
   },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   config = function()
-  --     require('lspconfig').setup()
-  --   end,
-  -- },
   {
     -- https://github.com/ggandor/lightspeed.nvim
     "ggandor/lightspeed.nvim",

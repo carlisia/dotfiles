@@ -1,35 +1,45 @@
---[[
-lvim is the global options object
-
-Linters should be
-filled in as strings with either
-a global executable or a path to
-an executable
-]]
--- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-lvim.plugins.path = "plugin/plugins"
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
--- to disable icons and use a minimalist setup, uncomment the following
--- lvim.use_icons = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
--- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+-- Overriding LunarVim's default keybindings
+local keybinding_prefix = lvim.keys.normal_mode
+keybinding_prefix["<C-s>"] = ":w<cr>"
 
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+-- ToggleTerm settings
+local terminal_prefix = lvim.builtin.terminal
+terminal_prefix.active = true
+terminal_prefix.direction = "horizontal"
+terminal_prefix.size = 10
 
--- if you don't want all the parsers change this to a table of the ones you want
+local alpha_prefix = lvim.builtin.alpha
+alpha_prefix.active = true
+alpha_prefix.mode = "dashboard"
+alpha_prefix.dashboard.section.header.opts.hl = ""
+alpha_prefix.dashboard.section.header.val = {
+  "▌              ▌ ▌▗",
+  "▌  ▌ ▌▛▀▖▝▀▖▙▀▖▚▗▘▄ ▛▚▀▖",
+  "▌  ▌ ▌▌ ▌▞▀▌▌  ▝▞ ▐ ▌▐ ▌",
+  "▀▀▘▝▀▘▘ ▘▝▀▘▘   ▘ ▀▘▘▝ ▘",
+}
+
+alpha_prefix.dashboard.section.buttons.entries = {
+  { "SPC f", "  Find File", "<CMD>Telescope find_files<CR>" },
+  { "SPC n", "  New File", "<CMD>ene!<CR>" },
+  { "SPC p", "  Recent Projects ", "<CMD>Telescope projects<CR>" },
+  { "SPC u", "  Recently Used Files", "<CMD>Telescope oldfiles<CR>" },
+  { "SPC s", "  Load last session", "<CMD>SessionLoad<CR>" },
+  { "SPC r", "  Ranger", "<CMD>RnvimrToggle<CR>" },
+  { "SPC m", "  Marks              ", "<CMD>Telescope marks<CR>" },
+  { "SPC w", "  Find Word", "<CMD>Telescope live_grep<CR>" },
+  { "SPC c", "  Edit Configuration", "<CMD>e ~/.config/lvim/config.lua<CR>" },
+  { "SPC g", "  Git status", "<CMD>Telescope git_status<CR>" }
+}
+
+-- Language parsers
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
@@ -42,49 +52,94 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 
-lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
--- generic LSP settings
+-- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+-- Builtins
+lvim.builtin.notify.active = true
 
--- ---@usage disable automatic installation of servers
--- lvim.lsp.automatic_servers_installation = false
-
-
--- local settings = require("user-conf")
-
--- {{{ Dashboard
-
-lvim.builtin.alpha.dashboard.section.header.opts.hl = ""
--- Shorter ASCII art logo, so not too much space is taken up.
-lvim.builtin.alpha.dashboard.section.header.val = {
-  "▌              ▌ ▌▗",
-  "▌  ▌ ▌▛▀▖▝▀▖▙▀▖▚▗▘▄ ▛▚▀▖",
-  "▌  ▌ ▌▌ ▌▞▀▌▌  ▝▞ ▐ ▌▐ ▌",
-  "▀▀▘▝▀▘▘ ▘▝▀▘▘   ▘ ▀▘▘▝ ▘",
+-- Indent Blankline settings
+lvim.builtin.indent_blankline = {
+  buftype_exclude = { "terminal" },
+  filetype_exclude = { "dashboard", "NvimTree", "packer", "lsp-installer" },
+  show_current_context = true,
+  context_patterns = {
+    "class", "return", "function", "method", "^if", "^while", "jsx_element", "^for", "^object",
+    "^table", "block", "arguments", "if_statement", "else_clause", "jsx_element",
+    "jsx_self_closing_element", "try_statement", "catch_clause", "import_statement",
+    "operation_type"
+  }
 }
 
-lvim.builtin.alpha.dashboard.section.buttons.entries = {
-  { "SPC f", "  Find File", "<CMD>Telescope find_files<CR>" },
-  { "SPC n", "  New File", "<CMD>ene!<CR>" },
-  { "SPC p", "  Recent Projects ", "<CMD>Telescope projects<CR>" },
-  { "SPC u", "  Recently Used Files", "<CMD>Telescope oldfiles<CR>" },
-  { "SPC s", "  Load last session", "<CMD>SessionLoad<CR>" },
-  { "SPC r", "  Ranger", "<CMD>RnvimrToggle<CR>" },
-  { "SPC m", "  Marks              ", "<CMD>Telescope marks<CR>" },
-  { "SPC w", "  Find Word", "<CMD>Telescope live_grep<CR>" },
-  { "SPC c", "  Edit Configuration", "<CMD>e ~/.config/lvim/config.lua<CR>" },
-  { "SPC g", "  Git status", "<CMD>Telescope git_status<CR>" }
+-- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
---}}}
-
-
 
 -- Additional Plugins
--- lvim.plugins = {
---     {"folke/tokyonight.nvim"},
---     {
---       "folke/trouble.nvim",
---       cmd = "TroubleToggle",
---     },
--- }
+lvim.plugins = {
+  {
+    "Mofiqul/trld.nvim",
+    config = function()
+      require('trld').setup {
+        -- where to render the diagnostics. 'top' | 'bottom'
+        position = 'top',
+
+        -- if this plugin should execute it's builtin auto commands
+        auto_cmds = true,
+
+        -- diagnostics highlight group names
+        highlights = {
+          error = "DiagnosticFloatingError",
+          warn = "DiagnosticFloatingWarn",
+          info = "DiagnosticFloatingInfo",
+          hint = "DiagnosticFloatingHint",
+        },
+        formatter = function(diag)
+          local u = require 'trld.utils'
+          local diag_lines = {}
+
+          for line in diag.message:gmatch("[^\n]+") do
+            line = line:gsub('[ \t]+%f[\r\n%z]', '')
+            table.insert(diag_lines, line)
+          end
+
+          local lines = {}
+          for _, diag_line in ipairs(diag_lines) do
+            table.insert(lines, { { diag_line .. ' ', u.get_hl_by_serverity(diag.severity) } })
+          end
+
+          return lines
+        end,
+      }
+    end,
+  },
+  {
+    -- neoscroll
+    -- smooth scrolling
+    "karb94/neoscroll.nvim",
+    event = "WinScrolled",
+    config = function()
+      require('neoscroll').setup({
+        -- All these keys will be mapped to their corresponding default scrolling animation
+        mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+        hide_cursor = true, -- Hide cursor while scrolling
+        stop_eof = true, -- Stop at <EOF> when scrolling downwards
+        use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+        respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+        cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+        easing_function = nil, -- Default easing function
+        pre_hook = nil, -- Function to run before the scrolling animation starts
+        post_hook = nil, -- Function to run after the scrolling animation ends
+      })
+    end
+  },
+  { "tpope/vim-repeat" },
+}

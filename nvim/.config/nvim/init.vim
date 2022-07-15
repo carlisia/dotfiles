@@ -1,22 +1,22 @@
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'Raimondi/delimitMate'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-scriptease'
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'Raimondi/delimitMate'
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'itchyny/lightline.vim'
+" Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-scriptease'
 " Plug 'christoomey/vim-tmux-navigator'
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'unblevable/quick-scope'
-Plug 'scrooloose/nerdtree'
+" Plug 'ConradIrwin/vim-bracketed-paste'
+" Plug 'unblevable/quick-scope'
+" Plug 'scrooloose/nerdtree'
 
-Plug 'SirVer/ultisnips'
-Plug 't9md/vim-choosewin'
-Plug 'garyburd/go-explorer'
+" Plug 'SirVer/ultisnips'
+" Plug 't9md/vim-choosewin'
+" Plug 'garyburd/go-explorer'
 
 Plug 'airblade/vim-gitgutter'
 
@@ -35,15 +35,15 @@ endif
 let g:deoplete#enable_at_startup = 1
 
 " filetype plugins
-Plug 'vim-ruby/vim-ruby'
-Plug 'elzr/vim-json', {'for' : 'json'}
-" Plug 'tejr/vim-tmux', {'for': 'tmux'}
-Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
-Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
-Plug 'corylanou/vim-present', {'for' : 'present'}
+" Plug 'vim-ruby/vim-ruby'
+" Plug 'elzr/vim-json', {'for' : 'json'}
+" " Plug 'tejr/vim-tmux', {'for': 'tmux'}
+" Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
+" Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
+" Plug 'corylanou/vim-present', {'for' : 'present'}
 
-Plug 'sudar/vim-arduino-syntax'
-Plug 'stevearc/vim-arduino'
+" Plug 'sudar/vim-arduino-syntax'
+" Plug 'stevearc/vim-arduino'
 
 call plug#end()
 

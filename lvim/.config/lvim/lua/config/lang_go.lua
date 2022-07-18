@@ -1,3 +1,4 @@
+-- https://github.com/ray-x/go.nvim
 -- NOTE: all LSP and formatting related options are disabeld.
 -- NOTE: LSP is handled by lsp.lua and formatting is handled by null-ls.lua
 require("go").setup({

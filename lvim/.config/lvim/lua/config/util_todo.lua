@@ -1,3 +1,4 @@
+-- https://github.com/folke/todo-comments.nvim
 require("todo-comments").setup({
   signs = true, -- show icons in the signs column
   sign_priority = 8, -- sign priority

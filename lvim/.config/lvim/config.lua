@@ -130,20 +130,6 @@ lvim.builtin.nvimtree.setup.view.side = "left"
 -- Builtins
 lvim.builtin.notify.active = true
 
--- Indent Blankline settings
-lvim.builtin.indent_blankline = {
-  buftype_exclude = { "terminal" },
-
-  -- filetype_exclude = { "dashboard", "NvimTree", "packer", "lsp-installer" },
-  show_current_context = true,
-  -- context_patterns = {
-  --   "class", "return", "function", "method", "^if", "^while", "jsx_element", "^for", "^object",
-  --   "^table", "block", "arguments", "if_statement", "else_clause", "jsx_element",
-  --   "jsx_self_closing_element", "try_statement", "catch_clause", "import_statement",
-  --   "operation_type"
-  -- }
-}
-
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
@@ -200,6 +186,28 @@ lvim.plugins = {
 
   -- EDITOR
   {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufRead",
+    setup = function()
+      vim.g.indentLine_enabled = 1
+      vim.g.indent_blankline_char = "▏"
+      vim.g.indent_blankline_filetype_exclude = { "help", "terminal", "dashboard" }
+      vim.g.indent_blankline_buftype_exclude = { "terminal" }
+      vim.g.indent_blankline_show_trailing_blankline_indent = false
+      vim.g.indent_blankline_show_first_indent_level = false
+
+      vim.opt.list = true
+      vim.opt.listchars:append("space:⋅")
+      vim.opt.listchars:append("eol:↴")
+
+      require("indent_blankline").setup {
+        space_char_blankline = " ",
+        show_current_context = true,
+        show_current_context_start = true,
+      }
+    end
+  },
+  {
     -- https://github.com/ggandor/lightspeed.nvim
     "ggandor/lightspeed.nvim",
     event = "BufRead",
@@ -212,13 +220,6 @@ lvim.plugins = {
       require('config.editor_neoscroll')
     end,
   },
-
-  -- FIND
-  {
-  "nvim-telescope/telescope-fzy-native.nvim",
-  run = "make",
-  event = "BufRead",
-},
 
   -- GIT
   {

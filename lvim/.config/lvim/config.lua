@@ -137,6 +137,30 @@ lvim.builtin.which_key.mappings["t"] = {
 
 -- Additional Plugins
 lvim.plugins = {
+  -- CODE
+  {
+    "is0n/jaq-nvim",
+    config = function()
+      require('jaq-nvim').setup({
+        cmds = {
+          -- Uses vim commands
+          internal = {
+            lua = "luafile %",
+            vim = "source %",
+          },
+
+          -- Uses shell commands
+          external = {
+            markdown = "glow %",
+            python   = "python3 %",
+            go       = "go run %",
+            sh       = "sh %",
+          },
+        },
+      })
+    end,
+  },
+
   -- COLOR
   { "lunarvim/colorschemes" },
   {
@@ -197,8 +221,8 @@ lvim.plugins = {
     config = function()
       require('config.lang_navigator')
     end,
-
   },
+  { 'nvim-treesitter/nvim-treesitter-refactor' },
 
 
   -- UTILS

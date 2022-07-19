@@ -213,6 +213,10 @@ lvim.plugins = {
 
   -- GIT
   {
+  "sindrets/diffview.nvim",
+  event = "BufRead",
+},
+  {
     'ldelossa/gh.nvim',
     requires = { 'ldelossa/litee.nvim' },
   },

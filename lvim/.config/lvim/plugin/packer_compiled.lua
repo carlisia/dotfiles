@@ -133,6 +133,13 @@ _G.packer_plugins = {
     path = "/Users/carlisiac/.local/share/lunarvim/site/pack/packer/start/devdocs.vim",
     url = "https://github.com/rhysd/devdocs.vim"
   },
+  ["diffview.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/carlisiac/.local/share/lunarvim/site/pack/packer/opt/diffview.nvim",
+    url = "https://github.com/sindrets/diffview.nvim"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/Users/carlisiac/.local/share/lunarvim/site/pack/packer/start/friendly-snippets",
@@ -592,12 +599,12 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'vim-signature', 'numb.nvim', 'nvim-bqf', 'Comment.nvim', 'octo.nvim', 'git-blame.nvim', 'gitlinker.nvim', 'gitsigns.nvim', 'lightspeed.nvim', 'vim-highlighturl', 'lsp-colors.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
-vim.cmd [[au WinScrolled * ++once lua require("packer.load")({'neoscroll.nvim'}, { event = "WinScrolled *" }, _G.packer_plugins)]]
 vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'nvim-ts-context-commentstring'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
-vim.cmd [[au BufNew * ++once lua require("packer.load")({'nvim-bqf'}, { event = "BufNew *" }, _G.packer_plugins)]]
+vim.cmd [[au WinScrolled * ++once lua require("packer.load")({'neoscroll.nvim'}, { event = "WinScrolled *" }, _G.packer_plugins)]]
 vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'which-key.nvim', 'bufferline.nvim', 'telescope-project.nvim', 'toggleterm.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'vim-signature', 'numb.nvim', 'nvim-bqf', 'diffview.nvim', 'Comment.nvim', 'octo.nvim', 'git-blame.nvim', 'gitlinker.nvim', 'gitsigns.nvim', 'lightspeed.nvim', 'vim-highlighturl', 'lsp-colors.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
 vim.cmd [[au CursorMoved * ++once lua require("packer.load")({'vim-matchup'}, { event = "CursorMoved *" }, _G.packer_plugins)]]
+vim.cmd [[au BufNew * ++once lua require("packer.load")({'nvim-bqf'}, { event = "BufNew *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end

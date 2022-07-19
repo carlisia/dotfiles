@@ -55,6 +55,7 @@ lvim.builtin.treesitter.ensure_installed = {
 lvim.builtin.treesitter.highlight.enabled = true
 lvim.builtin.treesitter.context_commentstring.enable = true
 lvim.builtin.treesitter.context_commentstring.enable_autocmd = true
+lvim.builtin.treesitter.rainbow.enable = true
 
 -- vim.diagnostic.config({ virtual_text = false })
 
@@ -194,6 +195,7 @@ lvim.plugins = {
     "folke/lsp-colors.nvim",
     event = "BufRead",
   },
+  { "p00f/nvim-ts-rainbow" },
 
 
   -- EDITOR
@@ -211,11 +213,18 @@ lvim.plugins = {
     end,
   },
 
-  -- GIT
+  -- FIND
   {
-  "sindrets/diffview.nvim",
+  "nvim-telescope/telescope-fzy-native.nvim",
+  run = "make",
   event = "BufRead",
 },
+
+  -- GIT
+  {
+    "sindrets/diffview.nvim",
+    event = "BufRead",
+  },
   {
     'ldelossa/gh.nvim',
     requires = { 'ldelossa/litee.nvim' },

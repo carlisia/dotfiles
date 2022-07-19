@@ -22,8 +22,8 @@ end
 set -x GOPATH $HOME/working
 
 set -x EDITOR code
-alias vim=lvim
-alias vi=lvim
+# alias vim=lvim
+# alias vi=lvim
 alias v=lvim
 
 alias go=richgo

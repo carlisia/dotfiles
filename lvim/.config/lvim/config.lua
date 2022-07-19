@@ -56,7 +56,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.builtin.treesitter.context_commentstring.enable = true
 lvim.builtin.treesitter.context_commentstring.enable_autocmd = true
 
-vim.diagnostic.config({ virtual_text = false })
+-- vim.diagnostic.config({ virtual_text = false })
 
 lvim.builtin.gitsigns.opts.signs.add.text = ''
 lvim.builtin.gitsigns.opts.signs.change.text = ''
@@ -97,6 +97,9 @@ lvim.builtin.telescope.defaults.mappings = {
 
 -- NVIMTREE
 -- https://github.com/kyazdani42/nvim-tree.lua
+-- TODO: configure the core plugins in separate files
+-- lvim.builtin.nvimtree.setup.filters.dotfiles = true
+-- lvim.builtin.nvimtree.setup.open_on_tab = true
 
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
@@ -185,6 +188,18 @@ lvim.plugins = {
       require('config.lang_go')
     end,
   },
+  {
+    'ray-x/navigator.lua',
+    requires = {
+      'ray-x/guihua.lua', run = 'cd lua/fzy && make',
+      'neovim/nvim-lspconfig',
+    },
+    config = function()
+      require('config.lang_navigator')
+    end,
+
+  },
+
 
   -- UTILS
   {
@@ -217,7 +232,7 @@ lvim.plugins = {
       require('config.util_trouble')
     end,
   },
-    {
+  {
     -- Highlight URL's. http://www.vivaldi.com
     "itchyny/vim-highlighturl",
     event = "BufRead",

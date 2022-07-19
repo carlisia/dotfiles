@@ -102,7 +102,7 @@ lvim.builtin.lualine.options.theme = "powerline_dark"
 local components = require("lvim.core.lualine.components")
 lvim.builtin.lualine.sections.lualine_a = { "mode" }
 lvim.builtin.lualine.sections.lualine_b = {
-   components.branch,
+  components.branch,
   "diff",
 }
 lvim.builtin.lualine.sections.lualine_c = { "filename" }
@@ -112,7 +112,7 @@ lvim.builtin.lualine.sections.lualine_x = {
 }
 lvim.builtin.lualine.sections.lualine_y = {
   components.spaces,
-    components.lsp,
+  components.lsp,
 }
 
 
@@ -215,6 +215,19 @@ lvim.plugins = {
   {
     'ldelossa/gh.nvim',
     requires = { 'ldelossa/litee.nvim' },
+  },
+  {
+    -- https://github.com/ruifm/gitlinker.nvim
+    'ruifm/gitlinker.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    event = "BufRead",
+    config = function()
+      require("gitlinker").setup {
+        opts = {
+         mappings = "<leader>gy",
+        },
+      }
+    end,
   },
   { "jesseduffield/lazygit" },
   {

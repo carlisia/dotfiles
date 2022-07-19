@@ -153,7 +153,7 @@ lvim.plugins = {
             markdown = "glow %",
             python   = "python3 %",
             go       = "go run %",
-            sh       = "sh %",
+            sh       = "/usr/local/bin/bash %",
           },
         },
       })

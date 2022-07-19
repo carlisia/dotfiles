@@ -95,6 +95,28 @@ lvim.builtin.telescope.defaults.mappings = {
   },
 }
 
+-- COLORS -----------------------------------
+
+lvim.builtin.lualine.style = "default"
+lvim.builtin.lualine.options.theme = "powerline_dark"
+local components = require("lvim.core.lualine.components")
+lvim.builtin.lualine.sections.lualine_a = { "mode" }
+lvim.builtin.lualine.sections.lualine_b = {
+   components.branch,
+  "diff",
+}
+lvim.builtin.lualine.sections.lualine_c = { "filename" }
+lvim.builtin.lualine.sections.lualine_x = {
+  components.diagnostics,
+  components.progress,
+}
+lvim.builtin.lualine.sections.lualine_y = {
+  components.spaces,
+    components.lsp,
+}
+
+
+
 -- NVIMTREE
 -- https://github.com/kyazdani42/nvim-tree.lua
 -- TODO: configure the core plugins in separate files
@@ -190,6 +212,10 @@ lvim.plugins = {
   },
 
   -- GIT
+  {
+    'ldelossa/gh.nvim',
+    requires = { 'ldelossa/litee.nvim' },
+  },
   { "jesseduffield/lazygit" },
   {
     "pwntester/octo.nvim",
@@ -279,7 +305,8 @@ lvim.plugins = {
     "kevinhwang91/nvim-bqf",
     event = { "BufRead", "BufNew" },
     requires = {
-      'junegunn/fzf',
+      -- TODO: check if this is missing or if it's interfeering with builtin fzf when it's on
+      -- 'junegunn/fzf',
       'nvim-treesitter/nvim-treesitter',
     },
     config = function()

@@ -224,7 +224,7 @@ lvim.plugins = {
     config = function()
       require("gitlinker").setup {
         opts = {
-         mappings = "<leader>gy",
+          mappings = "<leader>gy",
         },
       }
     end,
@@ -319,8 +319,11 @@ lvim.plugins = {
     event = { "BufRead", "BufNew" },
     requires = {
       -- TODO: check if this is missing or if it's interfeering with builtin fzf when it's on
-      -- 'junegunn/fzf',
-      'nvim-treesitter/nvim-treesitter',
+      { 'junegunn/fzf', run = function()
+        vim.fn['fzf#install']()
+      end
+      },
+      { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     },
     config = function()
       require("bqf").setup({

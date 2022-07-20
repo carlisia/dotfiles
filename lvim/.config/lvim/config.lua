@@ -1,6 +1,7 @@
 require "config.keymaps"
+require "config.whichkey"
 
--- general
+-- gehl  aneral
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.auto_complete = true
@@ -271,10 +272,6 @@ lvim.plugins = {
   {
     "sindrets/diffview.nvim",
     event = "BufRead",
-  },
-  {
-    'ldelossa/gh.nvim',
-    requires = { 'ldelossa/litee.nvim' },
   },
   {
     -- https://github.com/ruifm/gitlinker.nvim

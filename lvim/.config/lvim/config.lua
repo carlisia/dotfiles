@@ -84,6 +84,10 @@ lvim.lsp.diagnostics.signs.values = {
   { name = "LspDiagnosticsSignHint", text = '' },
   { name = "LspDiagnosticsSignInformation", text = "" },
 }
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  { command = "black" },
+}
 
 lvim.builtin.telescope.on_config_done = function(telescope)
   pcall(telescope.load_extension, "frecency")

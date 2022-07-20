@@ -245,6 +245,7 @@ lvim.plugins = {
     "ggandor/lightspeed.nvim",
     event = "BufRead",
   },
+  { "itspriddle/vim-marked" },
   {
     -- smooth scrolling
     "karb94/neoscroll.nvim",

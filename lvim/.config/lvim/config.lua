@@ -84,10 +84,12 @@ lvim.lsp.diagnostics.signs.values = {
   { name = "LspDiagnosticsSignHint", text = '' },
   { name = "LspDiagnosticsSignInformation", text = "" },
 }
+
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  { command = "black" },
+  { command = "black" }
 }
+
 
 lvim.builtin.telescope.on_config_done = function(telescope)
   pcall(telescope.load_extension, "frecency")
@@ -348,10 +350,7 @@ lvim.plugins = {
     event = { "BufRead", "BufNew" },
     requires = {
       -- TODO: check if this is missing or if it's interfeering with builtin fzf when it's on
-      { 'junegunn/fzf', run = function()
-        vim.fn['fzf#install']()
-      end
-      },
+      { 'junegunn/fzf' },
       { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     },
     config = function()

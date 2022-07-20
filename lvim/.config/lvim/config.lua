@@ -152,6 +152,10 @@ lvim.builtin.lualine.sections.lualine_y = {
   components.lsp,
 }
 
+-- for sparkly dots in the indentation space
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
 
 
 -- NVIMTREE

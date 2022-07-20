@@ -64,8 +64,27 @@ lvim.builtin.treesitter.ensure_installed = {
   "typescript",
   "yaml",
 }
+local lspconfig = require 'lspconfig'
+lspconfig.yamlls.setup {
+  settings = {
+    yaml = {
+      schemas = { kubernetes = "*.y*ml" },
+    }
+  },
+}
+
+local cmp = require 'cmp'
+lvim.builtin.cmp.mapping = cmp.mapping.preset.insert({
+  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+  ['<C-f>'] = cmp.mapping.scroll_docs(4),
+  ['<C-Space>'] = cmp.mapping.complete(),
+  ['<C-e>'] = cmp.mapping.abort(),
+  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+})
+
 
 lvim.builtin.treesitter.highlight.enabled = true
+
 lvim.builtin.treesitter.context_commentstring.enable = true
 lvim.builtin.treesitter.context_commentstring.enable_autocmd = true
 lvim.builtin.treesitter.rainbow.enable = true
@@ -84,12 +103,10 @@ lvim.lsp.diagnostics.signs.values = {
   { name = "LspDiagnosticsSignHint", text = '' },
   { name = "LspDiagnosticsSignInformation", text = "" },
 }
-
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  { command = "black" }
+  { command = "black" },
 }
-
 
 lvim.builtin.telescope.on_config_done = function(telescope)
   pcall(telescope.load_extension, "frecency")
@@ -350,7 +367,7 @@ lvim.plugins = {
     event = { "BufRead", "BufNew" },
     requires = {
       -- TODO: check if this is missing or if it's interfeering with builtin fzf when it's on
-      { 'junegunn/fzf' },
+      -- { 'junegunn/fzf' },
       { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
     },
     config = function()

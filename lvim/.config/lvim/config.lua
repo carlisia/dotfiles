@@ -283,6 +283,7 @@ lvim.plugins = {
     end,
   },
   { 'nvim-treesitter/nvim-treesitter-refactor' },
+  {  "cuducos/yaml.nvim" },
 
 
   -- UTILS

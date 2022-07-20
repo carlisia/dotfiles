@@ -13,6 +13,8 @@ local terminal_prefix = lvim.builtin.terminal
 terminal_prefix.active = true
 terminal_prefix.direction = "horizontal"
 terminal_prefix.size = 10
+terminal_prefix.shell = "fish"
+terminal_prefix.open_mapping = "<c-m>"
 
 local alpha_prefix = lvim.builtin.alpha
 alpha_prefix.active = true
@@ -283,7 +285,7 @@ lvim.plugins = {
     end,
   },
   { 'nvim-treesitter/nvim-treesitter-refactor' },
-  {  "cuducos/yaml.nvim" },
+  { "cuducos/yaml.nvim" },
 
 
   -- UTILS

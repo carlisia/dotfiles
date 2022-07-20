@@ -23,6 +23,17 @@ alpha_prefix.dashboard.section.header.val = {
   "▌  ▌ ▌▛▀▖▝▀▖▙▀▖▚▗▘▄ ▛▚▀▖",
   "▌  ▌ ▌▌ ▌▞▀▌▌  ▝▞ ▐ ▌▐ ▌",
   "▀▀▘▝▀▘▘ ▘▝▀▘▘   ▘ ▀▘▘▝ ▘",
+  "         ,_---~~~~~----._         ",
+  "  _,,_,*^____      _____``*g*\"*, ",
+  " / __/ /'     ^.  /      \\ ^@q   f ",
+  " [  @f | @))    |  | @))   l  0 _/  ",
+  " \\`/  \\~____ / __ \\_____/    \\   ",
+  "  |           _l__l_           I   ",
+  "  }          [______]           I  ",
+  "  ]            | | |            |  ",
+  "  ]             ~ ~             |  ",
+  "  |                            |   ",
+  "   |                           |   ",
 }
 
 
@@ -131,7 +142,10 @@ lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.notify.active = true
 
 -- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["m"] = { "<cmd>Telescope marks<CR>", "  Marks" }
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["r"] = { "<cmd>RnvimrToggle<CR>", "  Ranger" }
+lvim.builtin.which_key.mappings["u"] = { "<cmd>Telescope oldfiles<CR>", "  Recently Used Files" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },

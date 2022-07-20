@@ -7,7 +7,7 @@ prompt: disabled
 # A pager program to send command output to, e.g. "less". Set the value to "cat" to disable the pager.
 pager: delta -s
 # Aliases allow you to create nicknames for gh commands
-browser: Vivaldi.app
+browser: ""
 aliases:
     co: '!id="$(gh pr list -L100 | fzf | cut -f1)"; [ -n "$id" ] && gh pr checkout "$id"'
     zen: api zen

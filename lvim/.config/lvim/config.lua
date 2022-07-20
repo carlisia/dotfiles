@@ -225,6 +225,12 @@ lvim.plugins = {
 
   -- EDITOR
   {
+    "stevearc/aerial.nvim",
+    config = function()
+      require("aerial").setup({})
+    end,
+  },
+  {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufRead",
     config = function()

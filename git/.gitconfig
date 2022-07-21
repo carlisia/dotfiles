@@ -31,11 +31,11 @@
 	clean = git media clean %f
 	smudge = git media smudge %f
 [core]
-    pager = "diff-so-fancy | less --tabs=4 -RFX"
+    pager = diff-so-fancy | less --tabs=4 -RFX
 	editor = nvim
 	excludesfile = /Users/carlisiac/.gitignore_global
 [interactive]
-	diffFilter = "diff-so-fancy --patch"
+	diffFilter = diff-so-fancy --patch
 
 
 [delta]
@@ -67,3 +67,5 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+[gc]
+	autoDetach = false

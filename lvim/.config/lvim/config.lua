@@ -67,6 +67,11 @@ lvim.builtin.treesitter.ensure_installed = {
   "typescript",
   "yaml",
 }
+lvim.builtin.treesitter.playground.enable = true
+lvim.builtin.treesitter.rainbow.enable = true
+
+
+
 local lspconfig = require 'lspconfig'
 lspconfig.yamlls.setup {
   settings = {
@@ -75,6 +80,7 @@ lspconfig.yamlls.setup {
     }
   },
 }
+
 
 local cmp = require 'cmp'
 lvim.builtin.cmp.mapping = cmp.mapping.preset.insert({

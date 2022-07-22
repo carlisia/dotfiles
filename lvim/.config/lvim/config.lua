@@ -71,6 +71,8 @@ lvim.builtin.treesitter.playground.enable = true
 lvim.builtin.treesitter.rainbow.enable = true
 
 
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 local lspconfig = require 'lspconfig'
 lspconfig.yamlls.setup {

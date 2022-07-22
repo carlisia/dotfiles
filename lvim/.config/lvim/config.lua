@@ -266,6 +266,7 @@ lvim.plugins = {
     "ggandor/lightspeed.nvim",
     event = "BufRead",
   },
+  { "yamatsum/nvim-cursorline" },
   { "itspriddle/vim-marked" },
   {
     -- smooth scrolling

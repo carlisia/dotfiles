@@ -71,9 +71,6 @@ lvim.builtin.treesitter.playground.enable = true
 lvim.builtin.treesitter.rainbow.enable = true
 
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-
 local lspconfig = require 'lspconfig'
 lspconfig.yamlls.setup {
   settings = {
@@ -168,6 +165,9 @@ vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 vim.opt.listchars:append("eol:↴")
 
+-- folding
+vim.opt.foldmethod = "indent"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- NVIMTREE
 -- https://github.com/kyazdani42/nvim-tree.lua
@@ -276,6 +276,12 @@ lvim.plugins = {
       require('config.editor_neoscroll')
     end,
   },
+  { "anuvyklack/pretty-fold.nvim" },
+  {
+    "anuvyklack/fold-preview.nvim",
+    requires = "anuvyklack/keymap-amend.nvim",
+  },
+
 
   -- GIT
   {

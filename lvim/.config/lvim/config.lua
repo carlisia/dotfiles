@@ -1,14 +1,13 @@
-require "config.keymaps"
+-- require "config.keymaps"
 require "config.whichkey"
 
--- gehl  aneral
+
+-- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.auto_complete = true
 lvim.termguicolors = true
 lvim.colorscheme = "onedarker"
-
--- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 
 -- ToggleTerm settings
@@ -16,11 +15,10 @@ local terminal_prefix = lvim.builtin.terminal
 terminal_prefix.active = true
 terminal_prefix.direction = "horizontal"
 terminal_prefix.size = 10
-terminal_prefix.shell = "fish"
-terminal_prefix.open_mapping = "<c-m>"
+terminal_prefix.shell = "/usr/local/bin/bash"
+terminal_prefix.open_mapping = "<c-,>"
 
 local alpha_prefix = lvim.builtin.alpha
-alpha_prefix.active = true
 alpha_prefix.mode = "dashboard"
 alpha_prefix.dashboard.section.header.opts.hl = ""
 alpha_prefix.dashboard.section.header.val = {
@@ -34,7 +32,7 @@ alpha_prefix.dashboard.section.header.val = {
   " [  @f | @))    |  | @))   l  0 _/  ",
   " \\`/  \\~____ / __ \\_____/    \\   ",
   "  |           _l__l_           I   ",
-  "  }          [______]           I  ",
+  "           [______]           I  ",
   "  ]            | | |            |  ",
   "  ]             ~ ~             |  ",
   "  |                            |   ",
@@ -55,49 +53,95 @@ alpha_prefix.dashboard.section.buttons.entries = {
   { "SPC g", "  Git status", "<CMD>Telescope git_status<CR>" }
 }
 
--- Language parsers
-lvim.builtin.treesitter.ensure_installed = {
-  "bash",
-  "c",
-  "go",
-  "json",
-  "lua",
-  "markdown",
-  "python",
-  "typescript",
-  "yaml",
-}
-lvim.builtin.treesitter.playground.enable = true
-lvim.builtin.treesitter.rainbow.enable = true
 
 
-local lspconfig = require 'lspconfig'
-lspconfig.yamlls.setup {
-  settings = {
-    yaml = {
-      schemas = { kubernetes = "*.y*ml" },
-    }
+-- -- Language parsers
+lvim.builtin.treesitter = {
+  ensure_installed = {
+    "bash",
+    "c",
+    "go",
+    "json",
+    "lua",
+    "markdown",
+    "python",
+    "typescript",
+    "yaml",
   },
+
+  rainbow = { enable = true },
+  highlight = { enabled = true },
+
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = true,
+    config = {
+      -- Languages that have a single comment style
+      typescript = "// %s",
+      css = "/* %s */",
+      scss = "/* %s */",
+      html = "<!-- %s -->",
+      svelte = "<!-- %s -->",
+      vue = "<!-- %s -->",
+      json = "",
+    },
+  },
+
+  indent = { enable = true },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = '<c-space>',
+      node_incremental = '<c-space>',
+      -- TODO: I'm not sure for this one.
+      scope_incremental = '<c-s>',
+      node_decremental = '<c-backspace>',
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
+      },
+      goto_next_end = {
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
+      },
+      goto_previous_end = {
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ['<leader>a'] = '@parameter.inner',
+      },
+      swap_previous = {
+        ['<leader>A'] = '@parameter.inner',
+      },
+    },
+  }
 }
 
-
-local cmp = require 'cmp'
-lvim.builtin.cmp.mapping = cmp.mapping.preset.insert({
-  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-  ['<C-f>'] = cmp.mapping.scroll_docs(4),
-  ['<C-Space>'] = cmp.mapping.complete(),
-  ['<C-e>'] = cmp.mapping.abort(),
-  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-})
-
-
-lvim.builtin.treesitter.highlight.enabled = true
-
-lvim.builtin.treesitter.context_commentstring.enable = true
-lvim.builtin.treesitter.context_commentstring.enable_autocmd = true
-lvim.builtin.treesitter.rainbow.enable = true
-
--- vim.diagnostic.config({ virtual_text = false })
 
 lvim.builtin.gitsigns.opts.signs.add.text = ''
 lvim.builtin.gitsigns.opts.signs.change.text = ''
@@ -111,10 +155,7 @@ lvim.lsp.diagnostics.signs.values = {
   { name = "LspDiagnosticsSignHint", text = '' },
   { name = "LspDiagnosticsSignInformation", text = "" },
 }
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-  { command = "black" },
-}
+
 
 lvim.builtin.telescope.on_config_done = function(telescope)
   pcall(telescope.load_extension, "frecency")
@@ -166,20 +207,10 @@ vim.opt.listchars:append("space:⋅")
 vim.opt.listchars:append("eol:↴")
 
 -- folding
-vim.opt.foldmethod = "indent"
+vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
--- NVIMTREE
--- https://github.com/kyazdani42/nvim-tree.lua
--- TODO: configure the core plugins in separate files
--- lvim.builtin.nvimtree.setup.filters.dotfiles = true
--- lvim.builtin.nvimtree.setup.open_on_tab = true
 
-lvim.builtin.nvimtree.setup.view.side = "left"
-
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
--- Builtins
-lvim.builtin.notify.active = true
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["m"] = { "<cmd>Telescope marks<CR>", "  Marks" }
@@ -251,7 +282,8 @@ lvim.plugins = {
     config = function()
       require("indent_blankline").setup {
         char = "▏",
-        filetype_exclude = { "help", "terminal", "dashboard", "NvimTree", "packer", "lsp-installer" },
+        filetype_exclude = { "help", "terminal", "dashboard", "NvimTree", "packer",
+          "lsp-installer" },
         buftype_exclude = { "terminal" },
         show_trailing_blankline_indent = false,
         show_first_indent_level = false,
@@ -375,8 +407,13 @@ lvim.plugins = {
   },
   {
     -- Markers in margin. 'ma' adds marker
-    "kshenoy/vim-signature",
-    event = "BufRead",
+    "chentoast/marks.nvim",
+    config = function()
+      require 'marks'.setup {
+        default_mappings = true,
+        signs = true,
+      }
+    end,
   },
 
 
@@ -477,3 +514,48 @@ lvim.plugins = {
     end,
   },
 }
+
+
+
+-- ensure  servers  are installed. This setup must be called before setting up any server.
+-- make sure server will always be installed even if the server is in skipped_servers (not to be configured) list
+lvim.ensure_installed = {
+  "bashls",
+  "gopls",
+  "jsonls",
+  "marksman",
+  "yamlls",
+  "sumeko_lua"
+}
+
+-- -- language server installation and setup
+lvim.lsp.automatic_configuration.skipped_filetypes = { "TypeScript" }
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "yamlls", "rome" })
+
+
+lvim.lsp.on_attach_callback = function(client, bufnr)
+  require("lspconfig")["yamlls"].setup {
+    -- root_dir = util.find_git_ancestor,
+    on_attach = on_attach,
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    settings = {
+      yaml = {
+        hover = true,
+        completion = true,
+        validate = true,
+        schemaStore = {
+          enable = true,
+          url = "https://www.schemastore.org/api/json/catalog.json"
+        },
+        schemas = {
+          ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+          -- TODO: add  schema for Kubernetes.
+          --  the yamlls
+          -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.24.0/deployment-apps-v1.json"] = "/*"
+          -- ["kubernetes"] = "*.y*ml"
+          -- ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/main/v1.24.0-standalone-strict/all.json"] = "/*",
+        }
+      },
+    }
+  }
+end

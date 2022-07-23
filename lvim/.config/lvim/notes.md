@@ -31,3 +31,7 @@ when reading docs, `c-]` on top of a symbol will jump to its source/reference.
 \-- https://github.com/LunarVim/LunarVim/blob/c6431a09c7e6541dba46a7f7e6db7a34d0d00092/utils/installer/config.example.lua
 \-- get all k8s schemas!!
 \-- https://github.com/LunarVim/LunarVim/issues/437
+
+## UI
+
+fold plugin can be configured per language and also per fold method.

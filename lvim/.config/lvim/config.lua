@@ -308,7 +308,23 @@ lvim.plugins = {
       require('config.editor_neoscroll')
     end,
   },
-  { "anuvyklack/pretty-fold.nvim" },
+  {
+    "anuvyklack/pretty-fold.nvim",
+    config = function()
+      require('pretty-fold').setup {
+        process_comment_signs = false,
+        fill_char = '━',
+        sections = {
+          left = {
+            '━ ', function() return string.rep('*', vim.v.foldlevel) end, ' ━┫', 'content', '┣'
+          },
+          right = {
+            '┫ ', 'number_of_folded_lines', ': ', 'percentage', ' ┣━━',
+          }
+        }
+      }
+    end,
+  },
   {
     "anuvyklack/fold-preview.nvim",
     requires = "anuvyklack/keymap-amend.nvim",

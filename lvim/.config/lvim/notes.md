@@ -35,3 +35,11 @@ when reading docs, `c-]` on top of a symbol will jump to its source/reference.
 ## UI
 
 fold plugin can be configured per language and also per fold method.
+
+### problems
+
+nvimtree
+- the setting to not open on start is on (exclude files from ooepn) but it's not working
+*   folder icons are not working for some files, csv
+*   git status icons are not showing
+*   lvim is not giving me the option to set auto\_close to true on purpose.

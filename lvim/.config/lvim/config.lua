@@ -39,7 +39,6 @@ alpha_prefix.dashboard.section.header.val = {
   "   |                           |   ",
 }
 
-
 alpha_prefix.dashboard.section.buttons.entries = {
   { "SPC f", "  Find File", "<CMD>Telescope find_files<CR>" },
   { "SPC n", "  New File", "<CMD>ene!<CR>" },
@@ -142,6 +141,10 @@ lvim.builtin.treesitter = {
   }
 }
 
+-- TODO: this config should not be needed but it's not working.
+lvim.builtin.nvimtree.setup.git.ignore = true
+lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
+lvim.builtin.nvimtree.setup.renderer.highlight_git = true
 
 lvim.builtin.gitsigns.opts.signs.add.text = ''
 lvim.builtin.gitsigns.opts.signs.change.text = ''

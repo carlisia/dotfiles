@@ -1,47 +1,40 @@
 local M = {}
 
-M.options = {
-  user = function()
-    local opt = vim.opt
+local override = require("custom.override")
 
-    opt.tabstop = 4
-    opt.undofile = false
-  end,
+-- M.options = {
+-- 	nvChad = {
+-- 		-- update_url = "https://github.com/carlisia/NvChad",
+-- 		update_url = "https://github.com/NvChad/NvChad",
+-- 		update_branch = "main",
+-- 	},
+-- }
 
-  nvChad = {
-    -- update_url = "https://github.com/carlisia/NvChad",
-    update_url = "https://github.com/NvChad/NvChad",
-    update_branch = "main",
-  },
+M.plugins = {
+	override = {
+		["kyazdani42/nvim-tree.lua"] = override.nvimtree,
+		["nvim-treesitter/nvim-treesitter"] = override.treesitter,
+		["lukas-reineke/indent-blankline.nvim"] = override.blankline,
+		-- ["ray-x/lsp_signature.nvim"] = override.lsp_signature,
+		["lewis6991/gitsigns.nvim"] = override.gitsigns,
+	},
+
+	user = require("custom.plugins"),
 }
 
 M.ui = {
-  theme = "tokyodark",
+	theme = "acquarium",
+	hl_add = require("custom.highlights").new_hlgroups,
+	theme_toggle = { "gruvchad", "gruvbox_light" },
+  hl_override = require("custom.highlights").overriden_hlgroups,
+	-- tabufline = { lazyload = false },
+	-- statusline = { separator_style = "arrow" },
 }
 
-M.plugins = {
-  -- remove = {
-    -- "neovim/nvim-lspconfig",
-    -- "folke/which-key.nvim",
-    -- "williamboman/nvim-lsp-installer",
-  -- },
-  user = require("custom.plugins"),
-}
+-- M.mappings = {
+-- 	telescope = require("custom.mappings").telescope,
+-- }
 
-M.plugins.override = {
-  ["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
-  ["windwp/nvim-autopairs"] = { check_ts = true },
-  ["NvChad/nvim-colorizer.lua"] = require("custom.plugins.common").colorizer(),
-  -- ["neovim/nvim-lspconfig"] = require("custom.plugins.common").lspconfig(),
-  ["ray-x/lsp_signature.nvim"] = require("custom.plugins.common").lsp_signature(),
-  ["kyazdani42/nvim-tree.lua"] = require("custom.plugins.common").nvimtree(),
-  ["nvim-treesitter/nvim-treesitter"] = require("custom.plugins.common").treesitter(),
-  ["nvim-telescope/telescope.nvim"] = require("custom.plugins.common").telescope(),
-  ["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
-}
-
-M.mappings = {
-  telescope = require("custom.mappings").telescope,
-}
+M.mappings = require("custom.mappings")
 
 return M

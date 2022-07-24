@@ -2,6 +2,9 @@ local setup_lsp = function()
   require("base46").load_highlight "lsp"
   require "nvchad_ui.lsp"
 
+  local on_attach = require("plugins.configs.lspconfig").on_attach
+local capabilities = require("plugins.configs.lspconfig").capabilities
+
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem = {
     documentationFormat = { "markdown", "plaintext" },
@@ -28,7 +31,7 @@ local setup_lsp = function()
     end
     require("custom.mappings").lspconfig(client, bufnr)
 
-    if client.server_capabilities.signatureHelpProvider then
+    if client.server_capabilities.signatureHelpProvider then:vsp
       require("nvchad_ui.signature").setup(client)
     end
   end

@@ -1,7 +1,7 @@
 #!/usr/bin/bash
- 
+
 if [ -z "$USER" ]; then
-    USER=$(id -un)
+	USER=$(id -un)
 fi
 
 echo >&2 "====================================================================="
@@ -33,12 +33,12 @@ chmod a+x "$HOME"/bin/nvim
 
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 # - Run  these two commands in your terminal to add Homebrew to your PATH:
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/codespace/.profile
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>/home/codespace/.profile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # - Install Homebrew's dependencies if you have sudo access:
-    sudo apt-get install build-essential
+sudo apt-get install build-essential
 # - We recommend that you install GCC:
-    brew install gcc
+brew install gcc
 
 brew install stow
 
@@ -50,9 +50,8 @@ stow gh -t "$HOME"
 
 stow git -t "$HOME"
 
-bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/rolling/utils/installer/install-neovim-from-release)
-
-stow nvim -t "$HOME"
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+ln -s "$HOME"/working/src/github.com/carlisia/dotfiles/nvim/lua/custom/ ~/.config/nvim/lua/
 
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
 
@@ -60,3 +59,14 @@ stow lvim -t "$HOME"
 
 stow starfish -t "$HOME"
 
+# for nvim, need to install:
+brew install luarocks
+luarocks install luacheck
+luarocks install lanes
+npm install -g @fsouza/prettierd
+
+# the language servers
+brew install lua-language-server
+npm i -g bash-language-server
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
+npm i @johnnymorganz/stylua

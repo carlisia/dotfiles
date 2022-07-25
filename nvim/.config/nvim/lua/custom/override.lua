@@ -130,4 +130,23 @@ M.gitsigns = {
 	},
 }
 
+M.indentline = {
+	indentLine_enabled = 1,
+	char = "▏",
+	filetype_exclude = {
+		"help",
+		"terminal",
+		"alpha",
+		"packer",
+		"lspinfo",
+		"TelescopePrompt",
+		"TelescopeResults",
+		"Mason",
+		"",
+	},
+	space_char_blankline = " ",
+	show_current_context = true,
+	show_current_context_start = true,
+}
+
 return M

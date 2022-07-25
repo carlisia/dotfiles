@@ -124,14 +124,6 @@ return {
 		end,
 	},
 	--- EDITOR
-	["lukas-reineke/indent-blankline.nvim"] = {
-		config = function()
-			require("custom.plugins.blankline")
-		end,
-		setup = function()
-			require("custom.utils").packer_lazy_load("indent-blankline.nvim")
-		end,
-	},
 	["itspriddle/vim-marked"] = {
 		setup = function()
 			require("custom.utils").packer_lazy_load("vim-marked")

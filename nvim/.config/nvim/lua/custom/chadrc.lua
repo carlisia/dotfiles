@@ -27,8 +27,6 @@ M.options = {
 M.ui = {
 	theme = "ayu-dark",
 	theme_toggle = { "onedark", "tokyodark" },
-	hl_add = require("custom.highlights").new_hlgroups,
-	hl_override = require("custom.highlights").overriden_hlgroups,
 }
 
 M.plugins = {
@@ -44,10 +42,10 @@ M.plugins = {
 		-- ["goolord/alpha-nvim"] = override.alpha,
 		["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
 		["windwp/nvim-autopairs"] = { check_ts = true },
-		["NvChad/nvim-colorizer.lua"] = override.colorizer,
 		["neovim/nvim-lspconfig"] = require("custom.plugins.common").lspconfig_setup(),
 		["ray-x/lsp_signature.nvim"] = override.lsp_signature,
 		["nvim-telescope/telescope.nvim"] = override.telescope,
+
 		["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
 	},
 

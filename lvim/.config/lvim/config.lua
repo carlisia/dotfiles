@@ -328,10 +328,10 @@ lvim.plugins = {
       }
     end,
   },
-  {
-    "anuvyklack/fold-preview.nvim",
-    requires = "anuvyklack/keymap-amend.nvim",
-  },
+  -- {
+  --   "anuvyklack/fold-preview.nvim",
+  --   requires = "anuvyklack/keymap-amend.nvim",
+  -- },
   { "mg979/vim-visual-multi" },
 
 

@@ -1,30 +1,21 @@
 local M = {}
 
-local override = require("custom.override")
+local override = require "custom.override"
 
 M.options = {
-	nvChad = {
-		-- update_url = "https://github.com/carlisia/NvChad",
-		update_url = "https://github.com/NvChad/NvChad",
-		update_branch = "main",
-	},
-}
+  user = function()
+    local opt = vim.opt
+    -- local g = vim.g
 
-M.plugins = {
-  remove = {
-		"neovim/nvim-lspconfig",
-	},
+    opt.tabstop = 4
+    opt.undofile = false
+  end,
 
-  override = {
-    ["kyazdani42/nvim-tree.lua"] = override.nvimtree,
-    ["nvim-treesitter/nvim-treesitter"] = override.treesitter,
-    ["lukas-reineke/indent-blankline.nvim"] = override.blankline,
-    -- ["ray-x/lsp_signature.nvim"] = override.lsp_signature,
-    ["lewis6991/gitsigns.nvim"] = override.gitsigns,
-    ["neovim/nvim-lspconfig"] = require("custom.plugins.common").lspconfig(),
+  nvChad = {
+    -- update_url = "https://github.com/carlisia/NvChad",
+    update_url = "https://github.com/NvChad/NvChad",
+    update_branch = "main",
   },
-
-  user = require("custom.plugins"),
 }
 
 M.ui = {
@@ -32,16 +23,35 @@ M.ui = {
   hl_add = require("custom.highlights").new_hlgroups,
   theme_toggle = { "gruvchad", "gruvbox_light" },
   hl_override = require("custom.highlights").overriden_hlgroups,
-  -- tabufline = { lazyload = false },
-  -- statusline = { separator_style = "arrow" },
 }
 
--- M.mappings = {
--- 	telescope = require("custom.mappings").telescope,
--- }
+M.plugins = {
+  remove = {
+    "neovim/nvim-lspconfig",
+    -- "williamboman/nvim-lsp-installer",
+  },
 
-M.mappings = require("custom.mappings")
+  override = {
+    ["kyazdani42/nvim-tree.lua"] = override.nvimtree,
+    ["nvim-treesitter/nvim-treesitter"] = override.treesitter,
+    ["lukas-reineke/indent-blankline.nvim"] = override.blankline,
+    -- ["goolord/alpha-nvim"] = override.alpha,
+    ["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
+    ["windwp/nvim-autopairs"] = { check_ts = true },
+    ["NvChad/nvim-colorizer.lua"] = require("custom.plugins.common").colorizer(),
+    ["neovim/nvim-lspconfig"] = require("custom.plugins.common").lspconfig(),
+    ["ray-x/lsp_signature.nvim"] = require("custom.plugins.common").lsp_signature(),
+    ["nvim-telescope/telescope.nvim"] = require("custom.plugins.common").telescope(),
+    -- ["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
+  },
 
+  user = require "custom.plugins",
+}
+
+-- M.mappings = require("custom.-- mappings")
+-- M.mappings.telescope = require("custom.mappings").telescope
+M.mappings = {
+  telescope = require("custom.mappings").telescope,
+}
 
 return M
-

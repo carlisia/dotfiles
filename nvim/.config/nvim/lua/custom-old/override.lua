@@ -3,6 +3,7 @@ local M = {}
 M.treesitter = {
   ensure_installed = {
     "go",
+    "vim",
     "json",
     "toml",
     "markdown",
@@ -12,9 +13,11 @@ M.treesitter = {
     "norg",
     "yaml",
   },
-  autopairs = { enable = true },
-  context_commentstring = { enable = true },
-  highlight = { enable = true, use_languagetree = true },
+	autopairs = { enable = true },
+	context_commentstring = { enable = true },
+	highlight = { enable = true, use_languagetree = true },
+	indent = { enable = true },
+	matchup = { enable = true },
 }
 
 -- M.lsp_signature = {
@@ -26,20 +29,10 @@ M.treesitter = {
 -- }
 
 M.nvimtree = {
-  disable_netrw = true,
-  hijack_netrw = true,
-  open_on_setup = false,
-  ignore_ft_on_setup = { "alpha" },
-  hijack_cursor = true,
-  hijack_unnamed_buffer_when_opening = false,
-  update_cwd = true,
-  update_focused_file = {
-    enable = true,
-    update_cwd = false,
-  },
   git = {
     enable = true,
     ignore = true,
+    show_on_dirs = true,
   },
 
   renderer = {
@@ -48,18 +41,19 @@ M.nvimtree = {
       show = {
         git = true,
         folder_arrow = false,
-        file = true,
-        folder = true,
       },
     },
     indent_markers = { enable = true },
   },
+
   filters = { exclude = {} },
-  view = { hide_root_folder = false, adaptive_size = true },
+  view = { hide_root_folder = false, adaptive_size = false },
+  -- open_on_tab = true,
+  create_in_closed_folder = true,
 }
 
 M.blankline = {
-  filetype_exclude = {
+    filetype_exclude = {
     "help",
     "terminal",
     "alpha",
@@ -70,7 +64,15 @@ M.blankline = {
     "nvchad_cheatsheet",
     "lsp-installer",
     "norg",
+    "",
   },
+  char = "▏",
+  buftype_exclude = { "terminal" },
+  show_trailing_blankline_indent = false,
+  show_first_indent_level = false,
+  space_char_blankline = " ",
+  show_current_context = true,
+  show_current_context_start = true,
 }
 
 M.gitsigns = {
@@ -105,7 +107,7 @@ M.gitsigns = {
       numhl = "GitSignsChangeNr",
       linehl = "GitSignsChangeLn",
     },
-  },
+  }
 }
 
 return M

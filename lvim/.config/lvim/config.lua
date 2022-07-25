@@ -257,7 +257,7 @@ lvim.plugins = {
     end,
   },
 
-  -- COLOR
+  -- COLOR -- 
   { "lunarvim/colorschemes" },
   {
     "christianchiarulli/nvcode-color-schemes.vim",

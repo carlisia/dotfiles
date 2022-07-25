@@ -6,23 +6,10 @@ end
 
 local b = null_ls.builtins
 local sources = {
-
-   -- c/c++
-   -- b.formatting.clang_format,
-
-   -- python
-   -- b.formatting.black,
-
-   -- rust
-   b.formatting.rustfmt,
-
    -- JS html css stuff
    b.formatting.prettierd.with {
       filetypes = { "html", "json", "scss", "css", "javascript", "javascriptreact", "typescript" },
    },
-   --    b.diagnostics.eslint.with {
-   --       command = "eslint_d",
-   --    },
 
    -- Lua
    b.formatting.stylua,

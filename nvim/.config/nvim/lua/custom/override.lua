@@ -48,7 +48,7 @@ M.nvimtree = {
 
   filters = { exclude = {} },
   view = { hide_root_folder = false, adaptive_size = false },
-  open_on_tab = true,
+  -- open_on_tab = true,
   create_in_closed_folder = true,
 }
 

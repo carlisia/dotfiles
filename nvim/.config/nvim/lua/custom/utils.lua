@@ -27,6 +27,12 @@ function M.create_dirs()
    end
 end
 
+function M.packer_lazy_load(plugin)
+   vim.defer_fn(function()
+      require("packer").loader(plugin)
+   end, 0)
+end
+
 function M.search_and_replace()
    -- grab content of " register"
    local content, v_mode = vim.fn.getreg '"', false

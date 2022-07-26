@@ -138,30 +138,117 @@ return {
 		disable = false,
 		cmd = "Alpha",
 	},
-
-	["https://git.sr.ht/~whynothugo/lsp_lines.nvim"] = {
-		config = function()
-			require("lsp_lines").setup({
-				vim.diagnostic.config({
-					virtual_text = false,
-				}),
-			})
-		end,
-	},
-	["rcarriga/nvim-notify"] = {
-		config = function()
-			require("notify").setup({
-				stages = "fade_in_slide_out",
-				background_colour = "FloatShadow",
-				timeout = 3000,
-			})
-			vim.notify = require("notify")
-		end,
-	},
 	["glepnir/lspsaga.nvim"] = {
 		config = function()
 			local saga = require("lspsaga")
 			saga.init_lsp_saga()
 		end,
 	},
+	-- dim inactive windows
+	["andreadev-it/shade.nvim"] = {
+		module = "shade",
+		config = function()
+			require("custom.plugins.smolconfigs").shade()
+		end,
+	},
+	["Pocco81/AutoSave.nvim"] = {
+		module = "autosave",
+		config = function()
+			require("custom.plugins.smolconfigs").autosave()
+		end,
+	},
+	["rcarriga/nvim-notify"] = {},
 }
+--
+-- {
+-- 	"f-person/git-blame.nvim",
+-- 	event = "BufRead",
+-- 	config = function()
+-- 		vim.cmd("highlight default link gitblame SpecialComment")
+-- 		vim.g.gitblame_enabled = 0
+-- 	end,
+-- },
+-- {
+-- 	-- Markers in margin. 'ma' adds marker
+-- 	"chentoast/marks.nvim",
+-- 	config = function()
+-- 		require("marks").setup({
+-- 			default_mappings = true,
+-- 			signs = true,
+-- 		})
+-- 	end,
+-- },
+--
+-- {
+-- 	"Mofiqul/trld.nvim",
+-- 	config = function()
+-- 		require("config.util_trld")
+-- 	end,
+-- },
+--
+-- {
+-- 	"simrat39/symbols-outline.nvim",
+-- 	cmd = "SymbolsOutline",
+-- },
+
+-- {
+-- 	"folke/todo-comments.nvim",
+-- 	requires = "nvim-lua/plenary.nvim",
+-- 	config = function()
+-- 		require("config.util_todo")
+-- 	end,
+-- },
+-- -- UTILS
+-- {
+-- 	-- Dev docs
+-- 	"rhysd/devdocs.vim",
+-- },
+--
+-- -- LANGUAGES
+-- {
+-- 	"ray-x/go.nvim",
+-- 	config = function()
+-- 		require("config.lang_go")
+-- 	end,
+-- },
+--
+-- { "cuducos/yaml.nvim" },
+--
+--
+--
+-- -- GIT
+-- {
+--   "sindrets/diffview.nvim",
+--   event = "BufRead",
+-- },
+-- {
+--   -- https://github.com/ruifm/gitlinker.nvim
+--   'ruifm/gitlinker.nvim',
+--   requires = 'nvim-lua/plenary.nvim',
+--   event = "BufRead",
+--   config = function()
+--     require("gitlinker").setup {
+--       opts = {
+--         mappings = "<leader>gy",
+--       },
+--     }
+--   end,
+-- },
+-- { "jesseduffield/lazygit" },
+-- {
+--   "pwntester/octo.nvim",
+--   event = "BufRead",
+--   requires = {
+--     'nvim-lua/plenary.nvim',
+--     'nvim-telescope/telescope.nvim',
+--     'kyazdani42/nvim-web-devicons',
+--   },
+--   config = function()
+--     require('config.git_octo')
+--   end
+-- },
+--   {
+--   "anuvyklack/fold-preview.nvim",
+--   requires = "anuvyklack/keymap-amend.nvim",
+-- },
+-- { "mg979/vim-visual-multi" },

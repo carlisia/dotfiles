@@ -17,15 +17,14 @@ M.options = {
 }
 
 M.ui = {
-	theme = "ayu-dark",
+	theme = "aquarium",
 	theme_toggle = { "onedark", "tokyodark" },
 }
 
 M.plugins = {
 	remove = {
 		"neovim/nvim-lspconfig",
-		"folke/lua-dev.nvim",
-		"norcalli/nvim-colorizer.lua",
+		"NvChad/nvim-colorizer.lua",
 	},
 
 	override = {

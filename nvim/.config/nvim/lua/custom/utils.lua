@@ -7,6 +7,11 @@ function M.echo(opts)
 	if opts == nil or type(opts) ~= "table" then
 		return
 	end
+	vim.api.opt.shell = "/usr/local/bin/bash"
+	vim.opt.termguicolors = true
+	vim.opt.list = true
+	vim.opt.listchars:append("space:⋅")
+
 	vim.api.nvim_echo(opts, false, {})
 end
 

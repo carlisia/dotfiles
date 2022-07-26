@@ -1,11 +1,6 @@
 vim.opt.rtp:append(vim.fn.stdpath("config") .. "/lua/custom/runtime")
 vim.opt.pumheight = 30
 
-vim.opt.shell = "/usr/local/bin/bash"
-vim.opt.termguicolors = true
-vim.opt.list = true
-vim.opt.listchars:append("space:⋅")
-
 vim.defer_fn(function()
 	-- Create directory if missing: https://github.com/jghauser/mkdir.nvim
 	vim.cmd([[autocmd BufWritePre * lua require('custom.utils').create_dirs()]])
@@ -18,8 +13,31 @@ vim.defer_fn(function()
 	vim.cmd("silent! command Sudowrite lua require('custom.utils').sudo_write()")
 end, 0)
 
+local new_cmd = vim.api.nvim_create_user_command
 local api = vim.api
+
+new_cmd("EnableShade", function()
+	require("shade").setup()
+end, {})
+
+new_cmd("EnableAutosave", function()
+	require("autosave").setup()
+end, {})
+
 local autocmd = api.nvim_create_autocmd
+local opt_local = vim.opt_local
+
+-- autocmds
+-- pretty up norg ft!
+autocmd("FileType", {
+	pattern = "norg",
+	callback = function()
+		opt_local.number = false
+		opt_local.cole = 1
+		opt_local.foldlevel = 10
+		opt_local.signcolumn = "yes:2"
+	end,
+})
 
 -- Dynamic terminal padding with/without nvim (for siduck's st only)
 -- replace stuff from file

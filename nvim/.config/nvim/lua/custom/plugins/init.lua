@@ -9,7 +9,7 @@ return {
 	["stevearc/dressing.nvim"] = {
 		opt = true,
 		setup = function()
-			require("custom.utils").packer_lazy_load("dressing.nvim")
+			require("custom.extensions").packer_lazy_load("dressing.nvim")
 		end,
 	},
 	["kevinhwang91/nvim-bqf"] = { ft = "qf" },
@@ -31,7 +31,7 @@ return {
 			require("custom.plugins.lspconfig")
 		end,
 		setup = function()
-			require("custom.utils").packer_lazy_load("nvim-lspconfig")
+			require("custom.extensions").packer_lazy_load("nvim-lspconfig")
 			-- reload the current file so lsp actually starts for it
 			vim.defer_fn(function()
 				vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
@@ -58,7 +58,7 @@ return {
 			require("telescope").load_extension("fzf")
 		end,
 		setup = function()
-			require("custom.utils").packer_lazy_load("telescope.nvim")
+			require("custom.extensions").packer_lazy_load("telescope.nvim")
 		end,
 	},
 	["hrsh7th/cmp-cmdline"] = {
@@ -81,7 +81,7 @@ return {
 			})
 		end,
 		setup = function()
-			require("custom.utils").packer_lazy_load("nvim-cmp")
+			require("custom.extensions").packer_lazy_load("nvim-cmp")
 		end,
 	},
 	["ggandor/lightspeed.nvim"] = {
@@ -93,7 +93,7 @@ return {
 			})
 		end,
 		setup = function()
-			require("custom.utils").packer_lazy_load("lightspeed.nvim")
+			require("custom.extensions").packer_lazy_load("lightspeed.nvim")
 		end,
 	},
 	["VonHeikemen/searchbox.nvim"] = {
@@ -126,12 +126,12 @@ return {
 	--- EDITOR
 	["itspriddle/vim-marked"] = {
 		setup = function()
-			require("custom.utils").packer_lazy_load("vim-marked")
+			require("custom.extensions").packer_lazy_load("vim-marked")
 		end,
 	},
 	["mg979/vim-visual-multi"] = {
 		setup = function()
-			require("custom.utils").packer_lazy_load("vim-visual-multi")
+			require("custom.extensions").packer_lazy_load("vim-visual-multi")
 		end,
 	},
 	["goolord/alpha-nvim"] = {

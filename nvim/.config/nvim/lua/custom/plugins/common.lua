@@ -118,11 +118,11 @@ end
 function M.searchbox()
 	-- search
 	map("n", "<leader>s", "<cmd>lua require('searchbox').match_all({confirm = 'menu'})<CR>")
-	map("x", "<leader>s", "\"yy<cmd>lua require('custom.utils').search()<CR>")
+	map("x", "<leader>s", "\"yy<cmd>lua require('custom.extensions').search()<CR>")
 
 	-- search and replace
 	map("n", "<leader>r", "<cmd>lua require('searchbox').replace({confirm = 'menu'})<CR>")
-	map("x", "<leader>r", "\"yy<cmd>lua require('custom.utils').search_and_replace()<CR>")
+	map("x", "<leader>r", "\"yy<cmd>lua require('custom.extensions').search_and_replace()<CR>")
 end
 
 return M

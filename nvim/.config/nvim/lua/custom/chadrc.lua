@@ -45,6 +45,6 @@ M.plugins = {
 	user = require("custom.plugins"),
 }
 
-M.mappings = require("custom.mappings")
+M.mappings = require("custom.plugins.mappings")
 
 return M

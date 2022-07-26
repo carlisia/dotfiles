@@ -1,6 +1,6 @@
 local M = {}
 
-local override = require("custom.override")
+local override = require("custom.plugins.override")
 
 M.options = {
 	user = function()

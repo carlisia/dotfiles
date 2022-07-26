@@ -24,6 +24,8 @@ M.ui = {
 M.plugins = {
 	remove = {
 		"neovim/nvim-lspconfig",
+		"folke/lua-dev.nvim",
+		"norcalli/nvim-colorizer.lua",
 	},
 
 	override = {
@@ -36,6 +38,8 @@ M.plugins = {
 		["nvim-telescope/telescope.nvim"] = override.telescope,
 		["lukas-reineke/indent-blankline.nvim"] = override.indentline,
 		["lewis6991/gitsigns.nvim"] = override.gitsigns,
+		["goolord/alpha-nvim"] = override.alpha,
+
 		["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
 	},
 

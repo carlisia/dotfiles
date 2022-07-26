@@ -9,7 +9,7 @@ return {
 	["stevearc/dressing.nvim"] = {
 		opt = true,
 		setup = function()
-			require("custom.utils").packer_lazy_load("dressing.nvim", 500)
+			require("custom.utils").packer_lazy_load("dressing.nvim")
 		end,
 	},
 	["kevinhwang91/nvim-bqf"] = { ft = "qf" },
@@ -58,7 +58,7 @@ return {
 			require("telescope").load_extension("fzf")
 		end,
 		setup = function()
-			require("custom.utils").packer_lazy_load("telescope.nvim", 1000)
+			require("custom.utils").packer_lazy_load("telescope.nvim")
 		end,
 	},
 	["hrsh7th/cmp-cmdline"] = {
@@ -132,6 +132,36 @@ return {
 	["mg979/vim-visual-multi"] = {
 		setup = function()
 			require("custom.utils").packer_lazy_load("vim-visual-multi")
+		end,
+	},
+	["goolord/alpha-nvim"] = {
+		disable = false,
+		cmd = "Alpha",
+	},
+
+	["https://git.sr.ht/~whynothugo/lsp_lines.nvim"] = {
+		config = function()
+			require("lsp_lines").setup({
+				vim.diagnostic.config({
+					virtual_text = false,
+				}),
+			})
+		end,
+	},
+	["rcarriga/nvim-notify"] = {
+		config = function()
+			require("notify").setup({
+				stages = "fade_in_slide_out",
+				background_colour = "FloatShadow",
+				timeout = 3000,
+			})
+			vim.notify = require("notify")
+		end,
+	},
+	["glepnir/lspsaga.nvim"] = {
+		config = function()
+			local saga = require("lspsaga")
+			saga.init_lsp_saga()
 		end,
 	},
 }

@@ -49,19 +49,6 @@ M.lsp_signature = {
 	fix_pos = false,
 }
 
-M.colorizer = {
-	user_default_options = {
-		names = false, -- "Name" codes like Blue
-		RRGGBBAA = true, -- #RRGGBBAA hex codes
-		rgb_fn = true, -- CSS rgb() and rgba() functions
-		hsl_fn = true, -- CSS hsl() and hsla() functions
-		css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-		css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-		-- Available modes: foreground, background
-		mode = "background", -- Set the display mode.
-	},
-}
-
 M.nvimtree = {
 	disable_netrw = true,
 	hijack_netrw = true,
@@ -147,6 +134,49 @@ M.indentline = {
 	space_char_blankline = " ",
 	show_current_context = true,
 	show_current_context_start = true,
+}
+
+M.alpha = {
+	header = {
+		val = {
+			"         ,_---~~~~~----._         ",
+			'  _,,_,*^____      _____``*g*"*, ',
+			" / __/ /'     ^.  /      \\ ^@q   f ",
+			" [  @f | @))    |  | @))   l  0 _/  ",
+			" \\`/  \\~____ / __ \\_____/    \\   ",
+			"  |           _l__l_           I   ",
+			"           [______]           I  ",
+			"  ]            | | |            |  ",
+			"  ]             ~ ~             |  ",
+			"  |                            |   ",
+			"   |                           |   ",
+		},
+	},
+
+	-- buttons = {
+	-- 	{ "SPC f", "  Find File", "<CMD>Telescope find_files<CR>" },
+	-- 	{ "SPC n", "  New File", "<CMD>ene!<CR>" },
+	-- 	{ "SPC p", "  Recent Projects ", "<CMD>Telescope projects<CR>" },
+	-- 	{ "SPC u", "  Recently Used Files", "<CMD>Telescope oldfiles<CR>" },
+	-- 	{ "SPC s", "  Load last session", "<CMD>SessionLoad<CR>" },
+	-- 	{ "SPC r", "  Ranger", "<CMD>RnvimrToggle<CR>" },
+	-- 	{ "SPC m", "  Marks              ", "<CMD>Telescope marks<CR>" },
+	-- 	{ "SPC w", "  Find Word", "<CMD>Telescope live_grep<CR>" },
+	-- 	{ "SPC c", "  Edit Configuration", "<CMD>e ~/.config/lvim/config.lua<CR>" },
+	-- 	{ "SPC g", "  Git status", "<CMD>Telescope git_status<CR>" },
+	-- },
+}
+
+M.whichkey = {
+	window = {
+		border = "shadow", -- none/single/double/shadow
+	},
+
+	triggers_blacklist = {
+		-- list of mode / prefixes that should never be hooked by WhichKey
+		i = { "j", "k" },
+		v = { "j", "k" },
+	},
 }
 
 return M

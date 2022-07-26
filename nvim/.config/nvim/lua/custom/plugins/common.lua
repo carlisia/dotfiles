@@ -116,13 +116,13 @@ function M.lspconfig_keys(client, bufnr)
 end
 
 function M.searchbox()
-	map("n", "<leader>s", "<cmd>lua require('searchbox').replace({confirm = 'menu'})<CR>")
-	map(
-		"x",
-		"<leader>s",
-		"\"yy<cmd>lua require('custom.utils').search_and_replace()<CR>"
-		-- "<cmd>lua require('custom').search_and_replace()<cr>"
-	)
+	-- search
+	map("n", "<leader>s", "<cmd>lua require('searchbox').match_all({confirm = 'menu'})<CR>")
+	map("x", "<leader>s", "\"yy<cmd>lua require('custom.utils').search()<CR>")
+
+	-- search and replace
+	map("n", "<leader>r", "<cmd>lua require('searchbox').replace({confirm = 'menu'})<CR>")
+	map("x", "<leader>r", "\"yy<cmd>lua require('custom.utils').search_and_replace()<CR>")
 end
 
 return M

@@ -16,6 +16,7 @@ local M = {}
 M.Dashboard = {
 	n = {
 		["<leader>m"] = { "<cmd>Telescope marks<CR>", "  Marks" },
+		["<leader>n"] = { "<cmd>Notifications<CR>", "History  " },
 		-- ["P"] = { "<cmd>Telescope projects<CR>", "Projects" },
 		-- 	["r"] = { "<cmd>RnvimrToggle<CR>", "  Ranger" },
 		-- ["u<leader>u"] = { "<cmd>Telescope oldfiles<CR>", "  Recently Used Files" },

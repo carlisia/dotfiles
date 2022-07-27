@@ -1,6 +1,8 @@
 vim.opt.rtp:append(vim.fn.stdpath("config") .. "/lua/custom/runtime")
 vim.opt.pumheight = 30
 
+require("custom.pluagins.mappings").general()
+
 vim.defer_fn(function()
 	-- Create directory if missing: https://github.com/jghauser/mkdir.nvim
 	vim.cmd([[autocmd BufWritePre * lua require('custom.extensions').create_dirs()]])

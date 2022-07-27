@@ -31,7 +31,7 @@ M.telescope = {
 		},
 		file_ignore_patterns = { "node_modules/", ".git/" },
 	},
-	extensions = {
+	exteKnsions = {
 		fzf = {
 			fuzzy = true,
 			override_generic_sorter = true,
@@ -79,7 +79,7 @@ M.nvimtree = {
 		indent_markers = { enable = true },
 	},
 	filters = { exclude = {} },
-	view = { hide_root_folder = false, adaptive_size = false },
+	view = { hide_root_folder = false, adaptive_size = true },
 }
 
 M.gitsigns = {
@@ -119,7 +119,6 @@ M.gitsigns = {
 
 M.indentline = {
 	indentLine_enabled = 1,
-	char = "▏",
 	filetype_exclude = {
 		"help",
 		"terminal",
@@ -178,5 +177,9 @@ M.whichkey = {
 		v = { "j", "k" },
 	},
 }
+
+M.lspconfig_setup = function()
+	require("custom.plugins.lspconfig")
+end
 
 return M

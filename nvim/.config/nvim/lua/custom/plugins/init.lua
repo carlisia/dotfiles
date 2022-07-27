@@ -69,7 +69,7 @@ return {
 				sources = {
 					{ name = "buffer" },
 				},
-				mapping = cmp.mapping.preset.cmdline({}),
+				mapping = cmp.mappings.preset.cmdline({}),
 			})
 			cmp.setup.cmdline(":", {
 				sources = cmp.config.sources({
@@ -106,7 +106,7 @@ return {
 			end,
 		},
 		setup = function()
-			require("custom.plugins.common").searchbox()
+			require("custom.plugins.mappings").searchbox()
 		end,
 	},
 	["windwp/nvim-spectre"] = {
@@ -157,19 +157,33 @@ return {
 			require("custom.plugins.smolconfigs").autosave()
 		end,
 	},
+
 	["rcarriga/nvim-notify"] = {},
+
+	["Mofiqul/trld.nvim"] = {
+		config = function()
+			require("custom.plugins.config.editor")
+		end,
+	},
+	["sindrets/diffview.nvim"] = {
+		setup = function()
+			require("custom.extensions").packer_lazy_load("diffview.nvim")
+		end,
+	},
+	["nvim-telescope/telescope-project.nvim"] = {
+		event = "BufWinEnter",
+		config = function()
+			vim.cmd([[packadd telescope.nvim]])
+		end,
+	},
+	["f-person/git-blame.nvim"] = {
+		event = "BufRead",
+		config = function()
+			vim.cmd("highlight default link gitblame SpecialComment")
+			vim.g.gitblame_enabled = 0
+		end,
+	},
 }
---
--- {
--- 	"f-person/git-blame.nvim",
--- 	event = "BufRead",
--- 	config = function()
--- 		vim.cmd("highlight default link gitblame SpecialComment")
--- 		vim.g.gitblame_enabled = 0
--- 	end,
--- },
--- {
--- 	-- Markers in margin. 'ma' adds marker
 -- 	"chentoast/marks.nvim",
 -- 	config = function()
 -- 		require("marks").setup({
@@ -178,13 +192,7 @@ return {
 -- 		})
 -- 	end,
 -- },
---
--- {
--- 	"Mofiqul/trld.nvim",
--- 	config = function()
--- 		require("config.util_trld")
--- 	end,
--- },
+
 --
 -- {
 -- 	"simrat39/symbols-outline.nvim",
@@ -217,10 +225,7 @@ return {
 --
 --
 -- -- GIT
--- {
---   "sindrets/diffview.nvim",
---   event = "BufRead",
--- },
+
 -- {
 --   -- https://github.com/ruifm/gitlinker.nvim
 --   'ruifm/gitlinker.nvim',
@@ -234,7 +239,6 @@ return {
 --     }
 --   end,
 -- },
--- { "jesseduffield/lazygit" },
 -- {
 --   "pwntester/octo.nvim",
 --   event = "BufRead",

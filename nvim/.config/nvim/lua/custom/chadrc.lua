@@ -24,7 +24,7 @@ M.ui = {
 M.plugins = {
 	remove = {
 		"neovim/nvim-lspconfig",
-		"NvChad/nvim-colorizer.lua",
+		-- "NvChad/nvim-colorizer.lua",
 	},
 
 	override = {
@@ -32,10 +32,10 @@ M.plugins = {
 		["nvim-treesitter/nvim-treesitter"] = override.treesitter,
 		["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
 		["windwp/nvim-autopairs"] = { check_ts = true },
-		["neovim/nvim-lspconfig"] = require("custom.plugins.common").lspconfig_setup(),
+		["neovim/nvim-lspconfig"] = override.lspconfig_setup,
 		["ray-x/lsp_signature.nvim"] = override.lsp_signature,
 		["nvim-telescope/telescope.nvim"] = override.telescope,
-		["lukas-reineke/indent-blankline.nvim"] = override.indentline,
+		["lukas-reineke/indent-blankline.nvim"] = override.lspconfig_setup,
 		["lewis6991/gitsigns.nvim"] = override.gitsigns,
 		["goolord/alpha-nvim"] = override.alpha,
 
@@ -45,6 +45,8 @@ M.plugins = {
 	user = require("custom.plugins"),
 }
 
-M.mappings = require("custom.plugins.mappings")
+M.mappings = {
+	telescope = require("custom.plugins.mappings").telescope,
+}
 
 return M

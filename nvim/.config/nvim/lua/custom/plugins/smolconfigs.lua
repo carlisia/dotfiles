@@ -30,4 +30,8 @@ M.autosave = function()
 	end
 end
 
+M.lspconfig = function()
+	return "custom.plugins.lspconfig"
+end
+
 return M

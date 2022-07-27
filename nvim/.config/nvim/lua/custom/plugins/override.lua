@@ -79,7 +79,7 @@ M.nvimtree = {
 		indent_markers = { enable = true },
 	},
 	filters = { exclude = {} },
-	view = { hide_root_folder = false, adaptive_size = true },
+	view = { hide_root_folder = false, adaptive_size = false },
 }
 
 M.gitsigns = {
@@ -115,24 +115,6 @@ M.gitsigns = {
 			linehl = "GitSignsChangeLn",
 		},
 	},
-}
-
-M.indentline = {
-	indentLine_enabled = 1,
-	filetype_exclude = {
-		"help",
-		"terminal",
-		"alpha",
-		"packer",
-		"lspinfo",
-		"TelescopePrompt",
-		"TelescopeResults",
-		"Mason",
-		"",
-	},
-	space_char_blankline = " ",
-	show_current_context = true,
-	show_current_context_start = true,
 }
 
 M.alpha = {

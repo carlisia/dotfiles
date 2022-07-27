@@ -69,7 +69,7 @@ return {
 				sources = {
 					{ name = "buffer" },
 				},
-				mapping = cmp.mappings.preset.cmdline({}),
+				mapping = cmp.mapping.preset.cmdline({}),
 			})
 			cmp.setup.cmdline(":", {
 				sources = cmp.config.sources({
@@ -105,9 +105,6 @@ return {
 				require("searchbox").setup()
 			end,
 		},
-		setup = function()
-			require("custom.plugins.mappings").searchbox()
-		end,
 	},
 	["windwp/nvim-spectre"] = {
 		module = "spectre",
@@ -140,21 +137,20 @@ return {
 	},
 	["glepnir/lspsaga.nvim"] = {
 		config = function()
-			local saga = require("lspsaga")
-			saga.init_lsp_saga()
+			require("custom.plugins.config.ui").lspsaga()
 		end,
 	},
 	-- dim inactive windows
 	["andreadev-it/shade.nvim"] = {
 		module = "shade",
 		config = function()
-			require("custom.plugins.smolconfigs").shade()
+			require("custom.plugins.config.ui").shade()
 		end,
 	},
 	["Pocco81/AutoSave.nvim"] = {
 		module = "autosave",
 		config = function()
-			require("custom.plugins.smolconfigs").autosave()
+			require("custom.plugins.config.ui").autosave()
 		end,
 	},
 
@@ -162,14 +158,10 @@ return {
 
 	["Mofiqul/trld.nvim"] = {
 		config = function()
-			require("custom.plugins.config.editor")
+			require("custom.plugins.config.ui")
 		end,
 	},
-	["sindrets/diffview.nvim"] = {
-		setup = function()
-			require("custom.extensions").packer_lazy_load("diffview.nvim")
-		end,
-	},
+	["sindrets/diffview.nvim"] = {},
 	["nvim-telescope/telescope-project.nvim"] = {
 		event = "BufWinEnter",
 		config = function()

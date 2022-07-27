@@ -26,7 +26,7 @@ local setup_lsp = function()
 			client.resolved_capabilities.document_formatting = false
 			client.resolved_capabilities.document_range_formatting = false
 		end
-		require("custom.plugins.mappings").lspconfig_keys(client, bufnr)
+		require("custom.plugins.bindings").lspconfig_keys(client, bufnr)
 
 		if client.server_capabilities.signatureHelpProvider then
 			require("nvchad_ui.signature").setup(client)

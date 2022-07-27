@@ -1,0 +1,7 @@
+-- local M = {}
+--
+-- M.lspconfig = function()
+-- 	return "custom.plugins.lspconfig"
+-- end
+--
+-- return M

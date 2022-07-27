@@ -17,7 +17,7 @@ M.options = {
 }
 
 M.ui = {
-	theme = "catppuccin",
+	theme = "jellybeans",
 	theme_toggle = { "onedark", "tokyodark" },
 }
 

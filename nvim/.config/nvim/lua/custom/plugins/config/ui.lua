@@ -74,4 +74,14 @@ M.lspsaga = function()
 	lspsaga.init_lsp_saga()
 end
 
+M.lspsaga = function()
+	local present, lspsaga = pcall(require, "lspsaga")
+
+	if not present then
+		return
+	end
+
+	lspsaga.init_lsp_saga()
+end
+
 return M

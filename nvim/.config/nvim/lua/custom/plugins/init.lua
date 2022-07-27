@@ -12,6 +12,7 @@ return {
 			require("custom.extensions").packer_lazy_load("dressing.nvim")
 		end,
 	},
+
 	["kevinhwang91/nvim-bqf"] = { ft = "qf" },
 
 	["folke/trouble.nvim"] = {
@@ -158,15 +159,15 @@ return {
 
 	["Mofiqul/trld.nvim"] = {
 		config = function()
-			require("custom.plugins.config.ui")
+			require("custom.plugins.config.ui").trld()
 		end,
 	},
 	["sindrets/diffview.nvim"] = {},
 	["nvim-telescope/telescope-project.nvim"] = {
 		event = "BufWinEnter",
-		config = function()
-			vim.cmd([[packadd telescope.nvim]])
-		end,
+		-- config = function()
+		-- 	vim.cmd([[packadd telescope.nvim]])
+		-- end,
 	},
 	["f-person/git-blame.nvim"] = {
 		event = "BufRead",
@@ -175,6 +176,10 @@ return {
 			vim.g.gitblame_enabled = 0
 		end,
 	},
+
+	["tpope/vim-fugitive"] = {},
+
+	["andymass/vim-matchup"] = {},
 }
 -- 	"chentoast/marks.nvim",
 -- 	config = function()

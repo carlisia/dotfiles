@@ -1,7 +1,7 @@
 vim.opt.rtp:append(vim.fn.stdpath("config") .. "/lua/custom/runtime")
 vim.opt.pumheight = 30
 
-require("custom.pluagins.bindings).general()
+require("custom.pluagins.bindings").general()
 
 vim.defer_fn(function()
 	-- Create directory if missing: https://github.com/jghauser/mkdir.nvim
@@ -24,6 +24,10 @@ end, {})
 
 new_cmd("EnableAutosave", function()
 	require("autosave").setup()
+end, {})
+
+new_cmd("EnableTelescope", function()
+	require("telescope").setup()
 end, {})
 
 local autocmd = api.nvim_create_autocmd

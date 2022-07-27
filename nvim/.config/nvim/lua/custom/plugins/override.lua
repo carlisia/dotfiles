@@ -15,6 +15,11 @@ M.treesitter = {
 	autopairs = { enable = true },
 	context_commentstring = { enable = true },
 	highlight = { enable = true, use_languagetree = true },
+	matchup = {
+		enable = true, -- mandatory, false will disable the whole extension
+		disable = { "c", "ruby" }, -- optional, list of language that will be disabled
+		-- [options]
+	},
 }
 
 M.telescope = {

@@ -11,25 +11,126 @@ local toggle_lazygit = function()
 end
 
 M.keys = {
-	[";"] = { "<cmd>Alpha<CR>", "Dashboard" },
-	q = { ":q<cr>", "Quit" },
-	Q = { ":wq<cr>", "Save & Quit" },
-	w = { ":w<cr>", "Save" },
-	x = { ":bdelete<cr>", "Close" },
-	E = { ":e ~/.config/nvim/init.lua<cr>", "Edit config" },
-	r = { ":Telescope live_grep<cr>", "Telescope Live Grep" },
+	[";"] = { "<cmd>Alpha<CR>", "dash" },
 
-	n = { "<cmd>Telescope notify<cr>", "View Notifications" },
+	["/"] = "which_key_ignore",
+	e = { "<cmd> NvimTreeToggle <CR>", "which_key_ignore" },
+	n = { "<cmd>Telescope notify<cr>", "which_key_ignore" },
+	b = "which_key_ignore",
+	c = "which_key_ignore",
+	-- TODO: out set number line somewhere
+	r = "which_key_ignore",
+	v = "which_key_ignore",
+	x = "which_key_ignore",
 
-	s = {
-		name = "find stuff",
-		f = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", " all files" },
-		t = { "<cmd>Telescope live_grep<cr>", " text in files" },
-		b = { "<cmd> Telescope buffers <CR>", " buffers" },
-		o = { "<cmd> Telescope oldfiles <CR>", " old files" },
+	d = {
+		name = "diagnostics",
+		R = { "<cmd>Lspsaga rename<cr>", "Rename" },
+		a = { "<cmd>Lspsaga code_action<cr>", "Code Action" },
+		e = { "<cmd>Lspsaga show_line_diagnostics<cr>", "Show Line Diagnostics" },
+		n = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Go To Next Diagnostic" },
+
+		--    	buf_k("n", m.workspace_diagnostics, function()
+		-- 	if vim.diagnostic.get()[1] then
+		-- 		require("trouble").open("workspace_diagnostics")
+		-- 	else
+		-- 		vim.notify("No workspace diagnostics found.")
+		-- 	end
+		-- end)
+		-- --
+		-- buf_k("n", m.buffer_diagnostics, function()
+		-- 	if vim.diagnostic.get()[1] then
+		-- 		require("trouble").open("document_diagnostics")
+		-- 	else
+		-- 		vim.notify("No docunment diagnostics found.")
+		-- 	end
+		-- end)
+
+		f = {
+			function()
+				vim.diagnostic.open_float()
+			end,
+			"   floating diagnostic",
+		},
+
+		["[d"] = {
+			function()
+				vim.diagnostic.goto_prev()
+			end,
+			"   goto prev",
+		},
+
+		["d]"] = {
+			function()
+				vim.diagnostic.goto_next()
+			end,
+			"   goto_next",
+		},
+
+		q = {
+			function()
+				vim.diagnostic.setloclist()
+			end,
+			"   diagnostic setloclist",
+		},
+
+		-- ["<leader>ra"] = {
+		--   function()
+		--     require("nvchad_ui.renamer").open()
+		--   end,
+		--   "   lsp rename",
+		-- },
+
+		-- ["ca"] = {
+		-- 	function()
+		-- 		vim.lsp.buf.code_action()
+		-- 	end,
+		-- 	"   lsp code_action",
+		-- },
+	},
+
+	f = {
+		name = "  file handling",
+
+		a = "which_key_ignore",
+		b = "which_key_ignore",
+		f = "which_key_ignore",
+		h = "which_key_ignore",
+		o = "which_key_ignore",
+
+		m = {
+			function()
+				vim.lsp.buf.formatting()
+			end,
+			" formatt",
+		},
+		w = { ":w<cr>", "Write" },
+		x = { ":bdelete<cr>", "Close" },
+		q = { ":q<cr>", "Quit" },
+		s = { ":wq<cr>", "Save  & Quit" },
+		S = { ":wa<cr>", "Save All" },
+		Q = { ":qa<cr>", "Quit All" },
 	},
 
 	g = {
+		name = "  goto code",
+		t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "  type definition" },
+		d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "  definition" },
+		D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "  declaration" },
+		i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "  implementation" },
+		r = { "<cmd>lua vim.lsp.buf.references()<cr>", "  references" },
+		k = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "  signature" },
+		K = { "<cmd>Lspsaga hover_doc<cr>", "   hover" },
+
+		-- ["K"] = {
+		-- 	function()
+		-- 		vim.lsp.buf.hover()
+		-- 	end,
+		-- 	"   lsp hover",
+		-- },
+	},
+
+	G = {
 		name = "Git",
 		j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
 		k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
@@ -59,37 +160,6 @@ M.keys = {
 		l = { toggle_lazygit, "LazyGit" },
 	},
 
-	t = {
-		name = "term",
-		-- pick a hidden term
-		t = { "<cmd> Telescope terms <CR>", "   pick hidde /n term" },
-		b = { ":ToggleTerm<cr>", "Split Below" },
-		f = { toggle_float, "Floating Terminal" },
-	},
-
-	l = {
-		name = "LSP",
-		i = { ":LspInfo<cr>", "Language Servers" },
-		ii = { ":LspInstallInfo<cr>", "Manage Language Servers" },
-		k = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature Help" },
-		K = { "<cmd>Lspsaga hover_doc<cr>", "Hover Commands" },
-		w = { "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>", "Add Workspace Folder" },
-		W = { "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>", "Remove Workspace Folder" },
-		l = {
-			"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
-			"List Workspace Folders",
-		},
-		t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "Type Definition" },
-		d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Go To Definition" },
-		D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Go To Declaration" },
-		r = { "<cmd>lua vim.lsp.buf.references()<cr>", "References" },
-		R = { "<cmd>Lspsaga rename<cr>", "Rename" },
-		a = { "<cmd>Lspsaga code_action<cr>", "Code Action" },
-		e = { "<cmd>Lspsaga show_line_diagnostics<cr>", "Show Line Diagnostics" },
-		n = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Go To Next Diagnostic" },
-		N = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Go To Previous Diagnostic" },
-	},
-
 	p = {
 		name = "Packer",
 		c = { "<cmd>PackerLoad<cr>", "Load" },
@@ -101,6 +171,41 @@ M.keys = {
 		s = { "<cmd>PackerStatus<cr>", "Status" },
 		u = { "<cmd>PackerUpdate<cr>", "Update" },
 	},
+
+	l = {
+		name = "LSP",
+		i = { ":LspInfo<cr>", "Language Servers" },
+		m = { ":LspInstallInfo<cr>", "Manage Language Servers" },
+		l = { ":LspInstall sumneko_lua<cr>", "install Lua" },
+
+		w = {
+			name = "workspace",
+			a = { "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>", "Add Workspace Folder" },
+			r = { "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>", "Remove Workspace Folder" },
+			l = {
+				"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
+				"List Workspace Folders",
+			},
+		},
+	},
+
+	s = {
+		name = "search stuff",
+		f = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", " files" },
+		t = { "<cmd>Telescope live_grep<cr>", " text" },
+		b = { "<cmd> Telescope buffers <CR>", " buffers" },
+		o = { "<cmd> Telescope oldfiles <CR>", " old files" },
+	},
+
+	t = {
+		name = "term",
+		-- pick a hidden term
+		t = { "<cmd> Telescope terms <CR>", "   pick hidde /n term" },
+		b = { ":ToggleTerm<cr>", "Split Below" },
+		f = { toggle_float, "Floating Terminal" },
+	},
+
+	---HELP STUFF
 
 	h = {
 		name = "Help",
@@ -121,137 +226,11 @@ M.keys = {
 	},
 
 	-- focus
-	e = { "<cmd> NvimTreeToggle <CR>", "   toggle nvimtree" },
 
 	i = {
+		name = "which_key_ignore",
 		["jk"] = { "<ESC>", "escape insert mode", noremap = true },
 		["kj"] = { "<ESC>", "escape insert mode", noremap = true },
-	},
-
-	-- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
-	["gD"] = {
-		function()
-			vim.lsp.buf.declaration()
-		end,
-		"   lsp declaration",
-	},
-
-	["gd"] = {
-		function()
-			vim.lsp.buf.definition()
-		end,
-		"   lsp definition",
-	},
-
-	["K"] = {
-		function()
-			vim.lsp.buf.hover()
-		end,
-		"   lsp hover",
-	},
-
-	["gi"] = {
-		function()
-			vim.lsp.buf.implementation()
-		end,
-		"   lsp implementation",
-	},
-
-	["<leader>ls"] = {
-		function()
-			vim.lsp.buf.signature_help()
-		end,
-		"   lsp signature_help",
-	},
-
-	["<leader>D"] = {
-		function()
-			vim.lsp.buf.type_definition()
-		end,
-		"   lsp definition type",
-	},
-
-	-- ["<leader>ra"] = {
-	--   function()
-	--     require("nvchad_ui.renamer").open()
-	--   end,
-	--   "   lsp rename",
-	-- },
-
-	["<leader>ca"] = {
-		function()
-			vim.lsp.buf.code_action()
-		end,
-		"   lsp code_action",
-	},
-
-	["gr"] = {
-		function()
-			vim.lsp.buf.references()
-		end,
-		"   lsp references",
-	},
-
-	["<leader>f"] = {
-		function()
-			vim.diagnostic.open_float()
-		end,
-		"   floating diagnostic",
-	},
-
-	["[d"] = {
-		function()
-			vim.diagnostic.goto_prev()
-		end,
-		"   goto prev",
-	},
-
-	["d]"] = {
-		function()
-			vim.diagnostic.goto_next()
-		end,
-		"   goto_next",
-	},
-
-	["<leader>q"] = {
-		function()
-			vim.diagnostic.setloclist()
-		end,
-		"   diagnostic setloclist",
-	},
-
-	["<leader>fm"] = {
-		function()
-			vim.lsp.buf.formatting()
-		end,
-		"   lsp formatting",
-	},
-
-	["<leader>wa"] = {
-		function()
-			vim.lsp.buf.add_workspace_folder()
-		end,
-		"   add workspace folder",
-	},
-
-	["<leader>wr"] = {
-		function()
-			vim.lsp.buf.remove_workspace_folder()
-		end,
-		"   remove workspace folder",
-	},
-
-	["<leader>wl"] = {
-		function()
-			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end,
-		"   list workspace folders",
-	},
-}
-
-M.telescope = {
-	n = {
-		-- find
 	},
 }
 

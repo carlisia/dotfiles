@@ -224,14 +224,11 @@ M.keys = {
 		t = { "<cmd> Telescope themes <CR>", "   nvchad themes" },
 		ht = { "<cmd> Telescope help_tags <CR>", "  Telescope help page" },
 	},
+}
 
-	-- focus
-
-	i = {
-		name = "which_key_ignore",
-		["jk"] = { "<ESC>", "escape insert mode", noremap = true },
-		["kj"] = { "<ESC>", "escape insert mode", noremap = true },
-	},
+M.i = {
+	["jk"] = { "<ESC>", "escape insert mode" },
+	["kj"] = { "<ESC>", "escape insert mode" },
 }
 
 local map = vim.keymap.set

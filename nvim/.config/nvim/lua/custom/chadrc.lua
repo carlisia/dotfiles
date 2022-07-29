@@ -11,9 +11,10 @@ M.options = {
 }
 
 M.ui = {
-	theme = "decay",
+	theme = "onedarker",
+	-- theme = "decay",
 	theme_toggle = { "onedark", "tokyodark" },
-	hl_override = require("custom.highlights"),
+	-- hl_override = require("custom.highlights"),
 }
 
 M.plugins = {

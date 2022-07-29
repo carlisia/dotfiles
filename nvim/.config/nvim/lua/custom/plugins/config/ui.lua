@@ -40,6 +40,26 @@ M.trld = function()
 	})
 end
 
+M.notify = function()
+	local present, notify = pcall(require, "notify")
+
+	if not present then
+		vim.notify("notify not found.")
+		return
+	end
+
+	pcall(function()
+		require("telescope").load_extension("notify")
+	end)
+
+	notify.setup({
+		background_colour = "#121212",
+		fps = 60,
+		-- stages = "fades",
+	})
+	vim.api.nvim_set_keymap("n", "q", "", { callback = notify.dismiss })
+end
+
 M.shade = function()
 	local present, shade = pcall(require, "shade")
 

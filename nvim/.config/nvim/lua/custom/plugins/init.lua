@@ -141,14 +141,32 @@ return {
 		end,
 	},
 
-	["rcarriga/nvim-notify"] = {},
+	["rcarriga/nvim-notify"] = {
+		after = "telescope.nvim",
+		config = function()
+			require("custom.plugins.config.ui").notify()
+		end,
+		setup = function()
+			require("custom.extensions").packer_lazy_load("telescope.nvim")
+		end,
+	},
 
 	["Mofiqul/trld.nvim"] = {
 		config = function()
 			require("custom.plugins.config.ui").trld()
 		end,
 	},
-	["sindrets/diffview.nvim"] = {},
+
+	["sindrets/diffview.nvim"] = {
+		-- TODO: fix the setup
+		-- config = function()
+		-- 	require("custom.plugins.config.diffview")
+		-- end,
+		-- setup = function()
+		-- 	require("custom.extensions").packer_lazy_load("diffview.nvim")
+		-- end,
+	},
+
 	["nvim-telescope/telescope-project.nvim"] = {
 		event = "BufWinEnter",
 		-- config = function()
@@ -175,6 +193,9 @@ return {
 	},
 	["folke/todo-comments.nvim"] = {
 		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("custom.plugins.config.todo")
+		end,
 		setup = function()
 			require("custom.extensions").packer_lazy_load("todo-comments.nvim")
 		end,
@@ -186,89 +207,30 @@ return {
 		end,
 		setup = function()
 			require("custom.extensions").packer_lazy_load("which-key.nvim")
-
-			-- reload the current file so lsp actually starts for it
-			-- vim.defer_fn(function()
-			-- 	vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
-			-- end, 0)
 		end,
 	},
-	-- },
-	--
-	-- config = function()
-	-- 	require("spectre").setup({
-	-- 		color_devicons = true,
-	-- 		open_cmd = "new",
-	-- 		is_insert_mode = true,
-	-- 	})
-	-- end,
-	-- setup = function()
-	-- 	vim.cmd('silent! command FindReplace lua require("spectre").open({})')
-	-- end,
+	["ruifm/gitlinker.nvim"] = {
+		requires = "nvim-lua/plenary.nvim",
+		event = "BufRead",
+		config = function()
+			require("gitlinker").setup({
+				opts = {
+					mappings = "<leader>gy",
+				},
+			})
+		end,
+		setup = function()
+			require("custom.extensions").packer_lazy_load("gitlinker.nvim")
+		end,
+	},
+	["akinsho/toggleterm.nvim"] = {
+		tag = "v2.*",
+		config = function()
+			require("toggleterm").setup()
+		end,
+		setup = function()
+			require("custom.extensions").packer_lazy_load("toggleterm.nvim")
+		end,
+	},
+	-- TODO: CHANGE THEME
 }
-
--- 	"chentoast/marks.nvim",
--- 	config = function()
--- 		require("marks").setup({
--- 			default_mappings = true,
--- 			signs = true,
--- 		})
--- 	end,
--- },
-
---
--- {
--- 	"simrat39/symbols-outline.nvim",
--- 	cmd = "SymbolsOutline",
--- },
-
--- -- UTILS
--- {
--- 	-- Dev docs
--- 	"rhysd/devdocs.vim",
--- },
---
--- -- LANGUAGES
--- {
--- 	"ray-x/go.nvim",
--- 	config = function()
--- 		require("config.lang_go")
--- 	end,
--- },
---
--- { "cuducos/yaml.nvim" },
---
---
---
--- -- GIT
-
--- {
---   -- https://github.com/ruifm/gitlinker.nvim
---   'ruifm/gitlinker.nvim',
---   requires = 'nvim-lua/plenary.nvim',
---   event = "BufRead",
---   config = function()
---     require("gitlinker").setup {
---       opts = {
---         mappings = "<leader>gy",
---       },
---     }
---   end,
--- },
--- {
---   "pwntester/octo.nvim",
---   event = "BufRead",
---   requires = {
---     'nvim-lua/plenary.nvim',
---     'nvim-telescope/telescope.nvim',
---     'kyazdani42/nvim-web-devicons',
---   },
---   config = function()
---     require('config.git_octo')
---   end
--- },
---   {
---   "anuvyklack/fold-preview.nvim",
---   requires = "anuvyklack/keymap-amend.nvim",
--- },
--- { "mg979/vim-visual-multi" },

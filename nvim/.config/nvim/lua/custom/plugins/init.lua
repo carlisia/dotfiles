@@ -65,21 +65,7 @@ return {
 	["hrsh7th/cmp-cmdline"] = {
 		after = "nvim-cmp",
 		config = function()
-			local cmp = require("cmp")
-			cmp.setup.cmdline("/", {
-				sources = {
-					{ name = "buffer" },
-				},
-				mapping = cmp.mapping.preset.cmdline({}),
-			})
-			cmp.setup.cmdline(":", {
-				sources = cmp.config.sources({
-					{ name = "path" },
-				}, {
-					{ name = "cmdline" },
-				}),
-				mapping = cmp.mapping.preset.cmdline({}),
-			})
+			require("custom.plugins.config.editor").cmp()
 		end,
 		setup = function()
 			require("custom.extensions").packer_lazy_load("nvim-cmp")
@@ -136,7 +122,7 @@ return {
 		disable = false,
 		cmd = "Alpha",
 	},
-	["glepnir/lspsaga.nvim"] = {
+	["kkharji/lspsaga.nvim"] = {
 		config = function()
 			require("custom.plugins.config.ui").lspsaga()
 		end,
@@ -180,7 +166,47 @@ return {
 	["tpope/vim-fugitive"] = {},
 
 	["andymass/vim-matchup"] = {},
+
+	["liuchengxu/vim-clap"] = {
+		command = ":Clap install-binary!",
+		config = function()
+			require("custom.plugins.config.ui").clap()
+		end,
+	},
+	["folke/todo-comments.nvim"] = {
+		requires = "nvim-lua/plenary.nvim",
+		setup = function()
+			require("custom.extensions").packer_lazy_load("todo-comments.nvim")
+		end,
+	},
+	["folke/which-key.nvim"] = {
+		after = "telescope.nvim",
+		config = function()
+			require("custom.plugins.config.whichkey")
+		end,
+		setup = function()
+			require("custom.extensions").packer_lazy_load("which-key.nvim")
+
+			-- reload the current file so lsp actually starts for it
+			-- vim.defer_fn(function()
+			-- 	vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
+			-- end, 0)
+		end,
+	},
+	-- },
+	--
+	-- config = function()
+	-- 	require("spectre").setup({
+	-- 		color_devicons = true,
+	-- 		open_cmd = "new",
+	-- 		is_insert_mode = true,
+	-- 	})
+	-- end,
+	-- setup = function()
+	-- 	vim.cmd('silent! command FindReplace lua require("spectre").open({})')
+	-- end,
 }
+
 -- 	"chentoast/marks.nvim",
 -- 	config = function()
 -- 		require("marks").setup({
@@ -196,13 +222,6 @@ return {
 -- 	cmd = "SymbolsOutline",
 -- },
 
--- {
--- 	"folke/todo-comments.nvim",
--- 	requires = "nvim-lua/plenary.nvim",
--- 	config = function()
--- 		require("config.util_todo")
--- 	end,
--- },
 -- -- UTILS
 -- {
 -- 	-- Dev docs

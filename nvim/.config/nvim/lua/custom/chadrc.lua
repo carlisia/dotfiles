@@ -3,12 +3,6 @@ local M = {}
 local override = require("custom.plugins.override")
 
 M.options = {
-	user = function()
-		local opt = vim.opt
-		opt.tabstop = 4
-		opt.undofile = false
-	end,
-
 	nvChad = {
 		-- update_url = "https://github.com/carlisia/NvChad",
 		update_url = "https://github.com/NvChad/NvChad",
@@ -17,8 +11,9 @@ M.options = {
 }
 
 M.ui = {
-	theme = "jellybeans",
+	theme = "decay",
 	theme_toggle = { "onedark", "tokyodark" },
+	hl_override = require("custom.highlights"),
 }
 
 M.plugins = {
@@ -38,6 +33,7 @@ M.plugins = {
 		["nvim-telescope/telescope.nvim"] = override.telescope,
 		["lewis6991/gitsigns.nvim"] = override.gitsigns,
 		["goolord/alpha-nvim"] = override.alpha,
+		-- ["folke/which-key.nvim"] = override.wk,
 
 		["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
 	},
@@ -45,11 +41,6 @@ M.plugins = {
 	user = require("custom.plugins"),
 }
 
--- M.mappings = {
--- 	shade = require("custom.plugins.mappings").shade,
--- 	searchbox = require("custom.plugins.mappings").searchbox,
--- }
-
-M.mappings = require("custom.plugins.mappings")
+-- M.mappings = require("custom.mappings")
 
 return M

@@ -14,7 +14,6 @@ M.keys = {
 	[";"] = { "<cmd>Alpha<CR>", "dash" },
 
 	["/"] = "which_key_ignore",
-	e = { "<cmd> NvimTreeToggle <CR>", "which_key_ignore" },
 	n = { "<cmd>Telescope notify<cr>", "which_key_ignore" },
 	b = "which_key_ignore",
 	c = "which_key_ignore",
@@ -205,11 +204,6 @@ M.keys = {
 	},
 }
 
-M.i = {
-	["jk"] = { "<ESC>", "escape insert mode" },
-	["kj"] = { "<ESC>", "escape insert mode" },
-}
-
 M.gotocode = {
 	g = {
 		name = "  goto code",
@@ -230,7 +224,35 @@ M.gotocode = {
 	},
 }
 
-local map = vim.keymap.set
+local map = vim.api.nvim_set_keymap
+M.extrakeys = function()
+	map("n", "<C-h>", "<C-w>h", { noremap = true, silent = false })
+	map("n", "<C-l>", "<C-w>l", { noremap = true, silent = false })
+	map("n", "<C-j>", "<C-w>j", { noremap = true, silent = false })
+	map("n", "<C-k>", "<C-w>k", { noremap = true, silent = false })
+
+	map("i", "jk", "<ESC>", { noremap = true, silent = false })
+	map("i", "kj", "<ESC>", { noremap = true, silent = false })
+
+	map("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+
+	map("v", "<", "<gv", { noremap = true, silent = false })
+	map("v", ">", ">gv", { noremap = true, silent = false })
+
+	map(
+		"n",
+		"<C-u>",
+		"<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<cr>",
+		{ noremap = true, silent = true }
+	)
+	map(
+		"n",
+		"<C-d>",
+		"<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<cr>",
+		{ noremap = true, silent = true }
+	)
+end
+
 function M.lspconfig_keys(client, bufnr)
 	local m = {
 		declaration = "gD",

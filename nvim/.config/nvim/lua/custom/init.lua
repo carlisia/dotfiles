@@ -1,7 +1,5 @@
-vim.opt.rtp:append(vim.fn.stdpath("config") .. "/lua/custom/runtime")
-vim.opt.pumheight = 30
+require("custom.settings")
 
-require("custom.mappings").extrakeys()
 -- to set an external theme:
 -- - install the theme
 -- do `vim.cmd "colorscheme tokyonight" `

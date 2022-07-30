@@ -112,52 +112,31 @@ M.keys = {
 		Q = { ":qa<cr>", "Quit All" },
 	},
 
+	z = { toggle_lazygit, "!!! LazyGit" },
 	g = {
-		name = "  goto code",
-		t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "  type definition" },
-		d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "  definition" },
-		D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "  declaration" },
-		i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "  implementation" },
-		r = { "<cmd>lua vim.lsp.buf.references()<cr>", "  references" },
-		k = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "  signature" },
-		K = { "<cmd>Lspsaga hover_doc<cr>", "   hover" },
+		name = "git",
+		t = "which_key_ignore",
 
-		-- ["K"] = {
-		-- 	function()
-		-- 		vim.lsp.buf.hover()
-		-- 	end,
-		-- 	"   lsp hover",
-		-- },
-	},
+		b = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
 
-	G = {
-		name = "Git",
-		j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
-		k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-		ll = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
-		p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
-		r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
-		R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
-		s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-		u = {
-			"<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-			"Undo Stage Hunk",
-		},
 		o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-		c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-		C = {
-			"<cmd>Telescope git_bcommits<cr>",
-			"Checkout commit(for current file)",
-		},
-		dd = {
-			"<cmd>Gitsigns diffthis HEAD<cr>",
-			"Git Diff",
-		},
+		-- b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+		C = { "<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)" },
+		d = { "<cmd>Gitsigns diffthis HEAD<cr>", "!!! Git Diff" },
 
-		cc = { "<cmd> Telescope git_commits <CR>", "   git commits" },
-		dc = { "<cmd> Telescope git_status <CR>", "  git status" },
-		l = { toggle_lazygit, "LazyGit" },
+		c = { "<cmd> Telescope git_commits <CR>", "!!!    git commits" },
+		s = { "<cmd> Telescope git_status <CR>", "!!!   git status" },
+
+		h = {
+			name = "Hunk stuff",
+			p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
+			r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
+			R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
+			s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
+			u = { "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", "Undo Stage Hunk" },
+			j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
+			k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
+		},
 	},
 
 	p = {
@@ -229,6 +208,26 @@ M.keys = {
 M.i = {
 	["jk"] = { "<ESC>", "escape insert mode" },
 	["kj"] = { "<ESC>", "escape insert mode" },
+}
+
+M.gotocode = {
+	g = {
+		name = "  goto code",
+		t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "  type definition" },
+		d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "  definition" },
+		D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "  declaration" },
+		i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "  implementation" },
+		r = { "<cmd>lua vim.lsp.buf.references()<cr>", "  references" },
+		k = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "  signature" },
+		K = { "<cmd>Lspsaga hover_doc<cr>", "   hover" },
+
+		-- ["K"] = {
+		-- 	function()
+		-- 		vim.lsp.buf.hover()
+		-- 	end,
+		-- 	"   lsp hover",
+		-- },
+	},
 }
 
 local map = vim.keymap.set

@@ -61,10 +61,19 @@ local iopts = {
 	nowait = true, -- use `nowait` when creating keymaps
 }
 
+local noprefixopts = {
+	mode = "n", -- INSERT mode
+	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+	silent = true, -- use `silent` when creating keymaps
+	noremap = true, -- use `noremap` when creating keymaps
+	nowait = true, -- use `nowait` when creating keymaps
+}
+
 local mappings = require("custom.mappings")
 
 wk.register(mappings.keys, opts)
 wk.register(mappings.keys, vopts)
 wk.register(mappings.i, iopts)
+wk.register(mappings.gotocode, noprefixopts)
 
 wk.setup(options)

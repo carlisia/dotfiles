@@ -21,7 +21,6 @@ M.plugins = {
 	remove = {
 		"neovim/nvim-lspconfig",
 		"folke/which-key.nvim",
-		-- "NvChad/nvim-colorizer.lua",
 	},
 
 	override = {
@@ -34,7 +33,6 @@ M.plugins = {
 		["nvim-telescope/telescope.nvim"] = override.telescope,
 		["lewis6991/gitsigns.nvim"] = override.gitsigns,
 		["goolord/alpha-nvim"] = override.alpha,
-		-- ["folke/which-key.nvim"] = override.wk,
 
 		["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
 	},

@@ -94,14 +94,4 @@ M.lspsaga = function()
 	lspsaga.init_lsp_saga()
 end
 
-M.clap = function()
-	local present, clap = pcall(require, "clap")
-
-	if not present then
-		return
-	end
-
-	clap.setup()
-end
-
 return M

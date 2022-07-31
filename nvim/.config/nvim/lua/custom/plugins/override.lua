@@ -43,6 +43,13 @@ M.telescope = {
 			override_file_sorter = true,
 			case_mode = "smart_case",
 		},
+		project = {
+			base_dirs = {
+				"Users/carlisiac/working/src/github.com",
+			},
+			hidden_files = true, -- default: false
+			theme = "dropdown",
+		},
 	},
 }
 
@@ -137,20 +144,29 @@ M.alpha = {
 			"  |                            |   ",
 			"   |                           |   ",
 		},
+		opts = {
+			position = "center",
+			hl = "AlphaHeader",
+		},
 	},
 
-	-- buttons = {
-	-- 	{ "SPC f", "  Find File", "<CMD>Telescope find_files<CR>" },
-	-- 	{ "SPC n", "  New File", "<CMD>ene!<CR>" },
-	-- 	{ "SPC p", "  Recent Projects ", "<CMD>Telescope projects<CR>" },
-	-- 	{ "SPC u", "  Recently Used Files", "<CMD>Telescope oldfiles<CR>" },
-	-- 	{ "SPC s", "  Load last session", "<CMD>SessionLoad<CR>" },
-	-- 	{ "SPC r", "  Ranger", "<CMD>RnvimrToggle<CR>" },
-	-- 	{ "SPC m", "  Marks              ", "<CMD>Telescope marks<CR>" },
-	-- 	{ "SPC w", "  Find Word", "<CMD>Telescope live_grep<CR>" },
-	-- 	{ "SPC c", "  Edit Configuration", "<CMD>e ~/.config/lvim/config.lua<CR>" },
-	-- 	{ "SPC g", "  Git status", "<CMD>Telescope git_status<CR>" },
-	-- },
+	buttons = {
+		type = "group",
+		val = {
+			{ "SPC p", "  Recent Projects ", "<CMD>Telescope projects<CR>" },
+			{ "SPC f", "  Search File", "<CMD>Telescope find_files follow=true no_ignore=true hidden=trueCR>" },
+			{ "SPC u", "  Recently Used Files", "<CMD>Telescope oldfiles<CR>" },
+			{ "SPC s", "  Load last session", "<CMD>SessionLoad<CR>" },
+			{ "SPC r", "  Ranger", "<CMD>RnvimrToggle<CR>" },
+			{ "SPC m", "  Marks              ", "<CMD>Telescope marks<CR>" },
+			{ "SPC t", "  Search Text", "<CMD>Telescope live_grep<CR>" },
+			{ "SPC c", "  Edit Configuration", "<CMD>e ~/.config/nvim/lua/custom/init.lua<CR>" },
+			{ "SPC g", "  Git status", "<CMD>Telescope git_status<CR>" },
+		},
+		opts = {
+			spacing = 2,
+		},
+	},
 }
 
 M.lspconfig_setup = function()

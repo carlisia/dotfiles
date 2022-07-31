@@ -140,6 +140,12 @@ M.keys = {
 	},
 
 	p = {
+		l = { "<CMD>Telescope project<CR>", "  Recent Projects" },
+
+		t = "which_key_ignore",
+	},
+
+	P = {
 		name = "Packer",
 		c = { "<cmd>PackerLoad<cr>", "Load" },
 		-- c = { "<cmd>PackerCompile<cr>", "Compile" },

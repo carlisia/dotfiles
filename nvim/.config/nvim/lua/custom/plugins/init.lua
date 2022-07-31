@@ -71,6 +71,9 @@ return {
 			require("custom.extensions").packer_lazy_load("nvim-cmp")
 		end,
 	},
+
+	["tpope/vim-repeat"] = {},
+
 	["ggandor/lightspeed.nvim"] = {
 		opt = true,
 		config = function()
@@ -157,21 +160,25 @@ return {
 		end,
 	},
 
-	["sindrets/diffview.nvim"] = {
-		-- TODO: fix the setup
-		-- config = function()
-		-- 	require("custom.plugins.config.diffview")
-		-- end,
-		-- setup = function()
-		-- 	require("custom.extensions").packer_lazy_load("diffview.nvim")
-		-- end,
-	},
+	-- ["sindrets/diffview.nvim"] = {
+	-- 	-- TODO: verify the setup
+	--    after = "nvim-lua/plenary.nvim",
+	-- 	config = function()
+	-- 		require("custom.plugins.config.diffview")
+	-- 	end,
+	-- 	setup = function()
+	-- 		require("custom.extensions").packer_lazy_load("diffview.nvim")
+	-- 	end,
+	-- },
 
 	["nvim-telescope/telescope-project.nvim"] = {
-		event = "BufWinEnter",
-		-- config = function()
-		-- 	vim.cmd([[packadd telescope.nvim]])
-		-- end,
+		after = "telescope.nvim",
+		config = function()
+			require("telescope").load_extension("project")
+		end,
+		setup = function()
+			require("custom.extensions").packer_lazy_load("telescope.nvim")
+		end,
 	},
 	["f-person/git-blame.nvim"] = {
 		event = "BufRead",
@@ -185,12 +192,6 @@ return {
 
 	["andymass/vim-matchup"] = {},
 
-	["liuchengxu/vim-clap"] = {
-		command = ":Clap install-binary!",
-		config = function()
-			require("custom.plugins.config.ui").clap()
-		end,
-	},
 	["folke/todo-comments.nvim"] = {
 		requires = "nvim-lua/plenary.nvim",
 		config = function()
@@ -232,5 +233,12 @@ return {
 			require("custom.extensions").packer_lazy_load("toggleterm.nvim")
 		end,
 	},
-	-- TODO: CHANGE THEME
+	-- ["ur4ltz/surround.nvim"] = {
+	-- 	config = function()
+	-- 		require("surround").setup({ mappings_style = "sandwich" })
+	-- 	end,
+	-- 	setup = function()
+	-- 		require("custom.extensions").packer_lazy_load("surround.nvim")
+	-- 	end,
+	-- },
 }

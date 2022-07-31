@@ -160,8 +160,7 @@ M.keys = {
 	l = {
 		name = "LSP",
 		i = { ":LspInfo<cr>", "Language Servers" },
-		m = { ":LspInstallInfo<cr>", "Manage Language Servers" },
-		l = { ":LspInstall sumneko_lua<cr>", "install Lua" },
+		m = { ":Mason<cr>", "Manage Language Servers" },
 
 		w = {
 			name = "workspace",

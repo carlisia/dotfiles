@@ -12,14 +12,12 @@ M.options = {
 
 M.ui = {
 	theme = "onedarker",
-	-- theme = "decay",
 	theme_toggle = { "onedark", "tokyodark" },
 	-- hl_override = require("custom.highlights"),
 }
 
 M.plugins = {
 	remove = {
-		"neovim/nvim-lspconfig",
 		"folke/which-key.nvim",
 	},
 
@@ -28,18 +26,15 @@ M.plugins = {
 		["nvim-treesitter/nvim-treesitter"] = override.treesitter,
 		["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
 		["windwp/nvim-autopairs"] = { check_ts = true },
-		["neovim/nvim-lspconfig"] = override.lspconfig_setup,
 		["ray-x/lsp_signature.nvim"] = override.lsp_signature,
 		["nvim-telescope/telescope.nvim"] = override.telescope,
 		["lewis6991/gitsigns.nvim"] = override.gitsigns,
 		["goolord/alpha-nvim"] = override.alpha,
 
-		["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
+		-- ["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
 	},
 
 	user = require("custom.plugins"),
 }
-
--- M.mappings = require("custom.mappings")
 
 return M

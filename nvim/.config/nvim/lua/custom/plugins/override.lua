@@ -169,8 +169,4 @@ M.alpha = {
 	},
 }
 
-M.lspconfig_setup = function()
-	require("custom.plugins.lspconfig")
-end
-
 return M

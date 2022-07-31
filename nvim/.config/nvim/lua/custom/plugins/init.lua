@@ -25,26 +25,6 @@ return {
 			})
 		end,
 	},
-	["neovim/nvim-lspconfig"] = {
-		opt = true,
-		module = "lspconfig",
-		config = function()
-			require("custom.plugins.lspconfig")
-		end,
-		setup = function()
-			require("custom.extensions").packer_lazy_load("nvim-lspconfig")
-			-- reload the current file so lsp actually starts for it
-			vim.defer_fn(function()
-				vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
-			end, 0)
-		end,
-	},
-	["jose-elias-alvarez/null-ls.nvim"] = {
-		after = "nvim-lspconfig",
-		config = function()
-			require("custom.plugins.null-ls").setup()
-		end,
-	},
 	["folke/lua-dev.nvim"] = { ft = "lua" },
 	["nacro90/numb.nvim"] = {
 		event = "CmdlineEnter",
@@ -241,4 +221,16 @@ return {
 	-- 		require("custom.extensions").packer_lazy_load("surround.nvim")
 	-- 	end,
 	-- },
+	["jose-elias-alvarez/null-ls.nvim"] = {
+		after = "nvim-lspconfig",
+		config = function()
+			require("custom.plugins.null-ls")
+		end,
+	},
+	["neovim/nvim-lspconfig"] = {
+		config = function()
+			require("plugins.configs.lspconfig")
+			require("custom.plugins.lspconfig")
+		end,
+	},
 }

@@ -5,6 +5,9 @@ vim.opt.undofile = false
 
 vim.o.sessionoptions = "blank,buffers,curdir,localoptions,folds,help,tabpages,winsize,winpos,terminal"
 
+-- this is for trdl
+vim.diagnostic.config({ virtual_text = false })
+
 require("custom.autocmds").aki()
 require("custom.commands").aki()
 require("custom.mappings").aki()

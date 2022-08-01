@@ -47,6 +47,8 @@ function M.aki()
 
   -- cycle between split windows using Alt+w
   map({ "n", "t", "i" }, "<a-w>", [[<C-\><C-n><C-w>W]])
+
+  map("n", "<C-n>", "Telescope notify")
 end
 
 function M.bufferline()
@@ -211,6 +213,7 @@ M.telescope = {
       "<cmd> :Telescope find_files follow=true hidden=true <CR>",
       "  find files",
     },
+    ["<leader>ft"] = { "<cmd> Telescope live_grep <CR>", "  find text" },
   },
 }
 

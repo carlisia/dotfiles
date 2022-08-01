@@ -58,7 +58,7 @@ M.escapePair = function()
   end
 end
 
-diagnostics_active = true -- must be global since this function is called in which.lua
+local diagnostics_active = true -- must be global since this function is called in which.lua
 -- toggle diagnostics line
 M.toggle_diagnostics = function()
   diagnostics_active = not diagnostics_active

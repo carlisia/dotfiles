@@ -10,7 +10,7 @@ capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
--- lspservers with default config
+-- lspservers with default config or with config outside of lspconfig (null-ls for example)
 local servers = {
   "jsonls",
   "marksman",

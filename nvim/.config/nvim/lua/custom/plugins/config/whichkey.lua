@@ -32,7 +32,19 @@ local options = {
 		spacing = 3, -- spacing between columns
 		align = "center", -- align columns left, center or right
 	},
-	ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label..
+	ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label..
+	hidden = {
+		"<silent>",
+		"<cmd>",
+		"<Cmd>",
+		"<cr>",
+		"<CR>",
+		"call",
+		"lua",
+		"require",
+		"^:",
+		"^ ",
+	}, -- hide mapping boilerplate
 }
 
 local opts = {
@@ -53,18 +65,30 @@ local vopts = {
 	nowait = true, -- use `nowait` when creating keymaps
 }
 
-local noprefixopts = {
-	mode = "n", -- INSERT mode
-	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-	silent = true, -- use `silent` when creating keymaps
-	noremap = true, -- use `noremap` when creating keymaps
-	nowait = true, -- use `nowait` when creating keymaps
-}
+-- local noprefixopts = {
+-- 	mode = "n", -- INSERT mode
+-- 	buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+-- 	silent = true, -- use `silent` when creating keymaps
+-- 	noremap = true, -- use `noremap` when creating keymaps
+-- 	nowait = true, -- use `nowait` when creating keymaps
+-- }
 
 local mappings = require("custom.mappings")
 
 wk.register(mappings.keys, opts)
 wk.register(mappings.keys, vopts)
-wk.register(mappings.gotocode, noprefixopts)
+-- wk.register(mappings.gotocode, noprefixopts)
+
+-- register non leader based mappings
+wk.register({
+	sa = "Add surrounding",
+	sd = "Delete surrounding",
+	sh = "Highlight surrounding",
+	sn = "Surround update n lines",
+	sr = "Replace surrounding",
+	sF = "Find left surrounding",
+	sf = "Replace right surrounding",
+	ss = { "<Plug>Lightspeed_s", "Search 2-character forward" },
+})
 
 wk.setup(options)

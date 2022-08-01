@@ -210,25 +210,25 @@ M.keys = {
 	},
 }
 
-M.gotocode = {
-	g = {
-		name = "  goto code",
-		t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "  type definition" },
-		d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "  definition" },
-		D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "  declaration" },
-		i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "  implementation" },
-		r = { "<cmd>lua vim.lsp.buf.references()<cr>", "  references" },
-		k = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "  signature" },
-		K = { "<cmd>Lspsaga hover_doc<cr>", "   hover" },
-
-		-- ["K"] = {
-		-- 	function()
-		-- 		vim.lsp.buf.hover()
-		-- 	end,
-		-- 	"   lsp hover",
-		-- },
-	},
-}
+-- M.gotocode = {
+-- 	g = {
+-- 		name = "  goto code",
+-- 		t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "  type definition" },
+-- 		d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "  definition" },
+-- 		D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "  declaration" },
+-- 		i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "  implementation" },
+-- 		r = { "<cmd>lua vim.lsp.buf.references()<cr>", "  references" },
+-- 		k = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "  signature" },
+-- 		K = { "<cmd>Lspsaga hover_doc<cr>", "   hover" },
+--
+-- 		-- ["K"] = {
+-- 		-- 	function()
+-- 		-- 		vim.lsp.buf.hover()
+-- 		-- 	end,
+-- 		-- 	"   lsp hover",
+-- 		-- },
+-- 	},
+-- }
 
 -- M.extrakeys = function()
 -- -- 	map("v", "<", "<gv", { noremap = true, silent = false })
@@ -248,117 +248,185 @@ M.gotocode = {
 -- 	)
 --
 
-function M.lspconfig_keys(client, bufnr)
-	local map = vim.api.nvim_set_keymap
+M.g = {
 
-	local m = {
-		declaration = "gD",
-		definition = "gd",
-		hover = "K",
-		implementation = "gi",
-		signature_help = "gk",
-		add_workspace_folder = "<leader>wa",
-		remove_workspace_folder = "<leader>wr",
-		list_workspace_folders = "<leader>wl",
-		type_definition = "<leader>D",
-		rename = "<leader>re",
-		code_action = "<leader>a",
-		references = "gr",
-		formatting = "<leader>fm",
-		-- diagnostics
-		workspace_diagnostics = "<leader>w",
-		buffer_diagnostics = "<leader>d",
-		-- goto_prev = "[d",
-		--[[ 		-- goto_next = "]d", ]]
-	}
+	n = {
+		-- lsp finder
+		h = { "<cmd>Lspsaga lsp_finder<CR>", "which_key_ignore" },
 
-	local buf_k = function(mo, k, c)
-		map(mo, k, c, { buffer = bufnr })
-	end
-
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	buf_k("n", m.declaration, function()
-		vim.lsp.buf.declaration()
-	end)
-
-	buf_k("n", m.definition, function()
-		vim.lsp.buf.definition()
-	end)
-
-	buf_k("n", m.hover, function()
-		vim.lsp.buf.hover()
-	end)
-	--
-	buf_k("n", m.implementation, function()
-		vim.lsp.buf.implementation()
-	end)
-
-	buf_k("n", m.signature_help, function()
-		vim.lsp.buf.signature_help()
-	end)
-
-	buf_k("n", m.type_definition, function()
-		vim.lsp.buf.type_definition()
-	end)
-
-	buf_k("n", m.rename, function()
-		vim.lsp.buf.rename()
-	end)
-
-	buf_k("n", m.code_action, function()
-		vim.lsp.buf.code_action()
-	end)
-
-	buf_k("n", m.references, function()
-		require("trouble").open("lsp_references")
-	end)
-
-	buf_k("n", m.goto_prev, function()
-		vim.diagnostic.goto_prev()
-	end)
-
-	buf_k("n", m.goto_next, function()
-		vim.diagnostic.goto_next()
-	end)
-
-	buf_k("n", m.workspace_diagnostics, function()
-		if vim.diagnostic.get()[1] then
-			require("trouble").open("workspace_diagnostics")
-		else
-			vim.notify("No workspace diagnostics found.")
-		end
-	end)
-	--
-	buf_k("n", m.buffer_diagnostics, function()
-		if vim.diagnostic.get()[1] then
-			require("trouble").open("document_diagnostics")
-		else
-			vim.notify("No docunment diagnostics found.")
-		end
-	end)
-	--
-	buf_k("n", m.add_workspace_folder, function()
-		vim.lsp.buf.add_workspace_folder()
-	end)
-
-	buf_k("n", m.remove_workspace_folder, function()
-		vim.lsp.buf.remove_workspace_folder()
-	end)
-
-	buf_k("n", m.list_workspace_folders, function()
-		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end)
-
-	if client.resolved_capabilities.document_formatting then
-		buf_k("n", m.formatting, function()
-			vim.lsp.buf.formatting_sync()
-		end)
-		buf_k("v", m.formatting, function()
-			vim.lsp.buf.range_formatting()
-		end)
-	end
-end
-
+		-- Code action
+		["ca"] = { "<cmd>Lspsaga code_action<CR>", "which_key_ignore" },
+	},
+}
+--
+-- map("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true, noremap = true })
+--
+-- -- Hover doc
+-- -- show hover doc and press twice will jumpto hover window
+-- map("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+--
+-- local action = require("lspsaga.action")
+-- -- scroll down hover doc or scroll in definition preview
+-- map("n", "<C-f>", function()
+-- 	action.smart_scroll_with_saga(1)
+-- end, { silent = true })
+-- -- scroll up hover doc
+-- map("n", "<C-b>", function()
+-- 	action.smart_scroll_with_saga(-1)
+-- end, { silent = true })
+--
+-- ---Signature help
+-- map("n", "gs", "<Cmd>Lspsaga signature_help<CR>", { silent = true, noremap = true })
+--
+-- -- Rename with preview and select
+-- map("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true, noremap = true })
+-- -- close rename win use <C-c> in insert mode or `q` in normal mode or `:q`
+--
+-- ---Preview definition
+-- map("n", "gd", "<cmd>Lspsaga preview_definition<CR>", { silent = true })
+--
+-- -- Jump and show diagnostics
+-- map("n", "gd", "<cmd>Lspsaga preview_definition<CR>", { silent = true })
+--
+-- map("n", "<leader>cd", require("lspsaga.diagnostic").show_line_diagnostics, { silent = true, noremap = true })
+-- vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true, noremap = true })
+--
+-- -- jump diagnostic
+-- map("n", "[e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true, noremap = true })
+-- vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true, noremap = true })
+--
+-- -- or jump to error
+-- map("n", "[E", function()
+-- 	require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
+-- end, { silent = true, noremap = true })
+-- map("n", "]E", function()
+-- 	require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
+-- end, { silent = true, noremap = true })
+--
+-- --Float terminal
+-- -- float terminal also you can pass the cli command in open_float_terminal function
+-- local term = require("lspsaga.floaterm")
+--
+-- -- float terminal also you can pass the cli command in open_float_terminal function
+-- map("n", "<A-d>", "<cmd>Lspsaga open_floaterm custom_cli_command<CR>", { silent = true, noremap = true })
+-- map("t", "<A-d>", "<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>", { silent = true, noremap = true })
+--
+-- -- Outline
+-- -- work fast when lspsaga symbol winbar in_custom = true or enable = true,
+-- -- :LSoutlineToggle
+-- }
+--
+-- function M.lspconfig_keys(client, bufnr)
+-- 	local map = vim.api.nvim_set_keymap
+--
+-- 	local m = {
+-- 		declaration = "gD",
+-- 		definition = "gd",
+-- 		hover = "K",
+-- 		implementation = "gi",
+-- 		signature_help = "gk",
+-- 		add_workspace_folder = "<leader>wa",
+-- 		remove_workspace_folder = "<leader>wr",
+-- 		list_workspace_folders = "<leader>wl",
+-- 		type_definition = "<leader>D",
+-- 		rename = "<leader>re",
+-- 		code_action = "<leader>a",
+-- 		references = "gr",
+-- 		formatting = "<leader>fm",
+-- 		-- diagnostics
+-- 		workspace_diagnostics = "<leader>w",
+-- 		buffer_diagnostics = "<leader>d",
+-- 		-- goto_prev = "[d",
+-- 		--[[ 		-- goto_next = "]d", ]]
+-- 	}
+--
+-- 	local buf_k = function(mo, k, c)
+-- 		map(mo, k, c, { buffer = bufnr })
+-- 	end
+--
+-- 	-- See `:help vim.lsp.*` for documentation on any of the below functions
+-- 	buf_k("n", m.declaration, function()
+-- 		vim.lsp.buf.declaration()
+-- 	end)
+--
+-- 	buf_k("n", m.definition, function()
+-- 		vim.lsp.buf.definition()
+-- 	end)
+--
+-- 	buf_k("n", m.hover, function()
+-- 		vim.lsp.buf.hover()
+-- 	end)
+-- 	--
+-- 	buf_k("n", m.implementation, function()
+-- 		vim.lsp.buf.implementation()
+-- 	end)
+--
+-- 	buf_k("n", m.signature_help, function()
+-- 		vim.lsp.buf.signature_help()
+-- 	end)
+--
+-- 	buf_k("n", m.type_definition, function()
+-- 		vim.lsp.buf.type_definition()
+-- 	end)
+--
+-- 	buf_k("n", m.rename, function()
+-- 		vim.lsp.buf.rename()
+-- 	end)
+--
+-- 	buf_k("n", m.code_action, function()
+-- 		vim.lsp.buf.code_action()
+-- 	end)
+--
+-- 	buf_k("n", m.references, function()
+-- 		require("trouble").open("lsp_references")
+-- 	end)
+--
+-- 	buf_k("n", m.goto_prev, function()
+-- 		vim.diagnostic.goto_prev()
+-- 	end)
+--
+-- 	buf_k("n", m.goto_next, function()
+-- 		vim.diagnostic.goto_next()
+-- 	end)
+--
+-- 	buf_k("n", m.workspace_diagnostics, function()
+-- 		if vim.diagnostic.get()[1] then
+-- 			require("trouble").open("workspace_diagnostics")
+-- 		else
+-- 			vim.notify("No workspace diagnostics found.")
+-- 		end
+-- 	end)
+-- 	--
+-- 	buf_k("n", m.buffer_diagnostics, function()
+-- 		if vim.diagnostic.get()[1] then
+-- 			require("trouble").open("document_diagnostics")
+-- 		else
+-- 			vim.notify("No docunment diagnostics found.")
+-- 		end
+-- 	end)
+-- 	--
+-- 	buf_k("n", m.add_workspace_folder, function()
+-- 		vim.lsp.buf.add_workspace_folder()
+-- 	end)
+--
+-- 	buf_k("n", m.remove_workspace_folder, function()
+-- 		vim.lsp.buf.remove_workspace_folder()
+-- 	end)
+--
+-- 	buf_k("n", m.list_workspace_folders, function()
+-- 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+-- 	end)
+--
+-- 	if client.resolved_capabilities.document_formatting then
+-- 		buf_k("n", m.formatting, function()
+-- 			vim.lsp.buf.formatting_sync()
+-- 		end)
+-- 		buf_k("v", m.formatting, function()
+-- 			vim.lsp.buf.range_formatting()
+-- 		end)
+-- 	end
+-- end
+--
 --
 
 return M

@@ -36,7 +36,7 @@ M.telescope = {
 		},
 		file_ignore_patterns = { "node_modules/", ".git/" },
 	},
-	exteKnsions = {
+	extensions = {
 		fzf = {
 			fuzzy = true,
 			override_generic_sorter = true,
@@ -45,10 +45,21 @@ M.telescope = {
 		},
 		project = {
 			base_dirs = {
-				"Users/carlisiac/working/src/github.com",
+				"/Users/carlisiac/working/src/github.com",
 			},
 			hidden_files = true, -- default: false
 			theme = "dropdown",
+			patterns = {
+				".git",
+				"package.json",
+				".terraform",
+				"go.mod",
+				"requirements.yml",
+				"pyrightconfig.json",
+				"pyproject.toml",
+			},
+			-- detection_methods = { "lsp", "pattern" },
+			detection_methods = { "pattern" },
 		},
 	},
 }

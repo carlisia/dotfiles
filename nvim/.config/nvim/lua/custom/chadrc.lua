@@ -1,40 +1,37 @@
 local M = {}
 
-local override = require("custom.plugins.override")
-
 M.options = {
-	nvChad = {
-		-- update_url = "https://github.com/carlisia/NvChad",
-		update_url = "https://github.com/NvChad/NvChad",
-		update_branch = "main",
-	},
+  nvChad = {
+    -- update_url = "https://github.com/carlisia/NvChad",
+    update_url = "https://github.com/NvChad/NvChad",
+    update_branch = "main",
+  },
 }
 
 M.ui = {
-	theme = "onedarker",
-	theme_toggle = { "onedark", "tokyodark" },
-	-- hl_override = require("custom.highlights"),
+  theme = "tokyodark", -- default theme
 }
 
 M.plugins = {
-	remove = {
-		"folke/which-key.nvim",
-	},
+  remove = {
+    "NvChad/nvterm",
+    "folke/which-key.nvim",
+    "kyazdani42/nvim-tree.lua",
+  },
+  user = require("custom.plugins"),
+}
 
-	override = {
-		["kyazdani42/nvim-tree.lua"] = override.nvimtree,
-		["nvim-treesitter/nvim-treesitter"] = override.treesitter,
-		["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
-		["windwp/nvim-autopairs"] = { check_ts = true },
-		["ray-x/lsp_signature.nvim"] = override.lsp_signature,
-		["nvim-telescope/telescope.nvim"] = override.telescope,
-		["lewis6991/gitsigns.nvim"] = override.gitsigns,
-		["goolord/alpha-nvim"] = override.alpha,
+M.plugins.override = {
+  -- ["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
+  ["windwp/nvim-autopairs"] = { check_ts = true },
+  ["NvChad/nvim-colorizer.lua"] = require("custom.plugins.common").colorizer(),
+  ["nvim-treesitter/nvim-treesitter"] = require("custom.plugins.common").treesitter(),
+  ["nvim-telescope/telescope.nvim"] = require("custom.plugins.common").telescope(),
+  ["NvChad/ui"] = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },
+}
 
-		-- ["NvChad/ui"] = { tabufline = { lazyload = false }, statusline = { separator_style = "arrow" } },
-	},
-
-	user = require("custom.plugins"),
+M.mappings = {
+  telescope = require("custom.mappings").telescope,
 }
 
 return M

@@ -269,7 +269,7 @@ return {
 
   ["ray-x/go.nvim"] = {
     config = function()
-      require("custom.plugins.config.go").go()
+      require("custom.plugins.config.go")
     end,
     setup = function()
       require("custom.extensions").packer_lazy_load("go.nvim")

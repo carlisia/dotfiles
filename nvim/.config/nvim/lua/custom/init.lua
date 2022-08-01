@@ -31,56 +31,22 @@ new_cmd("EnableTelescope", function()
 	require("telescope").setup()
 end, {})
 
-local autocmd = api.nvim_create_autocmd
-local opt_local = vim.opt_local
+local opt = vim.opt
 
--- autocmds
--- pretty up norg ft!
-tocmd("FileType", {
-	pattern = "norg",
-	callback = function()
-		opt_local.number = false
-		opt_local.cole = 1
-		opt_local.foldlevel = 10
-		opt_local.signcolumn = "yes:2"
-	end,
-})
+opt.rtp:append(vim.fn.stdpath("config") .. "/lua/custom/runtime")
+opt.pumheight = 30
 
--- Dynamic terminal padding with/without nvim (for siduck's st only)
--- replace stuff from file
-local function sed(from, to, fname)
-	vim.cmd(string.format("silent !sed -i 's/%s/%s/g' %s", from, to, fname))
-end
+opt.shell = "/usr/local/bin/bash"
+opt.termguicolors = true
+opt.list = true
+opt.listchars:append("space:⋅")
 
--- reloads xresources for current focused window only
-local function liveReload_xresources()
-	vim.cmd(
-		string.format(
-			"silent !xrdb merge ~/.Xresources && kill -USR1 $(xprop -id $(xdotool getwindowfocus) | grep '_NET_WM_PID' | grep -oE '[[:digit:]]*$')"
-		)
-	)
-end
+local map = vim.api.nvim_set_keymap
 
-autocmd({ "BufNewFile", "BufRead" }, {
-	callback = function(ctx)
-		-- remove terminal padding
-		-- exclude when nvim has norg ft & more than 2 buffers
-		if vim.bo.ft == "norg" or #vim.fn.getbufinfo({ buflisted = 1 }) > 1 then
-			sed("st.borderpx: 20", "st.borderpx: 0", "~/.Xresources")
-			liveReload_xresources()
+map("n", "<C-h>", "<C-w>h", { noremap = true, silent = false })
+map("n", "<C-l>", "<C-w>l", { noremap = true, silent = false })
+map("n", "<C-j>", "<C-w>j", { noremap = true, silent = false })
+map("n", "<C-k>", "<C-w>k", { noremap = true, silent = false })
 
-			-- revert xresources change but dont reload it
-			sed("st.borderpx: 0", "st.borderpx: 20", "~/.Xresources")
-			vim.cmd(string.format("silent !xrdb merge ~/.Xresources"))
-			api.nvim_del_autocmd(ctx.id)
-		end
-	end,
-})
-
--- add terminal padding
-autocmd("VimLeavePre", {
-	callback = function()
-		sed("st.borderpx: 0", "st.borderpx: 20", "~/.Xresources")
-		liveReload_xresources()
-	end,
-})
+map("i", "jk", "<ESC>", { noremap = true, silent = false })
+map("i", "kj", "<ESC>", { noremap = true, silent = false })

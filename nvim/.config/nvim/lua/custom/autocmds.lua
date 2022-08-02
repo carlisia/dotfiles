@@ -1,4 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
+
 local M = {}
 
 -- non plugin autocmds

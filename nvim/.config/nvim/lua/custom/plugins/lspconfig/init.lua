@@ -1,4 +1,5 @@
 -- no need to touch this file
+
 -- only custom/plugins/lspconfig/servers.lua should be modified ideally
 local loaded, lspconfig = pcall(require, "lspconfig")
 
@@ -8,7 +9,7 @@ end
 
 local setup_lsp = function()
   pcall(function()
-    require("base46").load_highlight "lsp"
+    require("base46").load_highlight("lsp")
   end)
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -30,7 +31,7 @@ local setup_lsp = function()
     },
   }
 
-  local s = require "custom.plugins.lspconfig.servers"
+  local s = require("custom.plugins.lspconfig.servers")
   for server, conf in pairs(s) do
     local name = server
     local disable_format = conf.disable_format or false

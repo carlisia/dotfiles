@@ -2,17 +2,6 @@ local map = vim.keymap.set
 
 local M = {}
 
--- local Terminal = require("toggleterm.terminal").Terminal
--- -- local toggle_float = function()
--- --   local float = Terminal:new({ direction = "float" })
--- --   return float:toggle()
--- -- end
--- local toggle_lazygit = function()
---   local lazygit = Terminal:new({ cmd = "lazygit", direction = "float" })
---   return lazygit:toggle()
--- end
---
-
 -- all the plugins which are not dependent on any plugin
 function M.aki()
   -- select all text in a buffer
@@ -59,9 +48,13 @@ function M.aki()
   -- cycle between split windows using Alt+w
   map({ "n", "t", "i" }, "<a-w>", [[<C-\><C-n><C-w>W]])
 
-  map("n", "<C-n>", "Telescope notify")
-  -- map("n", "<leader>-z", toggle_lazygit)
-  -- map("n", "<leader>-z", toggle_lazygit)
+  map("n", "<leader>m", "<cmd>:Telescope notify<cr>")
+
+  map({ "n" }, "<Leader>z", function()
+    local Terminal = require("toggleterm.terminal").Terminal
+    local lazygit = Terminal:new({ cmd = "lazygit", direction = "float" })
+    return lazygit:toggle()
+  end)
 end
 
 function M.bufferline()

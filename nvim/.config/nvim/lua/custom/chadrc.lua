@@ -22,7 +22,6 @@ M.plugins = {
 }
 
 M.plugins.override = {
-  -- ["max397574/better-escape.nvim"] = { mapping = { "jk", "JK", "Jk" } },
   ["windwp/nvim-autopairs"] = { check_ts = true },
   ["NvChad/nvim-colorizer.lua"] = require("custom.plugins.common").colorizer(),
   ["nvim-treesitter/nvim-treesitter"] = require("custom.plugins.common").treesitter(),

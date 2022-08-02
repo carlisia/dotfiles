@@ -269,6 +269,7 @@ return {
       vim.g.gitblame_enabled = 0
     end,
   },
+
   ["sindrets/diffview.nvim"] = {
     cmd = {
       "DiffviewOpen",
@@ -281,6 +282,25 @@ return {
     end,
     setup = function()
       require("custom.utils").packer_lazy_load("diffview.nvim")
+    end,
+  },
+  ["folke/todo-comments.nvim"] = {
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("todo-comments.nvim")
+    end,
+  },
+  ["mg979/vim-visual-multi"] = {
+    setup = function()
+      require("custom.utils").packer_lazy_load("vim-visual-multi")
+    end,
+  },
+  ["itspriddle/vim-marked"] = {
+    setup = function()
+      require("custom.utils").packer_lazy_load("vim-marked")
     end,
   },
 }

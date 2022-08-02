@@ -24,6 +24,7 @@ M.plugins = {
 M.plugins.override = {
   ["windwp/nvim-autopairs"] = { check_ts = true },
   ["NvChad/nvim-colorizer.lua"] = require("custom.plugins.common").colorizer(),
+  ["lewis6991/gitsigns.nvim"] = require("custom.plugins.common").gitsigns,
   ["nvim-treesitter/nvim-treesitter"] = require("custom.plugins.common").treesitter(),
   ["nvim-telescope/telescope.nvim"] = require("custom.plugins.common").telescope(),
   ["NvChad/ui"] = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },

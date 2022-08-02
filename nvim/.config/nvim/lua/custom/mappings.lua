@@ -55,6 +55,8 @@ function M.aki()
     local lazygit = Terminal:new({ cmd = "lazygit", direction = "float" })
     return lazygit:toggle()
   end)
+
+  map("n", "<leader>o", "<cmd>:LSoutlineToggle<cr>")
 end
 
 function M.bufferline()

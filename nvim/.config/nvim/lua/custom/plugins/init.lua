@@ -38,7 +38,10 @@ return {
   ["glepnir/lspsaga.nvim"] = {
     after = "nvim-lspconfig",
     config = function()
-      require("lspsaga").init_lsp_saga({ max_preview_lines = 50 })
+      require("lspsaga").init_lsp_saga({
+        max_preview_lines = 50,
+        diagnostic_header = { "😡", "😥", "😤", "😐" },
+      })
     end,
   },
 
@@ -107,6 +110,7 @@ return {
     end,
   },
 
+  -- ui for lsp progress
   ["j-hui/fidget.nvim"] = {
     after = "nvim-lspconfig",
     config = function()
@@ -242,11 +246,11 @@ return {
     end,
   },
 
-  ["Mofiqul/trld.nvim"] = {
-    setup = function()
-      require("custom.utils").packer_lazy_load("trld.nvim", 1000)
-    end,
-  },
+  -- ["Mofiqul/trld.nvim"] = {
+  --   setup = function()
+  --     require("custom.utils").packer_lazy_load("trld.nvim", 1000)
+  --   end,
+  -- },
 
   ["ruifm/gitlinker.nvim"] = {
     requires = "nvim-lua/plenary.nvim",

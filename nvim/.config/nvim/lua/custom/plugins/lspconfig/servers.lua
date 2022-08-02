@@ -58,7 +58,27 @@ servers["sumneko_lua"] = {
 -- golang
 servers["gopls"] = {
   config = function()
-    return {}
+    local util = require("lspconfig/util")
+    local go_lsp_config = {
+      cmd = { "gopls", "serve" },
+      filetypes = { "go", "gomod" },
+      root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+      settings = {
+        gopls = {
+          analyses = {
+            nilness = true,
+            unusedparams = true,
+            unusedwrite = true,
+            useany = true,
+          },
+          experimentalPostfixCompletions = true,
+          gofumpt = true,
+          staticcheck = true,
+          usePlaceholders = true,
+        },
+      },
+    }
+    return go_lsp_config
   end,
   disable_format = true,
 }

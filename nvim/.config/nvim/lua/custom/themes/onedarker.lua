@@ -34,10 +34,12 @@ M.base_30 = {
 
   black2 = "#22262a",
   one_bg = "#25292d", -- real bg of onedark
-  one_bg2 = "#2f3337",
-  one_bg3 = "#393d41",
+  -- one_bg2 = "#2f3337",
+  one_bg2 = "#2a313e", -- highlight of enclosing block text
+  -- one_bg3 = "#393d41",
+  one_bg3 = "grey",
 
-  grey_fg = "#4b4f53",
+  grey_fg = "#4b4f53", -- comments and git blame text
   grey_fg2 = "red",
   light_grey = "green",
 

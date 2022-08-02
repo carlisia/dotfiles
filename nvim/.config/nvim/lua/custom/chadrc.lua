@@ -27,6 +27,7 @@ M.plugins.override = {
   ["lewis6991/gitsigns.nvim"] = require("custom.plugins.common").gitsigns,
   ["nvim-treesitter/nvim-treesitter"] = require("custom.plugins.common").treesitter(),
   ["nvim-telescope/telescope.nvim"] = require("custom.plugins.common").telescope(),
+  ["lukas-reineke/indent-blankline.nvim"] = require("custom.plugins.common").blankline,
   ["NvChad/ui"] = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },
 }
 

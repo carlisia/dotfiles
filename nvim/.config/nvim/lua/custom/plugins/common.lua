@@ -282,4 +282,32 @@ M.gitsigns = {
   },
 }
 
+M.aerial = function()
+  require("aerial").setup({
+    close_behavior = "auto",
+    default_direction = "prefer_left",
+    highlight_on_hover = true,
+  })
+end
+
+M.blankline = {
+  indentLine_enabled = 1,
+  filetype_exclude = {
+    "help",
+    "terminal",
+    "alpha",
+    "packer",
+    "lspinfo",
+    "TelescopePrompt",
+    "TelescopeResults",
+    "Mason",
+    "",
+  },
+  buftype_exclude = { "terminal" },
+  show_trailing_blankline_indent = true,
+  show_first_indent_level = false,
+  show_current_context = true,
+  show_current_context_start = true,
+}
+
 return M

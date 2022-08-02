@@ -307,4 +307,32 @@ return {
       require("custom.utils").packer_lazy_load("vim-marked")
     end,
   },
+  ["stevearc/aerial.nvim"] = {
+    config = function()
+      require("custom.plugins.common").aerial()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("aerial.nvim")
+    end,
+  },
+
+  ["yamatsum/nvim-cursorline"] = {
+    config = function()
+      require("nvim-cursorline").setup({
+        cursorline = {
+          enable = true,
+          timeout = 1000,
+          number = true,
+        },
+        cursorword = {
+          enable = true,
+          min_length = 3,
+          hl = { underline = true },
+        },
+      })
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("nvim-cursorline")
+    end,
+  },
 }

@@ -4,7 +4,6 @@ local servers = {
   -- ["bashls"] = { config = function or table , disable_format = true or false }
   -- no need to specify config and disable_format is no changes are required
   ["bashls"] = {},
-  ["jsonls"] = {},
   ["dockerls"] = {},
   ["marksman"] = {},
 }
@@ -130,6 +129,60 @@ servers["yamlls"] = {
 servers["bashls"] = {
   config = function()
     return {}
+  end,
+  disable_format = true,
+}
+
+servers["jsonls"] = {
+  config = function()
+    local json_lsp_config = {
+      cmd = { "vscode-json-languageserver", "--stdio" },
+      filetypes = { "json", "jsonc" },
+      init_options = {
+        provideFormatter = true,
+      },
+      single_file_support = true,
+      settings = {
+        json = {
+          format = { enabled = false },
+          schemas = {
+            {
+              description = "ESLint config",
+              fileMatch = { ".eslintrc.json", ".eslintrc" },
+              url = "http://json.schemastore.org/eslintrc",
+            },
+            {
+              description = "Package config",
+              fileMatch = { "package.json" },
+              url = "https://json.schemastore.org/package",
+            },
+            {
+              description = "Packer config",
+              fileMatch = { "packer.json" },
+              url = "https://json.schemastore.org/packer",
+            },
+            {
+              description = "Renovate config",
+              fileMatch = {
+                "renovate.json",
+                "renovate.json5",
+                ".github/renovate.json",
+                ".github/renovate.json5",
+                ".renovaterc",
+                ".renovaterc.json",
+              },
+              url = "https://docs.renovatebot.com/renovate-schema",
+            },
+            {
+              description = "OpenApi config",
+              fileMatch = { "*api*.json" },
+              url = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json",
+            },
+          },
+        },
+      },
+    }
+    return json_lsp_config
   end,
   disable_format = true,
 }

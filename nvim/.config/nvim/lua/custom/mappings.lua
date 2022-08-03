@@ -56,7 +56,7 @@ function M.aki()
     return lazygit:toggle()
   end)
 
-  map("n", "<leader>o", "<cmd>:LSoutlineToggle<cr>")
+  map("n", "<leader>o", "<cmd>:AerialToggle<cr>")
 end
 
 function M.bufferline()

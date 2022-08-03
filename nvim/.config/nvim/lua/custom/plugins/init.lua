@@ -53,12 +53,63 @@ return {
   },
 
   -- go lsp stuff
-  ["crispgm/nvim-go"] = {
-    after = "nvim-lspconfig",
+  --  ["crispgm/nvim-go"] = {
+  --    after = "nvim-lspconfig",
+  --    config = function()
+  --      require("custom.plugins.common").nvim_go()
+  --    end,
+  --    requires = "rcarriga/nvim-notify",
+  --  },
+
+  ["ray-x/go.nvim"] = {
     config = function()
-      require("custom.plugins.common").nvim_go()
+      require("custom.plugins.common").go_nvim()
     end,
-    requires = "rcarriga/nvim-notify",
+    setup = function()
+      require("custom.utils").packer_lazy_load("go.nvim")
+    end,
+  },
+
+  ["mfussenegger/nvim-dap"] = {
+    -- config = function()
+    -- 	require("nvim-dap")
+    -- end,
+    -- setup = function()
+    -- 	require("custom.extensions").packer_lazy_load("nvim-dap")
+    -- end,
+  },
+  ["rcarriga/nvim-dap-ui"] = {
+    -- config = function()
+    -- 	require("nvim-dap-ui")
+    -- end,
+    -- setup = function()
+    -- 	require("custom.extensions").packer_lazy_load("nvim-dap-ui")
+    -- end,
+  },
+  ["theHamsta/nvim-dap-virtual-text"] = {
+    -- config = function()
+    -- 	require("nvim-dap-virtual-text")
+    -- end,
+    -- setup = function()
+    -- 	require("custom.extensions").packer_lazy_load("nvim-dap-virtual-text")
+    -- end,
+  },
+  ["ray-x/guihua.lua"] = {
+    run = "cd lua/fzy && make",
+    setup = function()
+      require("custom.utils").packer_lazy_load("guihua.lua")
+    end,
+  },
+
+  ["RishabhRD/popfix"] = {
+    setup = function()
+      require("custom.utils").packer_lazy_load("popfix")
+    end,
+  },
+  ["RishabhRD/nvim-cheat.sh"] = {
+    setup = function()
+      require("custom.utils").packer_lazy_load("nvim-cheat.sh")
+    end,
   },
 
   -- lua lsp stuff

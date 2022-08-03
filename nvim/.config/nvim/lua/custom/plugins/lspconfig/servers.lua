@@ -4,11 +4,9 @@ local servers = {
   -- ["bashls"] = { config = function or table , disable_format = true or false }
   -- no need to specify config and disable_format is no changes are required
   ["bashls"] = {},
-  ["gopls"] = {},
   ["jsonls"] = {},
   ["dockerls"] = {},
   ["marksman"] = {},
-  ["yamlls"] = {},
 }
 
 --- These below needs some extra stuff done do their default config
@@ -93,7 +91,39 @@ servers["marksman"] = {
 
 servers["yamlls"] = {
   config = function()
-    return {}
+    local yaml_lsp_config = {
+      filetypes = { "yaml", "yml" },
+      settings = {
+        yaml = {
+          format = { enabled = false },
+          validate = true, -- TODO: conflicts between Kubernetes resources and kustomization.yaml
+          completion = true,
+          hover = true,
+          schemaStore = {
+            enable = true,
+            url = "https://www.schemastore.org/api/json/catalog.json",
+          },
+          schemas = {
+            -- TODO: add schemas for the other k8s resources if snippets don't validate well
+            ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.20.5-standalone-strict/_definitions.json#/definitions/io.k8s.api.apps.v1.DaemonSet"] = "*/*.yaml",
+
+            ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+            ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+            ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+            ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+            -- ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+            ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+            ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+            ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+            ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+            ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+            ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+          },
+        },
+      },
+    }
+    return yaml_lsp_config
   end,
   disable_format = true,
 }

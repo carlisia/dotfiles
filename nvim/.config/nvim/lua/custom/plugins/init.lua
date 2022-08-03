@@ -386,4 +386,19 @@ return {
       require("custom.utils").packer_lazy_load("nvim-cursorline")
     end,
   },
+
+  ["CRAG666/code_runner.nvim"] = {
+    config = function()
+      require("code_runner").setup({
+        -- put here the commands by filetype
+        filetype = {
+          go = "richgo",
+          sh = "bash",
+        },
+      })
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("code_runner.nvim")
+    end,
+  },
 }

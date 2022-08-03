@@ -9,7 +9,7 @@ opt.pumheight = 30
 opt.tabstop = 4
 opt.undofile = false
 
--- opt.shell = "/usr/local/bin/bash"
+opt.shell = "/usr/local/bin/bash"
 
 opt.termguicolors = true
 

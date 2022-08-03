@@ -3,9 +3,7 @@ local servers = {
   --- example ---
   -- ["bashls"] = { config = function or table , disable_format = true or false }
   -- no need to specify config and disable_format is no changes are required
-  ["bashls"] = {},
   ["dockerls"] = {},
-  ["marksman"] = {},
 }
 
 --- These below needs some extra stuff done do their default config
@@ -128,7 +126,15 @@ servers["yamlls"] = {
 
 servers["bashls"] = {
   config = function()
-    return {}
+    local bash_lsp_config = {
+      cmd = { "bash-language-server", "start" },
+      filetypes = { "sh" },
+      single_file_support = true,
+      settings = {
+        bash = {},
+      },
+    }
+    return bash_lsp_config
   end,
   disable_format = true,
 }

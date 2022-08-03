@@ -54,11 +54,15 @@ local setup_lsp = function()
       end
 
       require("custom.mappings").lspconfig(client, bufnr)
-      require("aerial").on_attach(client, bufnr)
 
       local ok, signature = pcall(require, "lsp_signature")
       if ok then
         signature.on_attach({}, bufnr)
+      end
+
+      local ok_aerial, aerial = pcall(require, "aerial")
+      if ok_aerial then
+        aerial.on_attach(client, bufnr)
       end
     end
 

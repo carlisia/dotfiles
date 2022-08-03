@@ -73,7 +73,6 @@ servers["gopls"] = {
           gofumpt = true,
           staticcheck = true,
           usePlaceholders = true,
-          shadow = true,
         },
       },
     }

@@ -55,11 +55,11 @@ function M.null_ls(bufnr)
   })
 end
 
-function M.nvim_go()
+function M.go_nvim()
   autocmd("FileType", {
     pattern = "go",
     callback = function()
-      vim.keymap.set("", "<leader>fm", "<cmd>GoFormat<cr>", { silent = true, buffer = 0 })
+      vim.keymap.set("", "<leader>fm", "<cmd>GoFmt<cr>", { silent = true, buffer = 0 })
     end,
   })
 end

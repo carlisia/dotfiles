@@ -50,19 +50,19 @@ function M.null_ls()
   require("custom.plugins.null-ls")
 end
 
-function M.nvim_go()
-  require("go").setup({
-    -- notify: use nvim-notify
-    notify = true,
-    -- lint_prompt_style: qf (quickfix), vt (virtual text)
-    lint_prompt_style = "virtual_text",
-    -- formatter: goimports, gofmt, gofumpt
-    formatter = "gofumpt",
-    -- maintain cursor position after formatting loaded buffer
-    maintain_cursor_pos = true,
-  })
-  require("custom.autocmds").nvim_go()
-end
+-- function M.nvim_go()
+--   require("go").setup({
+--     -- notify: use nvim-notify
+--     notify = true,
+--     -- lint_prompt_style: qf (quickfix), vt (virtual text)
+--     lint_prompt_style = "virtual_text",
+--     -- formatter: goimports, gofmt, gofumpt
+--     formatter = "gofumpt",
+--     -- maintain cursor position after formatting loaded buffer
+--     maintain_cursor_pos = true,
+--   })
+--   require("custom.autocmds").nvim_go()
+-- end
 
 function M.go_nvim()
   require("go").setup({
@@ -110,7 +110,7 @@ function M.go_nvim()
     run_in_floaterm = true, -- set to true to run in float window.
     -- float term recommended if you use richgo/ginkgo with terminal color
   })
-  require("custom.autocmds").nvim_go()
+  require("custom.autocmds").go_nvim()
 end
 
 function M.nvimtree()

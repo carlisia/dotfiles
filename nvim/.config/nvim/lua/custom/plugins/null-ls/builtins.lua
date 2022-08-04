@@ -1,8 +1,8 @@
 return function(builtins)
   local sources = {
 
-    -- builtins.formatting.goimports,
-    -- builtins.formatting.gofumpt,
+    builtins.formatting.goimports,
+    builtins.formatting.gofumpt,
 
     builtins.formatting.prettierd.with({
       "javascript",

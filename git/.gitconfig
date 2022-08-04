@@ -5,7 +5,8 @@
 
 [user]
 	name = Carlisia Thompson
-	email = carlisia@grokkingtech.io
+	email = carlisia@gmail.com
+	signingkey = B7551DF3ACB775274245AD73A2F6CAEE8110C9CB
 
 [credential]
 	helper = osxkeychain
@@ -69,3 +70,8 @@
 	smudge = git-lfs smudge -- %f
 [gc]
 	autoDetach = false
+[commit]
+    gpsign = true
+	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg

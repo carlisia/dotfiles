@@ -387,26 +387,12 @@ return {
     end,
   },
 
-  ["CRAG666/code_runner.nvim"] = {
-    config = function()
-      require("code_runner").setup({
-        -- put here the commands by filetype
-        filetype = {
-          go = "richgo",
-          sh = "bash",
-        },
-        term = {
-          --  Position to open the terminal, this option is ignored if mode is tab
-          position = "bot",
-          -- window size, this option is ignored if tab is true
-          size = 32,
-        },
-      })
-    end,
+  ["erietz/vim-terminator"] = {
     setup = function()
-      require("custom.utils").packer_lazy_load("code_runner.nvim")
+      require("custom.utils").packer_lazy_load("vim-terminator", 500)
     end,
   },
+
   ["pwntester/octo.nvim"] = {
     after = "telescope.nvim",
     config = function()

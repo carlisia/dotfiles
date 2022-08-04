@@ -18,3 +18,9 @@ opt.listchars:append("space:⋅")
 -- vim.o.listchars = { space = "⋅", tab = "⋅" }
 --
 vim.o.sessionoptions = "blank,buffers,curdir,localoptions,folds,help,tabpages,winsize,winpos,terminal"
+
+vim.g.terminator_runfile_map = {
+  markdown = "glow",
+  go = "richgo",
+  sh = "bash",
+}

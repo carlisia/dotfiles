@@ -413,7 +413,7 @@ return {
       require("octo").setup()
     end,
     setup = function()
-      require("custom.utils").packer_lazy_load("octo.nvim")
+      require("custom.utils").packer_lazy_load("telescope.nvim", 500)
     end,
   },
   ["petertriho/cmp-git"] = {

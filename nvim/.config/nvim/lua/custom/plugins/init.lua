@@ -407,4 +407,12 @@ return {
       require("custom.utils").packer_lazy_load("code_runner.nvim")
     end,
   },
+  ["pwntester/octo.nvim"] = {
+    config = function()
+      require("octo").setup()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("octo.nvim")
+    end,
+  },
 }

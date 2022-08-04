@@ -119,14 +119,6 @@ function M.go_nvim()
   require("custom.autocmds").go_nvim()
 end
 
-function M.nvimtree()
-  return {
-    filters = { exclude = {} },
-    view = { hide_root_folder = false, adaptive_size = false },
-    renderer = { indent_markers = { enable = true }, icons = { show = { folder_arrow = false } } },
-  }
-end
-
 function M.persisted()
   require("persisted").setup({
     autoload = true, -- automatically load the session for the cwd on Neovim startup
@@ -139,8 +131,6 @@ function M.persisted()
           vim.api.nvim_win_close(win, false)
         end
       end
-      vim.cmd(":silent! NvimTreeClose")
-      vim.cmd(":silent! Neotree close")
     end,
   })
 end

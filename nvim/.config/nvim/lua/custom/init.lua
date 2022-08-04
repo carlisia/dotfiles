@@ -18,3 +18,6 @@ opt.listchars:append("space:⋅")
 -- vim.o.listchars = { space = "⋅", tab = "⋅" }
 --
 vim.o.sessionoptions = "blank,buffers,curdir,localoptions,folds,help,tabpages,winsize,winpos,terminal"
+
+-- to disable nvim-tree key mappings completly so neotree keybindings can work
+vim.g.nvim_tree_disable_default_keybindings = 1

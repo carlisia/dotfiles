@@ -33,6 +33,7 @@ M.plugins.override = {
 
 M.mappings = {
   telescope = require("custom.mappings").telescope,
+  disabled = require("custom.mappings").disabled,
 }
 
 return M

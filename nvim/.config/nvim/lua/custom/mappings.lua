@@ -2,6 +2,13 @@ local map = vim.keymap.set
 
 local M = {}
 
+M.disabled = {
+  n = {
+    ["<C-n>"] = "",
+    ["<leader>e"] = "",
+  },
+}
+
 -- all the plugins which are not dependent on any plugin
 function M.aki()
   -- select all text in a buffer

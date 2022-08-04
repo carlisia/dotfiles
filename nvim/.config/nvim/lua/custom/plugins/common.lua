@@ -5,6 +5,12 @@ function M.bufferline()
 end
 
 function M.cmp()
+  local cmp = require("cmp")
+  cmp.setup.git = {
+    sources = {
+      { name = "git" },
+    },
+  }
   require("custom.plugins.cmp_cmdline")
 end
 

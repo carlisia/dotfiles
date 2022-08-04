@@ -408,11 +408,18 @@ return {
     end,
   },
   ["pwntester/octo.nvim"] = {
+    after = "telescope.nvim",
     config = function()
       require("octo").setup()
     end,
     setup = function()
       require("custom.utils").packer_lazy_load("octo.nvim")
+    end,
+  },
+  ["petertriho/cmp-git"] = {
+    after = "nvim-cmp",
+    setup = function()
+      require("custom.utils").packer_lazy_load("cmp-git")
     end,
   },
 }

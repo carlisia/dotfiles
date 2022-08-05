@@ -131,6 +131,7 @@ function M.persisted()
           vim.api.nvim_win_close(win, false)
         end
       end
+      vim.cmd(":silent! Neotree close")
     end,
   })
 end

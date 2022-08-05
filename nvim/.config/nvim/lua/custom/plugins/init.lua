@@ -1,7 +1,4 @@
 return {
-  ------------------------------------------------------------------------------
-  ------------------------------------------------------------------------------
-  ------------------------------------------------------------------------------
   -- all of the lsp related stuff --
   ["neovim/nvim-lspconfig"] = {
     after = "mason.nvim",
@@ -53,6 +50,7 @@ return {
   },
 
   -- go lsp stuff
+  -- --previous go plugin
   --  ["crispgm/nvim-go"] = {
   --    after = "nvim-lspconfig",
   --    config = function()
@@ -122,10 +120,6 @@ return {
       require("trouble").setup({ auto_close = true, use_diagnostic_signs = false })
     end,
   },
-  -- lsp stuff end --
-  ------------------------------------------------------------------------------
-  ------------------------------------------------------------------------------
-  ------------------------------------------------------------------------------
 
   ["max397574/better-escape.nvim"] = {
     event = "InsertEnter",
@@ -178,7 +172,6 @@ return {
       require("custom.utils").packer_lazy_load("lightspeed.nvim", 1000)
     end,
   },
-
   ["danymat/neogen"] = {
     module = "neogen",
     cmd = "Neogen",
@@ -197,7 +190,6 @@ return {
       require("custom.plugins.neotree")
     end,
   },
-
   ["nacro90/numb.nvim"] = {
     event = "CmdlineEnter",
     config = function()
@@ -207,6 +199,18 @@ return {
 
   ["kevinhwang91/nvim-bqf"] = { ft = "qf" },
 
+  -- TODO: Fix the highlight issue:
+  --[[
+Highlight group 'Normal' has no background highlight
+Please provide an RGB hex value or highlight group with a background value for 'background_colour' option.
+This is the colour that will be used for 100% transparency.
+```lua
+require("notify").setup({
+  background_colour = "#000000",
+})
+```
+Defaulting to #000000
+--]]
   ["rcarriga/nvim-notify"] = {
     config = function()
       vim.notify = require("notify")
@@ -225,7 +229,6 @@ return {
       require("custom.commands").spectre()
     end,
   },
-
   ["olimorris/persisted.nvim"] = {
     config = function()
       require("custom.plugins.common").persisted()
@@ -267,7 +270,6 @@ return {
       require("custom.utils").packer_lazy_load("telescope.nvim", 500)
     end,
   },
-
   ["akinsho/toggleterm.nvim"] = {
     module = "toggleterm",
     config = function()
@@ -277,7 +279,6 @@ return {
       require("custom.mappings").toggleterm()
     end,
   },
-
   ["nvim-treesitter/nvim-treesitter-context"] = {
     after = "nvim-treesitter",
     config = function()
@@ -296,7 +297,7 @@ return {
       require("custom.utils").packer_lazy_load("vim-move", 1000)
     end,
   },
-
+  --TODO: test if I want this plugin or not
   -- ["Mofiqul/trld.nvim"] = {
   --   setup = function()
   --     require("custom.utils").packer_lazy_load("trld.nvim", 1000)
@@ -324,7 +325,6 @@ return {
       vim.g.gitblame_enabled = 0
     end,
   },
-
   ["sindrets/diffview.nvim"] = {
     cmd = {
       "DiffviewOpen",
@@ -334,9 +334,6 @@ return {
     },
     config = function()
       require("custom.plugins.common").diffview()
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("diffview.nvim")
     end,
   },
   ["folke/todo-comments.nvim"] = {
@@ -353,20 +350,13 @@ return {
       require("custom.utils").packer_lazy_load("vim-visual-multi")
     end,
   },
+
+  ----------
   ["itspriddle/vim-marked"] = {
     setup = function()
       require("custom.utils").packer_lazy_load("vim-marked")
     end,
   },
-  ["stevearc/aerial.nvim"] = {
-    config = function()
-      require("custom.plugins.common").aerial()
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("aerial.nvim")
-    end,
-  },
-
   ["yamatsum/nvim-cursorline"] = {
     config = function()
       require("nvim-cursorline").setup({
@@ -392,9 +382,13 @@ return {
       require("custom.utils").packer_lazy_load("vim-terminator", 500)
     end,
   },
-
   ["pwntester/octo.nvim"] = {
     after = "telescope.nvim",
+    requires = {
+      "kyazdani42/nvim-web-devicons",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
     config = function()
       require("octo").setup()
     end,
@@ -406,6 +400,13 @@ return {
     after = "nvim-cmp",
     setup = function()
       require("custom.utils").packer_lazy_load("cmp-git")
+    end,
+  },
+
+  ["stevearc/aerial.nvim"] = {
+    cmd = "AerialToggle",
+    config = function()
+      require("custom.plugins.common").aerial()
     end,
   },
 }

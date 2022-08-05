@@ -182,7 +182,7 @@ function M.telescope()
         case_mode = "smart_case",
       },
     },
-    extension_list = { "fzf", "notify", "persisted", "neoclip" },
+    extension_list = { "fzf", "notify", "persisted", "neoclip", "octo" },
   }
 end
 

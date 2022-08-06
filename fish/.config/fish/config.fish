@@ -25,7 +25,6 @@ set -x EDITOR code
 
 alias go=richgo
 
-# So we can run go commands and go programs we have compiled ourselves
 set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin /Users/carlisiac/.cargo/bin fish fish_indent /Users/carlisiac/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script /Users/carlisiac/.local/bin
 
 alias python="python3"
@@ -72,6 +71,11 @@ alias gita="python3 -m gita"
 # gh cli / to be run inside a repo directory
 alias pr="gh pr list | fzf"
 alias co="gh co"
+alias gw="gh worktree"
+
+alias v=nvim
+alias l="git log --pretty=oneline -n 20 --graph --abbrev-commit"
+alias cc="git shortlog --summary --numbered"
 
 # iTerm2 shell integration
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish

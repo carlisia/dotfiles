@@ -74,7 +74,6 @@ end
 function M.lspconfig(client, bufnr)
   local m = {
     declaration = "gD",
-    definition = "gd",
     hover = "K",
     implementation = "gi",
     signature_help = "gk",
@@ -101,9 +100,7 @@ function M.lspconfig(client, bufnr)
     vim.lsp.buf.declaration()
   end)
 
-  buf_k("n", m.definition, function()
-    require("lspsaga.finder").lsp_finder()
-  end)
+  map("n", "gd", "<cmd>:Lspsaga lsp_finder<cr>")
 
   buf_k("n", m.hover, function()
     require("lspsaga.hover").render_hover_doc()

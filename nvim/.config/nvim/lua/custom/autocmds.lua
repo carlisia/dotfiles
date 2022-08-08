@@ -24,6 +24,7 @@ function M.cmp()
   autocmd("FileType", {
     pattern = "go",
     callback = function()
+      vim.keymap.set("", "<leader>fm", "<cmd>GoFmt<cr>", { silent = true, buffer = 0 })
       local ok, cmp = pcall(require, "cmp")
       if ok then
         cmp.setup.filetype({ "go" }, {
@@ -51,15 +52,6 @@ function M.null_ls(bufnr)
     buffer = bufnr,
     callback = function()
       vim.lsp.buf.formatting_seq_sync({}, 300)
-    end,
-  })
-end
-
-function M.go_nvim()
-  autocmd("FileType", {
-    pattern = "go",
-    callback = function()
-      vim.keymap.set("", "<leader>fm", "<cmd>GoFmt<cr>", { silent = true, buffer = 0 })
     end,
   })
 end

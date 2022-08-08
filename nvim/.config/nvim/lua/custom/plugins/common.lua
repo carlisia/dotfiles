@@ -116,7 +116,6 @@ function M.go_nvim()
     run_in_floaterm = true, -- set to true to run in float window.
     -- float term recommended if you use richgo/ginkgo with terminal color
   })
-  require("custom.autocmds").go_nvim()
 end
 
 function M.persisted()

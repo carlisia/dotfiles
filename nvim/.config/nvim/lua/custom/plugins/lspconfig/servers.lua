@@ -101,8 +101,9 @@ servers["yamlls"] = {
           },
           schemas = {
             -- TODO: add schemas for the other k8s resources if snippets don't validate well
-            ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.20.5-standalone-strict/_definitions.json#/definitions/io.k8s.api.apps.v1.DaemonSet"] = "*/*.yaml",
+            -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.20.5-standalone-strict/_definitions.json#/definitions/io.k8s.api.apps.v1.DaemonSet"] = "*/*.yaml",
 
+            ["http://json.schemastore.org/github-issue-forms"] = ".github/ISSUE_TEMPLATE/*",
             ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
             ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
             ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",

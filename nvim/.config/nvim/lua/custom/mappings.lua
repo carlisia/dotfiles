@@ -64,6 +64,14 @@ function M.aki()
   end)
 
   map("n", "<leader>o", "<cmd>:AerialToggle<cr>")
+
+  -- use <C-\> to toggle the search highlight
+  vim.cmd([[nnoremap <silent> <C-\> :if (&hlsearch == 1) \| set nohlsearch \| else \| set hlsearch \| endif<cr>]])
+
+  -- use <enter> to search for the current word (very much like *) but without the cursor jumping
+  vim.cmd(
+    [[nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr> ]) end, }a]]
+  )
 end
 
 function M.bufferline()
@@ -80,7 +88,7 @@ function M.lspconfig(client, bufnr)
     add_workspace_folder = "<leader>wa",
     remove_workspace_folder = "<leader>wr",
     list_workspace_folders = "<leader>wl",
-    type_definition = "<leader>D",
+    type_definition = "td",
     rename = "<leader>re",
     code_action = "<leader>ca",
     references = "gr",

@@ -5,10 +5,10 @@ local od = require("custom.highlights").onedarker
 M.base_30 = {
   white = od.cursor_bg,
 
-  black = od.bg, --  nvim bg
-  darker_black = "#161a1e",
+  black = "#494b51", -- nvim bg, highlights tab background + mode text on status line (this color is not great for that, but ok)
+  darker_black = "#161a1e", -- background of floating windows
 
-  grey = od.gray,
+  grey = od.gray, -- not tree highlight
 
   red = od.purple,
 
@@ -18,7 +18,7 @@ M.base_30 = {
   blue = od.blue, -- #
   nord_blue = "#ff007c", -- NORMAL bar?
   teal = "#94D2CF",
-  folder_bg = "#A3CBE7",
+  folder_bg = "#A3CBE7", -- color of folders
 
   cyan = od.sign_delete,
   purple = od.orange,
@@ -32,12 +32,11 @@ M.base_30 = {
   sun = od.yellow_orange,
   orange = od.orange,
 
-  black2 = "#22262a",
+  black2 = "#22262a", -- not tree highlight
   one_bg = "#25292d", -- real bg of onedark
-  -- one_bg2 = "#2f3337",
   one_bg2 = "#2a313e", -- highlight of enclosing block text
   -- one_bg3 = "#393d41",
-  one_bg3 = "grey",
+  one_bg3 = "#a6a8a9", -- "grey", -- can't tell
 
   grey_fg = "#4b4f53", -- comments and git blame text
   grey_fg2 = "red",
@@ -46,15 +45,14 @@ M.base_30 = {
   line = "#343A40", -- for lines like vertsplit
 
   statusline_bg = "#22262e",
-  lightbg = "#2f3337",
+  lightbg = "#2f3337", -- text of status line
 }
 
 M.base_16 = {
-  base00 = "#1e222a",
-  -- base00 = "#e06c75",
-  base01 = "#353b45",
-  base02 = "#3e4451",
-  base03 = "#545862",
+  base00 = "#1e222a", -- entire background
+  base01 = "#85898f", -- "#353b45", -- can't tell
+  base02 = "#3e4451", -- highlight of selected text
+  base03 = "#a9abb0", -- "#545862", -- can't tell
   base04 = "yellow",
   base05 = "#abb2bf",
   -- base06 = "#b6bdca",
@@ -70,6 +68,6 @@ M.base_16 = {
   base0F = "#be5046",
 }
 
-vim.opt.bg = "dark"
+-- vim.opt.bg = "dark"
 
 return M

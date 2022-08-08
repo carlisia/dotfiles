@@ -409,4 +409,6 @@ Defaulting to #000000
       require("custom.plugins.common").aerial()
     end,
   },
+  ["tpope/vim-fugitive"] = {},
+  ["tpope/vim-unimpaired"] = {},
 }

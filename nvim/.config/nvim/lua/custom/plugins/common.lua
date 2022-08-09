@@ -330,7 +330,7 @@ M.gitsigns = {
 M.aerial = function()
   require("aerial").setup({
     close_behavior = "auto",
-    default_direction = "prefer_left",
+    default_direction = "prefer_right",
     highlight_on_hover = true,
   })
 end
@@ -345,7 +345,7 @@ M.blankline = {
     "lspinfo",
     "TelescopePrompt",
     "TelescopeResults",
-    "Mason",
+    "mason",
     "",
   },
   buftype_exclude = { "terminal" },

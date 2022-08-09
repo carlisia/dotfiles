@@ -36,7 +36,7 @@ M.base_30 = {
   one_bg = "#25292d", -- real bg of onedark
   one_bg2 = "#2a313e", -- highlight of enclosing block text
   -- one_bg3 = "#393d41",
-  one_bg3 = "#a6a8a9", -- "grey", -- can't tell
+  one_bg3 = "grey", -- "#a6a8a9", -- "grey", -- can't tell (update: one of these is the inner tab symbol)
 
   grey_fg = "#4b4f53", -- comments and git blame text
   grey_fg2 = "red",
@@ -50,9 +50,11 @@ M.base_30 = {
 
 M.base_16 = {
   base00 = "#1e222a", -- entire background
-  base01 = "#85898f", -- "#353b45", -- can't tell
+  base01 = "#353b45", -- "#85898f", -- "#353b45", -- can't tell (update: one of these is the inner tab symbol)
+
   base02 = "#3e4451", -- highlight of selected text
-  base03 = "#a9abb0", -- "#545862", -- can't tell
+  base03 = "#545862", -- "#a9abb0", -- "#545862", -- can't tell  (update: one of these is the inner tab symbol)
+
   base04 = "yellow",
   base05 = "#abb2bf",
   -- base06 = "#b6bdca",
@@ -68,6 +70,6 @@ M.base_16 = {
   base0F = "#be5046",
 }
 
--- vim.opt.bg = "dark"
+vim.opt.bg = "dark"
 
 return M

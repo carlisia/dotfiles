@@ -30,7 +30,7 @@ return function(builtins)
     builtins.diagnostics.actionlint,
     builtins.diagnostics.alex,
 
-    builtins.code_actions.gitsigns,
+    -- builtins.code_actions.gitsigns,
     builtins.code_actions.shellcheck,
   }
   return sources

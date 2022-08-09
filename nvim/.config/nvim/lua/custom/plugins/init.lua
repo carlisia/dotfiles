@@ -297,12 +297,6 @@ Defaulting to #000000
       require("custom.utils").packer_lazy_load("vim-move", 1000)
     end,
   },
-  --TODO: test if I want this plugin or not
-  -- ["Mofiqul/trld.nvim"] = {
-  --   setup = function()
-  --     require("custom.utils").packer_lazy_load("trld.nvim", 1000)
-  --   end,
-  -- },
 
   ["ruifm/gitlinker.nvim"] = {
     requires = "nvim-lua/plenary.nvim",

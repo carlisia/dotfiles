@@ -21,7 +21,7 @@ end
 
 set -x GOPATH $HOME/working
 
-set -x EDITOR code
+set -x EDITOR nvim 
 
 alias go=richgo
 

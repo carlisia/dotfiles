@@ -17,11 +17,11 @@ k9s:
   currentContext: gke_knative-carlisia_us-central1_cluster-2-bigger
   currentCluster: gke_knative-carlisia_us-central1_cluster-2-bigger
   clusters:
-    gke_knative-carlisia_us-central1_cluster-2-bigger:
+    gke-kube-1-24:
       namespace:
         active: ""
         favorites:
-        - default
+          - knative-serving
       view:
         active: po
       featureGates:

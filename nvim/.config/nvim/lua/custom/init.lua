@@ -8,6 +8,7 @@ local opt = vim.opt
 opt.pumheight = 30
 opt.tabstop = 4
 opt.undofile = false
+vim.opt.swapfile = false
 
 opt.shell = "/usr/local/bin/bash"
 

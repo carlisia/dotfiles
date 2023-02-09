@@ -25,8 +25,14 @@ set -x EDITOR nvim
 
 alias go=richgo
 
-set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin /Users/carlisiac/.cargo/bin fish fish_indent /Users/carlisiac/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script /Users/carlisiac/.local/bin
+set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin /Users/carlisiac/.cargo/bin fish fish_indent /Users/carlisiac/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script /Users/carlisiac/.local/bin 
 
+set -x PATH /usr/local/opt/gnu-tar/libexec/gnubin:$PATH
+set -x PATH /usr/local/opt/grep/libexec/gnubin:$PATH
+set -x PATH /usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+set -x PATH /usr/local/opt/coreutils/libexec/gnubin:$PATH
+
+alias n="nvim ."
 alias python="python3"
 alias g="git status -sb"
 
@@ -81,4 +87,4 @@ alias cc="git shortlog --summary --numbered"
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc' ]; . '/Users/carlisiac/Downloads/google-cloud-sdk/path.fish.inc'; end
+if [ -f '/Applications/gcloud/google-cloud-sdk/path.fish.inc' ]; . '/Applications/gcloud/google-cloud-sdk/path.fish.inc'; end

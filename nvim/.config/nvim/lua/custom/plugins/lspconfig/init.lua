@@ -60,10 +60,10 @@ local setup_lsp = function()
         signature.on_attach({}, bufnr)
       end
 
-      local ok_aerial, aerial = pcall(require, "aerial")
-      if ok_aerial then
-        aerial.on_attach(client, bufnr)
-      end
+      -- local ok_aerial, aerial = pcall(require, "aerial")
+      -- if ok_aerial then
+      --   aerial.on_attach(client, bufnr)
+      -- end
     end
 
     local default_config = {

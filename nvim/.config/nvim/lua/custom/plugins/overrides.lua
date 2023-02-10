@@ -16,16 +16,17 @@ end
 
 function M.colorizer()
   return {
+    filetypes = { "*", "!cmp_menu" },
     user_default_options = {
-      names = false, -- "Name" codes like Blue
       RRGGBBAA = true, -- #RRGGBBAA hex codes
-      rgb_fn = true, -- CSS rgb() and rgba() functions
-      hsl_fn = true, -- CSS hsl() and hsla() functions
+      AARRGGBB = true, -- #0xAARRGGBA hex codes
       css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-      css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
       -- Available modes: foreground, background
       mode = "background", -- Set the display mode.
+      tailwind = false,
+      sass = { enable = true },
     },
+    buftypes = { "*", "!terminal", "!prompt", "!popup" },
   }
 end
 
@@ -133,29 +134,6 @@ function M.persisted()
       vim.cmd(":silent! Neotree close")
     end,
   })
-end
-
-function M.treesitter()
-  return {
-    ensure_installed = {
-      "go",
-      "json",
-      "toml",
-      "markdown",
-      "c",
-      "bash",
-      "lua",
-      "norg",
-      "yaml",
-      "vim",
-    },
-    -- autopairs = { enable = true },
-    -- context_commentstring = { enable = true },
-    highlight = { enable = true, use_languagetree = true },
-    indent = { enable = true },
-    matchup = { enable = true },
-    tree_docs = { enable = true },
-  }
 end
 
 function M.telescope()

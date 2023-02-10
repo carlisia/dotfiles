@@ -31,8 +31,8 @@ require("neo-tree").setup({
   },
 })
 
-vim.cmd([[nnoremap <c-n> <cmd>Neotree toggle<cr>]])
-vim.cmd([[nnoremap \ <cmd>Neotree toggle<cr>]])
+-- vim.cmd([[nnoremap <c-n> <cmd>Neotree toggle<cr>]])
+-- vim.cmd([[nnoremap \ <cmd>Neotree toggle<cr>]])
 
 vim.cmd([[
 highlight! link NeoTreeDirectoryIcon NvimTreeFolderIcon

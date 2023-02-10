@@ -73,4 +73,5 @@ local function config()
 end
 
 require("bufferline").setup(config())
-require("custom.mappings").bufferline()
+-- @todo: fix this mapping
+-- require("custom.mappings").bufferline()

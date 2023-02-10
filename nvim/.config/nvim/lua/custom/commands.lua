@@ -3,7 +3,7 @@ local command = vim.api.nvim_create_user_command
 local M = {}
 
 -- non plugin commands
-function M.aki()
+function M.init()
   command("Sudowrite", function()
     require("custom.utils").sudo_write()
   end, { desc = "Write to files using sudo" })

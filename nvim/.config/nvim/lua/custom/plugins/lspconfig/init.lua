@@ -49,11 +49,12 @@ local setup_lsp = function()
 
     local on_attach = function(client, bufnr)
       if disable_format then
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
       end
 
-      require("custom.mappings").lspconfig(client, bufnr)
+      -- @todo: fix/add lspconfig mappings
+      -- require("custom.mappings").lspconfig(client, bufnr)
 
       local ok, signature = pcall(require, "lsp_signature")
       if ok then

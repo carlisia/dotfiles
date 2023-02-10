@@ -1,70 +1,110 @@
-return {
-  -- all of the lsp related stuff --
+---@type {[PluginName]: NvPluginConfig|false}
+
+local overrides = require "custom.plugins.overrides"
+
+local plugins = {
+  -- remove plugins --
+
+  ["NvChad/nvterm"] = false,
+
+  -- override plugin definition options --
+
   ["neovim/nvim-lspconfig"] = {
     after = "mason.nvim",
     module = "lspconfig",
     config = function()
-      require("custom.plugins.lspconfig")
+      require "plugins.configs.lspconfig"
+      require "custom.plugins.lspconfig"
     end,
   },
 
-  ["williamboman/mason-lspconfig.nvim"] = { module = "mason-lspconfig" },
+  -- override plugin configs --
+
+  ["nvim-treesitter/nvim-treesitter"] = {
+    setup = function()
+      require "custom.plugins.treesitter"
+    end,
+    config = function() end,
+  },
 
   ["williamboman/mason.nvim"] = {
-    opt = true,
-    config = function()
-      require("mason").setup()
-      require("mason-lspconfig").setup()
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("mason.nvim", 1000)
-      -- reload the current file so lsp actually starts for it
-      vim.defer_fn(function()
-        vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
-      end, 0)
-    end,
+    override_options = overrides.mason,
   },
 
+  ["nvim-tree/nvim-tree.lua"] = {
+    override_options = overrides.nvimtree,
+  },
+
+  -- install plugins --
+
+  ["williamboman/mason-lspconfig.nvim"] = { module = "mason-lspconfig" },
   ["ray-x/lsp_signature.nvim"] = {
     after = "nvim-lspconfig",
     config = function()
-      require("custom.plugins.common").lsp_signature()
+      require("custom.plugins.overrides").lsp_signature()
     end,
   },
-
+  -- code formatting, linting etc
+  ["jose-elias-alvarez/null-ls.nvim"] = {
+    after = "nvim-lspconfig",
+    config = function()
+      require("custom.plugins.overrides").null_ls()
+    end,
+  },
   ["glepnir/lspsaga.nvim"] = {
     after = "nvim-lspconfig",
     config = function()
-      require("lspsaga").init_lsp_saga({
+      require("lspsaga").setup({
         max_preview_lines = 50,
         diagnostic_header = { "😡", "😥", "😤", "😐" },
       })
     end,
   },
 
-  ["jose-elias-alvarez/null-ls.nvim"] = {
-    after = "nvim-lspconfig",
+  ["nvim-treesitter/nvim-treesitter-context"] = {
+    after = "nvim-treesitter",
     config = function()
-      require("custom.plugins.common").null_ls()
+      require("treesitter-context").setup {
+        enable = true,
+        max_lines = 2,
+        trim_scope = "inner", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+        patterns = { default = { "class", "function", "method", "for", "while", "if", "switch", "case" } },
+      }
     end,
   },
-
-  -- go lsp stuff
-  -- --previous go plugin
-  --  ["crispgm/nvim-go"] = {
-  --    after = "nvim-lspconfig",
-  --    config = function()
-  --      require("custom.plugins.common").nvim_go()
-  --    end,
-  --    requires = "rcarriga/nvim-notify",
-  --  },
-
-  ["ray-x/go.nvim"] = {
+  -- Neo-tree is a Neovim plugin to browse the file system and other tree like
+  -- structures in whatever style suits you, including sidebars, floating windows,
+  -- netrw split style, or all of them at once!
+  -- https://github.com/nvim-neo-tree/neo-tree.nvim
+  ["nvim-neo-tree/neo-tree.nvim"] = {
+    requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "MunifTanjim/nui.nvim" },
     config = function()
-      require("custom.plugins.common").go_nvim()
+      require("custom.plugins.neotree")
     end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("go.nvim")
+    -- setup = function()
+    -- @todo: fix this mapping
+    --   -- require("custom.mappings").neotree()
+    -- end,
+  },
+
+  -- A better annotation generator. Supports multiple languages and annotation conventions
+  -- https://github.com/danymat/neogen
+  ["danymat/neogen"] = {
+    -- module = "neogen",
+    -- cmd = "Neogen",
+    requires = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("neogen").setup({ snippet_engine = "luasnip" })
+    end,
+    -- setup = function()
+      -- require("custom.mappings").neogen()
+    -- end,
+  },
+
+  ["max397574/better-escape.nvim"] = {
+    event = "InsertEnter",
+    config = function()
+      require("better_escape").setup()
     end,
   },
 
@@ -110,7 +150,6 @@ return {
     end,
   },
 
-  -- lua lsp stuff
   ["folke/lua-dev.nvim"] = { ft = "lua" },
 
   ["folke/trouble.nvim"] = {
@@ -130,7 +169,7 @@ return {
 
   ["akinsho/bufferline.nvim"] = {
     config = function()
-      require("custom.plugins.common").bufferline()
+      require("custom.plugins.overrides").bufferline()
     end,
     after = "base46",
   },
@@ -138,7 +177,7 @@ return {
   ["hrsh7th/cmp-cmdline"] = {
     after = "nvim-cmp",
     config = function()
-      require("custom.plugins.common").cmp()
+      require("custom.plugins.overrides").cmp()
     end,
     setup = function()
       require("custom.utils").packer_lazy_load("nvim-cmp", 0)
@@ -172,24 +211,7 @@ return {
       require("custom.utils").packer_lazy_load("lightspeed.nvim", 1000)
     end,
   },
-  ["danymat/neogen"] = {
-    module = "neogen",
-    cmd = "Neogen",
-    config = function()
-      require("neogen").setup({ { snippet_engine = "luasnip" } })
-    end,
-    setup = function()
-      require("custom.mappings").neogen()
-    end,
-    requires = "nvim-treesitter/nvim-treesitter",
-  },
 
-  ["nvim-neo-tree/neo-tree.nvim"] = {
-    requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "MunifTanjim/nui.nvim" },
-    config = function()
-      require("custom.plugins.neotree")
-    end,
-  },
   ["nacro90/numb.nvim"] = {
     event = "CmdlineEnter",
     config = function()
@@ -198,6 +220,7 @@ return {
   },
 
   ["kevinhwang91/nvim-bqf"] = { ft = "qf" },
+
 
   -- TODO: Fix the highlight issue:
   --[[
@@ -211,198 +234,225 @@ require("notify").setup({
 ```
 Defaulting to #000000
 --]]
-  ["rcarriga/nvim-notify"] = {
-    config = function()
-      vim.notify = require("notify")
-      require("notify").setup({ timeout = 3000 })
-    end,
-  },
+["rcarriga/nvim-notify"] = {
+  config = function()
+    vim.notify = require("notify")
+    require("notify").setup({ timeout = 3000 })
+  end,
+},
 
-  ["windwp/nvim-spectre"] = {
-    module = "spectre",
-    command = "FindReplace",
-    config = function()
-      require("spectre").setup({ color_devicons = true, open_cmd = "vertical new", is_insert_mode = true })
-    end,
-    setup = function()
-      require("custom.mappings").spectre()
-      require("custom.commands").spectre()
-    end,
-  },
-  ["olimorris/persisted.nvim"] = {
-    config = function()
-      require("custom.plugins.common").persisted()
-    end,
-  },
+["windwp/nvim-spectre"] = {
+  module = "spectre",
+  command = "FindReplace",
+  config = function()
+    require("spectre").setup({ color_devicons = true, open_cmd = "vertical new", is_insert_mode = true })
+  end,
+  setup = function()
+    -- @todo: fix this mapping
+    -- require("custom.mappings").spectre()
+    require("custom.commands").spectre()
+  end,
+},
+["olimorris/persisted.nvim"] = {
+  config = function()
+    require("custom.plugins.overrides").persisted()
+  end,
+},
 
-  ["tversteeg/registers.nvim"] = {
-    config = function()
-      vim.g.registers_window_border = "rounded"
-      vim.g.registers_insert_mode = false -- Suppress imap <C-R>
-      vim.cmd([[ inoremap <C-R> &ft=='TelescopePrompt' ? '<C-R>' : registers#peek('<C-R>') ]])
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("telescope.nvim", 1000)
-    end,
-  },
+["tversteeg/registers.nvim"] = {
+  config = function()
+    vim.g.registers_window_border = "rounded"
+    vim.g.registers_insert_mode = false -- Suppress imap <C-R>
+    vim.cmd([[ inoremap <C-R> &ft=='TelescopePrompt' ? '<C-R>' : registers#peek('<C-R>') ]])
+  end,
+  setup = function()
+    require("custom.utils").packer_lazy_load("telescope.nvim", 1000)
+  end,
+},
 
-  ["VonHeikemen/searchbox.nvim"] = {
-    module = "searchbox",
-    command = "SearchBox",
-    requires = { "MunifTanjim/nui.nvim" },
-    setup = function()
-      require("custom.mappings").searchbox()
-    end,
-  },
+["VonHeikemen/searchbox.nvim"] = {
+  module = "searchbox",
+  command = "SearchBox",
+  requires = { "MunifTanjim/nui.nvim" },
+  setup = function()
+    -- @todo: fix this mapping
+    -- require("custom.mappings").searchbox()
+  end,
+},
 
-  ["nvim-telescope/telescope-fzf-native.nvim"] = {
-    run = "make",
-    after = "telescope.nvim",
-    config = function()
-      -- load extensions
-      pcall(function()
-        for _, ext in ipairs(require("custom.plugins.common").telescope().extension_list) do
-          require("telescope").load_extension(ext)
-        end
-      end)
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("telescope.nvim", 500)
-    end,
+["nvim-telescope/telescope.nvim"] = { override_options = require("custom.plugins.overrides").telescope() },
+
+["nvim-telescope/telescope-fzf-native.nvim"] = {
+  run = "make",
+  after = "telescope.nvim",
+  config = function()
+    -- load extensions
+    pcall(function()
+      for _, ext in ipairs(require("custom.plugins.overrides").telescope().extension_list) do
+        require("telescope").load_extension(ext)
+      end
+    end)
+  end,
+  setup = function()
+    require("custom.utils").packer_lazy_load("telescope.nvim", 500)
+  end,
+},
+["akinsho/toggleterm.nvim"] = {
+  module = "toggleterm",
+  config = function()
+    require("custom.plugins.overrides").toggleterm()
+  end,
+  setup = function()
+    -- @todo: fix this mapping
+    -- require("custom.mappings").toggleterm()
+  end,
+},
+
+
+["matze/vim-move"] = {
+  opt = true,
+  setup = function()
+    require("custom.utils").packer_lazy_load("vim-move", 1000)
+  end,
+},
+
+["ruifm/gitlinker.nvim"] = {
+  requires = "nvim-lua/plenary.nvim",
+  event = "BufRead",
+  config = function()
+    require("gitlinker").setup({
+      opts = {
+        mappings = "<leader>gy",
+      },
+    })
+  end,
+  setup = function()
+    require("custom.utils").packer_lazy_load("gitlinker.nvim")
+  end,
+},
+["f-person/git-blame.nvim"] = {
+  event = "BufRead",
+  config = function()
+    vim.cmd("highlight default link gitblame SpecialComment")
+    vim.g.gitblame_enabled = 0
+  end,
+},
+["sindrets/diffview.nvim"] = {
+  cmd = {
+    "DiffviewOpen",
+    "DiffviewClose",
+    "DiffviewToggleFiles",
+    "DiffviewFocusFiles",
   },
-  ["akinsho/toggleterm.nvim"] = {
-    module = "toggleterm",
-    config = function()
-      require("custom.plugins.common").toggleterm()
-    end,
-    setup = function()
-      require("custom.mappings").toggleterm()
-    end,
-  },
-  ["nvim-treesitter/nvim-treesitter-context"] = {
-    after = "nvim-treesitter",
-    config = function()
-      require("treesitter-context").setup({
+  config = function()
+    require("custom.plugins.overrides").diffview()
+  end,
+},
+["folke/todo-comments.nvim"] = {
+  requires = "nvim-lua/plenary.nvim",
+  config = function()
+    require("todo-comments").setup()
+  end,
+  setup = function()
+    require("custom.utils").packer_lazy_load("todo-comments.nvim")
+  end,
+},
+["mg979/vim-visual-multi"] = {
+  setup = function()
+    require("custom.utils").packer_lazy_load("vim-visual-multi")
+  end,
+},
+
+----------
+["itspriddle/vim-marked"] = {
+  setup = function()
+    require("custom.utils").packer_lazy_load("vim-marked")
+  end,
+},
+["yamatsum/nvim-cursorline"] = {
+  config = function()
+    require("nvim-cursorline").setup({
+      cursorline = {
         enable = true,
-        max_lines = 2,
-        trim_scope = "inner", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        patterns = { default = { "class", "function", "method", "for", "while", "if", "switch", "case" } },
-      })
-    end,
-  },
+        timeout = 1000,
+        number = true,
+      },
+      cursorword = {
+        enable = true,
+        min_length = 3,
+        hl = { underline = true },
+      },
+    })
+  end,
+  setup = function()
+    require("custom.utils").packer_lazy_load("nvim-cursorline")
+  end,
+},
 
-  ["matze/vim-move"] = {
-    opt = true,
-    setup = function()
-      require("custom.utils").packer_lazy_load("vim-move", 1000)
-    end,
+["erietz/vim-terminator"] = {
+  setup = function()
+    require("custom.utils").packer_lazy_load("vim-terminator", 500)
+  end,
+},
+["pwntester/octo.nvim"] = {
+  after = "telescope.nvim",
+  requires = {
+    "kyazdani42/nvim-web-devicons",
+    "nvim-lua/plenary.nvim",
+    "nvim/telescope.nvim",
   },
+  config = function()
+    require("octo").setup()
+  end,
+  setup = function()
+    require("custom.utils").packer_lazy_load("telescope.nvim", 500)
+  end,
+},
+["petertriho/cmp-git"] = {
+  after = "nvim-cmp",
+  setup = function()
+    require("custom.utils").packer_lazy_load("cmp-git")
+  end,
+},
 
-  ["ruifm/gitlinker.nvim"] = {
-    requires = "nvim-lua/plenary.nvim",
-    event = "BufRead",
-    config = function()
-      require("gitlinker").setup({
-        opts = {
-          mappings = "<leader>gy",
-        },
-      })
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("gitlinker.nvim")
-    end,
-  },
-  ["f-person/git-blame.nvim"] = {
-    event = "BufRead",
-    config = function()
-      vim.cmd("highlight default link gitblame SpecialComment")
-      vim.g.gitblame_enabled = 0
-    end,
-  },
-  ["sindrets/diffview.nvim"] = {
-    cmd = {
-      "DiffviewOpen",
-      "DiffviewClose",
-      "DiffviewToggleFiles",
-      "DiffviewFocusFiles",
-    },
-    config = function()
-      require("custom.plugins.common").diffview()
-    end,
-  },
-  ["folke/todo-comments.nvim"] = {
-    requires = "nvim-lua/plenary.nvim",
-    config = function()
-      require("todo-comments").setup()
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("todo-comments.nvim")
-    end,
-  },
-  ["mg979/vim-visual-multi"] = {
-    setup = function()
-      require("custom.utils").packer_lazy_load("vim-visual-multi")
-    end,
-  },
+["stevearc/aerial.nvim"] = {
+  cmd = "AerialToggle",
+  config = function()
+    require("custom.plugins.overrides").aerial()
+  end,
+},
+["tpope/vim-fugitive"] = {},
+["tpope/vim-unimpaired"] = {},
 
-  ----------
-  ["itspriddle/vim-marked"] = {
-    setup = function()
-      require("custom.utils").packer_lazy_load("vim-marked")
-    end,
-  },
-  ["yamatsum/nvim-cursorline"] = {
-    config = function()
-      require("nvim-cursorline").setup({
-        cursorline = {
-          enable = true,
-          timeout = 1000,
-          number = true,
-        },
-        cursorword = {
-          enable = true,
-          min_length = 3,
-          hl = { underline = true },
-        },
-      })
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("nvim-cursorline")
-    end,
-  },
+["famiu/bufdelete.nvim"] = {
+  module = "bufdelete",
+  setup = function()
+    -- @todo: fix this mapping
+    -- require("custom.mappings").bufdelete()
+  end,
+},
 
-  ["erietz/vim-terminator"] = {
-    setup = function()
-      require("custom.utils").packer_lazy_load("vim-terminator", 500)
-    end,
-  },
-  ["pwntester/octo.nvim"] = {
-    after = "telescope.nvim",
-    requires = {
-      "kyazdani42/nvim-web-devicons",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("octo").setup()
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("telescope.nvim", 500)
-    end,
-  },
-  ["petertriho/cmp-git"] = {
-    after = "nvim-cmp",
-    setup = function()
-      require("custom.utils").packer_lazy_load("cmp-git")
-    end,
-  },
+["windwp/nvim-autopairs"] = { override_options = { check_ts = true } },
+["NvChad/nvim-colorizer.lua"] = { override_options = require("custom.plugins.overrides").colorizer() },
 
-  ["stevearc/aerial.nvim"] = {
-    cmd = "AerialToggle",
-    config = function()
-      require("custom.plugins.common").aerial()
-    end,
-  },
-  ["tpope/vim-fugitive"] = {},
-  ["tpope/vim-unimpaired"] = {},
+["lukas-reineke/indent-blankline.nvim"] = require("custom.plugins.overrides").blankline,
+
+["lewis6991/gitsigns.nvim"] = require("custom.plugins.overrides").gitsigns,
+
+["NvChad/ui"] = {
+  override_options = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },
+},
+
+["ray-x/go.nvim"] = {
+  config = function()
+    require("custom.plugins.overrides").go_nvim()
+  end,
+  setup = function()
+    require("custom.utils").packer_lazy_load("go.nvim")
+  end,
+},
+
+  -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
 }
+
+return plugins

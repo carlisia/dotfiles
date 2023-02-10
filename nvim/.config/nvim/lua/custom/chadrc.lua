@@ -1,39 +1,32 @@
+---@type ChadrcConfig
 local M = {}
+
+-- Path to overriding theme and highlights files
+local highlights = require("custom.highlights")
 
 M.options = {
   nvChad = {
     -- update_url = "https://github.com/carlisia/NvChad",
     update_url = "https://github.com/NvChad/NvChad",
-    update_branch = "main",
+    update_branch = "v2.0",
   },
 }
 
 M.ui = {
-  theme = "onedarker", -- default theme
+  theme = "onedarker", -- preferred theme
+  transparency = false,
+  hl_override = highlights.override,
+  hl_add = highlights.add,
 }
 
-M.plugins = {
-  remove = {
-    "NvChad/nvterm",
-    "folke/which-key.nvim",
-    "kyazdani42/nvim-tree.lua",
-  },
-  user = require("custom.plugins"),
-}
+M.plugins = require("custom.plugins")
 
-M.plugins.override = {
-  ["windwp/nvim-autopairs"] = { check_ts = true },
-  ["NvChad/nvim-colorizer.lua"] = require("custom.plugins.common").colorizer(),
-  ["lewis6991/gitsigns.nvim"] = require("custom.plugins.common").gitsigns,
-  ["nvim-treesitter/nvim-treesitter"] = require("custom.plugins.common").treesitter(),
-  ["nvim-telescope/telescope.nvim"] = require("custom.plugins.common").telescope(),
-  ["lukas-reineke/indent-blankline.nvim"] = require("custom.plugins.common").blankline,
-  ["NvChad/ui"] = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },
-}
+-- check core.mappings for table structure
+M.mappings = require("custom.mappings")
 
-M.mappings = {
-  telescope = require("custom.mappings").telescope,
-  disabled = require("custom.mappings").disabled,
-}
+-- M.mappings = {
+--   telescope = require("custom.mappings").telescope,
+--   disabled = require("custom.mappings").disabled,
+-- }
 
 return M

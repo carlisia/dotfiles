@@ -11,3 +11,13 @@
 - If no manual configuration is needed for LSP servers or null-ls, then `:Mason` command can be used to add new LSP servers, formatters and linters.
 
 - `plugins/init.lua` - To add new plugins
+
+
+---
+## TODOs
+
+###Important
+@todo: fix custom mappings; (original settings are in amplenote); make sure it initialized in init.lua or elsewhere
+
+###Low priority
+@todo: ensure M.ui is properly configured

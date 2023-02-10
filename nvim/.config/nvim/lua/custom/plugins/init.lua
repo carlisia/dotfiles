@@ -20,6 +20,10 @@ local plugins = {
 
   -- override plugin configs --
 
+  ["NvChad/ui"] = {
+    override_options = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },
+  },
+
   ["nvim-treesitter/nvim-treesitter"] = {
     setup = function()
       require "custom.plugins.treesitter"
@@ -80,11 +84,8 @@ local plugins = {
     requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "MunifTanjim/nui.nvim" },
     config = function()
       require("custom.plugins.neotree")
+      require("custom.keybindings").neotree()
     end,
-    -- setup = function()
-    -- @todo: fix this mapping
-    --   -- require("custom.mappings").neotree()
-    -- end,
   },
 
   -- A better annotation generator. Supports multiple languages and annotation conventions
@@ -246,10 +247,9 @@ Defaulting to #000000
   command = "FindReplace",
   config = function()
     require("spectre").setup({ color_devicons = true, open_cmd = "vertical new", is_insert_mode = true })
+    require("custom.keybindings").spectre()
   end,
   setup = function()
-    -- @todo: fix this mapping
-    -- require("custom.mappings").spectre()
     require("custom.commands").spectre()
   end,
 },
@@ -274,9 +274,8 @@ Defaulting to #000000
   module = "searchbox",
   command = "SearchBox",
   requires = { "MunifTanjim/nui.nvim" },
-  setup = function()
-    -- @todo: fix this mapping
-    -- require("custom.mappings").searchbox()
+  config = function()
+    require("custom.keybindings").searchbox()
   end,
 },
 
@@ -301,10 +300,7 @@ Defaulting to #000000
   module = "toggleterm",
   config = function()
     require("custom.plugins.overrides").toggleterm()
-  end,
-  setup = function()
-    -- @todo: fix this mapping
-    -- require("custom.mappings").toggleterm()
+    require("custom.keybindings").toggleterm()
   end,
 },
 
@@ -426,9 +422,9 @@ Defaulting to #000000
 
 ["famiu/bufdelete.nvim"] = {
   module = "bufdelete",
-  setup = function()
-    -- @todo: fix this mapping
-    -- require("custom.mappings").bufdelete()
+  command = "Bufdelete",
+  config = function()
+    require("custom.keybindings").bufdelete()
   end,
 },
 
@@ -438,10 +434,6 @@ Defaulting to #000000
 ["lukas-reineke/indent-blankline.nvim"] = require("custom.plugins.overrides").blankline,
 
 ["lewis6991/gitsigns.nvim"] = require("custom.plugins.overrides").gitsigns,
-
-["NvChad/ui"] = {
-  override_options = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },
-},
 
 ["ray-x/go.nvim"] = {
   config = function()

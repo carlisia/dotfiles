@@ -20,13 +20,7 @@ M.ui = {
 }
 
 M.plugins = require("custom.plugins")
-
--- check core.mappings for table structure
 M.mappings = require("custom.mappings")
 
--- M.mappings = {
---   telescope = require("custom.mappings").telescope,
---   disabled = require("custom.mappings").disabled,
--- }
-
+-- tst 
 return M

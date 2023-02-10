@@ -73,5 +73,4 @@ local function config()
 end
 
 require("bufferline").setup(config())
--- @todo: fix this mapping
--- require("custom.mappings").bufferline()
+require("custom.keybindings").bufferline()

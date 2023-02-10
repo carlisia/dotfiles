@@ -1,6 +1,5 @@
 require("custom.autocmds").init()
 require("custom.commands").init()
--- require("custom.mappings").init()
 
 local opt = vim.opt
 opt.pumheight = 30
@@ -21,3 +20,5 @@ vim.g.terminator_runfile_map = {
   go = "richgo",
   sh = "bash",
 }
+
+require("custom.keybindings").init()

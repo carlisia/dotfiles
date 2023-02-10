@@ -53,8 +53,7 @@ local setup_lsp = function()
         client.server_capabilities.documentRangeFormattingProvider = false
       end
 
-      -- @todo: fix/add lspconfig mappings
-      -- require("custom.mappings").lspconfig(client, bufnr)
+      require("custom.keybindings").lspconfig(client, bufnr)
 
       local ok, signature = pcall(require, "lsp_signature")
       if ok then

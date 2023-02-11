@@ -163,42 +163,42 @@ local plugins = {
   --   end,
   -- },
 
---   ["stevearc/dressing.nvim"] = {
---     opt = true,
---     config = function()
---       require("dressing").setup({ input = { mappings = { n = { ["q"] = "Close" } } } })
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("dressing.nvim", 1000)
---     end,
---   },
+  ["stevearc/dressing.nvim"] = {
+    opt = true,
+    config = function()
+      require("dressing").setup({ input = { mappings = { n = { ["q"] = "Close" } } } })
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("dressing.nvim", 1000)
+    end,
+  },
 
---   -- ui for lsp progress
---   ["j-hui/fidget.nvim"] = {
---     after = "nvim-lspconfig",
---     config = function()
---       require("fidget").setup({})
---     end,
---   },
+  -- ui for lsp progress
+  ["j-hui/fidget.nvim"] = {
+    after = "nvim-lspconfig",
+    config = function()
+      require("fidget").setup({})
+    end,
+  },
 
---   ["ggandor/lightspeed.nvim"] = {
---     opt = true,
---     config = function()
---       require("lightspeed").setup({ ignore_case = true, repeat_ft_with_target_char = true })
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("lightspeed.nvim", 1000)
---     end,
---   },
+  ["ggandor/lightspeed.nvim"] = {
+    opt = true,
+    config = function()
+      require("lightspeed").setup({ ignore_case = true, repeat_ft_with_target_char = true })
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("lightspeed.nvim", 1000)
+    end,
+  },
 
---   ["nacro90/numb.nvim"] = {
---     event = "CmdlineEnter",
---     config = function()
---       require("numb").setup()
---     end,
---   },
+  ["nacro90/numb.nvim"] = {
+    event = "CmdlineEnter",
+    config = function()
+      require("numb").setup()
+    end,
+  },
 
---   ["kevinhwang91/nvim-bqf"] = { ft = "qf" },
+  ["kevinhwang91/nvim-bqf"] = { ft = "qf" },
 
 --   -- TODO: Fix the highlight issue:
 --   --[[

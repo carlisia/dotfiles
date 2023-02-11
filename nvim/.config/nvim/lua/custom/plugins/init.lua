@@ -224,7 +224,6 @@ local plugins = {
     config = function()
       vim.g.registers_window_border = "rounded"
       vim.g.registers_insert_mode = false -- Suppress imap <C-R>
-      -- TODO: fix this cmd
       vim.cmd([[ inoremap <C-R> &ft=='TelescopePrompt' ? '<C-R>' : registers#peek('<C-R>') ]])
     end,
     setup = function()
@@ -292,7 +291,6 @@ local plugins = {
   ["f-person/git-blame.nvim"] = {
     event = "BufRead",
     config = function()
-      -- TODO: fix this cmd
       vim.cmd("highlight default link gitblame SpecialComment")
       vim.g.gitblame_enabled = 0
     end,

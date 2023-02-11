@@ -152,17 +152,6 @@ local plugins = {
     end,
   },
 
-  -- https://github.com/hrsh7th/cmp-cmdline
-  -- ["hrsh7th/cmp-cmdline"] = {
-  --   after = "nvim-cmp",
-  --   config = function()
-  --     require("custom.plugins.overrides").cmp(),
-  --   end,
-  --   setup = function()
-  --     require("custom.utils").packer_lazy_load("nvim-cmp", 0)
-  --   end,
-  -- },
-
   ["stevearc/dressing.nvim"] = {
     opt = true,
     config = function()
@@ -230,14 +219,6 @@ local plugins = {
       require("custom.commands").spectre()
     end,
   },
-
---   ["olimorris/persisted.nvim"] = {
---     module = "persisted", -- For lazy loading
---     config = function()
---       require("custom.plugins.overrides").persisted()
---       require("telescope").load_extension("persisted") -- To load the telescope extension
---     end,
---   },
 
   ["tversteeg/registers.nvim"] = {
     config = function()
@@ -316,15 +297,20 @@ local plugins = {
       vim.g.gitblame_enabled = 0
     end,
   },
---   -- ["sindrets/diffview.nvim"] = {
---   --   cmd = {
---   --     "DiffviewOpen",
---   --     "DiffviewClose",
---   --     "DiffviewToggleFiles",
---   --     "DiffviewFocusFiles",
---   --   },
---   --   config = overrides.diffview(),
---   -- },
+  ["sindrets/diffview.nvim"] = {
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+    },
+    config = function()
+      require("custom.plugins.overrides").diffview()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("diffview.nvim")
+    end,
+  },
   ["folke/todo-comments.nvim"] = {
     requires = "nvim-lua/plenary.nvim",
     config = function()
@@ -419,7 +405,25 @@ local plugins = {
 
   -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
 
-  ------- suspicious plugins that misbehave during installation sometimes
+  ------- suspicious plugins that misbehave during installation
+  --   ["olimorris/persisted.nvim"] = {
+  --     module = "persisted", -- For lazy loading
+  --     config = function()
+  --       require("custom.plugins.overrides").persisted()
+  --       require("telescope").load_extension("persisted") -- To load the telescope extension
+  --     end,
+  --   },
+
+  -- https://github.com/hrsh7th/cmp-cmdline
+  -- ["hrsh7th/cmp-cmdline"] = {
+  --   after = "nvim-cmp",
+  --   config = function()
+  --     require("custom.plugins.overrides").cmp(),
+  --   end,
+  --   setup = function()
+  --     require("custom.utils").packer_lazy_load("nvim-cmp", 0)
+  --   end,
+  -- },
 
 }
 

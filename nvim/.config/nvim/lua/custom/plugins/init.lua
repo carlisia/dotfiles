@@ -219,17 +219,17 @@ local plugins = {
     end,
   },
 
---   ["windwp/nvim-spectre"] = {
---     module = "spectre",
---     command = "FindReplace",
---     config = function()
---       require("spectre").setup({ color_devicons = true, open_cmd = "vertical new", is_insert_mode = true })
---       require("custom.keybindings").spectre()
---     end,
---     setup = function()
---       require("custom.commands").spectre()
---     end,
---   },
+  ["windwp/nvim-spectre"] = {
+    module = "spectre",
+    command = "FindReplace",
+    config = function()
+      require("spectre").setup({ color_devicons = true, open_cmd = "vertical new", is_insert_mode = true })
+      require("custom.keybindings").spectre()
+    end,
+    setup = function()
+      require("custom.commands").spectre()
+    end,
+  },
 
 --   ["olimorris/persisted.nvim"] = {
 --     module = "persisted", -- For lazy loading
@@ -239,17 +239,17 @@ local plugins = {
 --     end,
 --   },
 
---   ["tversteeg/registers.nvim"] = {
---     config = function()
---       vim.g.registers_window_border = "rounded"
---       vim.g.registers_insert_mode = false -- Suppress imap <C-R>
---       -- TODO: fix this cmd
---       vim.cmd([[ inoremap <C-R> &ft=='TelescopePrompt' ? '<C-R>' : registers#peek('<C-R>') ]])
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("telescope.nvim", 1000)
---     end,
---   },
+  ["tversteeg/registers.nvim"] = {
+    config = function()
+      vim.g.registers_window_border = "rounded"
+      vim.g.registers_insert_mode = false -- Suppress imap <C-R>
+      -- TODO: fix this cmd
+      vim.cmd([[ inoremap <C-R> &ft=='TelescopePrompt' ? '<C-R>' : registers#peek('<C-R>') ]])
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("telescope.nvim", 1000)
+    end,
+  },
 
   ["VonHeikemen/searchbox.nvim"] = {
     module = "searchbox",

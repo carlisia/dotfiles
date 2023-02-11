@@ -401,13 +401,13 @@ local plugins = {
 --   ["tpope/vim-fugitive"] = {},
 --   ["tpope/vim-unimpaired"] = {},
 
---   ["famiu/bufdelete.nvim"] = {
---     module = "bufdelete",
---     command = "Bufdelete",
---     config = function()
---       require("custom.keybindings").bufdelete()
---     end,
---   },
+  ["famiu/bufdelete.nvim"] = {
+    module = "bufdelete",
+    command = "Bufdelete",
+    config = function()
+      require("custom.keybindings").bufdelete()
+    end,
+  },
 
   -- ["ray-x/go.nvim"] = {
   --   config = overrides.go_nvim(),

@@ -403,7 +403,8 @@ local plugins = {
 
   -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
 
-  ------- suspicious plugins that misbehave during installation
+  ------- plugins that misbehave during installation
+  --   https://github.com/olimorris/persisted.nvim
   --   ["olimorris/persisted.nvim"] = {
   --     module = "persisted", -- For lazy loading
   --     config = function()

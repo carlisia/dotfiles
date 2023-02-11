@@ -50,14 +50,13 @@ function M.init()
   map({ "n", "t", "i" }, "<a-w>", [[<C-\><C-n><C-w>W]])
 
   map("n", "<leader>m", "<Cmd>:Notifications<CR>")
+  map("n", "<leader>o", "<Cmd>:AerialToggle<CR>")
 
-  map({ "n" }, "<Leader>z", function()
+  map({ "n" }, "<leader>z", function()
     local Terminal = require("toggleterm.terminal").Terminal
     local lazygit = Terminal:new({ cmd = "lazygit", direction = "float" })
     return lazygit:toggle()
   end)
-
-  map("n", "<leader>o", "<Cmd>:AerialToggle<CR>")
 
   -- use <C-\> to toggle the search highlight
   vim.cmd([[nnoremap <silent> <C-\> :if (&hlsearch == 1) \| set nohlsearch \| else \| set hlsearch \| endif<CR>]])

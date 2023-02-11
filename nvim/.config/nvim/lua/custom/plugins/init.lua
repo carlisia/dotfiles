@@ -244,21 +244,21 @@ local plugins = {
     end,
   },
 
---   ["nvim-telescope/telescope-fzf-native.nvim"] = {
---     run = "make",
---     after = "telescope.nvim",
---     config = function()
---       -- load extensions
---       pcall(function()
---         for _, ext in ipairs(overrides.telescope().extension_list) do
---           require("telescope").load_extension(ext)
---         end
---       end)
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("telescope.nvim", 500)
---     end,
---   },
+  ["nvim-telescope/telescope-fzf-native.nvim"] = {
+    run = "make",
+    after = "telescope.nvim",
+    config = function()
+      -- load extensions
+      pcall(function()
+        for _, ext in ipairs(require("custom.plugins.overrides").telescope().extension_list) do
+          require("telescope").load_extension(ext)
+        end
+      end)
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("telescope.nvim", 500)
+    end,
+  },
 
   ["akinsho/toggleterm.nvim"] = {
     module = "toggleterm",

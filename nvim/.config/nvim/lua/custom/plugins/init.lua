@@ -397,8 +397,8 @@ local plugins = {
       require("custom.plugins.overrides").aerial()
     end,
   },
-  -- ["tpope/vim-fugitive"] = {},
-  -- ["tpope/vim-unimpaired"] = {},
+  ["tpope/vim-fugitive"] = {},
+  ["tpope/vim-unimpaired"] = {},
 
   ["famiu/bufdelete.nvim"] = {
     module = "bufdelete",
@@ -408,12 +408,14 @@ local plugins = {
     end,
   },
 
-  -- ["ray-x/go.nvim"] = {
-  --   config = overrides.go_nvim(),
-  --   setup = function()
-  --     require("custom.utils").packer_lazy_load("go.nvim")
-  --   end,
-  -- },
+  ["ray-x/go.nvim"] = {
+    config = function()
+      require("custom.plugins.overrides").go_nvim()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("go.nvim")
+    end,
+  },
 
   -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
 

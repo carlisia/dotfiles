@@ -122,11 +122,6 @@ local plugins = {
     end,
   },
 
-  ["RishabhRD/popfix"] = {
-    setup = function()
-      require("custom.utils").packer_lazy_load("popfix")
-    end,
-  },
   ["RishabhRD/nvim-cheat.sh"] = {
     setup = function()
       require("custom.utils").packer_lazy_load("nvim-cheat.sh")
@@ -150,16 +145,16 @@ local plugins = {
     end,
   },
 
---   -- https://github.com/hrsh7th/cmp-cmdline
---   -- ["hrsh7th/cmp-cmdline"] = {
---   --   after = "nvim-cmp",
---   --   config = function()
---   --     require("custom.plugins.overrides").cmp(),
---   --   end,
---   --   setup = function()
---   --     require("custom.utils").packer_lazy_load("nvim-cmp", 0)
---   --   end,
---   -- },
+  -- https://github.com/hrsh7th/cmp-cmdline
+  -- ["hrsh7th/cmp-cmdline"] = {
+  --   after = "nvim-cmp",
+  --   config = function()
+  --     require("custom.plugins.overrides").cmp(),
+  --   end,
+  --   setup = function()
+  --     require("custom.utils").packer_lazy_load("nvim-cmp", 0)
+  --   end,
+  -- },
 
 --   ["stevearc/dressing.nvim"] = {
 --     opt = true,
@@ -210,12 +205,12 @@ local plugins = {
 -- ```
 -- Defaulting to #000000
 -- --]]
---   ["rcarriga/nvim-notify"] = {
---     config = function()
---       vim.notify = require("notify")
---       require("notify").setup({ timeout = 3000 })
---     end,
---   },
+  ["rcarriga/nvim-notify"] = {
+    config = function()
+      vim.notify = require("notify")
+      require("notify").setup({ timeout = 3000 })
+    end,
+  },
 
 --   ["windwp/nvim-spectre"] = {
 --     module = "spectre",
@@ -249,14 +244,17 @@ local plugins = {
 --     end,
 --   },
 
---   ["VonHeikemen/searchbox.nvim"] = {
---     module = "searchbox",
---     command = "SearchBox",
---     requires = { "MunifTanjim/nui.nvim" },
---     config = function()
---       require("custom.keybindings").searchbox()
---     end,
---   },
+  ["VonHeikemen/searchbox.nvim"] = {
+    module = "searchbox",
+    command = "SearchBox",
+    requires = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require("custom.keybindings").searchbox()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("searchbox.nvim", 1000)
+    end,
+  },
 
 --   ["nvim-telescope/telescope-fzf-native.nvim"] = {
 --     run = "make",
@@ -412,6 +410,9 @@ local plugins = {
   -- },
 
   -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
+
+  ------- suspicious plugins that misbehave during installation sometimes
+
 }
 
 return plugins

@@ -9,8 +9,8 @@ function M.init()
   -- select all text in a buffer
   map({ "n", "x" }, "<C-a>", "gg0vG$")
   -- save with c-s in all modes
-  map({ "n", "x", "i" }, "<C-s>", "<cmd>:update<cr>")
-  map("n", "<leader><leader>q", "<cmd>:qall<cr>")
+  map({ "n", "x", "i" }, "<C-s>", "<Cmd>:update<CR>")
+  map("n", "<leader><leader>q", "<Cmd>:qall<CR>")
   -- Reselect visual selection after indenting
   map("v", "<", "<gv")
   map("v", ">", ">gv")
@@ -42,14 +42,14 @@ function M.init()
   map("t", "kj", [[<C-\><C-n>]])
   -- move between windows
   map("t", "<C-h>", [[<Cmd>wincmd h<CR>]])
-  map("t", "<c-j>", [[<cmd>wincmd j<cr>]])
+  map("t", "<c-j>", [[<Cmd>wincmd j<CR>]])
   map("t", "<C-k>", [[<Cmd>wincmd k<CR>]])
   map("t", "<C-l>", [[<Cmd>wincmd l<CR>]])
 
   -- cycle between split windows using Alt+w
   map({ "n", "t", "i" }, "<a-w>", [[<C-\><C-n><C-w>W]])
 
-  map("n", "<leader>m", "<cmd>:Telescope notify<cr>")
+  map("n", "<leader>m", "<Cmd>:Notifications<CR>")
 
   map({ "n" }, "<Leader>z", function()
     local Terminal = require("toggleterm.terminal").Terminal
@@ -57,14 +57,14 @@ function M.init()
     return lazygit:toggle()
   end)
 
-  map("n", "<leader>o", "<cmd>:AerialToggle<cr>")
+  map("n", "<leader>o", "<Cmd>:AerialToggle<CR>")
 
   -- use <C-\> to toggle the search highlight
-  vim.cmd([[nnoremap <silent> <C-\> :if (&hlsearch == 1) \| set nohlsearch \| else \| set hlsearch \| endif<cr>]])
+  vim.cmd([[nnoremap <silent> <C-\> :if (&hlsearch == 1) \| set nohlsearch \| else \| set hlsearch \| endif<CR>]])
 
   -- use <enter> to search for the current word (very much like *) but without the cursor jumping
   vim.cmd(
-    [[nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr> ]) end, }a]]
+    [[nnoremap <silent> <CR> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<CR> ]) end, }a]]
   )
 end
 
@@ -76,8 +76,8 @@ function M.bufdelete()
 end
 
 function M.bufferline()
-  map("n", "<tab>", "<cmd>:BufferLineCycleNext<cr>")
-  map("n", "<s-tab>", "<cmd>:BufferLineCyclePrev<cr>")
+  map("n", "<tab>", "<Cmd>:BufferLineCycleNext<CR>")
+  map("n", "<s-tab>", "<Cmd>:BufferLineCyclePrev<CR>")
 end
 
 function M.lspconfig(client, bufnr)
@@ -109,9 +109,9 @@ function M.lspconfig(client, bufnr)
     vim.lsp.buf.declaration()
   end)
 
-  map("n", "gd", "<cmd>:Lspsaga lsp_finder<cr>")
+  map("n", "gd", "<Cmd>:Lspsaga lsp_finder<CR>")
 
-  buf_k("n", m.hover, "<cmd>Lspsaga hover_doc<CR>")
+  buf_k("n", m.hover, "<Cmd>Lspsaga hover_doc<CR>")
   -- scroll down hover doc or scroll in definition preview
   buf_k("n", "<C-f>", function()
     require("lspsaga.action").smart_scroll_with_saga(1)
@@ -131,9 +131,9 @@ function M.lspconfig(client, bufnr)
 
   buf_k("n", m.rename, vim.lsp.buf.rename)
 
-  buf_k("n", m.code_action, [[:Lspsaga code_action<cr>]])
+  buf_k("n", m.code_action, [[:Lspsaga code_action<CR>]])
 
-  buf_k("v", "<leader>ca", [[:Lspsaga range_code_action<cr>]])
+  buf_k("v", "<leader>ca", [[:Lspsaga range_code_action<CR>]])
 
   buf_k("n", m.references, function()
     require("trouble").open("lsp_references")
@@ -175,7 +175,7 @@ function M.lspconfig(client, bufnr)
 end
 
 function M.neotree()
-  map({ "n" }, "<C-n>", "<cmd>Neotree toggle<cr>")
+  map({ "n" }, "<C-n>", "<Cmd>Neotree toggle<CR>")
 end
 
 function M.neogen()

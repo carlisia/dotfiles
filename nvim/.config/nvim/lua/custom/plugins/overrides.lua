@@ -89,6 +89,10 @@ M.colorizer = {
   buftypes = { "*", "!terminal", "!prompt", "!popup" },
 }
 
+function M.bufferline()
+  require("custom.plugins.bufferline")
+end
+
 function M.lspconfig()
   require("custom.plugins.lspconfig")
 end

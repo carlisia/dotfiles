@@ -32,6 +32,13 @@ local plugins = {
 
   -- install plugins --
 
+  ["akinsho/bufferline.nvim"] = {
+    config = function()
+      require("custom.plugins.overrides").bufferline()
+    end,
+    after = "base46",
+  },
+
   -- ["williamboman/mason-lspconfig.nvim"] = { module = "mason-lspconfig" }, [this is causing an error]
   ["ray-x/lsp_signature.nvim"] = {
     after = "nvim-lspconfig",

@@ -308,14 +308,14 @@ local plugins = {
       require("custom.utils").packer_lazy_load("gitlinker.nvim")
     end,
   },
---   ["f-person/git-blame.nvim"] = {
---     event = "BufRead",
---     config = function()
---       -- TODO: fix this cmd
---       vim.cmd("highlight default link gitblame SpecialComment")
---       vim.g.gitblame_enabled = 0
---     end,
---   },
+  ["f-person/git-blame.nvim"] = {
+    event = "BufRead",
+    config = function()
+      -- TODO: fix this cmd
+      vim.cmd("highlight default link gitblame SpecialComment")
+      vim.g.gitblame_enabled = 0
+    end,
+  },
 --   -- ["sindrets/diffview.nvim"] = {
 --   --   cmd = {
 --   --     "DiffviewOpen",
@@ -325,20 +325,20 @@ local plugins = {
 --   --   },
 --   --   config = overrides.diffview(),
 --   -- },
---   ["folke/todo-comments.nvim"] = {
---     requires = "nvim-lua/plenary.nvim",
---     config = function()
---       require("todo-comments").setup()
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("todo-comments.nvim")
---     end,
---   },
---   ["mg979/vim-visual-multi"] = {
---     setup = function()
---       require("custom.utils").packer_lazy_load("vim-visual-multi")
---     end,
---   },
+  ["folke/todo-comments.nvim"] = {
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("todo-comments.nvim")
+    end,
+  },
+  ["mg979/vim-visual-multi"] = {
+    setup = function()
+      require("custom.utils").packer_lazy_load("vim-visual-multi")
+    end,
+  },
 
   ["itspriddle/vim-marked"] = {
     setup = function()

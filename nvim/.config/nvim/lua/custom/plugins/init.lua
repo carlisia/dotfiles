@@ -287,27 +287,27 @@ local plugins = {
     end,
   },
 
---   ["matze/vim-move"] = {
---     opt = true,
---     setup = function()
---       require("custom.utils").packer_lazy_load("vim-move", 1000)
---     end,
---   },
+  ["matze/vim-move"] = {
+    opt = true,
+    setup = function()
+      require("custom.utils").packer_lazy_load("vim-move", 1000)
+    end,
+  },
 
---   ["ruifm/gitlinker.nvim"] = {
---     requires = "nvim-lua/plenary.nvim",
---     event = "BufRead",
---     config = function()
---       require("gitlinker").setup({
---         opts = {
---           mappings = "<leader>gy",
---         },
---       })
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("gitlinker.nvim")
---     end,
---   },
+  ["ruifm/gitlinker.nvim"] = {
+    requires = "nvim-lua/plenary.nvim",
+    event = "BufRead",
+    config = function()
+      require("gitlinker").setup({
+        opts = {
+          mappings = "<leader>gy",
+        },
+      })
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("gitlinker.nvim")
+    end,
+  },
 --   ["f-person/git-blame.nvim"] = {
 --     event = "BufRead",
 --     config = function()
@@ -340,57 +340,56 @@ local plugins = {
 --     end,
 --   },
 
---   ----------
---   ["itspriddle/vim-marked"] = {
---     setup = function()
---       require("custom.utils").packer_lazy_load("vim-marked")
---     end,
---   },
---   ["yamatsum/nvim-cursorline"] = {
---     config = function()
---       require("nvim-cursorline").setup({
---         cursorline = {
---           enable = true,
---           timeout = 1000,
---           number = true,
---         },
---         cursorword = {
---           enable = true,
---           min_length = 3,
---           hl = { underline = true },
---         },
---       })
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("nvim-cursorline")
---     end,
---   },
+  ["itspriddle/vim-marked"] = {
+    setup = function()
+      require("custom.utils").packer_lazy_load("vim-marked")
+    end,
+  },
+  ["yamatsum/nvim-cursorline"] = {
+    config = function()
+      require("nvim-cursorline").setup({
+        cursorline = {
+          enable = true,
+          timeout = 1000,
+          number = true,
+        },
+        cursorword = {
+          enable = true,
+          min_length = 3,
+          hl = { underline = true },
+        },
+      })
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("nvim-cursorline")
+    end,
+  },
 
   ["erietz/vim-terminator"] = {
     setup = function()
       require("custom.utils").packer_lazy_load("vim-terminator", 500)
     end,
   },
---   ["pwntester/octo.nvim"] = {
---     after = "telescope.nvim",
---     requires = {
---       "kyazdani42/nvim-web-devicons",
---       "nvim-lua/plenary.nvim",
---       "nvim/telescope.nvim",
---     },
---     config = function()
---       require("octo").setup()
---     end,
---     setup = function()
---       require("custom.utils").packer_lazy_load("telescope.nvim", 500)
---     end,
---   },
---   ["petertriho/cmp-git"] = {
---     after = "nvim-cmp",
---     setup = function()
---       require("custom.utils").packer_lazy_load("cmp-git")
---     end,
---   },
+  ["pwntester/octo.nvim"] = {
+    after = "telescope.nvim",
+    requires = {
+      "kyazdani42/nvim-web-devicons",
+      "nvim-lua/plenary.nvim",
+      "nvim/telescope.nvim",
+    },
+    config = function()
+      require("octo").setup()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("telescope.nvim", 500)
+    end,
+  },
+  ["petertriho/cmp-git"] = {
+    after = "nvim-cmp",
+    setup = function()
+      require("custom.utils").packer_lazy_load("cmp-git")
+    end,
+  },
 
 -- --   -- ["stevearc/aerial.nvim"] = {
 -- --   --   cmd = "AerialToggle",

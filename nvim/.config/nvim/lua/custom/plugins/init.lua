@@ -386,11 +386,15 @@ local plugins = {
   ["tpope/vim-fugitive"] = {},
   ["tpope/vim-unimpaired"] = {},
 
+  -- https://github.com/famiu/bufdelete.nvim
   ["famiu/bufdelete.nvim"] = {
     module = "bufdelete",
     command = "Bufdelete",
     config = function()
       require("custom.keybindings").bufdelete()
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("bufdelete.nvim")
     end,
   },
 

@@ -366,11 +366,11 @@ local plugins = {
 --     end,
 --   },
 
---   ["erietz/vim-terminator"] = {
---     setup = function()
---       require("custom.utils").packer_lazy_load("vim-terminator", 500)
---     end,
---   },
+  ["erietz/vim-terminator"] = {
+    setup = function()
+      require("custom.utils").packer_lazy_load("vim-terminator", 500)
+    end,
+  },
 --   ["pwntester/octo.nvim"] = {
 --     after = "telescope.nvim",
 --     requires = {

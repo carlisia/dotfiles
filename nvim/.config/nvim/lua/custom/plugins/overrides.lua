@@ -353,8 +353,22 @@ M.gitsigns = {
 
 M.aerial = function()
   require("aerial").setup({
-    close_behavior = "auto",
-    default_direction = "prefer_right",
+    backends = {
+      "treesitter",
+      "lsp",
+      "markdown",
+      "man",
+      "go",
+      "json",
+      "toml",
+      "markdown",
+      "c",
+      "bash",
+      "lua",
+      "norg",
+      "yaml",
+      "vim",
+    },
     highlight_on_hover = true,
   })
 end

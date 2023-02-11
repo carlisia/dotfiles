@@ -391,14 +391,14 @@ local plugins = {
     end,
   },
 
--- --   -- ["stevearc/aerial.nvim"] = {
--- --   --   cmd = "AerialToggle",
--- --   --   config = function()
--- --   --     overrides.aerial()
--- --   --   end,
--- --   -- },
---   ["tpope/vim-fugitive"] = {},
---   ["tpope/vim-unimpaired"] = {},
+  ["stevearc/aerial.nvim"] = {
+    cmd = "AerialToggle",
+    config = function()
+      require("custom.plugins.overrides").aerial()
+    end,
+  },
+  -- ["tpope/vim-fugitive"] = {},
+  -- ["tpope/vim-unimpaired"] = {},
 
   ["famiu/bufdelete.nvim"] = {
     module = "bufdelete",

@@ -1,7 +1,96 @@
 local M = {}
 
-function M.bufferline()
-  require("custom.plugins.bufferline")
+M.mason = {
+  ensure_installed = {
+    "lua-language-server",
+    "stylua",
+    "gopls",
+    "bashls",
+    "marksman",
+    "yamlls",
+    "jsonls",
+    "dockerls",
+  },
+}
+
+-- git support in nvimtree
+M.nvimtree = {
+  git = {
+    enable = true,
+  },
+
+  renderer = {
+    highlight_git = true,
+    icons = {
+      show = {
+        git = true,
+      },
+    },
+  },
+}
+
+M.treesitter = {
+  ensure_installed = {
+    "go",
+    "json",
+    "toml",
+    "markdown",
+    "c",
+    "bash",
+    "lua",
+    "norg",
+    "yaml",
+    "vim",
+  },
+  autopairs = { enable = true },
+  context_commentstring = { enable = true },
+  highlight = { enable = true, use_languagetree = true },
+  indent = { enable = true },
+  matchup = { enable = true },
+  tree_docs = { enable = true },
+}
+
+M.telescope = {
+  defaults = {
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--hidden",
+    },
+    file_ignore_patterns = { "node_modules/", ".git/" },
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    },
+  },
+  extension_list = { "fzf", "notify", "persisted", "neoclip", "octo" },
+}
+
+M.colorizer = {
+  filetypes = { "*", "!cmp_menu" },
+  user_default_options = {
+    RRGGBBAA = true, -- #RRGGBBAA hex codes
+    AARRGGBB = true, -- #0xAARRGGBA hex codes
+    css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+    -- Available modes: foreground, background
+    mode = "background", -- Set the display mode.
+    tailwind = false,
+    sass = { enable = true },
+  },
+  buftypes = { "*", "!terminal", "!prompt", "!popup" },
+}
+
+function M.lspconfig()
+  require("custom.plugins.lspconfig")
 end
 
 function M.cmp()
@@ -12,26 +101,6 @@ function M.cmp()
     },
   }
   require("custom.plugins.cmp_cmdline")
-end
-
-function M.colorizer()
-  return {
-    filetypes = { "*", "!cmp_menu" },
-    user_default_options = {
-      RRGGBBAA = true, -- #RRGGBBAA hex codes
-      AARRGGBB = true, -- #0xAARRGGBA hex codes
-      css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-      -- Available modes: foreground, background
-      mode = "background", -- Set the display mode.
-      tailwind = false,
-      sass = { enable = true },
-    },
-    buftypes = { "*", "!terminal", "!prompt", "!popup" },
-  }
-end
-
-function M.lspconfig()
-  require("custom.plugins.lspconfig")
 end
 
 function M.lsp_signature()
@@ -136,35 +205,8 @@ function M.persisted()
   })
 end
 
-function M.telescope()
-  return {
-    defaults = {
-      vimgrep_arguments = {
-        "rg",
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-        "--smart-case",
-        "--hidden",
-      },
-      file_ignore_patterns = { "node_modules/", ".git/" },
-    },
-    extensions = {
-      fzf = {
-        fuzzy = true,
-        override_generic_sorter = true,
-        override_file_sorter = true,
-        case_mode = "smart_case",
-      },
-    },
-    extension_list = { "fzf", "notify", "persisted", "neoclip", "octo" },
-  }
-end
-
 function M.toggleterm()
-  require("toggleterm").setup({
+  return {
     -- size can be a number or function which is passed the current terminal
     size = function(term)
       if term.direction == "horizontal" then
@@ -177,7 +219,7 @@ function M.toggleterm()
     -- i basically wanted to disable the mapping so lets use a russian alphabet
     open_mapping = [[д]],
     direction = "horizontal",
-  })
+  }
 end
 
 function M.diffview()

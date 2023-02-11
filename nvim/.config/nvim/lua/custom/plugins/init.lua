@@ -279,13 +279,13 @@ local plugins = {
 --     end,
 --   },
 
--- --   -- ["akinsho/toggleterm.nvim"] = {
--- --   --   module = "toggleterm",
--- --   --   config = function()
--- --   --     require("toggleterm").setup(overrides.toggleterm())
--- --   --     require("custom.keybindings").toggleterm()
--- --   --   end,
--- --   -- },
+  ["akinsho/toggleterm.nvim"] = {
+    module = "toggleterm",
+    config = function()
+      require("custom.plugins.overrides").toggleterm()
+      require("custom.keybindings").toggleterm()
+    end,
+  },
 
 --   ["matze/vim-move"] = {
 --     opt = true,

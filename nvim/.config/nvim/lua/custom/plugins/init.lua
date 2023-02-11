@@ -20,7 +20,9 @@ local plugins = {
 
   -- override plugin configs --
 
-  ["NvChad/ui"] = { override_options = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } } },
+  ["NvChad/ui"] = {
+    override_options = { tabufline = { enabled = false }, statusline = { separator_style = "arrow" } },
+  },
   ["windwp/nvim-autopairs"] = { override_options = { check_ts = true } },
   ["NvChad/nvim-colorizer.lua"] = { override_options = overrides.colorizer },
   ["nvim-treesitter/nvim-treesitter"] = { override_options = overrides.treesitter },
@@ -42,14 +44,14 @@ local plugins = {
   -- ["williamboman/mason-lspconfig.nvim"] = { module = "mason-lspconfig" }, [this is causing an error]
   ["ray-x/lsp_signature.nvim"] = {
     after = "nvim-lspconfig",
-    config =  function()
+    config = function()
       require("custom.plugins.overrides").lsp_signature()
     end,
   },
   -- code formatting, linting etc
   ["jose-elias-alvarez/null-ls.nvim"] = {
     after = "nvim-lspconfig",
-    config =  function()
+    config = function()
       require("custom.plugins.overrides").null_ls()
     end,
   },
@@ -189,18 +191,18 @@ local plugins = {
 
   ["kevinhwang91/nvim-bqf"] = { ft = "qf" },
 
---   -- TODO: Fix the highlight issue:
---   --[[
--- Highlight group 'Normal' has no background highlight
--- Please provide an RGB hex value or highlight group with a background value for 'background_colour' option.
--- This is the colour that will be used for 100% transparency.
--- ```lua
--- require("notify").setup({
---   background_colour = "#000000",
--- })
--- ```
--- Defaulting to #000000
--- --]]
+  -- TODO: Fix the highlight issue:
+  --[[
+  Highlight group 'Normal' has no background highlight
+  Please provide an RGB hex value or highlight group with a background value for 'background_colour' option.
+  This is the colour that will be used for 100% transparency.
+  ```lua
+  require("notify").setup({
+    background_colour = "#000000",
+  })
+  ```
+  Defaulting to #000000
+  --]]
   ["rcarriga/nvim-notify"] = {
     config = function()
       vim.notify = require("notify")
@@ -401,6 +403,12 @@ local plugins = {
     end,
   },
 
+  -- https://github.com/numToStr/Comment.nvim
+  ["numToStr/Comment.nvim"] = {
+    config = function()
+      require("Comment").setup()
+    end,
+  },
   -- ["goolord/alpha-nvim"] = { disable = false } -- enables dashboard
 
   ------- plugins that misbehave during installation
@@ -423,7 +431,6 @@ local plugins = {
   --     require("custom.utils").packer_lazy_load("nvim-cmp", 0)
   --   end,
   -- },
-
 }
 
 return plugins

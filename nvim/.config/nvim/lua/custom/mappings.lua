@@ -26,7 +26,6 @@ M.telescope = {
       "find files",
     },
     ["<leader>ft"] = { "<cmd> Telescope live_grep <CR>", "  find text" },
-    ["<leader>m"] = { "<cmd>:Telescope notify<cr>" },
     ["<leader>tr"] = { "<cmd>:Telescope resume<cr>" },
   },
 }

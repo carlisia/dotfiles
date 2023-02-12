@@ -174,7 +174,7 @@ function M.lspconfig(client, bufnr)
 end
 
 function M.neotree()
-  map({ "n" }, "<C-n>", "<Cmd>Neotree toggle<CR>")
+  map({ "n" }, "\\", "<Cmd>Neotree toggle<CR>")
 end
 
 function M.neogen()

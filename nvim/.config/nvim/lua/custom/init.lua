@@ -7,7 +7,7 @@ opt.tabstop = 4
 opt.undofile = false
 opt.swapfile = false
 
-opt.shell = "/usr/local/bin/bash"
+opt.shell = "/usr/local/bin/fish"
 
 opt.termguicolors = true
 
@@ -18,7 +18,7 @@ vim.o.sessionoptions = "blank,buffers,curdir,localoptions,folds,help,tabpages,wi
 vim.g.terminator_runfile_map = {
   markdown = "glow",
   go = "richgo",
-  sh = "bash",
+  sh = "fish",
 }
 
 require("custom.keybindings").init()

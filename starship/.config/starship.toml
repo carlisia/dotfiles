@@ -55,7 +55,7 @@ symbol = "🅰 "
 
 [directory]
 # disabled = true
-truncate_to_repo = true
+truncate_to_repo = false 
 home_symbol = "$HOME"
 
 
@@ -91,7 +91,7 @@ deleted = "🗑"
 
 [kubernetes]
 # format = '[$context \($namespace\)](dimmed green) '
-format = '[namespace: $namespace](dimmed green) '
+format = '[>$context](dimmed red) [$namespace](dimmed green) '
 disabled = false
 [kubernetes.context_aliases]
 "dev.local.cluster.k8s" = "dev"
@@ -99,3 +99,6 @@ disabled = false
 [golang]
 disabled = true
 format = "[$version](bold cyan) "
+
+[container]
+format = '[$symbol \[$name\]]($style) '

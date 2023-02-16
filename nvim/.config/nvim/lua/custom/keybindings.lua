@@ -51,6 +51,7 @@ function M.init()
 
   map("n", "<leader>m", "<Cmd>:Notifications<CR>")
   map("n", "<leader>o", "<Cmd>:AerialToggle<CR>")
+  map("n", "<leader>r", "<Cmd>:GoRun<CR>")
 
   map({ "n" }, "<leader>z", function()
     local Terminal = require("toggleterm.terminal").Terminal

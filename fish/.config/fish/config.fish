@@ -56,6 +56,7 @@ alias pkr "pbpaste | kubectl delete -f-"
 alias ks kube-shell
 
 alias dockly "docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly"
+alias ld "lazydocker"
 
 if [ ! -n "$__shhist_session" ]
     if [ -n "$TERM_SESSION_ID" ]

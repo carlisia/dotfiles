@@ -37,6 +37,8 @@
 	excludesfile = /Users/carlisiac/.gitignore_global
 [interactive]
 	diffFilter = diff-so-fancy --patch
+[init]
+  defaultBranch = main
 
 
 [delta]

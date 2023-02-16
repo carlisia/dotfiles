@@ -97,7 +97,7 @@ disabled = false
 "dev.local.cluster.k8s" = "dev"
 
 [golang]
-disabled = true
+# disabled = true
 format = "[$version](bold cyan) "
 
 [container]

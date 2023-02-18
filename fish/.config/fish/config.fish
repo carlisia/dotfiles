@@ -19,8 +19,6 @@ end
 # For gpg keys
 # set -gx GPG_TTY /dev/ttys054
 
-set -x GOPATH $HOME/working
-
 set -x EDITOR nvim 
 
 alias go=richgo

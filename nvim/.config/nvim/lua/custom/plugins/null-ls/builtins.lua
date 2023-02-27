@@ -26,7 +26,7 @@ return function(builtins)
 
     builtins.diagnostics.luacheck.with({ extra_args = { "--global vim" } }),
     builtins.diagnostics.shellcheck.with({ diagnostics_format = "#{m} [#{c}]" }),
-    builtins.diagnostics.yamllint,
+    -- builtins.diagnostics.yamllint,
     builtins.diagnostics.actionlint,
     builtins.diagnostics.alex,
 

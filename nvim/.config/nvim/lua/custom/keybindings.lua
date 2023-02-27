@@ -3,6 +3,8 @@ local map = function(...)
   vim.keymap.set(...)
 end
 
+local diagnostics_active = true
+
 local M = {}
 
 function M.init()
@@ -52,11 +54,19 @@ function M.init()
   map("n", "<leader>m", "<Cmd>:Notifications<CR>")
   map("n", "<leader>o", "<Cmd>:AerialToggle<CR>")
   map("n", "<leader>r", "<Cmd>:GoRun<CR>")
-
   map({ "n" }, "<leader>z", function()
     local Terminal = require("toggleterm.terminal").Terminal
     local lazygit = Terminal:new({ cmd = "lazygit", direction = "float" })
     return lazygit:toggle()
+  end)
+
+  map("n", "<leader>d", function()
+    diagnostics_active = not diagnostics_active
+    if diagnostics_active then
+      vim.diagnostic.show()
+    else
+      vim.diagnostic.hide()
+    end
   end)
 
   -- use <C-\> to toggle the search highlight

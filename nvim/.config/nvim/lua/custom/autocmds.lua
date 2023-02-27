@@ -22,7 +22,7 @@ end
 
 function M.lsp_autosave_format(bufnr)
   local id = augroup("LspFormatSave_aki", { clear = false })
-  local i = vim.api.nvim_get_autocmds { group = id, event = "BufWritePre", buffer = bufnr }
+  local i = vim.api.nvim_get_autocmds({ group = id, event = "BufWritePre", buffer = bufnr })
   if not vim.tbl_isempty(i) then
     return
   end
@@ -78,13 +78,13 @@ function M.treesitter()
       local char = vim.fn.wordcount()["chars"]
       -- manually disable/enable treesitter after a buffer is created
       if char < 500000 then
-        vim.cmd [[silent! TSBufEnable highlight]]
-        vim.cmd [[silent! TSBufEnable indent]]
-        vim.cmd [[silent! TSBufEnable matchup]]
+        vim.cmd([[silent! TSBufEnable highlight]])
+        vim.cmd([[silent! TSBufEnable indent]])
+        vim.cmd([[silent! TSBufEnable matchup]])
       else
-        vim.cmd [[silent! TSBufDisable highlight]]
-        vim.cmd [[silent! TSBufDisable indent]]
-        vim.cmd [[silent! TSBufDisable matchup]]
+        vim.cmd([[silent! TSBufDisable highlight]])
+        vim.cmd([[silent! TSBufDisable indent]])
+        vim.cmd([[silent! TSBufDisable matchup]])
       end
     end,
   })

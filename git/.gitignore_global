@@ -17,4 +17,6 @@ newrelic_agent.log
 
 .env
 .envrc
-**/.envrc
+
+# To ensure Git starts using your updated global ignore file:
+# git config --global core.excludesfile '~/.gitignore_global'

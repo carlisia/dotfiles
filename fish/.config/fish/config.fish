@@ -1,4 +1,5 @@
 set -x SHELL /usr/local/bin/fish
+set -gx PATH /opt/homebrew/bin $PATH
 
 # prompt stuff
 set -x GIT_TERMINAL_PROMPT 1
@@ -17,24 +18,24 @@ if status --is-interactive
 end
 
 # For gpg keys
-# set -gx GPG_TTY /dev/ttys054
+set -gx GPG_TTY (tty)
 
-set -x EDITOR nvim 
+set -x EDITOR nvim
 
 alias go=richgo
 
-set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin /Users/carlisiac /Users/carlisiac/Kui-darwin-x64 /Users/carlisiac/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin /Users/carlisiac/.cargo/bin fish fish_indent /Users/carlisiac/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script /Users/carlisiac/.local/bin 
+set -x ME /Users/carlisiacampos
 
-set -x PATH /usr/local/opt/gnu-tar/libexec/gnubin:$PATH
-set -x PATH /usr/local/opt/grep/libexec/gnubin:$PATH
-set -x PATH /usr/local/opt/gnu-sed/libexec/gnubin:$PATH
-set -x PATH /usr/local/opt/coreutils/libexec/gnubin:$PATH
+set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $ME $ME/Kui-darwin-x64 $ME/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $ME/.cargo/bin fish fish_indent $ME/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script $ME/.local/bin $ME/Library/Python/3.9/bin
+
+set -gx PATH /opt/homebrew/bin $PATH
+set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 
 alias n="nvim ."
 alias python="python3"
 alias g="git status -sb"
 
-alias dev="eval sh /Users/carlisiac/working/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
+alias dev="eval sh $ME/working/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
 
 alias j="z"
 alias c="code ."
@@ -49,7 +50,7 @@ alias gs "k get ns"
 alias pka "pbpaste | kubectl apply -f-"
 alias pkr "pbpaste | kubectl delete -f-"
 
-# # alias knd "bass source /Users/carlisiac/working/src/github.com/carlisia/dotfiles/scripts/kind-with-registry.sh"
+# # alias knd "bass source $ME/working/src/github.com/carlisia/dotfiles/scripts/kind-with-registry.sh"
 
 alias ks kube-shell
 
@@ -89,3 +90,5 @@ test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shel
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Applications/gcloud/google-cloud-sdk/path.fish.inc' ]; . '/Applications/gcloud/google-cloud-sdk/path.fish.inc'; end
+
+direnv hook fish | source

@@ -68,9 +68,6 @@ function __z -d "Jump to a recent directory."
                         printf "%-10s %s\n", matches[x], x | cmd
                     }
                 }
-                if( common ) {
-                    printf "%-10s %s\n", "common:", common > "/dev/stderr"
-                }
             } else {
                 if( common ) best_match = common
                 print best_match
@@ -174,20 +171,4 @@ function __z -d "Jump to a recent directory."
     else
         pushd "$target"
     end
-end
-
-functions --copy fish_prompt fish_prompt_original
-function fish_prompt
-    set __shhist_status $status
-
-    if fish_is_root_user
-        set __shhist_user $SUDO_USER
-    else
-        set __shhist_user $LOGNAME
-    end
-    iterm2_prompt_mark
-
-    \history --show-time="%s " -1 | sudo --preserve-env --user $__shhist_user /Applications/ShellHistory.app/Contents/Helpers/shhist insert --session $__shhist_session --username $LOGNAME --hostname (hostname) --exit-code $__shhist_status --shell fish
-
-    fish_prompt_original;
 end

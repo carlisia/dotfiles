@@ -4,9 +4,9 @@
   ff = only
 
 [user]
-	name = Carlisia Thompson
+	name = Carlisia Campos
 	email = carlisia@gmail.com
-	signingkey = B7551DF3ACB775274245AD73A2F6CAEE8110C9CB
+	signingkey = 6707B608DD1E41DDDF8A7FCEC23690E728F56717
 
 [credential]
 	helper = osxkeychain
@@ -76,4 +76,4 @@
     gpsign = true
 	gpgsign = true
 [gpg]
-	program = /usr/local/bin/gpg
+	program = /opt/homebrew/bin/gpg

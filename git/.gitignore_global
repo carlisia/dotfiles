@@ -14,3 +14,7 @@ devcontainer
 newrelic_agent.log
 
 /worktrees
+
+.env
+.envrc
+**/.envrc

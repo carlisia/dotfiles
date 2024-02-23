@@ -1,4 +1,4 @@
-set -x SHELL /usr/local/bin/fish
+set -x SHELL /opt/homebrew/bin/fish
 set -gx PATH /opt/homebrew/bin $PATH
 
 # prompt stuff
@@ -12,10 +12,10 @@ starship init fish | source
 # end
 
 # Base16 Shell
-if status --is-interactive
-    set BASE16_SHELL "$HOME/.config/base16-shell"
-    source "$BASE16_SHELL/profile_helper.fish"
-end
+# if status --is-interactive
+#     set BASE16_SHELL "$HOME/.config/base16-shell"
+#     source "$BASE16_SHELL/profile_helper.fish"
+# end
 
 # For gpg keys
 set -gx GPG_TTY (tty)
@@ -26,18 +26,22 @@ alias go=richgo
 
 set -x ME /Users/carlisiacampos
 
-set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $ME $ME/Kui-darwin-x64 $ME/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $ME/.cargo/bin fish fish_indent $ME/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script $ME/.local/bin $ME/Library/Python/3.9/bin
+set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $ME $ME/Kui-darwin-x64 $ME/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $ME/.cargo/bin fish fish_indent $ME/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script $ME/.local/bin /opt/homebrew/bin/python3
 
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 
 alias n="nvim ."
 alias python="python3"
+alias pip="pip3"
 alias g="git status -sb"
 
 alias dev="eval sh $ME/working/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
 
 alias j="z"
+
+alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+# alias code="vscode ."
 alias c="code ."
 
 alias k kubectl

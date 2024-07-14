@@ -26,7 +26,7 @@ alias go=richgo
 
 set -x ME /Users/carlisiacampos
 
-set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $ME $ME/Kui-darwin-x64 $ME/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $ME/.cargo/bin fish fish_indent $ME/working/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script $ME/.local/bin /opt/homebrew/bin/python3
+set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $ME $ME/Kui-darwin-x64 $ME/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $ME/.cargo/bin fish fish_indent $ME/code/src/github.com/carlisia/dotfiles/other-configs/scripts/jq-script $ME/.local/bin /opt/homebrew/bin/python3
 
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
@@ -36,7 +36,7 @@ alias python="python3"
 alias pip="pip3"
 alias g="git status -sb"
 
-alias dev="eval sh $ME/working/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
+alias dev="eval sh $ME/code/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
 
 alias j="z"
 
@@ -54,7 +54,7 @@ alias gs "k get ns"
 alias pka "pbpaste | kubectl apply -f-"
 alias pkr "pbpaste | kubectl delete -f-"
 
-# # alias knd "bass source $ME/working/src/github.com/carlisia/dotfiles/scripts/kind-with-registry.sh"
+# # alias knd "bass source $ME/code/src/github.com/carlisia/dotfiles/scripts/kind-with-registry.sh"
 
 alias ks kube-shell
 

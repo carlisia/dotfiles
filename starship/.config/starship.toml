@@ -28,7 +28,7 @@ vicmd_symbol = "[V](bold green) "
 
 [cmd_duration]
 min_time = 5
-format = "took [$duration](bold yellow)"
+format = "took [$duration](bold purple)"
 
 [hostname]
 ssh_only = true
@@ -55,7 +55,7 @@ symbol = "🅰 "
 
 [directory]
 # disabled = true
-truncate_to_repo = false 
+truncate_to_repo = false
 home_symbol = "$HOME"
 
 
@@ -98,7 +98,12 @@ disabled = false
 
 [golang]
 # disabled = true
-format = "[$version](bold cyan) "
+style = 'yellow bold'
+format = 'via [$symbol($version )]($style)'
+# format = "[$version](bold cyan) "
+symbol = '🐹 '
 
 [container]
 format = '[$symbol \[$name\]]($style) '
+
+

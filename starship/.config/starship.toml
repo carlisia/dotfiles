@@ -1,5 +1,20 @@
 command_timeout = 3500
 
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$python\
+$character"""
+
 # Comment/uncomment the lines below to toggle between a loaded and a very minimalist prompt. Good for doing code demos.
 # ############################### - from here
 # format = """
@@ -24,7 +39,12 @@ disabled = false
 [character]
 success_symbol = "[➜](bold green) "
 error_symbol = "[✗](bold red) "
-vicmd_symbol = "[V](bold green) "
+vicmd_symbol = "[➜ V](bold purple) "
+
+[directory]
+# disabled = true
+truncate_to_repo = false
+home_symbol = "$HOME"
 
 [cmd_duration]
 min_time = 5
@@ -52,11 +72,6 @@ disabled = true
 format = "[$symbol $region]($style) "
 style = "bold blue"
 symbol = "🅰 "
-
-[directory]
-# disabled = true
-truncate_to_repo = false
-home_symbol = "$HOME"
 
 
 [helm]

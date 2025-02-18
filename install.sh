@@ -55,7 +55,7 @@ ln -s "$HOME"/working/src/github.com/carlisia/dotfiles/nvim/lua/custom/ ~/.confi
 
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
 
-stow lvim -t "$HOME"
+stow nvim -t "$HOME"
 
 stow starfish -t "$HOME"
 

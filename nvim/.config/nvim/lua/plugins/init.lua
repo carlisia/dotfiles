@@ -3,7 +3,7 @@
 local overrides = require "configs.overrides"
 
 return {
--- Overrides of native plugins
+  -- Overrides of native plugins
   {
     "nvim-tree/nvim-tree.lua",
     enabled = false,
@@ -22,36 +22,29 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    event = 'BufWritePre', -- uncomment for format on save
+    event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
   -----END NATIVE PLUGINS----
 
+  ---LANGUAGE
   {
-    "kawre/leetcode.nvim",
-    lazy = false,
-    dependencies = {
-        "nvim-telescope/telescope.nvim",
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-    },
-    opts = {
-        arg = "leetcode.nvim",
-        lang = "go",
-    }
-},
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("nvchad.configs.lspconfig").defaults()
+      require "configs.lspconfig"
+    end,
+  },
 
-  -- Neo-tree is a Neovim plugin to browse the file system and other tree like
-  -- structures in whatever style suits you, including sidebars, floating windows,
-  -- netrw split style, or all of them at once!
-  -- https://github.com/nvim-neo-tree/neo-tree.nvim
+  ---END OF LANGUAGE
+
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim"
+      "MunifTanjim/nui.nvim",
     },
     lazy = false,
     config = function()
@@ -63,36 +56,16 @@ return {
   },
 
   {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
-    end,
+    "kawre/leetcode.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      arg = "leetcode.nvim",
+      lang = "go",
+    },
   },
-
-  {
-    "rcarriga/nvim-notify",
-    config = function()
-      vim.notify = require("notify")
-      require("notify").setup({ timeout = 3000 })
-    end,
-  },
-
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    run = "make",
-    after = "telescope.nvim",
-    config = function()
-      -- load extensions
-      pcall(function()
-        for _, ext in ipairs(require(overrides).telescope.extension_list) do
-          require("telescope").load_extension(ext)
-        end
-      end)
-    end,
-    setup = function()
-      require("custom.utils").packer_lazy_load("telescope.nvim", 500)
-    end,
-  },
-
 }

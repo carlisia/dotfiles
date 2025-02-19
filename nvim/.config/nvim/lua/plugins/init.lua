@@ -6,7 +6,9 @@ return {
   -- Overrides of native plugins
   {
     "nvim-tree/nvim-tree.lua",
-    enabled = false,
+    opts = {
+      enabled = false,
+    },
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -23,7 +25,7 @@ return {
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
-    opts = require "configs.conform",
+    opts = require "overrides.conform",
   },
   -----END NATIVE PLUGINS----
 
@@ -46,7 +48,7 @@ return {
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
-    lazy = false,
+    -- lazy = false,
     config = function()
       require "configs.neotree"
       -- Unless you are still migrating, remove the deprecated commands from v1.x
@@ -55,6 +57,15 @@ return {
     end,
   },
 
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = require("configs.snacks").opts,
+    keys = require("configs.snacks").keys,
+
+  -- leet --
   {
     "kawre/leetcode.nvim",
     lazy = false,

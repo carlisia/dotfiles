@@ -59,6 +59,7 @@ stow nvim -t "$HOME"
 
 stow starfish -t "$HOME"
 
+#####NOTE: go over all the lsp, formatters, fonts,etc and figure out what needs installing in the system. Here are some.
 # for nvim, need to install:
 brew install luarocks
 luarocks install luacheck
@@ -69,4 +70,4 @@ npm install -g @fsouza/prettierd
 brew install lua-language-server
 npm i -g bash-language-server
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
-npm i @johnnymorganz/stylua
+brew install stylua

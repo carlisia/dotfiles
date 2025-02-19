@@ -6,8 +6,6 @@ end
 
 
 neotree.setup({
-
-
   sort_case_insensitive = true, -- used when sorting files and directories in the tree
   default_component_configs = { indent = { padding = 2 } },
   window = {

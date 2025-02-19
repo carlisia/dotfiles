@@ -8,8 +8,8 @@
 local M = {}
 
 M.base46 = {
-	-- theme = "aquarium",
-	theme = "ayu_dark",
+	-- theme = "material-deep-ocean",
+	theme = "material-deep-ocean",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },

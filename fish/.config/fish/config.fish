@@ -29,11 +29,6 @@ set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-langu
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 
-alias n="nvim ."
-alias python="python3"
-alias pip="pip3"
-alias g="git status -sb"
-
 alias dev="eval sh $HOMEE/code/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
 
 alias j="z"
@@ -83,7 +78,12 @@ alias pr="gh pr list | fzf"
 alias co="gh co"
 alias gw="gh worktree"
 
+alias vv="nvim ."
 alias v=nvim
+alias python="python3"
+alias pip="pip3"
+alias g="git status -sb"
+
 alias l="git log --pretty=oneline -n 20 --graph --abbrev-commit"
 alias cc="git shortlog --summary --numbered"
 

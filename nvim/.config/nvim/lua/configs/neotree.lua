@@ -16,6 +16,7 @@ neotree.setup({
       ["s"] = "open_split",
       ["v"] = "open_vsplit",
       ["t"] = "open_tabnew",
+      ["<Tab>"] = "open_tabnew",
       ["z"] = "close_all_nodes",
       ["Z"] = "expand_all_nodes",
       ["a"] = { "add", config = { show_path = "relative" } },

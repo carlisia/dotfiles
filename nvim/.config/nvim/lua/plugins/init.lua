@@ -1,7 +1,14 @@
+local overrides = require "configs.overrides"
+
 ---@type NvPluginSpec[]
 return {
   --------------------------------------- default plugins -----------------------------------------(siduck)
   -- https://github.com/siduck/dotfiles/blob/master/nvchad/lua/plugins/init.lua
+
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = overrides.telescope,
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -94,6 +101,31 @@ return {
     "ggandor/leap.nvim",
     init = function()
       require("leap").add_default_mappings()
+    end,
+  },
+
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      vim.notify = require("notify")
+      require("notify").setup({ timeout = 3000 })
+    end,
+  },
+
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "make",
+    after = "telescope.nvim",
+    config = function()
+      -- load extensions
+      pcall(function()
+        for _, ext in ipairs(require(overrides).telescope.extension_list) do
+          require("telescope").load_extension(ext)
+        end
+      end)
+    end,
+    setup = function()
+      require("custom.utils").packer_lazy_load("telescope.nvim", 500)
     end,
   },
 

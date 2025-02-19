@@ -78,6 +78,7 @@ alias pr="gh pr list | fzf"
 alias co="gh co"
 alias gw="gh worktree"
 
+alias vleet="nvim leetcode.nvim"
 alias vv="nvim ."
 alias v=nvim
 alias python="python3"

@@ -27,6 +27,20 @@ return {
   },
   -----END NATIVE PLUGINS----
 
+  {
+    "kawre/leetcode.nvim",
+    lazy = false,
+    dependencies = {
+        "nvim-telescope/telescope.nvim",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+    },
+    opts = {
+        arg = "leetcode.nvim",
+        lang = "go",
+    }
+},
+
   -- Neo-tree is a Neovim plugin to browse the file system and other tree like
   -- structures in whatever style suits you, including sidebars, floating windows,
   -- netrw split style, or all of them at once!
@@ -54,22 +68,6 @@ return {
       require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
-  },
-
-  {
-      "kawre/leetcode.nvim",
-      -- build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
-      dependencies = {
-          "nvim-telescope/telescope.nvim",
-          -- "ibhagwan/fzf-lua",
-          "nvim-lua/plenary.nvim",
-          "MunifTanjim/nui.nvim",
-      },
-      cmd = "Leet",
-      opts = {
-          --@type lc.lang
-          lang = "go",
-      }
   },
 
   {

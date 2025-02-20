@@ -17,4 +17,5 @@ local minifiles_toggle = function(...)
   end
 end
 map("n", "<leader>e", minifiles_toggle, { desc = "Mini Files Explorer" })
--- map("n", "<leader>s", MiniFiles.synchronize)
+
+map("n", "<leader>bb", ":b#<CR>", { desc = "Toggle buffers" })

@@ -133,14 +133,21 @@ M.keys = {
   --   desc = "File Explorer",
   -- },
   -- ╭─────────────────────────────────────────────────────────╮
-  -- │ Find Buffers                                            |
+  -- │ Buffers                                            |
   -- ╰─────────────────────────────────────────────────────────╯
   {
-    "<leader>fb",
+    "<leader>bl",
     function()
       Snacks.picker.buffers()
     end,
     desc = "Buffers",
+  },
+  {
+    "<leader>bd",
+    function()
+      Snacks.bufdelete()
+    end,
+    desc = "Delete Buffer",
   },
   -- ╭─────────────────────────────────────────────────────────╮
   -- │ Fubd Files                                              │
@@ -545,13 +552,6 @@ M.keys = {
       Snacks.notifier.show_history()
     end,
     desc = "Notification History",
-  },
-  {
-    "<leader>bd",
-    function()
-      Snacks.bufdelete()
-    end,
-    desc = "Delete Buffer",
   },
   {
     "<leader>cR",

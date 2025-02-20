@@ -1,6 +1,5 @@
-require "nvchad.mappings"
+-- require "nvchad.mappings"
 -- [NvChad/lua/nvchad/mappings.lua at v2.5 · NvChad/NvChad](https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/mappings.lua)
-
 
 local map = vim.keymap.set
 

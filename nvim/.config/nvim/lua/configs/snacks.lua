@@ -222,7 +222,30 @@ M.keys = {
   -- │ Git                                                     │
   -- ╰─────────────────────────────────────────────────────────╯
   {
-    "<leader>gb",
+    "<leader>gg",
+    function()
+      Snacks.lazygit()
+    end,
+    desc = "Lazygit",
+  },
+  {
+    "<leader>gB",
+    function()
+      Snacks.git.blame_line()
+    end,
+    desc = "Git Blame Line",
+  },
+
+  {
+    "<leader>gx",
+    function()
+      Snacks.gitbrowse()
+    end,
+    desc = "Git Browse",
+    mode = { "n", "v" },
+  },
+  {
+    "<leader>gt",
     function()
       Snacks.picker.git_branches {
         layout = "select",
@@ -559,21 +582,6 @@ M.keys = {
       Snacks.rename.rename_file()
     end,
     desc = "Rename File",
-  },
-  {
-    "<leader>gB",
-    function()
-      Snacks.gitbrowse()
-    end,
-    desc = "Git Browse",
-    mode = { "n", "v" },
-  },
-  {
-    "<leader>gg",
-    function()
-      Snacks.lazygit()
-    end,
-    desc = "Lazygit",
   },
   {
     "<leader>un",

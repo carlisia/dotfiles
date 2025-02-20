@@ -5,7 +5,7 @@ local M = {}
 local highlights = require "custom.highlights"
 
 M.base46 = {
-  theme = "material-deep-ocean",
+  theme = "decay",
 }
 
 M.ui = {

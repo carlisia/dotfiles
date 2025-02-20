@@ -11,6 +11,7 @@ map("i", "kj", "<ESC>")
 
 map({ "n" }, "\\", "<Cmd>Neotree toggle<CR>")
 
+require("mini.files").setup()
 local minifiles_toggle = function(...)
   if not MiniFiles.close() then
     MiniFiles.open(...)

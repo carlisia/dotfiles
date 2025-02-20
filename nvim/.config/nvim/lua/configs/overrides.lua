@@ -24,6 +24,7 @@ M.conform = {
 }
 
 M.telescope = {
+  enabled = false,
   pickers = {
     find_files = {
       find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },

@@ -5,6 +5,7 @@ local overrides = require "configs.overrides"
 return {
   -- Overrides of native plugins
   {
+    enabled = false,
     "nvim-tree/nvim-tree.lua",
     opts = {
       enabled = false,
@@ -12,6 +13,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     opts = overrides.telescope,
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -25,7 +27,7 @@ return {
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
-    opts = require "overrides.conform",
+    opts = overrides.conform,
   },
   -----END NATIVE PLUGINS----
 
@@ -48,12 +50,12 @@ return {
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
-    -- lazy = false,
+    lazy = false,
     config = function()
       require "configs.neotree"
       -- Unless you are still migrating, remove the deprecated commands from v1.x
       -- to disable nvim-tree key mappings completly so neotree keybindings can work:
-      vim.g.neo_tree_remove_legacy_commands = 1
+      -- vim.g.neo_tree_remove_legacy_commands = 1
     end,
   },
 
@@ -61,9 +63,40 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
     opts = require("configs.snacks").opts,
     keys = require("configs.snacks").keys,
+  },
+
+  {
+    "echasnovski/mini.nvim",
+    version = "*",
+    config = function()
+      -- text editing
+      require("mini.ai").setup(require("configs.mini").ai)
+      require("mini.comment").setup()
+      require("mini.completion").setup()
+      require("mini.move").setup()
+      require("mini.pairs").setup()
+      require("mini.surround").setup(require("configs.mini").surround)
+      -- workflow
+      require("mini.basics").setup()
+      require("mini.bracketed").setup()
+      require("mini.bufremove").setup()
+      require("mini.clue").setup()
+      require("mini.diff").setup()
+      require("mini.files").setup()
+      require("mini.git").setup()
+      -- appearance
+      require("mini.cursorword").setup()
+      require("mini.hipatterns").setup()
+      require("mini.indentscope").setup()
+      require("mini.notify").setup()
+      -- require("mini.tabline").setup()
+      require("mini.trailspace").setup()
+      -- others
+      require("mini.fuzzy").setup()
+    end,
+  },
 
   -- leet --
   {

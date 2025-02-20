@@ -8,7 +8,10 @@ M.opts = {
   explorer = { enabled = false },
   indent = { enabled = false },
   input = { enabled = false },
-  picker = { enabled = true },
+  picker = {
+    enabled = false,
+    -- focus = "list",
+  },
   notifier = { enabled = true },
   quickfile = { enabled = false },
   scope = { enabled = false },
@@ -57,13 +60,13 @@ M.keys = {
     end,
     desc = "Notification History",
   },
-  {
-    "<leader>e",
-    function()
-      Snacks.explorer()
-    end,
-    desc = "File Explorer",
-  },
+  -- {
+  --   "<leader>e",
+  --   function()
+  --     Snacks.explorer()
+  --   end,
+  --   desc = "File Explorer",
+  -- },
   -- ╭─────────────────────────────────────────────────────────╮
   -- │ Find                                                    │
   -- ╰─────────────────────────────────────────────────────────╯

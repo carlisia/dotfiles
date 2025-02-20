@@ -10,3 +10,11 @@ map("i", "kj", "<ESC>")
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 map({ "n" }, "\\", "<Cmd>Neotree toggle<CR>")
+
+local minifiles_toggle = function(...)
+  if not MiniFiles.close() then
+    MiniFiles.open(...)
+  end
+end
+map("n", "<leader>e", minifiles_toggle, { desc = "Mini Files Explorer" })
+-- map("n", "<leader>s", MiniFiles.synchronize)

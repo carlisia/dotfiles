@@ -86,7 +86,7 @@ return {
       require("mini.bufremove").setup()
       require("mini.clue").setup()
       require("mini.diff").setup()
-      require("mini.files").setup()
+      require("mini.files").setup(require("configs.mini").files)
       require("mini.git").setup()
       -- appearance
       require("mini.cursorword").setup()

@@ -45,7 +45,25 @@ M.surround = {
 --  - yinq - [Y]ank [I]nside [N]ext [']quote
 --  - ci'  - [C]hange [I]nside [']quote
 M.ai = {
-    n_lines = 500
+  n_lines = 500,
+}
+
+M.files = {
+  options = {
+    -- Whether to delete permanently or move into module-specific trash
+    -- To get this dir run :echo stdpath('data')
+    -- ~/.local/share/neobean/mini.files/trash
+    permanent_delete = false,
+  },
+  windows = {
+    preview = true,
+    width_focus = 30,
+    width_preview = 80,
+  },
+  mappings = {
+    go_in_plus = "<CR>",
+    reveal_cwd = ".",
+  },
 }
 
 return M

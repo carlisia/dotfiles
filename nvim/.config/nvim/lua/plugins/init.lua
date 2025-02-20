@@ -95,6 +95,7 @@ return {
       require("mini.trailspace").setup()
       -- others
       require("mini.fuzzy").setup()
+      require("mini.icons").setup()
     end,
   },
 

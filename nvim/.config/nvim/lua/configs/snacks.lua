@@ -3,11 +3,11 @@ Snacks = Snacks
 local M = {}
 
 M.opts = {
-  bigfile = { enabled = false },
+  bigfile = { enabled = true },
   dashboard = { enabled = false },
   explorer = { enabled = false },
-  indent = { enabled = false },
-  input = { enabled = false },
+  indent = { enabled = true },
+  input = { enabled = true },
   picker = {
     enabled = false,
     -- focus = "list",
@@ -92,29 +92,42 @@ M.opts = {
     enabled = true,
     top_down = false, -- place notifications from top to bottom
   },
-  quickfile = { enabled = false },
-  scope = { enabled = false },
-  scroll = { enabled = false },
-  statuscolumn = { enabled = false },
-  words = { enabled = false },
+  quickfile = { enabled = true },
+  scope = { enabled = true },
+  scroll = { enabled = true },
+  statuscolumn = { enabled = true },
+  words = { enabled = true },
 
   git = { enabled = true },
   gitbrowse = { enabled = true },
 }
 
 M.keys = {
-  -- Top Pickers & Explorer
-  {
-    "<leader><space>",
-    function()
-      Snacks.picker.smart()
-    end,
-    desc = "Smart Find Files",
-  },
   {
     "<leader>,",
     function()
-      Snacks.picker.buffers()
+      Snacks.picker.buffers {
+        -- For the buffers picker to start in normal mode
+        on_show = function()
+          vim.cmd.stopinsert()
+        end,
+        finder = "buffers",
+        format = "buffer",
+        hidden = false,
+        unloaded = true,
+        current = true,
+        sort_lastused = true,
+        win = {
+          input = {
+            keys = {
+              ["d"] = "bufdelete",
+            },
+          },
+          list = { keys = { ["d"] = "bufdelete" } },
+        },
+        -- In case you want to override the layout for this keymap
+        -- layout = "ivy",
+      }
     end,
     desc = "Buffers",
   },
@@ -147,7 +160,7 @@ M.keys = {
   --   desc = "File Explorer",
   -- },
   -- ╭─────────────────────────────────────────────────────────╮
-  -- │ Find                                                    │
+  -- │ Find Buffers                                            |
   -- ╰─────────────────────────────────────────────────────────╯
   {
     "<leader>fb",
@@ -155,6 +168,16 @@ M.keys = {
       Snacks.picker.buffers()
     end,
     desc = "Buffers",
+  },
+  -- ╭─────────────────────────────────────────────────────────╮
+  -- │ Fubd Files                                              │
+  -- ╰─────────────────────────────────────────────────────────╯
+  {
+    "<leader><space>",
+    function()
+      Snacks.picker.smart()
+    end,
+    desc = "Smart Find Files",
   },
   {
     "<leader>fc",
@@ -221,7 +244,9 @@ M.keys = {
   {
     "<leader>gb",
     function()
-      Snacks.picker.git_branches()
+      Snacks.picker.git_branches {
+        layout = "select",
+      }
     end,
     desc = "Git Branches",
   },
@@ -233,7 +258,7 @@ M.keys = {
         format = "git_log",
         preview = "git_show",
         confirm = "git_checkout",
-        layout = "vertical",
+        layout = "vertical", -- Open git log in vertical view
       }
     end,
     desc = "Git Log",
@@ -395,7 +420,9 @@ M.keys = {
   {
     "<leader>sk",
     function()
-      Snacks.picker.keymaps()
+      Snacks.picker.keymaps {
+        layout = "vertical",
+      }
     end,
     desc = "Keymaps",
   },

@@ -13,7 +13,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    enabled = false,
+    enabled = true,
     opts = overrides.telescope,
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -74,9 +74,6 @@ return {
       -- text editing
       require("mini.ai").setup(require("configs.mini").ai)
       require("mini.comment").setup()
-      require("mini.completion").setup {
-        delay = { completion = 10000, info = 100, signature = 50 },
-      }
       require("mini.move").setup()
       require("mini.pairs").setup()
       require("mini.surround").setup(require("configs.mini").surround)

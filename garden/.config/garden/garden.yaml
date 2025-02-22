@@ -108,5 +108,3 @@ gardens:
   knative-sandbox:
     groups:
       - net
-
-

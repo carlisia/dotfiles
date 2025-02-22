@@ -10,7 +10,7 @@ M.opts = {
   input = { enabled = true },
   picker = {
     enabled = false,
-    -- focus = "list",
+    focus = "list",
     -- In case you want to make sure that the score manipulation above works
     -- or if you want to check the score of each file
     debug = {
@@ -118,13 +118,7 @@ M.keys = {
     end,
     desc = "Command History",
   },
-  {
-    "<leader>n",
-    function()
-      Snacks.picker.notifications()
-    end,
-    desc = "Notification History",
-  },
+
   -- {
   --   "<leader>e",
   --   function()
@@ -133,7 +127,7 @@ M.keys = {
   --   desc = "File Explorer",
   -- },
   -- ╭─────────────────────────────────────────────────────────╮
-  -- │ Buffers                                            |
+  -- │ Buffers                                                 |
   -- ╰─────────────────────────────────────────────────────────╯
   {
     "<leader>bl",
@@ -404,7 +398,7 @@ M.keys = {
     desc = "Jumps",
   },
   {
-    "<leader>sk",
+    "<leader>ks",
     function()
       Snacks.picker.keymaps {
         layout = "vertical",
@@ -522,6 +516,30 @@ M.keys = {
     desc = "LSP Workspace Symbols",
   },
   -- ╭─────────────────────────────────────────────────────────╮
+  -- │ Notifications                                           │
+  -- ╰─────────────────────────────────────────────────────────╯
+  {
+    "<leader>ns",
+    function()
+      Snacks.picker.notifications()
+    end,
+    desc = "Search Notification History",
+  },
+  {
+    "<leader>nn",
+    function()
+      Snacks.notifier.show_history()
+    end,
+    desc = "Show Notifications",
+  },
+  {
+    "<leader>nh",
+    function()
+      Snacks.notifier.hide()
+    end,
+    desc = "Hide Notifications",
+  },
+  -- ╭─────────────────────────────────────────────────────────╮
   -- │ Other                                                   │
   -- ╰─────────────────────────────────────────────────────────╯
   {
@@ -546,18 +564,11 @@ M.keys = {
     desc = "Toggle Scratch Buffer",
   },
   {
-    "<leader>S",
+    "<leader>,",
     function()
       Snacks.scratch.select()
     end,
     desc = "Select Scratch Buffer",
-  },
-  {
-    "<leader>n",
-    function()
-      Snacks.notifier.show_history()
-    end,
-    desc = "Notification History",
   },
   {
     "<leader>cR",
@@ -566,13 +577,7 @@ M.keys = {
     end,
     desc = "Rename File",
   },
-  {
-    "<leader>un",
-    function()
-      Snacks.notifier.hide()
-    end,
-    desc = "Dismiss All Notifications",
-  },
+
   {
     "]]",
     function()

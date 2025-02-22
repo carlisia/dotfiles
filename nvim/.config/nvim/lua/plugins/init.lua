@@ -5,8 +5,8 @@ local overrides = require "configs.overrides"
 return {
   -- Overrides of native plugins
   {
-    enabled = false,
     "nvim-tree/nvim-tree.lua",
+    enabled = false,
     opts = {
       enabled = false,
     },
@@ -76,6 +76,7 @@ return {
       require("mini.comment").setup()
       require("mini.move").setup()
       require("mini.pairs").setup()
+
       require("mini.surround").setup(require("configs.mini").surround)
       -- workflow
       require("mini.basics").setup()

@@ -1,4 +1,4 @@
----@type NvPluginSpec[]
+--   @type NvPluginSpec[]
 
 local overrides = require "configs.overrides"
 
@@ -28,6 +28,14 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
     opts = overrides.conform,
+  },
+  {
+    "folke/which-key.nvim",
+    opts = {
+      icons = {
+        group = "",
+      },
+    },
   },
   -----END NATIVE PLUGINS----
 
@@ -73,7 +81,13 @@ return {
     config = function()
       -- text editing
       require("mini.ai").setup(require("configs.mini").ai)
-      require("mini.comment").setup()
+      require("mini.comment").setup {
+        mappings = {
+          comment = "<C-/>",
+          comment_line = ".",
+          comment_visual = "<C-/><C-/>",
+        },
+      }
       require("mini.move").setup()
       require("mini.pairs").setup()
 
@@ -86,6 +100,7 @@ return {
       require("mini.diff").setup()
       require("mini.files").setup(require("configs.mini").files)
       require("mini.git").setup()
+      require("mini.clue").setup(require("configs.mini").clue)
       -- appearance
       require("mini.cursorword").setup()
       require("mini.hipatterns").setup()

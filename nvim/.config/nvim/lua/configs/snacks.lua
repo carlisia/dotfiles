@@ -39,7 +39,7 @@ M.opts = {
           backdrop = false,
           row = -1,
           width = 0,
-          height = 0.5,
+          -- height = 0.5,
           border = "top",
           title = " {title} {live} {flags}",
           title_pos = "left",
@@ -105,7 +105,7 @@ M.opts = {
 M.keys = {
 
   {
-    "<leader>/",
+    "<leader>s/",
     function()
       Snacks.picker.grep()
     end,
@@ -118,14 +118,6 @@ M.keys = {
     end,
     desc = "Command History",
   },
-
-  -- {
-  --   "<leader>e",
-  --   function()
-  --     Snacks.explorer()
-  --   end,
-  --   desc = "File Explorer",
-  -- },
   -- ╭─────────────────────────────────────────────────────────╮
   -- │ Buffers                                                 |
   -- ╰─────────────────────────────────────────────────────────╯
@@ -571,7 +563,7 @@ M.keys = {
     desc = "Select Scratch Buffer",
   },
   {
-    "<leader>cR",
+    "<leader>sr",
     function()
       Snacks.rename.rename_file()
     end,

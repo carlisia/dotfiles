@@ -1,4 +1,3 @@
-local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").on_capabilities
 
@@ -9,23 +8,7 @@ local servers = {
 }
 
 local cust_attach = function(client, bufnr)
-  on_attach(client, bufnr)
-
   local map = vim.keymap.set
-  local unmap = vim.keymap.del
-
-  unmap("n", "gD", { buffer = bufnr })
-  unmap("n", "gd", { buffer = bufnr })
-  unmap("n", "gi", { buffer = bufnr })
-  unmap("n", "<leader>sh", { buffer = bufnr })
-  unmap("n", "<leader>wa", { buffer = bufnr })
-  unmap("n", "<leader>wr", { buffer = bufnr })
-  unmap("n", "<leader>wl", { buffer = bufnr })
-  unmap("n", "<leader>D", { buffer = bufnr })
-  unmap("n", "<leader>ra", { buffer = bufnr })
-  unmap({ "n", "v" }, "<leader>ca", { buffer = bufnr })
-  unmap("n", "gr", { buffer = bufnr })
-  unmap("n", "gd", { buffer = bufnr })
 
   map("n", "<leader>lr", require "nvchad.lsp.renamer", { buffer = bufnr, desc = "lsp renamer", noremap = true })
 
@@ -50,7 +33,7 @@ local cust_attach = function(client, bufnr)
   map({ "n", "v" }, "<leader>lc", vim.lsp.buf.code_action, { buffer = bufnr, desc = "code action", noremap = true })
   map("n", "lr", vim.lsp.buf.references, { buffer = bufnr, desc = "show references", noremap = true })
 
-  vim.keymap.set("n", "lb", "<cmd> Telescope<cr>", { buffer = bufnr, desc = "type definition", noremap = true })
+  map("n", "lb", "<cmd> Telescope<cr>", { buffer = bufnr, desc = "type definition", noremap = true })
 end
 
 -- lsps with default config

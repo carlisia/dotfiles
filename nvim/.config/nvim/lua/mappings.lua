@@ -111,7 +111,7 @@ map("n", "<leader=tt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidd
 -- ╰─────────────────────────────────────────────────────────╯
 -- global lsp mappings
 unmap("n", "<leader>ds")
-map("n", "<leader>ld", vim.diagnostic.setloclist, { desc = "diagnostic loclist" })
+map("n", "<leader>lp", vim.diagnostic.setloclist, { desc = "problem/diagnostic loclist" })
 
 unmap("n", "<leader>fm") -- format file
 map("n", "<leader>fm", function()

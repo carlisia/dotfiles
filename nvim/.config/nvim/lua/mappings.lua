@@ -40,16 +40,6 @@ map("n", "<leader>kw", function()
   vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
 end, { desc = "whichkey query lookup" })
 map("n", "<leader>kc", "<cmd>NvCheatsheet<CR>", { desc = "nvcheatsheet" })
--- ╭─────────────────────────────────────────────────────────╮
--- │ Files                                                   │
--- ╰─────────────────────────────────────────────────────────╯
-require("mini.files").setup()
-local minifiles_toggle = function(...)
-  if not MiniFiles.close() then
-    MiniFiles.open(...)
-  end
-end
-map("n", "<leader>e", minifiles_toggle, { desc = "mini explorer" })
 
 -- ╭─────────────────────────────────────────────────────────╮
 -- │ Buffers                                                 │

@@ -77,7 +77,7 @@ return {
 
   {
     "echasnovski/mini.nvim",
-    version = "*",
+    version = false,
     config = function()
       -- text editing
       require("mini.ai").setup(require("configs.mini").ai)
@@ -93,6 +93,12 @@ return {
       require("mini.clue").setup()
       require("mini.diff").setup()
       require("mini.files").setup(require("configs.mini").files)
+      local minifiles_toggle = function()
+        if not MiniFiles.close() then
+          MiniFiles.open()
+        end
+      end
+      vim.keymap.set("n", "<leader>e", minifiles_toggle, { desc = "mini explorer" })
       require("mini.git").setup()
       require("mini.clue").setup(require("configs.mini").clue)
       -- appearance

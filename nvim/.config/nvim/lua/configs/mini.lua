@@ -108,8 +108,7 @@ M.files = {
     width_preview = 80,
   },
   mappings = {
-    go_in_plus = "<CR>",
-    reveal_cwd = ".",
+    go_in_plus = "<Tab>",
   },
 }
 

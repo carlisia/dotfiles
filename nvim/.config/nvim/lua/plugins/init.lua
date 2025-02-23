@@ -81,13 +81,7 @@ return {
     config = function()
       -- text editing
       require("mini.ai").setup(require("configs.mini").ai)
-      require("mini.comment").setup {
-        mappings = {
-          comment = "<C-/>",
-          comment_line = ".",
-          comment_visual = "<C-/><C-/>",
-        },
-      }
+      require("mini.comment").setup(require("configs.mini").comment)
       require("mini.move").setup()
       require("mini.pairs").setup()
 

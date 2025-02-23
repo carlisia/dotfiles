@@ -48,6 +48,14 @@ M.ai = {
   n_lines = 500,
 }
 
+M.comment = {
+  mappings = {
+    comment = "<C-/>",
+    comment_line = "<C-.>",
+    comment_visual = "<C-/><C-/>",
+  },
+}
+
 local miniclue = require "mini.clue"
 M.clue = {
   clues = {

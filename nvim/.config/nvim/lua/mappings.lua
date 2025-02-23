@@ -104,7 +104,7 @@ map("n", "<leader>to", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find o
 map("n", "<leader>tf", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
 map("n", "<leader>tgc", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 map("n", "<leader>tgs", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
-map("n", "<leader=tt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+map("n", "<leader>=tt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 
 -- ╭─────────────────────────────────────────────────────────╮
 -- │ LSP                                                     │

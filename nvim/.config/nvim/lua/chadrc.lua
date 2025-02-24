@@ -5,8 +5,17 @@ local M = {}
 local highlights = require "custom.highlights"
 
 M.base46 = {
-  theme = "decay",
-  theme_toggle = { "decay", "onedark", "one_light" },
+  theme = "carbonfox",
+  theme_toggle = {
+    "carbonfox", -- high contrast, heavy on the red
+    "oxocarbon", -- same as above, low red
+    --- for when tired:
+    "neofusion",
+    "nightowl",
+    ---
+    "onedark",
+    "one_light",
+  },
 }
 
 M.ui = {

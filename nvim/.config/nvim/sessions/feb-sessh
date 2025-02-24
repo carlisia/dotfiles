@@ -29,10 +29,6 @@ set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -43,11 +39,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 38 + 40) / 81)
 exe 'vert 1resize ' . ((&columns * 158 + 105) / 211)
-exe '2resize ' . ((&lines * 39 + 40) / 81)
-exe 'vert 2resize ' . ((&columns * 158 + 105) / 211)
-exe 'vert 3resize ' . ((&columns * 52 + 105) / 211)
+exe 'vert 2resize ' . ((&columns * 52 + 105) / 211)
 argglobal
 balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/chadrc.lua
 setlocal fdm=manual
@@ -60,33 +53,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 93 - ((18 * winheight(0) + 19) / 38)
+let s:l = 60 - ((45 * winheight(0) + 39) / 78)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 93
-normal! 0
-wincmd w
-argglobal
-enew | setl bt=help
-help nvui@en
-balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/chadrc.lua
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal nofen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 206 - ((0 * winheight(0) + 19) / 39)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 206
-normal! 02|
+keepjumps 60
+normal! 010|
 wincmd w
 argglobal
 if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/snacks.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/snacks.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/snacks.lua | endif
@@ -111,11 +83,8 @@ normal! zt
 keepjumps 1
 normal! 0
 wincmd w
-exe '1resize ' . ((&lines * 38 + 40) / 81)
 exe 'vert 1resize ' . ((&columns * 158 + 105) / 211)
-exe '2resize ' . ((&lines * 39 + 40) / 81)
-exe 'vert 2resize ' . ((&columns * 158 + 105) / 211)
-exe 'vert 3resize ' . ((&columns * 52 + 105) / 211)
+exe 'vert 2resize ' . ((&columns * 52 + 105) / 211)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

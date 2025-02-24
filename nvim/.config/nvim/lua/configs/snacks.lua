@@ -9,7 +9,8 @@ M.opts = {
   indent = { enabled = true },
   input = { enabled = true },
   picker = {
-    enabled = false,
+    enabled = true,
+    ui_select = true, -- replace `vim.ui.select` with the snacks picker
     focus = "list",
     -- In case you want to make sure that the score manipulation above works
     -- or if you want to check the score of each file
@@ -23,6 +24,7 @@ M.opts = {
       -- When reaching the bottom of the results in the picker, I don't want
       -- it to cycle and go back to the top
       cycle = false,
+      position = "bottom",
     },
     layouts = {
       -- I wanted to modify the ivy layout height and preview pane width,
@@ -39,7 +41,7 @@ M.opts = {
           backdrop = false,
           row = -1,
           width = 0,
-          -- height = 0.5,
+          height = 0.3,
           border = "top",
           title = " {title} {live} {flags}",
           title_pos = "left",
@@ -136,7 +138,7 @@ M.keys = {
     desc = "Delete Buffer",
   },
   -- ╭─────────────────────────────────────────────────────────╮
-  -- │ Fubd Files                                              │
+  -- │ Find Files                                              │
   -- ╰─────────────────────────────────────────────────────────╯
   {
     "<leader><space>",
@@ -216,9 +218,7 @@ M.keys = {
   {
     "<leader>gt",
     function()
-      Snacks.picker.git_branches {
-        layout = "select",
-      }
+      Snacks.picker.git_branches()
     end,
     desc = "Git Branches",
   },

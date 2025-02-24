@@ -89,12 +89,7 @@ return {
       require("mini.clue").setup()
       require("mini.diff").setup()
       require("mini.files").setup(require("configs.mini").files)
-      local minifiles_toggle = function()
-        if not MiniFiles.close() then
-          MiniFiles.open()
-        end
-      end
-      vim.keymap.set("n", "<leader>e", minifiles_toggle, { desc = "mini explorer" })
+
       require("mini.git").setup()
       require("mini.clue").setup(require("configs.mini").clue)
       -- appearance
@@ -107,7 +102,9 @@ return {
       -- others
       require("mini.fuzzy").setup()
       require("mini.icons").setup()
+      require("mini.misc").setup()
       require("mini.starter").setup()
+      require("mini.sessions").setup(require("configs.mini").sessions)
     end,
   },
 

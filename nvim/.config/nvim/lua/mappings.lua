@@ -9,6 +9,7 @@ map("i", "kj", "<ESC>")
 unmap("n", "\\")
 map({ "n", "v" }, "|", "<Cmd>Neotree toggle<CR>")
 
+unmap("n", "<leader>e")
 unmap("n", "<leader>n")
 unmap("n", "<leader>rn")
 unmap({ "n", "v" }, "<leader>/")
@@ -26,6 +27,7 @@ local groups = {
   { "<leader>l", group = "📚 [l]sp" },
   { "<leader>s", group = "🍿 [s]nacks" },
   { "<leader>t", group = "🔭 [t]telescope" },
+  { "<leader>-", group = "📟 [-] mini sessions" },
 }
 require("which-key").add(groups)
 
@@ -107,3 +109,31 @@ unmap("n", "<leader>fm") -- format file
 map("n", "<leader>fm", function()
   require("conform").format { lsp_fallback = true }
 end, { desc = "format file" })
+
+-- ╭─────────────────────────────────────────────────────────╮
+-- │ Mini                                                    │
+-- ╰─────────────────────────────────────────────────────────╯
+
+-- explorer
+local minifiles_toggle = function()
+  if not MiniFiles.close() then
+    MiniFiles.open()
+  end
+end
+vim.keymap.set("n", "<leader>e", minifiles_toggle, { desc = "mini explorer" })
+--- end
+
+-- sessions
+local command = vim.api.nvim_create_user_command
+-- Create a user command that can be executed with :SaveSession
+command("SaveSession", function()
+  MiniSessions.write(nil, { force = false })
+end, {})
+-- Create a user command that can be executed with :DeleteSession
+command("DeleteSession", function()
+  MiniSessions.delete(nil, { force = false })
+end, {})
+
+map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })
+map("n", "<leader>-a", ":SaveSession<CR>", { desc = "Add a session" })
+map("n", "<leader>-d", ":DeleteSession<CR>", { desc = "Delete a session" })

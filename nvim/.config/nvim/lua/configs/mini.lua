@@ -112,4 +112,8 @@ M.files = {
   },
 }
 
+M.sessions = {
+  directory = vim.fn.stdpath "config" .. "/sessions",
+}
+
 return M

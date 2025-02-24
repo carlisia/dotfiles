@@ -1,25 +1,9 @@
 require "nvchad.options"
 
-vim.api.nvim_create_autocmd("BufDelete", {
-  callback = function()
-    local bufs = vim.t.bufs
-    if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == "" then
-      vim.cmd "lua MiniStarter.open()"
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    local bufs = vim.t.bufs
-    if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == "" then
-      -- vim.cmd "lua Snacks.dashboard()"
-      require "mini.starter"
-      vim.cmd "lua MiniStarter.open()"
-      -- require("nvchad.nvdash").open()
-    end
-  end,
-})
+-- How to set options from Lua:
+-- Use vim.opt only for "list"/"map" like options ('listchars', 'fillchars', etc.) as it has :append() / :remove() methods,
+-- and use vim.o for everything else.
+-- Using vim.opt for all options is not an error, vim.o is a more reliable interface.
 
 -- ╭─────────────────────────────────────────────────────────╮
 -- │ Mini                                                    │
@@ -44,6 +28,28 @@ local map_split = function(buf_id, lhs, direction)
   vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
 end
 
+-- mini starter
+-- At startup, auto open MiniStarter if no files are opened
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    local has_mini, MiniStarter = pcall(require, "mini.starter")
+    if has_mini and vim.fn.argc() == 0 then
+      MiniStarter.open()
+    end
+  end,
+})
+
+-- Auto open MiniStarter when the last buffer is deleted
+vim.api.nvim_create_autocmd("BufDelete", {
+  callback = function()
+    local listed_bufs = vim.t.bufs or {}
+    if #listed_bufs == 1 and vim.api.nvim_buf_get_name(listed_bufs[1]) == "" then
+      MiniStarter.open()
+    end
+  end,
+})
+
+--- mini explorer / split
 vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesBufferCreate",
   callback = function(args)
@@ -54,9 +60,9 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 -- Have mini file explorer reveal the current file
-_G.open_current = function()
+-- [mini.files: "Reveal" current file in tree? · echasnovski/mini.nvim · Discussion #395](https://github.com/echasnovski/mini.nvim/discussions/395#discussioncomment-6418353)
+_G.open_current = function() --- doesn't seem to be working
   local minifiles = require "mini.files"
   minifiles.open(vim.api.nvim_buf_get_name(0))
   minifiles.reveal_cwd()
 end
---- end

@@ -4,7 +4,19 @@ vim.api.nvim_create_autocmd("BufDelete", {
   callback = function()
     local bufs = vim.t.bufs
     if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == "" then
-      vim.cmd "lua Snacks.dashboard()"
+      vim.cmd "lua MiniStarter.open()"
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    local bufs = vim.t.bufs
+    if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == "" then
+      -- vim.cmd "lua Snacks.dashboard()"
+      require "mini.starter"
+      vim.cmd "lua MiniStarter.open()"
+      -- require("nvchad.nvdash").open()
     end
   end,
 })

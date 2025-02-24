@@ -7,9 +7,6 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     enabled = false,
-    opts = {
-      enabled = false,
-    },
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -38,7 +35,6 @@ return {
     },
   },
   -----END NATIVE PLUGINS----
-
   ---LANGUAGE
   {
     "neovim/nvim-lspconfig",
@@ -111,6 +107,7 @@ return {
       -- others
       require("mini.fuzzy").setup()
       require("mini.icons").setup()
+      require("mini.starter").setup()
     end,
   },
 

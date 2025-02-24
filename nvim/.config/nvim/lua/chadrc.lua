@@ -6,6 +6,7 @@ local highlights = require "custom.highlights"
 
 M.base46 = {
   theme = "decay",
+  theme_toggle = { "decay", "onedark", "one_light" },
 }
 
 M.ui = {

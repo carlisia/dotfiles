@@ -1,13 +1,23 @@
-local on_init = require("nvchad.configs.lspconfig").on_init
-local capabilities = require("nvchad.configs.lspconfig").on_capabilities
+local configs = require "nvchad.configs.lspconfig"
 
-local lspconfig = require "lspconfig"
-local servers = {
-  "gopls",
-  "lua_ls",
+local servers = {}
+local gopls = {
+  -- https://github.com/golang/tools/blob/3e76cae71578160dca62d1cab42a715ef960c892/gopls/doc/settings.md
+  -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md
+  settings = {
+    gopls = { -- overriding defaults only
+      analyses = {
+        shadow = true,
+      },
+      gofumpt = true,
+      staticcheck = true,
+      usePlaceholders = true,
+    },
+  },
 }
+servers["gopls"] = gopls
 
-local cust_attach = function(client, bufnr)
+local cust_attach = function(_, bufnr)
   local map = vim.keymap.set
 
   map("n", "<leader>lr", require "nvchad.lsp.renamer", { buffer = bufnr, desc = "lsp renamer", noremap = true })
@@ -36,11 +46,10 @@ local cust_attach = function(client, bufnr)
   map("n", "lb", "<cmd> Telescope<cr>", { buffer = bufnr, desc = "type definition", noremap = true })
 end
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = cust_attach,
-    on_init = on_init,
-    capabilities = capabilities,
-  }
+for name, opts in pairs(servers) do
+  opts.on_init = configs.on_init
+  opts.on_attach = cust_attach
+  opts.capabilities = configs.capabilities
+
+  require("lspconfig")[name].setup(opts)
 end

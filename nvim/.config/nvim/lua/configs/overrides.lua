@@ -24,7 +24,6 @@ M.conform = {
 }
 
 M.telescope = {
-  enabled = false,
   pickers = {
     find_files = {
       find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
@@ -41,7 +40,7 @@ M.telescope = {
   },
   defaults = {
     path_display = {
-      -- "smart",
+      "smart",
     },
     vimgrep_arguments = {
       "rg",

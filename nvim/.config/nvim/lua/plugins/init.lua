@@ -1,5 +1,4 @@
 --   @type NvPluginSpec[]
-
 local overrides = require "configs.overrides"
 
 return {
@@ -10,8 +9,9 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    enabled = true,
-    opts = overrides.telescope,
+    opts = function()
+      return overrides.telescope
+    end,
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
       "nvim-telescope/telescope-symbols.nvim",
@@ -19,23 +19,27 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
+    opts = function()
+      return overrides.treesitter
+    end,
   },
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
-    opts = overrides.conform,
+    opts = function()
+      return overrides.conform
+    end,
   },
   {
     "folke/which-key.nvim",
-    opts = {
-      icons = {
-        group = "",
-      },
-    },
+    opts = function()
+      return {
+        icons = {
+          group = "",
+        },
+      }
+    end,
   },
-  -----END NATIVE PLUGINS----
-  ---LANGUAGE
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -43,8 +47,7 @@ return {
       require "configs.lspconfig"
     end,
   },
-
-  ---END OF LANGUAGE
+  -----END NATIVE PLUGINS----
 
   {
     "nvim-neo-tree/neo-tree.nvim",

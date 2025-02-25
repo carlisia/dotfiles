@@ -1,8 +1,8 @@
 --@type ChadrcConfig
 local M = {}
 
--- Theme and highlights overrides and additions
-local highlights = require "custom.highlights"
+local highlights = require "custom.base46"
+local ui = require "custom.ui"
 
 M.base46 = {
   theme = "carbonfox",
@@ -16,10 +16,12 @@ M.base46 = {
     "onedark",
     "one_light",
   },
+
+  hl_override = highlights.overrides,
 }
 
 M.ui = {
-  hl_override = highlights.overrides,
+  statusline = ui.statusline,
 }
 
 return M

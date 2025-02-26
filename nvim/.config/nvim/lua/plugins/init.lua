@@ -47,6 +47,43 @@ return {
       require "configs.lspconfig"
     end,
   },
+  {
+    "hrsh7th/nvim-cmp",
+    require("cmp").setup({
+      enabled = function()
+      -- disable completion in comments
+        local context = require 'cmp.config.context'
+        -- keep command mode completion enabled when cursor is in a comment
+        if vim.api.nvim_get_mode().mode == 'c' then
+          return true
+        else
+          return not context.in_treesitter_capture("comment")
+            and not context.in_syntax_group("Comment")
+        end
+      end
+    }),
+    opts = function()
+      local cmp_config = require "nvchad.configs.cmp"
+      cmp_config.sources = {
+        {
+          name = "nvim_lsp",
+          entry_filter = function(entry, _)
+            return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
+          end,
+        },
+        { name = "luasnip" },
+        {
+          name = "buffer",
+          entry_filter = function(entry, _)
+            return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
+          end,
+        },
+        { name = "nvim_lua" },
+        { name = "path" },
+      }
+
+   end,
+  },
   -----END NATIVE PLUGINS----
 
   {

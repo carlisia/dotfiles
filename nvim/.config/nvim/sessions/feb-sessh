@@ -16,18 +16,15 @@ endif
 badd +55 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/options.lua
 badd +32 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/mini.lua
 badd +40 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/snacks.lua
-badd +21 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua
+badd +88 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua
 badd +18 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/lspconfig.lua
-badd +54 nvim/.config/nvim/lua/chadrc.lua
-badd +94 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua
-badd +11 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/base46.lua
-badd +34 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua
+badd +20 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua
+badd +77 nvim/.config/nvim/lua/custom/ui.lua
 badd +46 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/lazy.lua
-badd +5 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/plugins2.lua
-badd +0 neo-tree\ filesystem\ \[1]
+badd +3 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua
 argglobal
 %argdel
-edit nvim/.config/nvim/lua/chadrc.lua
+edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/lspconfig.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -49,7 +46,7 @@ set winminwidth=0
 set winwidth=1
 wincmd =
 argglobal
-balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua
+balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/lazy.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -60,42 +57,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 53 - ((52 * winheight(0) + 39) / 78)
+let s:l = 18 - ((17 * winheight(0) + 39) / 78)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 53
-normal! 08|
-wincmd w
-argglobal
-if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua | endif
-if &buftype ==# 'terminal'
-  silent file ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua
-endif
-balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/options.lua
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 34 - ((33 * winheight(0) + 39) / 78)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 34
+keepjumps 18
 normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/plugins2.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/plugins2.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/plugins2.lua | endif
+if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/plugins2.lua
+  silent file ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua
 endif
-balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua
+balt nvim/.config/nvim/lua/custom/ui.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -106,13 +80,37 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 6 - ((5 * winheight(0) + 39) / 78)
+let s:l = 88 - ((42 * winheight(0) + 39) / 78)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 6
-normal! 028|
+keepjumps 88
+normal! 07|
 wincmd w
+argglobal
+if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua | endif
+if &buftype ==# 'terminal'
+  silent file ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua
+endif
+balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 1 - ((0 * winheight(0) + 39) / 78)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1
+normal! 0
+wincmd w
+2wincmd w
 wincmd =
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

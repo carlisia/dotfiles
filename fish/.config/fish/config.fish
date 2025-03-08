@@ -6,6 +6,8 @@ set -x GIT_TERMINAL_PROMPT 1
 # alias zen=fish_greeting
 starship init fish | source
 
+set -x XDG_CONFIG_HOME $HOME/.config
+
 # if status --is-interactive
 #     and not set -q TMUX
 #     exec tmux

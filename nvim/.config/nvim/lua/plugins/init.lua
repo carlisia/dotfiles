@@ -60,12 +60,14 @@ return {
       end,
     },
 
+    -- Because these opts uses a function call ex: require*,
+    -- then make opts spec a function
     opts = function(_, conf)
-      -- local cmp_config = require "nvchad.configs..cmp"
-      conf.sources = overrides.cmp
+      conf.sources = overrides.cmpSources
       return conf
     end,
   },
+
   -----END NATIVE PLUGINS----
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -78,9 +80,6 @@ return {
     lazy = false,
     config = function()
       require "configs.neotree"
-      -- Unless you are still migrating, remove the deprecated commands from v1.x
-      -- to disable nvim-tree key mappings completly so neotree keybindings can work:
-      -- vim.g.neo_tree_remove_legacy_commands = 1
     end,
   },
 

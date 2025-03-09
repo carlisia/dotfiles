@@ -13,12 +13,15 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +64 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/options.lua
-badd +115 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/mappings.lua
-badd +45 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua
-badd +18 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/lspconfig.lua
-badd +11 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua
-badd +27 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua
+badd +52 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/options.lua
+badd +38 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua
+badd +102 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua
+badd +20 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/snacks.lua
+badd +1 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/mini.lua
+badd +16 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua
+badd +28 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/chadrc.lua
+badd +12 ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua
+badd +1 health://
 argglobal
 %argdel
 edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/options.lua
@@ -27,7 +30,18 @@ let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
-1wincmd h
+wincmd _ | wincmd |
+vsplit
+2wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+wincmd w
+wincmd w
+wincmd _ | wincmd |
+split
+1wincmd k
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -38,10 +52,17 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 130 + 130) / 260)
-exe 'vert 2resize ' . ((&columns * 129 + 130) / 260)
+exe '1resize ' . ((&lines * 36 + 38) / 77)
+exe 'vert 1resize ' . ((&columns * 89 + 141) / 282)
+exe '2resize ' . ((&lines * 37 + 38) / 77)
+exe 'vert 2resize ' . ((&columns * 89 + 141) / 282)
+exe 'vert 3resize ' . ((&columns * 89 + 141) / 282)
+exe '4resize ' . ((&lines * 37 + 38) / 77)
+exe 'vert 4resize ' . ((&columns * 102 + 141) / 282)
+exe '5resize ' . ((&lines * 36 + 38) / 77)
+exe 'vert 5resize ' . ((&columns * 102 + 141) / 282)
 argglobal
-balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/plugins/init.lua
+balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -52,12 +73,56 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 78 - ((33 * winheight(0) + 37) / 74)
+let s:l = 34 - ((10 * winheight(0) + 18) / 36)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 78
-normal! 015|
+keepjumps 34
+normal! 023|
+wincmd w
+argglobal
+enew | setl bt=help
+help nvui@en
+balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/options.lua
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 712 - ((24 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 712
+normal! 013|
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua | endif
+if &buftype ==# 'terminal'
+  silent file ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua
+endif
+balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/chadrc.lua
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 27 - ((26 * winheight(0) + 37) / 74)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 27
+normal! 0
 wincmd w
 argglobal
 if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/configs/overrides.lua | endif
@@ -75,15 +140,46 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 11 - ((10 * winheight(0) + 37) / 74)
+let s:l = 28 - ((27 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 11
-normal! 0
+keepjumps 28
+normal! 023|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 130 + 130) / 260)
-exe 'vert 2resize ' . ((&columns * 129 + 130) / 260)
+argglobal
+if bufexists(fnamemodify("~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua", ":p")) | buffer ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua | else | edit ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua | endif
+if &buftype ==# 'terminal'
+  silent file ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/custom/ui.lua
+endif
+balt ~/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/lua/utils/plugins.lua
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 21 - ((20 * winheight(0) + 18) / 36)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 21
+normal! 011|
+wincmd w
+3wincmd w
+exe '1resize ' . ((&lines * 36 + 38) / 77)
+exe 'vert 1resize ' . ((&columns * 89 + 141) / 282)
+exe '2resize ' . ((&lines * 37 + 38) / 77)
+exe 'vert 2resize ' . ((&columns * 89 + 141) / 282)
+exe 'vert 3resize ' . ((&columns * 89 + 141) / 282)
+exe '4resize ' . ((&lines * 37 + 38) / 77)
+exe 'vert 4resize ' . ((&columns * 102 + 141) / 282)
+exe '5resize ' . ((&lines * 36 + 38) / 77)
+exe 'vert 5resize ' . ((&columns * 102 + 141) / 282)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

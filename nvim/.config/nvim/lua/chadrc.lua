@@ -21,6 +21,7 @@ M.base46 = {
 }
 
 M.ui = {
+  cmp = ui.cmpUI,
   statusline = ui.statusline,
 }
 

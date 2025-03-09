@@ -6,6 +6,15 @@ local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 end
 
+M.cmpUI = {
+  lspkind_text = true,
+  icons_left = false,
+  style = "flat_dark", -- default/flat_light/flat_dark/atom/atom_colored
+  format_colors = {
+    tailwind = false,
+  },
+}
+
 require "utils.plugins"
 M.statusline = {
   theme = "default",

@@ -75,17 +75,6 @@ local function toggleAutoComplete()
     enabled = function()
       return vim.g.cmptoggle
     end,
-    mapping = {
-      ["<CR>"] = require("cmp").mapping.confirm { select = true },
-      ["<Tab>"] = require("cmp").mapping.select_next_item(),
-      ["<S-Tab>"] = require("cmp").mapping.select_prev_item(),
-    },
-    sources = {
-      { name = "nvim_lsp" },
-      { name = "buffer" },
-      { name = "path" },
-      { name = "luasnip" },
-    },
   }
 
   local status = vim.g.cmptoggle and "enabled" or "disabled"

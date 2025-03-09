@@ -2,6 +2,24 @@
 
 local M = {}
 
+M.cmp = {
+  {
+    name = "nvim_lsp",
+    entry_filter = function(entry, _)
+      return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
+    end,
+  },
+  { name = "luasnip" },
+  {
+    name = "buffer",
+    entry_filter = function(entry, _)
+      return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
+    end,
+  },
+  { name = "nvim_lua" },
+  { name = "path" },
+}
+
 M.conform = {
   lsp_fallback = true,
 
@@ -30,10 +48,10 @@ M.telescope = {
     },
     buffers = {
       theme = "dropdown",
-      previewer = false,
+      previewer = "true",
       mappings = {
         i = {
-          ["<c-d>"] = "delete_buffer",
+          ["<C-d>"] = "delete_buffer",
         },
       },
     },
@@ -73,16 +91,18 @@ M.telescope = {
       "^lazy%-lock%.json$",
       "^package%-lock%.json$",
     },
-  },
-  mappings = {
-    n = {
-      ["q"] = require("telescope.actions").close,
-      ["<Esc>"] = require("telescope.actions").close,
+    initial_mode = "insert",
+    mappings = {
+      i = {
+        ["<C-k>"] = require("telescope.actions").move_selection_previous,
+        ["<C-j>"] = require("telescope.actions").move_selection_next,
+        ["<Esc>"] = require("telescope.actions").close,
+      },
     },
-  },
-  layout_config = {
-    horizontal = {
-      prompt_position = "bottom",
+    layout_config = {
+      horizontal = {
+        prompt_position = "bottom",
+      },
     },
   },
   extensions = {
@@ -93,7 +113,13 @@ M.telescope = {
       case_mode = "smart_case",
     },
   },
-  extension_list = { "fzf" },
+  extension_list = {
+    --- nvchad defaults
+    "themes",
+    "terms",
+    ---
+    "fzf",
+  },
 }
 
 M.treesitter = {

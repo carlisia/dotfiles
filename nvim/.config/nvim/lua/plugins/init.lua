@@ -9,8 +9,13 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    opts = function()
-      return overrides.telescope
+    opts = function(_, conf)
+      conf.pickers = overrides.telescope.pickers
+      conf.defaults = overrides.telescope.defaults
+      conf.extension_list = overrides.extension_list
+      conf.extensions = overrides.extensions
+
+      return conf
     end,
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -25,7 +30,7 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
+    event = "BufWritePre", -- for format on save
     opts = function()
       return overrides.conform
     end,
@@ -49,43 +54,19 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
-    require("cmp").setup({
+    require("cmp").setup {
       enabled = function()
-      -- disable completion in comments
-        local context = require 'cmp.config.context'
-        -- keep command mode completion enabled when cursor is in a comment
-        if vim.api.nvim_get_mode().mode == 'c' then
-          return true
-        else
-          return not context.in_treesitter_capture("comment")
-            and not context.in_syntax_group("Comment")
-        end
-      end
-    }),
-    opts = function()
-      local cmp_config = require "nvchad.configs.cmp"
-      cmp_config.sources = {
-        {
-          name = "nvim_lsp",
-          entry_filter = function(entry, _)
-            return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
-          end,
-        },
-        { name = "luasnip" },
-        {
-          name = "buffer",
-          entry_filter = function(entry, _)
-            return require("cmp").lsp.CompletionItemKind.Text ~= entry:get_kind()
-          end,
-        },
-        { name = "nvim_lua" },
-        { name = "path" },
-      }
+        require("utils.plugins").disable_cmp_in_comments()
+      end,
+    },
 
-   end,
+    opts = function(_, conf)
+      -- local cmp_config = require "nvchad.configs..cmp"
+      conf.sources = overrides.cmp
+      return conf
+    end,
   },
   -----END NATIVE PLUGINS----
-
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",

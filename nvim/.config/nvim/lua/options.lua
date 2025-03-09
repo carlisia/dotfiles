@@ -66,3 +66,17 @@ _G.open_current = function() --- doesn't seem to be working
   minifiles.open(vim.api.nvim_buf_get_name(0))
   minifiles.reveal_cwd()
 end
+
+vim.g.cmptoggle = true
+local function toggleAutoComplete()
+  vim.g.cmptoggle = not vim.g.cmptoggle -- Toggle state
+  require("cmp").setup.buffer { enabled = vim.g.cmptoggle }
+  vim.notify("Auto-completion: " .. (vim.g.cmptoggle and "ON" or "OFF"), vim.log.levels.INFO)
+end
+
+-- Create a user command to manually trigger the toggle
+vim.api.nvim_create_user_command("ToggleAutoComplete", toggleAutoComplete, {})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = toggleAutoComplete,
+})

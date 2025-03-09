@@ -11,7 +11,6 @@ M.opts = {
   picker = {
     enabled = true,
     ui_select = true, -- replace `vim.ui.select` with the snacks picker
-    focus = "list",
     -- In case you want to make sure that the score manipulation above works
     -- or if you want to check the score of each file
     debug = {

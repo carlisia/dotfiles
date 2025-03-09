@@ -6,6 +6,7 @@ local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 end
 
+require "utils.plugins"
 M.statusline = {
   theme = "default",
   order = {
@@ -16,6 +17,7 @@ M.statusline = {
     "diagnostics",
 
     "%=",
+    "notification",
     "filetype",
     "lsp_msg",
 
@@ -94,6 +96,10 @@ M.statusline = {
 
       local ft = vim.bo[stbufnr()].ft
       return ft == " " and " %#St_ft# plain text  " or " %#St_ft#" .. ft .. " "
+    end,
+
+    notification = function()
+      return "%#StText#" .. "%@v:lua.TriggerToggleAutoComplete@" .. " %#St_lspError#" .. plugins.toggle_cmp()
     end,
   },
 }

@@ -69,9 +69,27 @@ end
 
 vim.g.cmptoggle = true
 local function toggleAutoComplete()
-  vim.g.cmptoggle = not vim.g.cmptoggle -- Toggle state
-  require("cmp").setup.buffer { enabled = vim.g.cmptoggle }
-  vim.notify("Auto-completion: " .. (vim.g.cmptoggle and "ON" or "OFF"), vim.log.levels.INFO)
+  vim.g.cmptoggle = not vim.g.cmptoggle
+
+  require("cmp").setup {
+    enabled = function()
+      return vim.g.cmptoggle
+    end,
+    mapping = {
+      ["<CR>"] = require("cmp").mapping.confirm { select = true },
+      ["<Tab>"] = require("cmp").mapping.select_next_item(),
+      ["<S-Tab>"] = require("cmp").mapping.select_prev_item(),
+    },
+    sources = {
+      { name = "nvim_lsp" },
+      { name = "buffer" },
+      { name = "path" },
+      { name = "luasnip" },
+    },
+  }
+
+  local status = vim.g.cmptoggle and "enabled" or "disabled"
+  vim.notify("AutoComplete " .. status, vim.log.levels.INFO)
 end
 
 -- Create a user command to manually trigger the toggle

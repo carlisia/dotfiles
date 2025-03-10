@@ -46,10 +46,19 @@ local cust_attach = function(_, bufnr)
   map("n", "lb", "<cmd> Telescope<cr>", { buffer = bufnr, desc = "type definition", noremap = true })
 end
 
+-- nvim lsp as LSP client (for nvim-ufo)
+-- Tell the server the capability of foldingRange,
+-- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+local cust_capabilities = configs.capabilities
+cust_capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init
   opts.on_attach = cust_attach
-  opts.capabilities = configs.capabilities
+  opts.capabilities = cust_capabilities
 
   require("lspconfig")[name].setup(opts)
 end

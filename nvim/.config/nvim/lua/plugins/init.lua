@@ -70,6 +70,80 @@ return {
 
   -----END NATIVE PLUGINS----
   {
+    "kevinhwang91/nvim-ufo",
+    -- dependencies = { "kevinhwang91/promise-async" },
+    dependencies = {
+      { "kevinhwang91/promise-async" },
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require "statuscol.builtin"
+          require("statuscol").setup {
+            -- foldfunc = "builtin",
+            -- setopt = true,
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          }
+        end,
+      },
+    },
+    event = "BufRead",
+    keys = {
+      {
+        "zR",
+        function()
+          require("ufo").openAllFolds()
+        end,
+      },
+      {
+        "zM",
+        function()
+          require("ufo").closeAllFolds()
+        end,
+      },
+      {
+        "K",
+        function()
+          local winid = require("ufo").peekFoldedLinesUnderCursor()
+          if not winid then
+            vim.lsp.buf.hover()
+          end
+        end,
+      },
+    },
+    config = function()
+      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+      vim.o.foldcolumn = "1"
+      vim.o.foldlevel = 99
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+      require("ufo").setup {
+        close_fold_kinds_for_ft = {
+          default = { "imports", "comment" },
+          json = { "array" },
+          c = { "comment", "region" },
+        },
+        preview = {
+          win_config = {
+            border = { "", "─", "", "", "", "─", "", "" },
+            winhighlight = "Normal:Folded",
+            winblend = 0,
+          },
+          mappings = {
+            scrollU = "<C-u>",
+            scrollD = "<C-d>",
+            jumpTop = "[",
+            jumpBot = "]",
+          },
+        },
+      }
+    end,
+  },
+  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
@@ -137,20 +211,22 @@ return {
     end,
   },
 
-  "chrisgrieser/nvim-recorder",
-  keys = { "q", "Q" },
-  opts = {
-    slots = { "a", "b", "c", "d", "e", "f", "g" },
-    mapping = {
-      startStopRecording = "q",
-      playMacro = "Q",
-      editMacro = "<leader>qe",
-      switchSlot = "<leader>qt",
+  {
+    "chrisgrieser/nvim-recorder",
+    keys = { "q", "Q" },
+    opts = {
+      slots = { "a", "b", "c", "d", "e", "f", "g" },
+      mapping = {
+        startStopRecording = "q",
+        playMacro = "Q",
+        editMacro = "<leader>qe",
+        switchSlot = "<leader>qt",
+      },
+      lessNotifications = true,
+      clear = false,
+      logLevel = vim.log.levels.INFO,
+      dapSharedKeymaps = false,
     },
-    lessNotifications = true,
-    clear = false,
-    logLevel = vim.log.levels.INFO,
-    dapSharedKeymaps = false,
   },
 
   -- leet --

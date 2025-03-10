@@ -67,7 +67,7 @@ _G.open_current = function() --- doesn't seem to be working
   minifiles.reveal_cwd()
 end
 
-vim.g.cmptoggle = true
+vim.g.cmptoggle = false
 local function toggleAutoComplete()
   vim.g.cmptoggle = not vim.g.cmptoggle
 

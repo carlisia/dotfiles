@@ -12,6 +12,7 @@ $git_state\
 $git_status\
 $cmd_duration\
 $line_break\
+$golang\
 $python\
 $character"""
 
@@ -113,10 +114,12 @@ disabled = false
 
 [golang]
 # disabled = true
-style = 'yellow bold'
-format = 'via [$symbol($version )]($style)'
-# format = "[$version](bold cyan) "
 symbol = '🐹 '
+style = 'yellow bold'
+format = '[$symbol($version )]($style)'
+
+[python]
+format = '[🐍 $version](bold green) '
 
 [container]
 format = '[$symbol \[$name\]]($style) '

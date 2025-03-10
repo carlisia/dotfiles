@@ -24,6 +24,17 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      {
+        "nvim-treesitter/nvim-treesitter-context", -- Show code context
+        opts = {
+          enable = true,
+          mode = "topline",
+          multiline_threshold = 40,
+          separator = "-",
+        },
+      },
+    },
     opts = function()
       return overrides.treesitter
     end,
@@ -67,11 +78,9 @@ return {
       return conf
     end,
   },
-
   -----END NATIVE PLUGINS----
   {
     "kevinhwang91/nvim-ufo",
-    -- dependencies = { "kevinhwang91/promise-async" },
     dependencies = {
       { "kevinhwang91/promise-async" },
       {
@@ -144,6 +153,18 @@ return {
     end,
   },
   {
+    "ray-x/go.nvim",
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+    },
+    config = function()
+      require("go").setup(require("configs.go_plugins").govim)
+    end,
+    event = { "CmdlineEnter" },
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  },
+  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
@@ -156,7 +177,6 @@ return {
       require "configs.neotree"
     end,
   },
-
   {
     "folke/snacks.nvim",
     priority = 1000,

@@ -4,6 +4,9 @@ if [ -z "$USER" ]; then
 	USER=$(id -un)
 fi
 
+# THIS IS OUT OF DATE! (March 11, 2025)
+# 🧨
+
 echo >&2 "====================================================================="
 echo >&2 " Setting up codespaces environment (linux based)"
 echo >&2 ""
@@ -71,3 +74,10 @@ brew install lua-language-server
 npm i -g bash-language-server
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
 brew install stylua
+
+# @todo
+# Install fish and fish themes + plugins
+# fzf: fisher install PatrickF1/fzf.fish
+# Install omf and install themes, or use starship
+# Install a Nerd Font
+# Install richgo, eza, peco

@@ -1,11 +1,7 @@
 set -x SHELL /opt/homebrew/bin/fish
 set -gx PATH /opt/homebrew/bin $PATH
 
-# prompt stuff
-set -x GIT_TERMINAL_PROMPT 1
-# alias zen=fish_greeting
 starship init fish | source
-
 set -x XDG_CONFIG_HOME $HOME/.config
 
 # if status --is-interactive
@@ -26,8 +22,7 @@ set -x EDITOR nvim
 
 alias go=richgo
 
-set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $HOMEE $HOMEE/Kui-darwin-x64 $HOMEE/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $HOMEE/.cargo/bin fish fish_indent $HOMEE/code/src/github.com/carlisia/dotfiles/other-configs/scripts $HOMEE/.local/bin /opt/homebrew/bin/python3
-
+set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $HOMEE $HOMEE/Kui-darwin-x64 $HOMEE/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $HOMEE/.cargo/bin fish fish_indent $HOMEE/code/src/github.com/carlisia/dotfiles/other-configs/scripts $HOMEE/.local/bin
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 
@@ -35,8 +30,14 @@ alias dev="eval sh $HOMEE/code/src/github.com/carlisia/dotfiles/other-configs/sc
 
 alias j="z"
 
+if type -q eza
+  alias ll "eza -l -a --icons"
+  alias llt "ll --tree"
+end
+
+alias p=peco
+
 alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
-# alias code="vscode ."
 alias c="code ."
 
 alias k kubectl
@@ -64,13 +65,6 @@ if [ ! -n "$__shhist_session" ]
     end
 end
 
-# function fish_greeting
-#     # echo The time is (set_color yellow; date +%T; set_color normal)
-#     # echo
-#     # gh zen
-# end
-
-# alias h="shhist search"
 alias h="history search"
 alias gg="garden"
 alias gita="python3 -m gita"

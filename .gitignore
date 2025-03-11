@@ -8,9 +8,11 @@ google-cloud-sdk
 
 gh/.config/gh/hosts.yml
 
-/Users/carlisiacampos/code/src/github.com/carlisia/dotfiles/other-configs/scripts/*.*.txt
+$HOME/code/src/github.com/carlisia/dotfiles/other-configs/scripts/*.*.txt
 
 yaml-language-server
 
 newchad.sh
+
+$HOME/code/src/github.com/carlisia/dotfiles/nvim/.config/nvim/sessions/
 

@@ -23,110 +23,25 @@ M.cmpSources = {
 
 M.conform = {
   lsp_fallback = true,
+  notify_on_error = true,
+  notify_no_formatters = true,
 
   formatters_by_ft = {
     lua = { "stylua" },
     python = { "isort", "black" },
-    go = { "gofmt", "goimports" },
+    go = { "gofmt", "goimports", lsp_format = "fallback" },
     json = { "prettierd" },
     jsonc = { "prettierd" },
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
     yaml = { "prettierd" },
   },
-
-  format_on_save = {
-    -- These options will be passed to conform.format()
-    timeout_ms = 500,
-    lsp_fallback = true,
-  },
-}
-
-M.telescope = {
-  pickers = {
-    find_files = {
-      find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-    },
-    buffers = {
-      theme = "dropdown",
-      previewer = "true",
-      mappings = {
-        i = {
-          ["<C-d>"] = "delete_buffer",
-        },
-      },
-    },
-  },
-  defaults = {
-    path_display = {
-      "smart",
-    },
-    vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-      "--hidden",
-    },
-    file_ignore_patterns = {
-      ".docker",
-      ".git/",
-      ".git\\",
-      "yarn.lock",
-      "go.sum",
-      "go.mod",
-      "tags",
-      "mocks",
-      "refactoring",
-      "^.git/",
-      "^./.git/",
-      "^node_modules/",
-      "node_modules\\",
-      "^build/",
-      "^dist/",
-      "^target/",
-      "^vendor/",
-      "^lazy%-lock%.json$",
-      "^package%-lock%.json$",
-    },
-    initial_mode = "insert",
-    mappings = {
-      i = {
-        ["<C-k>"] = require("telescope.actions").move_selection_previous,
-        ["<C-j>"] = require("telescope.actions").move_selection_next,
-        ["<Esc>"] = require("telescope.actions").close,
-      },
-    },
-    layout_config = {
-      horizontal = {
-        prompt_position = "bottom",
-      },
-    },
-  },
-  extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = "smart_case",
-    },
-  },
-  extension_list = {
-    --- nvchad defaults
-    "themes",
-    "terms",
-    ---
-    "fzf",
-  },
 }
 
 M.treesitter = {
   auto_install = true,
   ensure_installed = {
-    -- Go Lang
+    -- Go
     "go",
     "gomod",
     "gowork",
@@ -156,64 +71,13 @@ M.treesitter = {
     "vimdoc",
     "yaml",
   },
-  tree_setter = { enable = true },
-  indent = { enable = true },
-  playground = { enable = true },
-  autotag = { enable = true },
+  ignore_install = {
+    "c",
+    "javascript",
+  },
   autopairs = { enable = true },
-  context_commentstring = { enable = true },
-  highlight = { enable = true, use_languagetree = true },
-  matchup = { enable = true },
-  tree_docs = { enable = true },
-
-  query_linter = {
-    enable = true,
-    use_virtual_text = true,
-    lint_events = { "BufWrite", "CursorHold" },
-  },
-
-  textsubjects = {
-    enable = true,
-    keymaps = {
-      ["."] = "textsubjects-smart",
-      [";"] = "textsubjects-container-outer",
-      ["i;"] = "textsubjects-container-inner",
-    },
-  },
-
-  textobjects = {
-    swap = {
-      enable = true,
-      swap_next = {
-        ["sa"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["sA"] = "@parameter.inner",
-      },
-    },
-  },
-
-  rainbow = {
-    enable = true,
-    extended_mode = false,
-    max_file_lines = 1000,
-    query = {
-      "rainbow-parens",
-      html = "rainbow-tags",
-      javascript = "rainbow-tags-react",
-      tsx = "rainbow-tags",
-    },
-  },
-
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
+  highlight = { enable = true },
+  indent = { enable = true },
 }
 
 return M

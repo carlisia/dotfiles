@@ -5,16 +5,21 @@ local highlights = require "custom.base46"
 local ui = require "custom.ui"
 
 M.base46 = {
-  theme = "carbonfox",
+  theme = "solarized_osaka",
   theme_toggle = {
-    "carbonfox", -- high contrast, heavy on the red
-    "oxocarbon", -- same as above, low red
+    "solarized_osaka", -- high contrast, heavy on the red
+    -- "oxocarbon", -- same as above, low red
+    -- "bearded-arc",
+    -- "oceanic-next",
     --- for when tired:
-    "neofusion",
-    "nightowl",
-    ---
-    "onedark",
-    "one_light",
+    -- "neofusion",
+    -- "nightowl",
+    -- "onedark",
+    ------ light themes
+    -- "ayu_light",
+    "default-light",
+    -- "one_light",
+    -- "solarized_light",
   },
 
   hl_override = highlights.overrides,

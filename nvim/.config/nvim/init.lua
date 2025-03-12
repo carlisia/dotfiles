@@ -20,6 +20,9 @@ require("lazy").setup({
     lazy = false,
     branch = "v2.5",
     import = "nvchad.plugins",
+    config = function()
+      require "mappings"
+    end,
   },
 
   { import = "plugins" },
@@ -31,8 +34,5 @@ for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
 end
 
 require "options"
+require "utils.autocmds"
 require "nvchad.autocmds"
-
-vim.schedule(function()
-  require "mappings"
-end)

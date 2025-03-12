@@ -12,16 +12,9 @@ function M.disable_cmp_in_comments()
   return not context.in_treesitter_capture "comment" and not context.in_syntax_group "Comment"
 end
 
-_G.TriggerToggleAutoComplete = function()
-  vim.cmd "ToggleAutoComplete"
-end
-
+local emoji = require "utils.toggle_states"
 function M.toggle_cmp()
-  if vim.g.cmptoggle then
-    return "💚  "
-  else
-    return "🧨  "
-  end
+  return emoji.autocomplete[vim.g.cmptoggle]
 end
 
 return M

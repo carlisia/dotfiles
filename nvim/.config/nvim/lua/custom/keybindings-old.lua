@@ -56,7 +56,7 @@ function M.init()
   map("n", "<leader>r", "<Cmd>:GoRun<CR>")
   map({ "n" }, "<leader>z", function()
     local Terminal = require("toggleterm.terminal").Terminal
-    local lazygit = Terminal:new({ cmd = "lazygit", direction = "float" })
+    local lazygit = Terminal:new { cmd = "lazygit", direction = "float" }
     return lazygit:toggle()
   end)
 
@@ -70,12 +70,10 @@ function M.init()
   end)
 
   -- use <C-\> to toggle the search highlight
-  vim.cmd([[nnoremap <silent> <C-\> :if (&hlsearch == 1) \| set nohlsearch \| else \| set hlsearch \| endif<CR>]])
+  vim.cmd [[nnoremap <silent> <C-\> :if (&hlsearch == 1) \| set nohlsearch \| else \| set hlsearch \| endif<CR>]]
 
   -- use <enter> to search for the current word (very much like *) but without the cursor jumping
-  vim.cmd(
-    [[nnoremap <silent> <CR> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<CR> ]) end, }a]]
-  )
+  vim.cmd [[nnoremap <silent> <CR> :let searchTerm = '\v<'.expand("<cword>").'>' <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<CR> ]) end, }a]]
 end
 
 function M.bufdelete()
@@ -146,7 +144,7 @@ function M.lspconfig(client, bufnr)
   buf_k("v", "<leader>ca", [[:Lspsaga range_code_action<CR>]])
 
   buf_k("n", m.references, function()
-    require("trouble").open("lsp_references")
+    require("trouble").open "lsp_references"
   end)
 
   buf_k("n", m.goto_prev, function()
@@ -159,17 +157,17 @@ function M.lspconfig(client, bufnr)
 
   buf_k("n", m.workspace_diagnostics, function()
     if vim.diagnostic.get()[1] then
-      require("trouble").open("workspace_diagnostics")
+      require("trouble").open "workspace_diagnostics"
     else
-      vim.notify("No diagnostics found.")
+      vim.notify "No diagnostics found."
     end
   end)
 
   buf_k("n", m.buffer_diagnostics, function()
     if vim.diagnostic.get(bufnr)[1] then
-      require("trouble").open("document_diagnostics")
+      require("trouble").open "document_diagnostics"
     else
-      vim.notify("No diagnostics found.")
+      vim.notify "No diagnostics found."
     end
   end)
 
@@ -202,23 +200,23 @@ end
 
 function M.searchbox()
   map("n", "<leader>s", function()
-    require("searchbox").replace({ confirm = "menu", default_value = vim.fn.expand("<cword>") })
+    require("searchbox").replace { confirm = "menu", default_value = vim.fn.expand "<cword>" }
   end)
 
   map("x", "<leader>s", function()
     -- grab the old value of a register
-    local a_content = vim.fn.getreg("a")
+    local a_content = vim.fn.getreg "a"
     -- copy the current visual selection to "a" register
-    vim.cmd('noau normal! "ay"')
+    vim.cmd 'noau normal! "ay"'
     -- grab content
-    local content, v_mode = vim.fn.getreg("a"), false
+    local content, v_mode = vim.fn.getreg "a", false
     -- restore the "a" register
     vim.fn.setreg("a", a_content)
 
-    if content:match("\n") then
+    if content:match "\n" then
       content, v_mode = "", true
     end
-    require("searchbox").replace({ confirm = "menu", default_value = content, visual_mode = v_mode })
+    require("searchbox").replace { confirm = "menu", default_value = content, visual_mode = v_mode }
   end)
 end
 

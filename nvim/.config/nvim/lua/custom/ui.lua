@@ -1,6 +1,6 @@
 local M = {}
 
-local plugins = require "utils.plugins"
+local completion = require "utils.completion"
 
 local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
@@ -15,7 +15,6 @@ M.cmpUI = {
   },
 }
 
-require "utils.plugins"
 M.statusline = {
   theme = "default",
   order = {
@@ -108,7 +107,7 @@ M.statusline = {
     end,
 
     notification = function()
-      return "%#StText#" .. "%@v:lua.TriggerToggleAutoComplete@" .. " %#St_lspError#" .. plugins.toggle_cmp()
+      return " %#St_lspError#" .. completion.toggle_cmp()
     end,
   },
 }

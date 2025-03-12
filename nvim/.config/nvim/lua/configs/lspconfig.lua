@@ -57,8 +57,8 @@ cust_capabilities.textDocument.foldingRange = {
 
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init
-  opts.on_attach = cust_attach
-  opts.capabilities = cust_capabilities
+  -- opts.on_attach = cust_attach
+  opts.capabilities = configs.capabilities
 
   require("lspconfig")[name].setup(opts)
 end

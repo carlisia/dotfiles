@@ -7,6 +7,7 @@ local M = {
   },
 }
 
+--- Manually enable/disable
 function M.toggle()
   local filetype = vim.o.filetype
   M.filetypes[filetype] = vim.F.if_nil(not M.filetypes[filetype], false)
@@ -14,6 +15,15 @@ function M.toggle()
   vim.notify("Autoformat for " .. filetype .. " " .. state)
 end
 
+--- Fetch emoji representing current state
+local emoji = require "utils.toggle_states"
+function M.current_state_emoji()
+  local filetype = vim.o.filetype
+  local is_enabled = M.filetypes[filetype] or false
+  return emoji.format_on_save[is_enabled]
+end
+
+--- Lsp formatting
 function M.format()
   local buf = vim.api.nvim_get_current_buf()
 

@@ -1,17 +1,18 @@
 local M = {}
 
 local completion = require "utils.completion"
+local format = require "utils.format"
 
 local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 end
 
-M.cmpUI = {
+M.cmp_ui = { -- Note: these don't seem to be applying.
   lspkind_text = true,
-  icons_left = false,
-  style = "flat_dark", -- default/flat_light/flat_dark/atom/atom_colored
+  icons_left = true,
+  style = "flat_light", -- default/flat_light/flat_dark/atom/atom_colored
   format_colors = {
-    tailwind = false,
+    tailwind = true,
   },
 }
 
@@ -25,7 +26,8 @@ M.statusline = {
     "diagnostics",
 
     "%=",
-    "notification",
+    "auto_complete",
+    "format_on_save",
     "filetype",
     "lsp_msg",
 
@@ -106,8 +108,12 @@ M.statusline = {
       return ft == " " and " %#St_ft# plain text  " or " %#St_ft#" .. ft .. " "
     end,
 
-    notification = function()
-      return " %#St_lspError#" .. completion.toggle_cmp()
+    auto_complete = function()
+      return " %#St_lspError#" .. completion.current_state_emoji()
+    end,
+
+    format_on_save = function()
+      return " %#St_lspError#" .. format.current_state_emoji() .. " | "
     end,
   },
 }

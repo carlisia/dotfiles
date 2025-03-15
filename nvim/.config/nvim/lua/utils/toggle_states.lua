@@ -1,15 +1,15 @@
 local toggle_states = {
   autocomplete = {
-    [true] = "🔠",
-    [false] = "⛔",
+    [true] = "🔠 ",
+    [false] = "⛔ ",
   },
   format_on_save = {
-    [true] = "🖊️",
-    [false] = "🚫",
+    [true] = "✨ ",
+    [false] = "🔕 ",
   },
   inlay_hints = {
-    [true] = "🧐",
-    [false] = "👻",
+    [true] = "🔍  ",
+    [false] = "❌ ",
   },
 }
 

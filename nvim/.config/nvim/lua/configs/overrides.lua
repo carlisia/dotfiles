@@ -2,23 +2,25 @@
 
 local M = {}
 
-M.cmpSources = {
-  {
-    name = "nvim_lsp",
-    -- This excludes "Text" type from being included:
-    entry_filter = function(entry, _)
-      return entry:get_kind() ~= require("cmp").lsp.CompletionItemKind.Text
-    end,
+M.cmp = {
+  sources = {
+    {
+      name = "nvim_lsp",
+      -- This excludes "Text" type from being included:
+      entry_filter = function(entry, _)
+        return entry:get_kind() ~= require("cmp").lsp.CompletionItemKind.Text
+      end,
+    },
+    {
+      name = "buffer",
+      -- It's necessary to specify excluding "Text" from the buffer as well:
+      entry_filter = function(entry, _)
+        return entry:get_kind() ~= require("cmp").lsp.CompletionItemKind.Text
+      end,
+    },
+    { name = "path" },
+    { name = "luasnip" },
   },
-  {
-    name = "buffer",
-    -- It's necessary to specify excluding "Text" from the buffer as well:
-    entry_filter = function(entry, _)
-      return entry:get_kind() ~= require("cmp").lsp.CompletionItemKind.Text
-    end,
-  },
-  { name = "path" },
-  { name = "luasnip" },
 }
 
 M.conform = {

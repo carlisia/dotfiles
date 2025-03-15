@@ -1,20 +1,4 @@
-local k = {
-  definition = "gd",
-  type_definition = "gt",
-  implementation = "gi",
-  references = "gr",
-  ws_symbols = "gw",
-  symbols = "gs",
-  diagnostics = "gt",
-  ----
-  format = "\\f",
-  declaration = "gD",
-  hover = "K",
-  lsp_rename = "gn",
-  diag_go_next = "]d",
-  diag_go_prev = "[d",
-  sig = "gs",
-}
+local k = require("utils.custom_bindings").lsp
 
 -- Adapted from: https://github.com/desdic/neovim/blob/e22e397238bc8a53e2bbff885992756e99067014/lua/core/lspkeymaps.lua
 local M = {}
@@ -80,7 +64,7 @@ M.setkeys = function(ev)
   keymap("n", k.diag_go_prev, vim.diagnostic.goto_prev, silent_bufnr "Prev Diagnostic")
 
   if has_cap "signatureHelp" then
-    keymap("n", k.sig, vim.lsp.buf.signature_help, silent_bufnr "Signature Help")
+    keymap("n", k.signature, vim.lsp.buf.signature_help, silent_bufnr "Signature Help")
   end
 
   -- Preferences for code actions

@@ -57,7 +57,7 @@ return {
     -- Because these opts uses a function call ex: require*,
     -- then make opts spec a function
     opts = function(_, conf)
-      conf.sources = overrides.cmpSources
+      conf.sources = overrides.cmp.sources
       return conf
     end,
   },

@@ -1,8 +1,5 @@
-vim.cmd [[
-hi! MiniHipatternsCustDone guifg=#000000 guibg=#00CC00 gui=bold
-hi! MiniHipatternsCustNote guifg=#FF4000 guibg=#FFFF00 gui=bold
-]]
-
+local helper = require "utils.functions"
+local completion = require "utils.completion"
 local map = vim.keymap.set
 -- local unmap = vim.keymap.del
 
@@ -12,7 +9,7 @@ map("i", "kj", "<ESC>")
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 -- unmap("n", "\\")
 -- map({ "n", "v" }, "\\d", "<Cmd>Neotree toggle<CR>", { desc = "Toggle 'nav tree'" })
-map({ "n", "v" }, "\\a", "<Cmd>ToggleAutoComplete<CR>", { desc = "Toggle 'autocomplete'" })
+map({ "n", "v" }, "\\a", completion.toggle, { desc = "Toggle 'autocomplete'" })
 
 -- unmap("n", "<leader>e")
 -- unmap("n", "<leader>n")
@@ -80,22 +77,9 @@ map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "buffer new" })
 -- unmap({ "n", "t" }, "<A-v>")
 -- unmap({ "n", "t" }, "<A-h>")
 -- unmap({ "n", "t" }, "<A-i>")
--- Floater
-map({ "n", "t" }, "tt", function()
-  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
-end, { desc = "terminal toggle floating term" })
-
--- Horizontal
--- toggle
-map({ "n", "t" }, "tj", function()
-  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
-end, { desc = "terminal toggleable horizontal term" })
-
--- Vertical
--- toggleable
-map({ "n", "t" }, "tl", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
-end, { desc = "terminal toggleable vertical term" })
+map({ "n", "t" }, "tt", helper.toggle_floating_term, { desc = "Toggle floating term" })
+map({ "n", "t" }, "tj", helper.tggle_horizontal_term, { desc = "Toggle horizontal term" })
+map({ "n", "t" }, "tl", helper.toggle_vertical_term, { desc = "Toggle vertical term" })
 
 -- ╭─────────────────────────────────────────────────────────╮
 -- │ Telescope                                               │
@@ -132,71 +116,14 @@ map("n", "<leader>fm", function()
   require("conform").format { lsp_fallback = true }
 end, { desc = "format file" })
 
--- ╭─────────────────────────────────────────────────────────╮
--- │ Mini                                                    │
--- ╰─────────────────────────────────────────────────────────╯
--- explorer
-local minifiles_toggle = function()
-  if not MiniFiles.close() then
-    MiniFiles.open()
-  end
-end
-vim.keymap.set("n", "\\e", minifiles_toggle, { desc = "Toggle 'mini explorer'" })
---- end
-
--- sessions
-local command = vim.api.nvim_create_user_command
--- Create a user command that can be executed with :SaveSession
-command("SaveSession", function()
-  MiniSessions.write(nil, { force = false })
-end, {})
--- Create a user command that can be executed with :DeleteSession
-command("DeleteSession", function()
-  MiniSessions.delete(nil, { force = false })
-end, {})
+map("n", "\\e", helper.toggle_mini_explorer, { desc = "Toggle 'mini explorer'" })
 
 map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })
 map("n", "<leader>-a", ":SaveSession<CR>", { desc = "Add a session" })
 map("n", "<leader>-d", ":DeleteSession<CR>", { desc = "Delete a session" })
 
---- Add custom text for highlighting
-function InsertDoneComment()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " DONE: " })
-end
-
-function InsertFixComment()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " FIX: " })
-end
-
-function InsertHackomment()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " HACK: " })
-end
-
-function InsertNoteComment()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " NOTE: " })
-end
-
-function InsertTodoComment()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " TODO: " })
-end
-
-map({ "n", "v" }, "<leader>cd", InsertDoneComment, { noremap = true, silent = true, desc = "Insert -- DONE" })
-map({ "n", "v" }, "<leader>cf", InsertFixComment, { noremap = true, silent = true, desc = "Insert -- FIX" })
-map({ "n", "v" }, "<leader>ch", InsertHackomment, { noremap = true, silent = true, desc = "Insert -- HACK" })
-map({ "n", "v" }, "<leader>cn", InsertNoteComment, { noremap = true, silent = true, desc = "Insert -- NOTE" })
-map({ "n", "v" }, "<leader>ct", InsertTodoComment, { noremap = true, silent = true, desc = "Insert -- TODO" })
+map({ "n", "v" }, "<leader>cd", helper.insert_done_comment, { noremap = true, silent = true, desc = "Insert -- DONE" })
+map({ "n", "v" }, "<leader>cf", helper.insert_fix_comment, { noremap = true, silent = true, desc = "Insert -- FIX" })
+map({ "n", "v" }, "<leader>ch", helper.insert_hack_comment, { noremap = true, silent = true, desc = "Insert -- HACK" })
+map({ "n", "v" }, "<leader>cn", helper.insert_note_comment, { noremap = true, silent = true, desc = "Insert -- NOTE" })
+map({ "n", "v" }, "<leader>ct", helper.insert_todo_comment, { noremap = true, silent = true, desc = "Insert -- TODO" })

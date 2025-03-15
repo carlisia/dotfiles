@@ -33,6 +33,7 @@ for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
   dofile(vim.g.base46_cache .. v)
 end
 
-require "options"
+require "utils.functions"
 require "utils.autocmds"
+require "options"
 require "nvchad.autocmds"

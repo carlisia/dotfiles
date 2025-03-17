@@ -128,10 +128,21 @@ return {
     end,
   },
   {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "leoluz/nvim-dap-go",
+      "nvim-neotest/nvim-nio",
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
+    },
+  },
+  {
     "ray-x/go.nvim",
     dependencies = {
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       require("go").setup(require("configs.go_plugins").govim)

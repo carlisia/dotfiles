@@ -5,7 +5,7 @@ M.govim = {
   test_runner = "richgo",
   lsp_cfg = true,
   lsp_keymaps = false,
-  dap_debug_keymap = false,
+  dap_debug_keymap = true,
   comment_placeholder = "   ",
 }
 

@@ -127,9 +127,7 @@ M.go = {
       ue = { "<cmd>GoEnv<cr>", "Load environment variables" },
       uV = { "<cmd>Govulncheck<cr>", "Run vulnerability check" },
       ui = { "<cmd>GoInstallBinaries<cr>", "Install all dependent tools" },
-      uI = { "<cmd>GoInstallBinary<cr>", "Install a specific tool" },
       uu = { "<cmd>GoUpdateBinaries<cr>", "Update all installed tools" },
-      uU = { "<cmd>GoUpdateBinary<cr>", "Update a specific tool" },
       un = { "<cmd>GoNew<cr>", "Create a new Go file from template" },
     },
   },
@@ -147,6 +145,7 @@ M.go = {
 
   debug = {
     gonvim = {
+      da = { "<cmd>GoBreakToggle<cr>", "Add breakpoint" },
       ds = { "<cmd>GoDebug<cr>", "Start debugger" },
       dc = { "<cmd>GoDbgConfig<cr>", "Open debugger config" },
       dk = { "<cmd>GoDbgKeys<cr>", "Show debugger key mappings" },

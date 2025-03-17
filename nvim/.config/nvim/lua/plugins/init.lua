@@ -64,27 +64,34 @@ return {
   -----END NATIVE PLUGINS----
 
   {
+    "folke/todo-comments.nvim",
     lazy = false,
     event = "VimEnter",
-    "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("todo-comments").setup()
     end,
     keys = {
       {
-        "<leader>cl",
+        "<leader>pc",
         function()
           Snacks.picker.todo_comments()
         end,
-        desc = "Todos",
+        desc = "List all comments",
       },
       {
-        "<leader>cL",
+        "<leader>pt",
         function()
-          Snacks.picker.todo_comments { keywords = { "TODO", "FIX", "FIXME" } }
+          Snacks.picker.todo_comments { keywords = { "TODO" } }
         end,
-        desc = "Todo/Fix/Fixme",
+        desc = "List TODO comments",
+      },
+      {
+        "<leader>pf",
+        function()
+          Snacks.picker.todo_comments { keywords = { "FIX", "FIXME" } }
+        end,
+        desc = "List Fix/Fixme comments",
       },
     },
   },
@@ -109,8 +116,8 @@ return {
         end,
       },
     },
-    event = "BufRead",
     keys = require("configs.ufo").keys,
+    event = "BufRead",
     config = function()
       vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
       vim.o.foldcolumn = "1"
@@ -135,8 +142,8 @@ return {
     opts = {
       dap_debug = true,
       dap_debug_gui = true,
-      lsp_inlay_hints = { enable = false },
-      diagnostic = false,
+      lsp_inlay_hints = { enable = true },
+      diagnostic = true,
     },
   },
   {

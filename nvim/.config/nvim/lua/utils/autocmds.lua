@@ -1,8 +1,15 @@
 local helper = require "utils.functions"
 local completion = require "utils.completion"
 
--- Mini starter
--- At startup, auto open mini.starter if no files are opened
+---- LSP
+-- Attach my keymappins for all LSPs
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = require("utils.lspkeymaps").setkeys,
+})
+
+---- Mini
+-- Mini starter: at startup, auto open mini.starter if no files are opened
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     local has_mini, ministarter = pcall(require, "mini.starter")
@@ -23,7 +30,7 @@ vim.api.nvim_create_autocmd("BufDelete", {
   end,
 })
 
---- Mini explorer / split
+-- Mini explorer / split
 vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesBufferCreate",
   callback = function(args)
@@ -35,10 +42,4 @@ vim.api.nvim_create_autocmd("User", {
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = completion.toggle,
-})
-
--- Attach my keymappins for all LSPs
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = require("utils.lspkeymaps").setkeys,
 })

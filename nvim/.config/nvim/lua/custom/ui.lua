@@ -10,7 +10,7 @@ end
 M.cmp_ui = { -- Note: these don't seem to be applying.
   lspkind_text = true,
   icons_left = true,
-  style = "flat_light", -- default/flat_light/flat_dark/atom/atom_colored
+  style = "default", -- default/flat_light/flat_dark/atom/atom_colored
   format_colors = {
     tailwind = true,
   },

@@ -5,7 +5,7 @@ local M = {}
 M.opts = {
   dashboard = { enabled = false },
   toggle = { enabled = true },
-  scroll = { enabled = true }, -- handles scrolloff and mouse scrolling
+  scroll = { enabled = false }, -- handles scrolloff and mouse scrolling
   indent = { enabled = true, chunk = { enabled = true, only_current = true } },
 
   -- bigfile adds a new filetype bigfile to Neovim that triggers when the file is larger than the configured size
@@ -33,7 +33,7 @@ M.opts = {
     enabled = true,
     ignored = true,
     hidden = true,
-    debug = { scores = true }, -- show scores in the list
+    debug = { scores = false }, -- show scores in the list
     matcher = {
       cwd_bonus = true,
       frecency = true,
@@ -54,7 +54,7 @@ M.opts = {
         },
       },
     },
-    ui_select = true, -- replace `vim.ui.select` with the snacks picker
+    ui_select = true, -- replace `vim.ui.select` with /the snacks picker
     indent = { chunk = { enabled = true } },
     layout = {
       preset = "ivy",
@@ -169,11 +169,13 @@ M.keys = {
     desc = "Select scratch buffer",
   },
   {
-    "<leader>t",
+    "<leader>po",
     function()
-      Snacks.scratch { icon = " ", name = "Todo", ft = "markdown", file = "~/dot/TODO.md" }
+      local file = os.getenv "HOME"
+        .. "/Library/Mobile Documents/iCloud~md~obsidian/Documents/second_brain/Flows/TODO.md"
+      Snacks.scratch { icon = " ", name = "Todo", ft = "markdown", file = file }
     end,
-    desc = "Todo List",
+    desc = "Open TODO pad",
   },
 
   ------- Notifications
@@ -209,11 +211,11 @@ M.keys = {
 
   ---- Projects
   {
-    "<leader>p",
+    "<leader>pp",
     function()
       Snacks.picker.projects()
     end,
-    desc = "Projects",
+    desc = "List Projects",
   },
 
   ------- Files

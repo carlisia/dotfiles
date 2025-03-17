@@ -20,12 +20,14 @@ M.ai = {
 
 M.basics = {
   options = {
-    basic = true, -- 'number', 'ignorecase', ... (conform takes precedence on formating on save)
+    basic = true, -- 'number', 'ignorecase', ...
     extra_ui = false, -- 'winblend' (sets floating win to transparent), 'cmdheight=0', ...
     win_borders = "double", -- 'default', single', 'double', ...
   },
 
   mappings = {
+    -- Basic mappings (better 'jk', save with Ctrl+S, ...)
+    basic = true,
     -- Window navigation with <C-hjkl>, resize with <C-arrow>
     windows = true,
     -- Move cursor in Insert, Command, and Terminal mode with <M-hjkl>
@@ -33,6 +35,8 @@ M.basics = {
   },
 
   autocommands = {
+    -- Basic autocommands (highlight on yank, start Insert in terminal, ...)
+    basic = true,
     -- Set 'relativenumber' only in linewise and blockwise Visual mode
     relnum_in_visual_mode = true,
   },
@@ -99,19 +103,11 @@ M.clue = {
 
     -- Extra
     { mode = "n", keys = [[\]] }, -- mini.basics
+    { mode = "n", keys = "<leader>" }, -- mini.basics
     { mode = "n", keys = "[" }, -- mini.bracketed
     { mode = "n", keys = "]" },
     { mode = "x", keys = "[" },
     { mode = "x", keys = "]" },
-
-    { mode = "n", keys = "<leader>" }, -- mini.basics
-
-    -- `c` key - adding/looking for comments (todo, fix, etc)
-    { mode = "n", keys = "<leader>c" },
-    { mode = "x", keys = "<leader>c" },
-
-    -- `b` buffer
-    { mode = "n", keys = "<leader>b" },
 
     -- select, swap, mov, repeat
   },

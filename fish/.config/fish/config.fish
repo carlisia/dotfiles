@@ -7,6 +7,12 @@ set -x GIT_TERMINAL_PROMPT 1
 starship init fish | source
 
 set -x XDG_CONFIG_HOME $HOME/.config
+set -x CDPATH ~/.config # magic!
+
+# Use same preset as nvim/nvchad:
+# for addr in $XDG_RUNTIME_DIR/nvim.*
+#     nvim --server $addr --remote-send ':lua require("nvchad.utils").reload() <cr>'
+# end
 
 # if status --is-interactive
 #     and not set -q TMUX
@@ -26,12 +32,14 @@ set -x EDITOR nvim
 
 alias go=richgo
 
-set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $GOPATH/bin $HOMEE $HOMEE/Kui-darwin-x64 $HOMEE/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $HOMEE/.cargo/bin fish fish_indent $HOMEE/code/src/github.com/carlisia/dotfiles/other-configs/scripts $HOMEE/.local/bin /opt/homebrew/bin/python3
-
+set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $HOME $HOME/Kui-darwin-x64 $HOME/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $HOME/.cargo/bin fish fish_indent $HOME/code/src/github.com/carlisia/dotfiles/other-configs/scripts $HOME/.local/bin
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 
-alias dev="eval sh $HOMEE/code/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
+set -x GOPATH $HOME/code
+set -x PATH $GOPATH/bin $PATH
+
+alias dev="eval sh $HOME/code/src/github.com/carlisia/dotfiles/other-configs/scripts/tmux-scripts/workspace"
 
 alias j="z"
 
@@ -49,7 +57,7 @@ alias gs "k get ns"
 alias pka "pbpaste | kubectl apply -f-"
 alias pkr "pbpaste | kubectl delete -f-"
 
-# # alias knd "bass source $HOMEE/code/src/github.com/carlisia/dotfiles/scripts/kind-with-registry.sh"
+# # alias knd "bass source $HOME/code/src/github.com/carlisia/dotfiles/scripts/kind-with-registry.sh"
 
 alias ks kube-shell
 

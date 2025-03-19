@@ -1,5 +1,6 @@
 --   @type NvPluginSpec[]
 local overrides = require "configs.overrides"
+local ufo_custom = require "configs.ufo"
 
 return {
   -- Overrides of native plugins
@@ -47,19 +48,20 @@ return {
       require "configs.lspconfig"
     end,
   },
-  {
+  { ---- my own config:
     "hrsh7th/nvim-cmp",
-    require("cmp").setup {
-      enabled = function()
-        require("utils.completion").disable_cmp_in_comments()
-      end,
+    lazy = false,
+    event = "VimEnter",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-buffer",
+      { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
+      "saadparwaiz1/cmp_luasnip",
+      "roobert/tailwindcss-colorizer-cmp.nvim",
     },
-    -- Because these opts uses a function call ex: require*,
-    -- then make opts spec a function
-    opts = function(_, conf)
-      conf.sources = overrides.cmp.sources
-      return conf
-    end,
+    opts = require("configs.completion").cmp,
+    require("configs.completion").config(),
   },
   -----END NATIVE PLUGINS----
 
@@ -116,7 +118,7 @@ return {
         end,
       },
     },
-    keys = require("configs.ufo").keys,
+    keys = ufo_custom.keys,
     event = "BufRead",
     config = function()
       vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
@@ -124,8 +126,17 @@ return {
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
       vim.o.foldenable = true
-      require("ufo").setup { require("configs.ufo").setup }
+      require("ufo").setup(ufo_custom.config)
     end,
+  },
+  { "tpope/vim-dadbod" },
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    lazy = false,
+    dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
+    },
   },
   {
     "mfussenegger/nvim-dap",

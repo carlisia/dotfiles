@@ -12,7 +12,7 @@ function M.toggle()
   local filetype = vim.o.filetype
   M.filetypes[filetype] = vim.F.if_nil(not M.filetypes[filetype], false)
   local state = M.filetypes[filetype] and "enabled" or "disabled"
-  vim.notify("Autoformat for " .. filetype .. " " .. state)
+  vim.notify("AutoFormat on save for " .. filetype .. " " .. state)
 end
 
 --- Fetch emoji representing current state

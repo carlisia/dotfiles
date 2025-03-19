@@ -10,6 +10,7 @@ map("i", "jk", "<ESC>")
 map("i", "kj", "<ESC>")
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
 map({ "n", "v" }, "\\a", completion.toggle, { desc = "Toggle 'autocomplete'" })
+map({ "n", "v" }, "\\q", "<Cmd>DBUIToggle<CR>", { desc = "Toggle 'DB ui'" })
 
 unmap({ "n", "v", "o" }, "gc")
 unmap("n", "gcc")
@@ -46,8 +47,8 @@ map("n", k.diagnostics, vim.diagnostic.setloclist, { desc = "Buffer diagnostics"
 map("n", "\\e", helper.toggle_mini_explorer, { desc = "Toggle 'mini explorer'" })
 
 map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })
-map("n", "<leader>-a", ":SaveSession<CR>", { desc = "Add a session" })
-map("n", "<leader>-d", ":DeleteSession<CR>", { desc = "Delete a session" })
+map("n", "<leader>-a", "<Cmd>SaveSession<CR>", { desc = "Add a session" })
+map("n", "<leader>-d", "<Cmd>DeleteSession<CR>", { desc = "Delete a session" })
 
 --- helpers
 map({ "n", "v" }, "<leader>id", helper.insert_done_comment, { noremap = true, silent = true, desc = "Insert -- DONE" })

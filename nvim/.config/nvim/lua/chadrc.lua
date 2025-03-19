@@ -1,8 +1,8 @@
 --@type ChadrcConfig
 local M = {}
 
-local highlights = require "custom.base46"
-local ui = require "custom.ui"
+local highlights = require "custom_ui.base46"
+local ui = require "custom_ui.statusline"
 
 M.base46 = {
   theme = "solarized_osaka",

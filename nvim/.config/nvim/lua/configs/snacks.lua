@@ -22,7 +22,7 @@ M.opts = {
     exclude = { "latex" },
   },
   scope = { enabled = true },
-  words = { enabled = true }, -- auto-show LSP references and quickly navigate between them
+  words = { enabled = false }, -- auto-show LSP references and quickly navigate between them
   git = { enabled = true },
   gitbrowse = { enabled = true },
   explorer = {

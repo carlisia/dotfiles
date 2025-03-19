@@ -13,7 +13,6 @@ function M.toggle()
   -- Check if any LSP server is attached to this buffer
   local clients = vim.lsp.get_clients { bufnr = bufnr }
   if #clients == 0 then
-    print "❌ No LSP attached to this buffer"
     return
   end
 
@@ -51,7 +50,6 @@ function M.current_state_emoji()
   -- Check if any LSP server is attached to this buffer
   local clients = vim.lsp.get_clients { bufnr = bufnr }
   if #clients == 0 then
-    print "❌ No LSP attached to this buffer"
     return emoji.inlay_hints[false]
   end
 

@@ -14,7 +14,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     local has_mini, ministarter = pcall(require, "mini.starter")
     if has_mini and vim.fn.argc() == 0 then
-      ministarter.open()
+      vim.defer_fn(function()
+        ministarter.open()
+      end, 50) -- Delay execution slightly to prevent race conditions
     end
   end,
 })
@@ -41,5 +43,9 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = completion.toggle,
+  callback = function()
+    if type(completion.toggle) == "function" then
+      completion.toggle()
+    end
+  end,
 })

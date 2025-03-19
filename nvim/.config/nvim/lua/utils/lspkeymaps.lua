@@ -43,17 +43,14 @@ M.setkeys = function(ev)
         end
       end
     end
-    map("n", k.toggle_inlay_hints, "<cmd>GoToggleInlay<cr>", silent_bufnr "Toggle inlay hints")
+    map(
+      "n",
+      k.toggle_inlay_hints,
+      "<cmd>GoToggleInlay<cr><cmd>redrawstatus<cr>",
+      silent_bufnr "Toggle inlay hints | Go"
+    )
   else -- map all else for which there would be an alternative with a especialized go plugin:
-    map("n", k.toggle_inlay_hints, function()
-      local opt = { buf = 0 }
-      local ok = pcall(vim.lsp.inlay_hint.enable, vim.lsp.inlay_hint.is_enabled(opt))
-      if ok then
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(opt))
-      else
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(opt), opt)
-      end
-    end, { desc = "LSP | Toggle Inlay Hints", silent = true })
+    map("n", k.toggle_inlay_hints, require("utils.inlay").toggle, { desc = "Toggle inlay hints | LSP", silent = true })
   end
 
   -- For everything else...

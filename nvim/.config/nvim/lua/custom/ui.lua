@@ -2,9 +2,17 @@ local M = {}
 
 local completion = require "utils.completion"
 local format = require "utils.format"
+local inlay = require "utils.inlay"
 
+-- Ensure `stbufnr()` always returns a valid buffer
 local function stbufnr()
-  return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+  -- Ensure `vim.g.statusline_winid` is valid
+  local winid = vim.g.statusline_winid
+  if not winid or not vim.api.nvim_win_is_valid(winid) then
+    winid = vim.api.nvim_get_current_win() -- Fallback to current window
+  end
+
+  return vim.api.nvim_win_get_buf(winid)
 end
 
 M.cmp_ui = { -- Note: these don't seem to be applying.
@@ -28,6 +36,7 @@ M.statusline = {
     "%=",
     "auto_complete",
     "format_on_save",
+    "inlay_enabled",
     "filetype",
     "lsp_msg",
 
@@ -69,14 +78,46 @@ M.statusline = {
         return ""
       end
 
-      return "%#St_relativepath# " .. vim.fn.expand "%:.:h" .. " 🌱"
+      local clean_path = vim.fn.expand "%:.:h"
+
+      -- Remove leading dot if present
+      if clean_path:sub(1, 1) == "." then
+        clean_path = clean_path:sub(2)
+      end
+
+      return "%#St_relativepath# " .. clean_path .. " "
     end,
 
     icon_filename = function()
-      local icon_text
+      -- Adapted from:
+      -- https://github.com/BrunoKrugel/dotfiles/blob/6eb51723ef63ebde3701ee48d1397ee91edb62a9/lua/custom/utils/core.lua#L349
+      local icon = " 󰈚 "
       local filename = vim.fn.expand "%:t"
+      local icon_text
 
-      return icon_text or ("%#StText# " .. filename)
+      if filename ~= "Empty " then
+        local devicons_present, devicons = pcall(require, "nvim-web-devicons")
+
+        if devicons_present then
+          local ft_icon, ft_icon_hl = devicons.get_icon(filename, string.match(filename, "%a+$"))
+          icon = (ft_icon ~= nil and " " .. ft_icon) or ""
+          local icon_hl = ft_icon_hl or "DevIconDefault"
+          local hl_fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID(icon_hl)), "fg")
+          local hl_bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID "StText"), "bg")
+          vim.api.nvim_set_hl(0, "St_" .. icon_hl, { fg = hl_fg, bg = hl_bg })
+
+          if string.find(filename, "toggleterm") then
+            filename = '%{&ft == "toggleterm" ? " Terminal (".b:toggle_number.") " : ""}'
+          end
+          if string.find(filename, "NvimTree") then
+            filename = '%{&ft == "NvimTree" ? " File Explorer " : ""}'
+          end
+
+          icon_text = "%#St_" .. icon_hl .. "#" .. icon .. "%#StText# " .. filename .. " "
+        end
+      end
+
+      return icon_text or ("%#StText# " .. icon .. filename)
     end,
 
     git_changed = function()
@@ -113,7 +154,11 @@ M.statusline = {
     end,
 
     format_on_save = function()
-      return " %#St_lspError#" .. format.current_state_emoji() .. " | "
+      return " %#St_lspError#" .. format.current_state_emoji()
+    end,
+
+    inlay_enabled = function()
+      return " %#St_lspError#" .. inlay.current_state_emoji() .. " | "
     end,
   },
 }

@@ -5,6 +5,49 @@ hi! MiniHipatternsCustNote guifg=#FF4000 guibg=#FFFF00 gui=bold
 
 local M = {}
 
+-- Check if a Quickfix or Location List window is open
+local function qf_or_loc_exists()
+  for _, win in ipairs(vim.fn.getwininfo()) do
+    if win.quickfix == 1 then
+      return true
+    end
+  end
+  return false
+end
+
+M.toggle_quickfix = function()
+  if qf_or_loc_exists() then
+    print "Quickfix or Location List is open. Closing..."
+
+    -- Try closing Quickfix List first
+    if not vim.tbl_isempty(vim.fn.getqflist()) then
+      vim.cmd "cclose"
+      print "Closed Quickfix List"
+      return
+    end
+
+    -- If Quickfix didn't close, try closing Location List
+    if not vim.tbl_isempty(vim.fn.getloclist(0)) then
+      vim.cmd "lclose"
+      print "Closed Location List"
+      return
+    end
+
+    return
+  end
+
+  -- If neither are open, open Quickfix or Location List based on which has data
+  if not vim.tbl_isempty(vim.fn.getqflist()) then
+    print "Quickfix has entries. Opening..."
+    vim.cmd "copen"
+  elseif not vim.tbl_isempty(vim.fn.getloclist(0)) then
+    print "Location List has entries. Opening..."
+    vim.cmd "lopen"
+  else
+    print "Neither Quickfix nor Location List have entries!"
+  end
+end
+
 -- NvChad terminal
 local term = require "nvchad.term"
 M.toggle_floating_term = function()

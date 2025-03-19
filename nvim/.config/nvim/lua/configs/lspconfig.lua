@@ -14,6 +14,9 @@ local gopls = {
       usePlaceholders = true,
     },
   },
+  init_options = {
+    usePlaceholders = true,
+  },
 }
 servers["gopls"] = gopls
 

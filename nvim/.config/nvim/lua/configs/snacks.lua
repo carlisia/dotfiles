@@ -23,7 +23,13 @@ M.opts = {
           desc = "Config",
           action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
         },
-        { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+        { icon = " ", key = "l", desc = "Restore Last Session", section = "session" },
+        {
+          icon = " ",
+          key = "s",
+          desc = "Select a Session",
+          action = ":lua MiniSessions.select()",
+        },
         { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
         { icon = " ", key = "q", desc = "Quit", action = ":qa" },
       },
@@ -61,9 +67,10 @@ M.opts = {
         height = 5,
         padding = 4,
       },
+
       { section = "keys", gap = 1, padding = 1 },
       { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-      { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+      -- { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 }, -- not working :(
       {
         pane = 2,
         icon = " ",
@@ -78,6 +85,7 @@ M.opts = {
         ttl = 5 * 60,
         indent = 3,
       },
+
       { section = "startup" },
     },
   },
@@ -129,6 +137,19 @@ M.opts = {
         layout = {
           preset = "sidebar",
           cycle = false,
+        },
+      },
+      projects = {
+        -- confirm = "picker",
+        recent = true,
+        matcher = {
+          frecency = true, -- use frecency boosting
+          sort_empty = true, -- sort even when the filter is empty
+          cwd_bonus = true,
+        },
+        dev = { "~/.config/", "~/code/src/github.com/" },
+        projects = {
+          "~/.config/nvim",
         },
       },
     },

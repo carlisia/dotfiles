@@ -47,9 +47,11 @@ map("n", k.diagnostics, vim.diagnostic.setloclist, { desc = "Buffer diagnostics"
 ---- mini
 map("n", "\\e", helper.toggle_mini_explorer, { desc = "Toggle 'mini explorer'" })
 
+map("n", "<leader>-a", "<Cmd>lua MiniSessions.write(vim.fn.input('Session Name > '))<CR>", { desc = "Add a session" })
+map("n", "<leader>-d", "<Cmd>lua MiniSessions.select('delete')<CR>", { desc = "Delete a session" })
 map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })
-map("n", "<leader>-a", "<Cmd>SaveSession<CR>", { desc = "Add a session" })
-map("n", "<leader>-d", "<Cmd>DeleteSession<CR>", { desc = "Delete a session" })
+map("n", "<leader>-u", "<Cmd>lua MiniSessions.select('write')<CR>", { desc = "Update a session" })
+map("n", "<leader>-p", "<Cmd>lua MiniSessions.read(MiniSessions.get_latest())<CR>", { desc = "Pop the latest session" })
 
 --- helpers
 map({ "n", "v" }, "<leader>id", helper.insert_done_comment, { noremap = true, silent = true, desc = "Insert -- DONE" })

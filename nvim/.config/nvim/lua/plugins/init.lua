@@ -169,6 +169,7 @@ return {
   },
   {
     "NeogitOrg/neogit",
+    lazy = false,
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
@@ -185,7 +186,6 @@ return {
     opts = require("configs.snacks").opts,
     keys = require("configs.snacks").keys,
   },
-
   {
     "echasnovski/mini.nvim",
     version = false,
@@ -204,7 +204,7 @@ return {
       require("mini.move").setup(require("configs.mini").move)
       require("mini.notify").setup()
       require("mini.operators").setup()
-      require("mini.sessions").setup(require("configs.mini").sessions)
+      require("mini.sessions").setup()
       require("mini.splitjoin").setup {
         mappings = {
           toggle = "\\k",

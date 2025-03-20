@@ -94,19 +94,6 @@ M.map_split = function(buf_id, lhs, direction)
   vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
 end
 
----- Mini sessions
-local command = vim.api.nvim_create_user_command
--- Create a user command that can be executed with :SaveSession
-command("SaveSession", function()
-  local minisessions = require "mini.sessions"
-  minisessions.write(nil, { force = false })
-end, {})
--- Create a user command that can be executed with :DeleteSession
-command("DeleteSession", function()
-  local minisessions = require "mini.sessions"
-  minisessions.delete(nil, { force = false })
-end, {})
-
 --- Add custom text for highlighting comments
 M.insert_done_comment = function()
   local cursor_pos = vim.api.nvim_win_get_cursor(0)

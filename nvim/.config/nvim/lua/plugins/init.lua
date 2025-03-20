@@ -32,16 +32,6 @@ return {
     end,
   },
   {
-    "folke/which-key.nvim",
-    opts = function()
-      return {
-        icons = {
-          group = "",
-        },
-      }
-    end,
-  },
-  {
     "neovim/nvim-lspconfig",
     config = function()
       require("nvchad.configs.lspconfig").defaults()
@@ -56,6 +46,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
       { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
       "saadparwaiz1/cmp_luasnip",
       "roobert/tailwindcss-colorizer-cmp.nvim",
@@ -65,6 +56,14 @@ return {
   },
   -----END NATIVE PLUGINS----
 
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require("noice").setup(require("configs.noice").config)
+    end,
+  },
   {
     "folke/todo-comments.nvim",
     lazy = false,

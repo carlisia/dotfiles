@@ -11,6 +11,29 @@ M.config = function()
       { name = "buffer" },
     },
   })
+
+  -- `/` cmdline setup.
+  cmp.setup.cmdline("/", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = "buffer" },
+    },
+  })
+
+  -- `:` cmdline setup.
+  cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = "path" },
+    }, {
+      {
+        name = "cmdline",
+        option = {
+          ignore_cmds = { "Man", "!" },
+        },
+      },
+    }),
+  })
 end
 
 -- Function to determine when completion should be enabled

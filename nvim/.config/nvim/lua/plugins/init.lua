@@ -238,4 +238,22 @@ return {
       lang = "go",
     },
   },
+  --- Tools
+  {
+    "ramilito/kubectl.nvim",
+    config = function()
+      require("kubectl").setup()
+    end,
+  },
+  {
+    "anasinnyk/nvim-k8s-crd",
+    event = { "BufEnter *.yaml" },
+    dependencies = { "neovim/nvim-lspconfig" },
+    opts = {
+      cache_dir = "~/.cache/k8s-schemas/",
+      k8s = {
+        file_mask = "*.yaml",
+      },
+    },
+  },
 }

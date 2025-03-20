@@ -5,7 +5,7 @@ local luasnip = require "luasnip"
 
 M.config = function()
   -- Setup vim-dadbod
-  cmp.setup.filetype({ "sql" }, {
+  cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
     sources = {
       { name = "vim-dadbod-completion" },
       { name = "buffer" },
@@ -66,7 +66,7 @@ function M.disable_cmp()
 end
 
 M.cmp = {
-  completion = { completeopt = "menu,menuone,noinsert" },
+  completion = { completeopt = "menu,menuone" },
 
   -- Control completion activation
   enabled = M.disable_cmp,

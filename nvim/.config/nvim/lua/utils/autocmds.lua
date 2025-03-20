@@ -8,30 +8,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = require("utils.lspkeymaps").setkeys,
 })
 
----- Mini
--- Mini starter: at startup, auto open mini.starter if no files are opened
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    local has_mini, ministarter = pcall(require, "mini.starter")
-    if has_mini and vim.fn.argc() == 0 then
-      vim.defer_fn(function()
-        ministarter.open()
-      end, 50) -- Delay execution slightly to prevent race conditions
-    end
-  end,
-})
-
--- Mini starter: auto open when the last buffer is deleted
-vim.api.nvim_create_autocmd("BufDelete", {
-  callback = function()
-    local ministarter = require "mini.starter"
-    local listed_bufs = vim.t.bufs or {}
-    if #listed_bufs == 1 and vim.api.nvim_buf_get_name(listed_bufs[1]) == "" then
-      ministarter.open()
-    end
-  end,
-})
-
 -- Mini explorer / split
 vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesBufferCreate",

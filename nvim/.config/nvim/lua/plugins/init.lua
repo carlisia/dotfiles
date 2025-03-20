@@ -212,7 +212,6 @@ return {
           join = "sj",
         },
       }
-      require("mini.starter").setup()
       require("mini.surround").setup()
       -- require("mini.surround").setup(require("configs.mini").surround)
       -- require("mini.bufremove").setup()

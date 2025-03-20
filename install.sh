@@ -75,9 +75,10 @@ npm i -g bash-language-server
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
 brew install stylua
 
+
 # @todo
 # Install fish and fish themes + plugins
 # fzf: fisher install PatrickF1/fzf.fish
 # Install omf and install themes, or use starship
 # Install a Nerd Font
-# Install richgo, eza, peco
+# Install richgo, eza, peco, ripgrep

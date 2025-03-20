@@ -6,6 +6,7 @@ SETUVAR Z_DATA:/Users/carlisiacampos/\x2elocal/share/z/data
 SETUVAR Z_DATA_DIR:/Users/carlisiacampos/\x2elocal/share/z
 SETUVAR Z_EXCLUDE:\x5e/Users/carlisiacampos\x24
 SETUVAR __fish_initialized:3800
+SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:normal

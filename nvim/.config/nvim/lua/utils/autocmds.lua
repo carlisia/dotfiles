@@ -37,3 +37,11 @@ vim.api.nvim_create_autocmd("User", {
     set_mark("~", "~", "Home directory")
   end,
 })
+
+-- Needed to add comments to sql files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "sql", "mysql", "plsql" },
+  callback = function()
+    vim.bo.commentstring = "-- %s"
+  end,
+})

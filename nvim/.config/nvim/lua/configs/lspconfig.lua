@@ -18,7 +18,13 @@ local gopls = {
     usePlaceholders = true,
   },
 }
+
+local sqlls = {
+  filetypes = { "sql", "mysql", "plsql" },
+}
+
 servers["gopls"] = gopls
+servers["sqlls"] = sqlls
 
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init

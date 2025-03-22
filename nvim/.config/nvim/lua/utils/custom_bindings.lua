@@ -97,12 +97,10 @@ M.go = {
   run = {
     gonvim = {
       rI = { "<cmd>GoImports<cr>", "Manage imports" },
-      rb = { "<cmd>GoBuild<cr>", "Build Go project" },
-      rr = { "<cmd>GoRun<cr>", "Run Go program" },
-      rs = { "<cmd>GoStop<cr>", "Stop running Go task" },
-      rf = { "<cmd>GoFmt<cr>", "Format Go code" },
-      rc = { "<cmd>GoCheat<cr>", "Lookup Go cheat sheets" },
-      rg = { "<cmd>GoGet<cr>", "Fetch a Go package" },
+      rb = { "<cmd>GoBuild<cr>", "Build" },
+      rr = { "<cmd>GoRun<cr>", "Run" },
+      rs = { "<cmd>GoStop<cr>", "Stop task" },
+      rf = { "<cmd>GoFmt<cr>", "Format" },
       rl = { "<cmd>GoLint<cr>", "Run Go linters" },
       rn = { "<cmd>GoRename<cr>", "Rename identifier under cursor" },
       rN = { "<cmd>Gomvp<cr>", "Rename Go module" },
@@ -123,12 +121,14 @@ M.go = {
 
   utils = {
     gonvim = {
-      uv = { "<cmd>GoVet<cr>", "Run go vet for static analysis" },
+      uc = { "<cmd>GoCheat<cr>", "Lookup Go cheat sheets" },
       ue = { "<cmd>GoEnv<cr>", "Load environment variables" },
+      ug = { "<cmd>GoGet<cr>", "Get a package" },
+      ui = { "<cmd>GoInstallBinaries<cr>", "Install binaries" },
+      uu = { "<cmd>GoUpdateBinaries<cr>", "Update binaries" },
+      un = { "<cmd>GoNew<cr>", "New file from template" },
+      uv = { "<cmd>GoVet<cr>", "Run go vet for static analysis" },
       uV = { "<cmd>Govulncheck<cr>", "Run vulnerability check" },
-      ui = { "<cmd>GoInstallBinaries<cr>", "Install all dependent tools" },
-      uu = { "<cmd>GoUpdateBinaries<cr>", "Update all installed tools" },
-      un = { "<cmd>GoNew<cr>", "Create a new Go file from template" },
     },
   },
 

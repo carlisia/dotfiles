@@ -13,6 +13,7 @@ M.conform = {
     go = { "gofmt", "goimports", lsp_format = "fallback" },
     json = { "prettierd" },
     jsonc = { "prettierd" },
+    sql = { "sqlint" },
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
     yaml = { "prettierd" },

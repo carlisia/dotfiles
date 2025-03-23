@@ -1,7 +1,6 @@
 local M = {}
 
 local cmp = require "cmp"
-local luasnip = require "luasnip"
 
 M.config = function()
   -- Setup vim-dadbod

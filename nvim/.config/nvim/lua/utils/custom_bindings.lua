@@ -47,16 +47,31 @@ M.go = {
       rN = { "<cmd>Gomvp<cr>", "Rename Go module" },
       rn = { "<cmd>GoRename<cr>", "Rename identifier under cursor" },
       rr = { "<cmd>GoRun<cr>", "Run" },
-      rs = { "<cmd>GoStop<cr>", "Stop task" },
-      rT = { "<cmd>GoRmTag<cr>", "Remove struct tags" },
-      rv = { "<cmd>GoGenReturn<cr>", "Generate return values" },
-      rx = { "<cmd>GoImpl<cr>", "Generate interface implementation" },
+      rR = {
+        function()
+          -- Get full path to current file
+          local full_path = vim.fn.expand "%:p"
+          -- Trim the file path to be relative to root
+          local rel_path = vim.fn.fnamemodify(full_path, ":.") -- path relative to cwd
+          -- Prompt with the relative path and enable file autocompletion
+          local input = vim.fn.input {
+            prompt = "Path to file > ",
+            default = rel_path,
+            completion = "file",
+          }
+          if input == nil or input == "" then
+            return -- escaped or gave empty input
+          end
+          vim.cmd("GoRun " .. input)
+        end,
+        "Run...",
+      },
     },
   },
 
   utils = {
     gonvim = {
-      uc = { "<cmd>GoCheat<cr>", "Lookup Go cheat sheets" },
+      uc = { "<cmd>GoCheat<cr>", "Lookup cheat sheets" },
       ue = { "<cmd>GoEnv<cr>", "Load environment variables" },
       ug = { "<cmd>GoGet<cr>", "Get packages" },
       ui = { "<cmd>GoInstallBinaries<cr>", "Install binaries" },
@@ -75,7 +90,7 @@ M.go = {
       tc = { "<cmd>GoCoverage<cr>", "Run test coverage" },
       tf = { "<cmd>GoTestFile<cr>", "Test current file" },
       tF = { "<cmd>GoTestFunc<cr>", "Test current function" },
-      tm = { "<cmd>GoMockGen<cr>", "Generate Go mocks" },
+      tm = { "<cmd>GoMockGen<cr>", "Generate mocks" },
       ts = { "<cmd>GoTestSum<cr>", "Run tests with summary" },
       tt = { "<cmd>GoTest<cr>", "Run all tests" },
     },

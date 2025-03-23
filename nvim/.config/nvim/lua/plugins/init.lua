@@ -136,12 +136,6 @@ return {
       { "tpope/vim-dadbod", lazy = true },
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
     },
-    cmd = {
-      "DBUI",
-      "DBUIToggle",
-      "DBUIAddConnection",
-      "DBUIFindBuffer",
-    },
     init = function()
       vim.g.db_ui_show_help = 0
       vim.g.db_ui_win_position = "right"
@@ -172,14 +166,8 @@ return {
       require("go").setup(require("configs.go_plugins").govim)
     end,
     event = { "CmdlineEnter" },
-    ft = { "go", "gomod" },
+    ft = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-    opts = {
-      dap_debug = true,
-      dap_debug_gui = true,
-      lsp_inlay_hints = { enable = true },
-      diagnostic = true,
-    },
   },
   {
     "NeogitOrg/neogit",

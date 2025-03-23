@@ -20,102 +20,37 @@ M.lsp = {
   diag_go_next = "]d",
   diag_go_prev = "[d",
   ---
+  toggle_test_imp = "\\t",
+  toggle_outline = "\\o",
 }
 
 M.vim = {
   diagnostics = "<leader>lb",
 }
---[[
-GoInstallBinaries
-GoUpdateBinaries 
-GoInstallBinary
-GoUpdateBinary
-GoCoverage
-GoImports
-GoBuild
-GoRun
-GoStop
-
-
-GoTest
-GoTestSum
-GoTestFile
-GoTestFunc
-GoTestFunc
-GoAddTest
-GoMockGen 
-
-GoDebug
-GoDbgConfig 
-GoDbgKeys 
-GoDbgStop  
-GoDbgContinue 
-GoCreateLaunch 
-GoBreakToggle 
-GoBreakSave 
-GoBreakLoad 
-GoEnv 
-GoAlt 
-
-
-GoFmt
-GoLint
-GoRename
-GoAddTag 
-GoRmTag
-GoClearTag 
-GoJson2Struct
-GoPkgOutline
-GoImplements 
-GoImpl
-GoToggleInlay
-GoGenReturn
-
-Goenum
-GoNew 
-
-Govulncheck
-
-
-
-
-GoVet
-GoDoc 
-GoCheat
-GoGet 
-
-Gomvp 
-
-
-    map({ "n" }, "<leader>ca", function()vim.cmd "GoCodeAction"end, silent_bufnr "Code Action")
-    map({ "n" }, "<leader>cl", function()vim.cmd "GoCodeLenAct"end)
-
-
-]]
 
 M.go = {
   run = {
     gonvim = {
-      rI = { "<cmd>GoImports<cr>", "Manage imports" },
+      rA = { "<cmd>GoCodeAction<cr>", "Code action" },
+      ra = { "<cmd>GoAddTag<cr>", "Add struct tags" },
       rb = { "<cmd>GoBuild<cr>", "Build" },
+      rC = { "<cmd>GoClearTag<cr>", "Clear all struct tags" },
+      rc = { "<cmd>GoCmt<cr>", "Add comment" },
+      rd = { "<cmd>GoDoc<cr>", "Show documentation for identifier" },
+      re = { "<cmd>Goenum<cr>", "Generate Go enums" },
+      rf = { "<cmd>GoFmt<cr>", "Format" },
+      rI = { "<cmd>GoImports<cr>", "Manage imports" },
+      ri = { "<cmd>GoImplements<cr>", "Find implementations" },
+      rj = { "<cmd>GoJson2Struct<cr>", "Convert JSON to Go struct" },
+      rL = { "<cmd>GoListImports<cr>", "List imports" },
+      rl = { "<cmd>GoCodeLenAct<cr>", "Code lens" },
+      rN = { "<cmd>Gomvp<cr>", "Rename Go module" },
+      rn = { "<cmd>GoRename<cr>", "Rename identifier under cursor" },
       rr = { "<cmd>GoRun<cr>", "Run" },
       rs = { "<cmd>GoStop<cr>", "Stop task" },
-      rf = { "<cmd>GoFmt<cr>", "Format" },
-      rl = { "<cmd>GoLint<cr>", "Run Go linters" },
-      rn = { "<cmd>GoRename<cr>", "Rename identifier under cursor" },
-      rN = { "<cmd>Gomvp<cr>", "Rename Go module" },
-      ra = { "<cmd>GoAddTag<cr>", "Add struct tags" },
       rT = { "<cmd>GoRmTag<cr>", "Remove struct tags" },
-      rC = { "<cmd>GoClearTag<cr>", "Clear all struct tags" },
-      rA = { "<cmd>GoAlt<cr>", "Toggle between test and implementation" },
-      rd = { "<cmd>GoDoc<cr>", "Show documentation for identifier" },
-      rm = { "<cmd>GoMockGen<cr>", "Generate Go mocks" },
-      rp = { "<cmd>GoPkgOutline<cr>", "Show package symbols" },
-      ri = { "<cmd>GoImplements<cr>", "Find implementations" },
-      rx = { "<cmd>GoImpl<cr>", "Generate interface implementation" },
-      rj = { "<cmd>GoJson2Struct<cr>", "Convert JSON to Go struct" },
       rv = { "<cmd>GoGenReturn<cr>", "Generate return values" },
-      re = { "<cmd>Goenum<cr>", "Generate Go enums" },
+      rx = { "<cmd>GoImpl<cr>", "Generate interface implementation" },
     },
   },
 
@@ -123,38 +58,41 @@ M.go = {
     gonvim = {
       uc = { "<cmd>GoCheat<cr>", "Lookup Go cheat sheets" },
       ue = { "<cmd>GoEnv<cr>", "Load environment variables" },
-      ug = { "<cmd>GoGet<cr>", "Get a package" },
+      ug = { "<cmd>GoGet<cr>", "Get packages" },
       ui = { "<cmd>GoInstallBinaries<cr>", "Install binaries" },
-      uu = { "<cmd>GoUpdateBinaries<cr>", "Update binaries" },
+      ul = { "<cmd>GoLint<cr>", "Lint" },
       un = { "<cmd>GoNew<cr>", "New file from template" },
-      uv = { "<cmd>GoVet<cr>", "Run go vet for static analysis" },
+      ut = { "<cmd>GoModTidy<cr>", "Mod tidy" },
+      uu = { "<cmd>GoUpdateBinaries<cr>", "Update binaries" },
       uV = { "<cmd>Govulncheck<cr>", "Run vulnerability check" },
+      uv = { "<cmd>GoVet<cr>", "Run go vet for static analysis" },
     },
   },
 
   test = {
     gonvim = {
-      tf = { "<cmd>GoTestFunc<cr>", "Test the current function" },
-      tu = { "<cmd>GoAddTest<cr>", "Add unit test for function" },
-      tt = { "<cmd>GoTestFile<cr>", "Test the current file" },
-      ta = { "<cmd>GoTest<cr>", "Run all tests" },
-      tc = { "<cmd>GoCoverage<cr>", "Run and highlight test coverage" },
-      ts = { "<cmd>GoTestSum<cr>", "Run Go tests with summary" },
+      ta = { "<cmd>GoAddTest<cr>", "Add unit test for function" },
+      tc = { "<cmd>GoCoverage<cr>", "Run test coverage" },
+      tf = { "<cmd>GoTestFile<cr>", "Test current file" },
+      tF = { "<cmd>GoTestFunc<cr>", "Test current function" },
+      tm = { "<cmd>GoMockGen<cr>", "Generate Go mocks" },
+      ts = { "<cmd>GoTestSum<cr>", "Run tests with summary" },
+      tt = { "<cmd>GoTest<cr>", "Run all tests" },
     },
   },
 
   debug = {
     gonvim = {
       da = { "<cmd>GoBreakToggle<cr>", "Add breakpoint" },
-      ds = { "<cmd>GoDebug<cr>", "Start debugger" },
-      dc = { "<cmd>GoDbgConfig<cr>", "Open debugger config" },
-      dk = { "<cmd>GoDbgKeys<cr>", "Show debugger key mappings" },
-      de = { "<cmd>GoDbgStop<cr>", "Stop debugger session" },
-      dp = { "<cmd>GoDbgContinue<cr>", "Continue debugger session" },
-      dj = { "<cmd>GoCreateLaunch<cr>", "Create launch.json config" },
-      dt = { "<cmd>GoBreakToggle<cr>", "Toggle breakpoint" },
       db = { "<cmd>GoBreakSave<cr>", "Save breakpoints" },
+      dc = { "<cmd>GoDbgContinue<cr>", "Continue debugger session" },
+      de = { "<cmd>GoDbgStop<cr>", "End debugger session" },
+      df = { "<cmd>GoDbgConfig<cr>", "Open debugger config" },
+      dj = { "<cmd>GoCreateunch<cr>", "Create launch.json config" },
+      dk = { "<cmd>GoDbgKeys<cr>", "Key mappings" },
       dl = { "<cmd>GoBreakLoad<cr>", "Load saved breakpoints" },
+      ds = { "<cmd>GoDebug<cr>", "Start debugger" },
+      dt = { "<cmd>GoBreakToggle<cr>", "Toggle breakpoint" },
     },
   },
 }

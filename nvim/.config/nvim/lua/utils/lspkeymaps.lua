@@ -43,12 +43,10 @@ M.setkeys = function(ev)
         end
       end
     end
-    map(
-      "n",
-      k.toggle_inlay_hints,
-      "<cmd>GoToggleInlay<cr><cmd>redrawstatus<cr>",
-      silent_bufnr "Toggle inlay hints | Go"
-    )
+    --- toggles
+    map("n", k.toggle_inlay_hints, "<cmd>GoToggleInlay<cr><cmd>redrawstatus<cr>", silent_bufnr "Toggle 'inlay hints'")
+    map("n", k.toggle_test_imp, "<cmd>GoAlt<cr>", silent_bufnr "Toggle 'test/implementation'")
+    map("n", k.toggle_outline, "<cmd>GoPkgOutline<cr>", silent_bufnr "Toggle 'package outline'")
   else -- map all else for which there would be an alternative with a especialized go plugin:
     map("n", k.toggle_inlay_hints, require("utils.inlay").toggle, { desc = "Toggle inlay hints | LSP", silent = true })
   end

@@ -92,7 +92,28 @@ M.go = {
       tF = { "<cmd>GoTestFunc<cr>", "Test current function" },
       tm = { "<cmd>GoMockGen<cr>", "Generate mocks" },
       ts = { "<cmd>GoTestSum<cr>", "Run tests with summary" },
-      tt = { "<cmd>GoTest<cr>", "Run all tests" },
+      tt = {
+        function()
+          local choices = {
+            { label = "Run All Tests", cmd = "GoTestSum --format dots" },
+            { label = "Run with test names", cmd = "GoTestSum --format testname" },
+            { label = "Run with package names", cmd = "GoTestSum --format pkgname" },
+          }
+
+          vim.ui.select(choices, {
+            prompt = "Choose test option:",
+            format_item = function(item)
+              return item.label
+            end,
+          }, function(choice)
+            if not choice then
+              return
+            end
+            vim.cmd(choice.cmd)
+          end)
+        end,
+        "Run Go tests",
+      },
     },
   },
 

@@ -26,8 +26,6 @@ set -gx GPG_TTY (tty)
 
 set -x EDITOR nvim
 
-alias go=richgo
-
 set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-language-server/bin /usr/local/go/bin /usr/local/bin /usr/local/sbin $HOME $HOME/Kui-darwin-x64 $HOME/dotfiles /usr/local/bin/golangci-lint /usr/local/kubebuilder/bin $HOME/.gem/ruby/2.7.0/bin $HOME/.krew/bin $HOME/.cargo/bin fish fish_indent $HOME/code/src/github.com/carlisia/dotfiles/other-configs/scripts $HOME/.local/bin /Applications/iTerm.app/Contents/MacOS/iTerm2
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH

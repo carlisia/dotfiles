@@ -2,7 +2,7 @@ local M = {}
 
 M.govim = {
   go = "go", -- go command, can be go[default] or e.g. go1.18beta1
-  test_runner = "go",
+  test_runner = "gotestsum",
   lsp_cfg = true,
   lsp_keymaps = false,
   dap_debug = true,
@@ -14,6 +14,10 @@ M.govim = {
     highlight = true,
   },
   run_in_floaterm = true,
+  luasnip = true,
+  diagnostic = {
+    hdlr = true,
+  },
 }
 
 return M

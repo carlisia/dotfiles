@@ -23,6 +23,7 @@
   "mini.nvim": { "branch": "main", "commit": "0429e9ee9d35faef51971abdbb1b26d2540b5a5f" },
   "mini.pick": { "branch": "main", "commit": "12ea14f8e285d1bcc909116685fdbb129a89d546" },
   "minty": { "branch": "main", "commit": "aafc9e8e0afe6bf57580858a2849578d8d8db9e0" },
+  "navigator.lua": { "branch": "master", "commit": "725d501cdbd913f15daedafb21e24b50a0080ae2" },
   "neogit": { "branch": "master", "commit": "333968f8222fda475d3e4545a9b15fe9912ca26a" },
   "noice.nvim": { "branch": "main", "commit": "0427460c2d7f673ad60eb02b35f5e9926cf67c59" },
   "nui.nvim": { "branch": "main", "commit": "8d3bce9764e627b62b07424e0df77f680d47ffdb" },

@@ -160,15 +160,31 @@ return {
     dependencies = {
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       require("go").setup(require("configs.go_plugins").govim)
     end,
     event = { "CmdlineEnter" },
-    ft = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
+    ft = { "go", "gomod", "gosum", "gotmpl", "gohtmltmpl", "gotexttmpl" },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
+  -- {
+  --   "ray-x/navigator.lua",
+  --   requires = {
+  --     { "ray-x/guihua.lua", run = "cd lua/fzy && make" },
+  --     { "neovim/nvim-lspconfig" },
+  --   },
+  --   opts = {
+  --     width = 0.7,
+  --     lsp = {
+  --       diagnostic = { enable = true },
+  --       rename = { style = "floating-preview" },
+  --     },
+  --   },
+  -- },
   {
     "NeogitOrg/neogit",
     lazy = false,

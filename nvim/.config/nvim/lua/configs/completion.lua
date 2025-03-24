@@ -1,7 +1,6 @@
 local M = {}
 
 local cmp = require "cmp"
-
 M.config = function()
   -- Setup vim-dadbod
   cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
@@ -13,6 +12,13 @@ M.config = function()
 
   -- `/` cmdline setup.
   cmp.setup.cmdline("/", {
+    formatting = {
+      format = function(_, vim_item)
+        vim_item.kind = "" -- remove kind text
+        return vim_item
+      end,
+    },
+
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
       { name = "buffer" },
@@ -21,6 +27,14 @@ M.config = function()
 
   -- `:` cmdline setup.
   cmp.setup.cmdline(":", {
+    formatting = {
+      format = function(_, vim_item)
+        vim_item.kind = "" -- remove kind text
+        vim_item.menu = "" -- also remove menu if needed
+        return vim_item
+      end,
+    },
+
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = "path" },
@@ -66,6 +80,10 @@ end
 
 M.cmp = {
   completion = { completeopt = "menu,menuone" },
+
+  view = {
+    entries = "custom", -- can be "custom", "wildmenu" or "native"
+  },
 
   -- Control completion activation
   enabled = M.disable_cmp,

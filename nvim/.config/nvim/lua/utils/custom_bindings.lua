@@ -44,7 +44,6 @@ M.go = {
       rj = { "<cmd>GoJson2Struct<cr>", "Convert JSON to Go struct" },
       rL = { "<cmd>GoListImports<cr>", "List imports" },
       rl = { "<cmd>GoCodeLenAct<cr>", "Code lens" },
-      rN = { "<cmd>Gomvp<cr>", "Rename Go module" },
       rn = { "<cmd>GoRename<cr>", "Rename identifier under cursor" },
       rr = { "<cmd>GoRun<cr>", "Run" },
       rR = {
@@ -69,15 +68,25 @@ M.go = {
     },
   },
 
+  mod = {
+    gonvim = {
+      mi = { "<cmd>GoModInit<cr>", "go mod init" },
+      md = { "<cmd>GoModDnld<cr>", "go mod download" },
+      mt = { "<cmd>GoModTidy<cr>", "go mod tidy" },
+      mr = { "<cmd>Gomvp<cr>", "go mod rename" },
+      mv = { "<cmd>GoModVendor<cr>", "go mod vendor" },
+      mw = { "<cmd>GoModWhy<cr>", "go mod why" },
+    },
+  },
+
   utils = {
     gonvim = {
-      uc = { "<cmd>GoCheat<cr>", "Lookup cheat sheets" },
+      uc = { "<cmd>GoCheat<cr>", "Cheat sheet" },
       ue = { "<cmd>GoEnv<cr>", "Load environment variables" },
       ug = { "<cmd>GoGet<cr>", "Get packages" },
       ui = { "<cmd>GoInstallBinaries<cr>", "Install binaries" },
       ul = { "<cmd>GoLint<cr>", "Lint" },
       un = { "<cmd>GoNew<cr>", "New file from template" },
-      ut = { "<cmd>GoModTidy<cr>", "Mod tidy" },
       uu = { "<cmd>GoUpdateBinaries<cr>", "Update binaries" },
       uV = { "<cmd>Govulncheck<cr>", "Run vulnerability check" },
       uv = { "<cmd>GoVet<cr>", "Run go vet for static analysis" },

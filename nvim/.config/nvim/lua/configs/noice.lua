@@ -24,12 +24,14 @@ M.config = {
       views = {
         cmdline_popup = {
           position = {
-            row = 2,
+            row = "40%",
+            col = "50%",
           },
         },
         cmdline_popupmenu = {
           position = {
-            row = 5,
+            row = "40%",
+            col = "50%",
           },
         },
       },
@@ -59,7 +61,7 @@ M.config = {
     hover = { enabled = false },
     message = {
       -- Messages shown by lsp servers
-      enabled = true,
+      enabled = false,
     },
   },
 }

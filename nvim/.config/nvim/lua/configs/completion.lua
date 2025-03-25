@@ -122,6 +122,7 @@ M.cmp = {
       end,
     },
     { name = "path", keyword_length = 3, group_index = 2 },
+    { name = "render-markdown" },
   },
   { name = "buffer", keyword_length = 4 },
 

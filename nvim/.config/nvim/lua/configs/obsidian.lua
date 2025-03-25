@@ -13,13 +13,11 @@ M.opts = {
     },
   },
   new_notes_location = "§ Inbox",
-  -- wiki_link_func = "",
-
   completion = {
     -- Set to false to disable completion.
-    nvim_cmp = true,
+    nvim_cmp = false, -- the markdown plugin covers this
     -- Trigger completion at 2 chars.
-    min_chars = 2,
+    -- min_chars = 2,
   },
   templates = {
     subdir = vault_main .. "/_meta/Templates",

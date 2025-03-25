@@ -274,4 +274,30 @@ return {
       },
     },
   },
+  --- Markdown
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- latest release instead of latest commit
+    cmd = "Obsidian",
+    ft = "markdown",
+    config = function()
+      require("obsidian").setup(require("configs.obsidian").opts)
+    end,
+    wiki_link_func = function(opts)
+      if opts.id == nil then
+        return string.format("[[%s]]", opts.label)
+      elseif opts.label ~= opts.id then
+        return string.format("[[%s|%s]]", opts.id, opts.label)
+      else
+        return string.format("[[%s]]", opts.id)
+      end
+    end,
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    config = function()
+      require("render-markdown").setup(require("configs.render-markdown").opts)
+    end,
+  },
 }

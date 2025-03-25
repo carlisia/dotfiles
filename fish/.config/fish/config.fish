@@ -5,6 +5,8 @@ starship init fish | source
 set -x XDG_CONFIG_HOME $HOME/.config
 set -x CDPATH ~/.config # magic!
 
+set -x VAULT_MAIN ~/Documents/02-Areas/vaults/second_brain
+
 # Use same preset as nvim/nvchad:
 # for addr in $XDG_RUNTIME_DIR/nvim.*
 #     nvim --server $addr --remote-send ':lua require("nvchad.utils").reload() <cr>'

@@ -2,6 +2,35 @@ Snacks = Snacks
 
 local M = {}
 
+local vault_main = vim.env.VAULT_MAIN or ""
+vault_main = vim.fs.normalize(vault_main):gsub("/$", "")
+
+local excluded = require("configs.obsidian").exclude
+
+local root_patterns = {
+  ".git",
+  "go.mod",
+  "package.json",
+  ".obsidian",
+}
+vim.g.root_spec = { root_patterns, "lsp", "cwd" }
+
+-- HACK: https://github.com/folke/snacks.nvim/discussions/1581
+-- check later if better solution appears to filter
+-- out excluded directories & files inside excluded directories:
+local function filter_fn(item)
+  local function is_excluded(file)
+    for _, pattern in ipairs(excluded) do
+      if string.match(file, pattern) then
+        return true
+      end
+    end
+    return false
+  end
+
+  return not is_excluded(item.file)
+end
+
 M.opts = {
   dashboard = {
     enabled = true,
@@ -117,6 +146,7 @@ M.opts = {
   },
   picker = {
     enabled = true,
+    filter = { filter = filter_fn }, -- applies to smart pickers (buffers/recent/files)
     ignored = true,
     hidden = true,
     debug = { scores = false }, -- show scores in the list
@@ -128,7 +158,11 @@ M.opts = {
     -- https://github.com/folke/snacks.nvim/blob/main/lua/snacks/picker/config/sources.lua
     sources = {
       -- files and buffers explicitly set ignored and hidden (to false)
-      files = { ignored = true, hidden = true },
+      files = {
+        ignored = true,
+        hidden = true,
+        exclude = excluded,
+      },
       grep_buffers = { ignored = true, hidden = true },
       -- grep = { ignored = true, hidden = true },
       -- grep_word = { ignored = true, hidden = true },
@@ -138,6 +172,7 @@ M.opts = {
           preset = "sidebar",
           cycle = false,
         },
+        exclude = excluded,
       },
       projects = {
         -- confirm = "picker",
@@ -150,7 +185,9 @@ M.opts = {
         dev = { "~/.config/", "~/code/src/github.com/" },
         projects = {
           "~/.config/nvim",
+          vault_main,
         },
+        patterns = root_patterns,
       },
     },
     ui_select = true, -- replace `vim.ui.select` with /the snacks picker

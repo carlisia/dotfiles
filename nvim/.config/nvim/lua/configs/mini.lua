@@ -1,5 +1,22 @@
 local M = {}
 
+local vault_main = vim.env.VAULT_MAIN or ""
+vault_main = vim.fs.normalize(vault_main):gsub("/$", "")
+
+local excluded_list = require("configs.obsidian").exclude
+local excluded = {}
+for _, name in ipairs(excluded_list) do
+  excluded[name] = true
+end
+
+local function filter_fn(entry)
+  local is_in_vault = vim.startswith(entry.path, vault_main)
+  if is_in_vault and excluded[entry.name] then
+    return false
+  end
+  return true
+end
+
 M.ai = {
   mappings = {
     -- Main textobject prefixes
@@ -142,6 +159,10 @@ M.files = {
   },
   mappings = {
     go_in_plus = "<Tab>",
+  },
+
+  content = {
+    filter = filter_fn,
   },
 }
 

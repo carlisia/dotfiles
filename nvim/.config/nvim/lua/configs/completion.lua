@@ -12,6 +12,7 @@ M.config = function()
 
   -- `/` cmdline setup.
   cmp.setup.cmdline("/", {
+    completion = { completeopt = "menu,menuone,noselect" },
     formatting = {
       format = function(_, vim_item)
         vim_item.kind = "" -- remove kind text
@@ -27,6 +28,7 @@ M.config = function()
 
   -- `:` cmdline setup.
   cmp.setup.cmdline(":", {
+    completion = { completeopt = "menu,menuone,noselect" },
     formatting = {
       format = function(_, vim_item)
         vim_item.kind = "" -- remove kind text

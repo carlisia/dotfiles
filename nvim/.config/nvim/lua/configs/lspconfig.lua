@@ -25,6 +25,21 @@ local sqlls = {
 
 servers["gopls"] = gopls
 servers["sqlls"] = sqlls
+servers["marksman"] = {}
+
+servers["jsonls"] = {
+  settings = {
+    json = {
+      schemas = {
+        {
+          fileMatch = { "package.json" },
+          url = "https://json.schemastore.org/package.json",
+        },
+      },
+      validate = { enable = true },
+    },
+  },
+}
 
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init

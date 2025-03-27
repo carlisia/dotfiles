@@ -1,29 +1,31 @@
 -- Adapted from: https://github.com/desdic/neovim/blob/e22e397238bc8a53e2bbff885992756e99067014/lua/core/format.lua
+
 local M = {
-  -- Preferred defaults
-  filetypes = {
-    go = true,
-    lua = true,
-  },
+  -- Filetypes to exclude from autoformat on save as the default (without toggling)
+  excluded_filetypes = {},
 }
 
---- Manually enable/disable
 function M.toggle()
   local filetype = vim.o.filetype
-  M.filetypes[filetype] = vim.F.if_nil(not M.filetypes[filetype], false)
-  local state = M.filetypes[filetype] and "enabled" or "disabled"
+  local is_excluded = M.excluded_filetypes[filetype]
+  M.excluded_filetypes[filetype] = vim.F.if_nil(not is_excluded, true)
+  local state = M.excluded_filetypes[filetype] and "disabled" or "enabled"
   vim.notify("AutoFormat on save for " .. filetype .. " " .. state)
 end
 
---- Fetch emoji representing current state
-local emoji = require "utils.toggle_states"
-function M.current_state_emoji()
+--- Check if format-on-save is enabled for current filetype
+function M.is_enabled()
   local filetype = vim.o.filetype
-  local is_enabled = M.filetypes[filetype] or false
-  return emoji.format_on_save[is_enabled]
+  return not M.excluded_filetypes[filetype]
 end
 
---- Lsp formatting
+--- Fetch emoji representing current format-on-save state
+local emoji = require "utils.toggle_states"
+function M.current_state_emoji()
+  return emoji.format_on_save[M.is_enabled()]
+end
+
+--- LSP formatting
 function M.format()
   local buf = vim.api.nvim_get_current_buf()
 
@@ -42,12 +44,13 @@ function M.format()
   }
 end
 
+--- Autoformat on save unless excluded
 function M.on_attach(_, buf)
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("LspFormat." .. buf, {}),
     buffer = buf,
     callback = function()
-      if M.filetypes[vim.o.filetype] then
+      if not M.excluded_filetypes[vim.o.filetype] then
         M.format()
       end
     end,

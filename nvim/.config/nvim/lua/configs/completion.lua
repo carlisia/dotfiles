@@ -32,7 +32,7 @@ M.config = function()
     formatting = {
       format = function(_, vim_item)
         vim_item.kind = "" -- remove kind text
-        vim_item.menu = "" -- also remove menu if needed
+        -- vim_item.menu = "" -- remove menu
         return vim_item
       end,
     },
@@ -148,13 +148,6 @@ M.cmp = {
   },
 
   experimental = { ghost_text = true },
-
-  -- Enable luasnip to handle snippet expansion for nvim-cmp
-  snippet = {
-    expand = function(args)
-      vim.snippet.expand(args.body)
-    end,
-  },
 }
 
 return M

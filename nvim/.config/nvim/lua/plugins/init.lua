@@ -40,22 +40,14 @@ return {
   },
   { ---- my own config:
     "hrsh7th/nvim-cmp",
-    lazy = false,
     event = "VimEnter",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-cmdline",
-      { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
-      "saadparwaiz1/cmp_luasnip",
-      "roobert/tailwindcss-colorizer-cmp.nvim",
     },
     opts = require("configs.completion").cmp,
     require("configs.completion").config(),
   },
   -----END NATIVE PLUGINS----
-
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -105,8 +97,7 @@ return {
         config = function()
           local builtin = require "statuscol.builtin"
           require("statuscol").setup {
-            -- foldfunc = "builtin",
-            -- setopt = true,
+            setopt = true,
             relculright = true,
             segments = {
               { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
@@ -121,7 +112,7 @@ return {
     event = "BufRead",
     config = function()
       vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-      vim.o.foldcolumn = "1"
+      vim.o.foldcolumn = "2"
       vim.o.foldlevel = 99
       vim.o.foldlevelstart = 99
       vim.o.foldenable = true
@@ -131,10 +122,15 @@ return {
   { "tpope/vim-dadbod" },
   {
     "kristijanhusak/vim-dadbod-ui",
-    lazy = false,
     dependencies = {
       { "tpope/vim-dadbod", lazy = true },
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
     },
     init = function()
       vim.g.db_ui_show_help = 0
@@ -187,15 +183,18 @@ return {
   -- },
   {
     "NeogitOrg/neogit",
-    lazy = false,
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
       "sindrets/diffview.nvim", -- optional - Diff integration
 
-      -- Only one of these is needed.
-      "echasnovski/mini.pick", -- optional
+      "echasnovski/mini.pick",
     },
-    config = true,
+    cmd = {
+      "Neogit",
+    },
+    config = function()
+      require("neogit").setup()
+    end,
   },
   {
     "folke/snacks.nvim",
@@ -234,11 +233,9 @@ return {
       -- require("mini.surround").setup(require("configs.mini").surround)
       -- require("mini.bufremove").setup()
       -- require("mini.git").setup()
-      -- require("mini.hipatterns").setup()
       -- require("mini.tabline").setup()
       -- require("mini.trailspace").setup()
       -- require("mini.fuzzy").setup()
-      -- require("mini.icons").setup():
       -- require("mini.misc").setup()
     end,
   },
@@ -246,15 +243,17 @@ return {
   {
     "kawre/leetcode.nvim",
     lazy = false,
+    build = ":TSUpdate html",
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
     },
-    opts = {
-      arg = "leetcode.nvim",
-      lang = "go",
-    },
+    config = function()
+      require("leetcode").setup {
+        lang = "go",
+      }
+    end,
   },
   --- Tools
   {
@@ -287,6 +286,7 @@ return {
     version = "*", -- latest release instead of latest commit
     cmd = "Obsidian",
     ft = "markdown",
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("obsidian").setup(require("configs.obsidian").opts)
     end,
@@ -303,6 +303,11 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "echasnovski/mini.nvim",
+      "echasnovski/mini.icons",
+    },
     config = function()
       require("render-markdown").setup(require("configs.render-markdown").opts)
     end,

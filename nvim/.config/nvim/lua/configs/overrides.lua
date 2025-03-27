@@ -8,12 +8,15 @@ M.conform = {
   notify_no_formatters = true,
 
   formatters_by_ft = {
+    bash = { "shfmt" },
     lua = { "stylua" },
     python = { "isort", "black" },
     go = { "gofmt", "goimports", lsp_format = "fallback" },
     json = { "prettierd" },
     jsonc = { "prettierd" },
+    markdown = { "prettierd" },
     sql = { "sqlint" },
+    sh = { "shfmt" },
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
     yaml = { "prettierd" },

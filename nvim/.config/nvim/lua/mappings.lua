@@ -1,6 +1,5 @@
 local helper = require "utils.functions"
 local completion = require "utils.completion"
-local k = require("utils.custom_bindings").vim
 
 local map = vim.keymap.set
 local unmap = vim.keymap.del
@@ -41,9 +40,6 @@ map({ "n", "t" }, "tt", helper.toggle_floating_term, { desc = "Toggle floating t
 map({ "n", "t" }, "tj", helper.tggle_horizontal_term, { desc = "Toggle horizontal term" })
 map({ "n", "t" }, "tl", helper.toggle_vertical_term, { desc = "Toggle vertical term" })
 
----- lsp
-map("n", k.diagnostics, vim.diagnostic.setloclist, { desc = "Buffer diagnostics" })
-
 ---- mini
 map("n", "\\e", helper.toggle_mini_explorer, { desc = "Toggle 'mini explorer'" })
 
@@ -52,10 +48,3 @@ map("n", "<leader>-d", "<Cmd>lua MiniSessions.select('delete')<CR>", { desc = "D
 map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })
 map("n", "<leader>-u", "<Cmd>lua MiniSessions.select('write')<CR>", { desc = "Update a session" })
 map("n", "<leader>-p", "<Cmd>lua MiniSessions.read(MiniSessions.get_latest())<CR>", { desc = "Pop the latest session" })
-
---- helpers
-map({ "n", "v" }, "<leader>id", helper.insert_done_comment, { noremap = true, silent = true, desc = "Insert -- DONE" })
-map({ "n", "v" }, "<leader>if", helper.insert_fix_comment, { noremap = true, silent = true, desc = "Insert -- FIX" })
-map({ "n", "v" }, "<leader>ih", helper.insert_hack_comment, { noremap = true, silent = true, desc = "Insert -- HACK" })
-map({ "n", "v" }, "<leader>in", helper.insert_note_comment, { noremap = true, silent = true, desc = "Insert -- NOTE" })
-map({ "n", "v" }, "<leader>it", helper.insert_todo_comment, { noremap = true, silent = true, desc = "Insert -- TODO" })

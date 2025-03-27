@@ -52,7 +52,7 @@ M.opts = {
           desc = "Config",
           action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
         },
-        { icon = " ", key = "l", desc = "Restore Last Session", section = "session" },
+        { icon = " ", key = "S", desc = "Restore Last Session", section = "session" },
         {
           icon = " ",
           key = "s",
@@ -80,6 +80,7 @@ M.opts = {
     },
     sections = {
       { section = "header" },
+
       {
         pane = 2,
         section = "terminal",
@@ -98,7 +99,18 @@ M.opts = {
       },
 
       { section = "keys", gap = 1, padding = 1 },
+
       { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+      {
+        pane = 2,
+        icon = " ",
+        title = "Leet",
+        -- section = "",
+        indent = 2,
+        padding = 1,
+        key = "l",
+        action = ":Leet",
+      },
       -- { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 }, -- not working :(
       {
         pane = 2,
@@ -246,6 +258,8 @@ M.opts = {
           ["K"] = { "preview_scroll_up", mode = { "i", "n" } },
           ["H"] = { "preview_scroll_left", mode = { "i", "n" } },
           ["L"] = { "preview_scroll_right", mode = { "i", "n" } },
+
+          ["<c-h>"] = { "edit_split", mode = { "i", "n" } },
         },
       },
     },
@@ -470,7 +484,7 @@ M.keys = {
     function()
       Snacks.picker.git_log_file()
     end,
-    desc = "Git log files",
+    desc = "Git log this file",
   },
   {
     "<leader>go",

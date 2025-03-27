@@ -159,6 +159,7 @@ M.files = {
   },
   mappings = {
     go_in_plus = "<Tab>",
+    close = "<Esc>",
   },
 
   content = {

@@ -1,6 +1,30 @@
 local helper = require "utils.functions"
 local completion = require "utils.completion"
 
+MiniFiles = MiniFiles
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  callback = function()
+    -- Setup some globals for debugging (lazy-loaded)
+    _G.dd = function(...)
+      Snacks.debug.inspect(...)
+    end
+    _G.bt = function()
+      Snacks.debug.backtrace()
+    end
+    vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+    Snacks.toggle.diagnostics():map "\\p"
+    -- Markdown and other filetypes use conceallevel to make text easier to read:
+    Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 1 }):map "\\v"
+    Snacks.toggle.treesitter():map "\\T"
+    Snacks.toggle.inlay_hints():map "\\y"
+    Snacks.toggle.indent():map "\\I"
+    Snacks.toggle.dim():map "\\D"
+  end,
+})
+
 ---- LSP
 -- Attach my keymappins for all LSPs
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -9,12 +33,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- Mini explorer / split
+-- Create mappings to modify target window via (custom) split
 vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesBufferCreate",
   callback = function(args)
     local buf_id = args.data.buf_id
-    helper.map_split(buf_id, "<C-s>", "belowright horizontal")
+    helper.map_split(buf_id, "<C-h>", "belowright horizontal")
     helper.map_split(buf_id, "<C-v>", "belowright vertical")
+    helper.map_split(buf_id, "<C-t>", "tab")
   end,
 })
 

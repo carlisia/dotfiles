@@ -73,61 +73,23 @@ M.toggle_mini_explorer = function()
   end
 end
 
--- [mini.nvim/doc/mini-files.txt at c78332b4c71ad3c2a09efe6acd0a51283627258f · echasnovski/mini.nvim](https://github.com/echasnovski/mini.nvim/blob/c78332b4c71ad3c2a09efe6acd0a51283627258f/doc/mini-files.txt#L473-L503)
--- Create mappings to modify target window via split
--- This only create a split and changes target window to be that split. Follow with actually opening a file the usual way.
+-- https://github.com/echasnovski/mini.nvim/blob/760c1f3619418f769526884a3de47f0b76245887/doc/mini-files.txt#L417
+-- This only create a split (with the same file in the current buffer) and changes target window to be that split.
+-- Follow with actually opening a (new) file the usual way.
 M.map_split = function(buf_id, lhs, direction)
   local rhs = function()
-    local minifiles = require "mini.files"
     -- Make new window and set it as target
-    local cur_target = minifiles.get_explorer_state().target_window
+    local cur_target = MiniFiles.get_explorer_state().target_window
     local new_target = vim.api.nvim_win_call(cur_target, function()
       vim.cmd(direction .. " split")
       return vim.api.nvim_get_current_win()
     end)
 
-    minifiles.set_target_window(new_target)
+    MiniFiles.set_target_window(new_target)
   end
 
-  -- Adding `desc` will result into `show_help` entries
   local desc = "Split " .. direction
   vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
-end
-
---- Add custom text for highlighting comments
-M.insert_done_comment = function()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " DONE: " })
-end
-
-M.insert_fix_comment = function()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " FIX: " })
-end
-
-M.insert_hack_comment = function()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " HACK: " })
-end
-
-M.insert_note_comment = function()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " NOTE: " })
-end
-
-M.insert_todo_comment = function()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = cursor_pos[1] - 1
-  local col = cursor_pos[2]
-  vim.api.nvim_buf_set_text(0, line, col, line, col, { " TODO: " })
 end
 
 return M

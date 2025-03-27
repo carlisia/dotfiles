@@ -5,9 +5,12 @@ require "nvchad.options"
 -- and use vim.o for everything else.
 -- Using vim.opt for all options is not an error, but vim.o is a more reliable interface.
 local option = vim.o
-local opt = vim.opt
-option.cursorlineopt = "both"
+local g = vim.g
 
--- Markdown and other filetypes use conceallevel to make text easier to read.
--- ex: bold and not **bold**:
-opt.conceallevel = 1
+option.cursorlineopt = "both"
+g.markdown_folding = 1
+
+-- vim.g.vscode_snippets_exclude = { "all" }
+require("luasnip.loaders.from_vscode").lazy_load {
+  paths = vim.g.vscode_snippets_path or vim.fn.stdpath "config" .. "/snippets",
+}

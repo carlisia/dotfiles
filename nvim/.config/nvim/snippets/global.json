@@ -1,0 +1,27 @@
+{
+  "add todo": {
+    "prefix": "todo",
+    "body": [" TODO: $1"],
+    "description": "Add a todo mark"
+  },
+  "add done": {
+    "prefix": "done",
+    "body": [" DONE: $1"],
+    "description": "Add a done mark"
+  },
+  "add fix": {
+    "prefix": "fix",
+    "body": [" FIX: $1"],
+    "description": "Add a fix mark"
+  },
+  "add hack": {
+    "prefix": "hack",
+    "body": [" HACK: $1"],
+    "description": "Add a hack mark"
+  },
+  "add note": {
+    "prefix": "note",
+    "body": [" NOTE: $1"],
+    "description": "Add a note mark"
+  }
+}

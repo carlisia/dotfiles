@@ -1,37 +1,42 @@
 local M = {}
 
 M.lsp = {
-  --- used by snacks pickers:
+  -- snack pickers: search
   diagnostics = "<leader>lp",
+  -- snack pickers: lsp
+  declaration = "<leader>lc",
   definition = "<leader>ld",
   implementation = "<leader>li",
   references = "<leader>lr",
   symbols = "<leader>ls",
-  ws_symbols = "<leader>lS",
   type_definition = "<leader>lt",
-  ---- regular vim lsp
-  declaration = "<leader>lc",
+  ws_symbols = "<leader>lS",
+  -- other
   format = "<leader>lf",
-  toggle_inlay_hints = "\\y",
-  lsp_rename = "<leader>ln",
-  signature = "<leader>lg",
-  hover = "K",
+  -- toggles
   toggle_format_os = "\\f", -- on save
-  diag_go_next = "]d",
-  diag_go_prev = "[d",
-  ---
-  toggle_test_imp = "\\t",
+  toggle_inlay_hints = "\\y",
   toggle_outline = "\\o",
+  toggle_test_imp = "\\t",
 }
 
 M.vim = {
-  diagnostics = "<leader>lb",
+  code_action = "<leader>la",
+  diagnostics_buffer = "<leader>lb",
+  hover = "K",
+  lsp_rename = "<leader>ln",
+  signature = "<leader>lg",
+
+  diag_go_next = "]d",
+  diag_go_prev = "[d",
 }
 
 M.go = {
   run = {
     gonvim = {
-      rA = { "<cmd>GoCodeAction<cr>", "Code action" },
+      la = { "<cmd>GoCodeAction<cr>", "Code action" },
+      ln = { "<cmd>GoRename<cr>", "Rename identifier under cursor" },
+
       ra = { "<cmd>GoAddTag<cr>", "Add struct tags" },
       rb = { "<cmd>GoBuild<cr>", "Build" },
       rC = { "<cmd>GoClearTag<cr>", "Clear all struct tags" },
@@ -44,7 +49,6 @@ M.go = {
       rj = { "<cmd>GoJson2Struct<cr>", "Convert JSON to Go struct" },
       rL = { "<cmd>GoListImports<cr>", "List imports" },
       rl = { "<cmd>GoCodeLenAct<cr>", "Code lens" },
-      rn = { "<cmd>GoRename<cr>", "Rename identifier under cursor" },
       rr = { "<cmd>GoRun<cr>", "Run" },
       rR = {
         function()

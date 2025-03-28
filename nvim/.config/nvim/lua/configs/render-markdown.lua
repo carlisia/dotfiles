@@ -1,72 +1,32 @@
 local M = {}
 
--- local color_sign = "#ebfafa"
--- local color1_bg = "#f265b5"
--- local color2_bg = "#37f499"
--- local color3_bg = "#04d1f9"
--- local color4_bg = "#a48cf2"
--- local color5_bg = "#f1fc79"
--- local color6_bg = "#f7c67f"
--- local color_fg = "#323449"
-
-local color1_bg = "#f1fc79"
-local color2_bg = "#f7c67f"
-local color3_bg = "#37f499"
-local color4_bg = "#f265b5"
-local color5_bg = "#a48cf2"
-local color6_bg = "#04d1f9"
+local color1_bg = "#f7ca88"
+local color2_bg = "#a86c9a"
+local color3_bg = "#268bd2"
+local color4_bg = "#849900"
+local color5_bg = "#a16946"
+local color6_bg = "#656565"
 local color_fg = "#323449"
 
-vim.cmd(
-  string.format(
-    [[
-  hi! Headline1Bg guifg=%s guibg=%s
-  hi! Headline2Bg guifg=%s guibg=%s
-  hi! Headline3Bg guifg=%s guibg=%s
-  hi! Headline4Bg guifg=%s guibg=%s
-  hi! Headline5Bg guifg=%s guibg=%s
-  hi! Headline6Bg guifg=%s guibg=%s
-  hi! RenderMarkdownCodeInline guifg=%s guibg=%s
-]],
-    color1_bg,
-    color_fg,
-    color2_bg,
-    color_fg,
-    color3_bg,
-    color_fg,
-    color4_bg,
-    color_fg,
-    color5_bg,
-    color_fg,
-    color6_bg,
-    color_fg,
-    color6_bg,
-    color_fg
-  )
-)
+vim.cmd(string.format([[highlight Headline1Bg guifg=%s guibg=%s]], color_fg, color1_bg))
+vim.cmd(string.format([[highlight Headline2Bg guifg=%s guibg=%s]], color_fg, color2_bg))
+vim.cmd(string.format([[highlight Headline3Bg guifg=%s guibg=%s]], color_fg, color3_bg))
+vim.cmd(string.format([[highlight Headline4Bg guifg=%s guibg=%s]], color_fg, color4_bg))
+vim.cmd(string.format([[highlight Headline5Bg guifg=%s guibg=%s]], color_fg, color5_bg))
+vim.cmd(string.format([[highlight Headline6Bg guifg=%s guibg=%s]], color_fg, color6_bg))
 
-vim.cmd(string.format(
-  [[
-  hi! Headline1Fg cterm=bold gui=bold guifg=%s
-  hi! Headline2Fg cterm=bold gui=bold guifg=%s
-  hi! Headline3Fg cterm=bold gui=bold guifg=%s
-  hi! Headline4Fg cterm=bold gui=bold guifg=%s
-  hi! Headline5Fg cterm=bold gui=bold guifg=%s
-  hi! Headline6Fg cterm=bold gui=bold guifg=%s
-]],
-  color1_bg,
-  color2_bg,
-  color3_bg,
-  color4_bg,
-  color5_bg,
-  color6_bg
-))
+vim.cmd(string.format([[highlight Headline1Fg cterm=bold gui=bold guifg=%s]], color1_bg))
+vim.cmd(string.format([[highlight Headline2Fg cterm=bold gui=bold guifg=%s]], color2_bg))
+vim.cmd(string.format([[highlight Headline3Fg cterm=bold gui=bold guifg=%s]], color3_bg))
+vim.cmd(string.format([[highlight Headline4Fg cterm=bold gui=bold guifg=%s]], color4_bg))
+vim.cmd(string.format([[highlight Headline5Fg cterm=bold gui=bold guifg=%s]], color5_bg))
+vim.cmd(string.format([[highlight Headline6Fg cterm=bold gui=bold guifg=%s]], color6_bg))
 
 M.opts = {
   preset = "obsidian",
   completions = { lsp = { enabled = false } }, -- no need to add the nvim-cmp source if lsp based completions is enabled here.
   code = { width = "block" },
-
+  render_modes = true,
   indent = {
     -- Turn on / off org-indent-mode.
     enabled = true,
@@ -76,7 +36,7 @@ M.opts = {
     per_level = 2,
     -- Heading levels <= this value will not be indented.
     -- Use 0 to begin indenting from the very first level.
-    skip_level = 1,
+    skip_level = 2,
     -- Do not indent heading titles, only the body.
     skip_heading = false,
     -- Prefix added when indenting, one per level.
@@ -87,8 +47,8 @@ M.opts = {
 
   -- These are the colors for the eldritch colorscheme
   heading = {
-    sign = true, -- display column status/guide signs for the headers
-    -- icons = { "󰼏 ", "󰎨  ", "󰼑  ", "󰎲  ", "󰼓  ", "󰎴  " },
+    width = { "full", "full", "block" },
+    min_width = 30,
     backgrounds = {
       "Headline1Bg",
       "Headline2Bg",

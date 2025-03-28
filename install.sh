@@ -82,4 +82,4 @@ brew install stylua
 # Install omf and install themes, or use starship
 # Install a Nerd Font
 # Install richgo, eza, peco, ripgrep
-# brew install pngpaste (for obsidian)
+# brew install pngpaste (for obsidian) / kubectl

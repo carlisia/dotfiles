@@ -1,6 +1,7 @@
 --   @type NvPluginSpec[]
 local overrides = require "configs.overrides"
 local ufo_custom = require "configs.ufo"
+local linterConfig = vim.fn.stdpath "config" .. "/lint"
 
 return {
   -- Overrides of native plugins
@@ -36,6 +37,21 @@ return {
     config = function()
       require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
+    end,
+  },
+  {
+    "mfussenegger/nvim-lint",
+    config = function()
+      local lint = require "lint"
+      lint.linters_by_ft = {
+        markdown = { "markdownlint" },
+      }
+
+      local markdownlint = require("lint").linters.markdownlint
+      markdownlint.args = {
+        "--config=" .. linterConfig .. "/.markdownlint.yaml",
+        "--stdin",
+      }
     end,
   },
   { ---- my own config:
@@ -230,7 +246,6 @@ return {
         },
       }
       require("mini.surround").setup()
-      -- require("mini.surround").setup(require("configs.mini").surround)
       -- require("mini.bufremove").setup()
       -- require("mini.git").setup()
       -- require("mini.tabline").setup()

@@ -15,10 +15,11 @@ local function stbufnr()
   return vim.api.nvim_win_get_buf(winid)
 end
 
-M.cmp_ui = { -- Note: these don't seem to be applying.
+M.cmp_ui = {
   lspkind_text = true,
-  icons_left = true,
-  style = "default", -- default/flat_light/flat_dark/atom/atom_colored
+  icons = true,
+  icons_left = false,
+  style = "atom_colored", -- default/flat_light/flat_dark/atom/atom_colored
   format_colors = {
     tailwind = true,
   },

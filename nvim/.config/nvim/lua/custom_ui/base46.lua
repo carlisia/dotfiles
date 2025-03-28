@@ -1,6 +1,13 @@
 local M = {}
 
+-- cmd = { "Huefy", "Shades" }
+-- Note: the highlighting depends on the value of 'background'
 M.overrides = {
+  IncSearch = { fg = "#c94c16", bg = "#fff7a2", standout = true },
+  Search = { fg = "#86c1b9", bg = "#570f0e", standout = true },
+  DiagnosticVirtualTextWarn = { bg = "one_bg", fg = "#a48cf2", standout = false },
+
+  -- statusline
   St_NormalMode = { bg = "#66ff00" },
   St_NormalModeSep = { fg = "#FF160C" },
   St_InsertMode = { bg = "#FF160C" },
@@ -11,20 +18,6 @@ M.overrides = {
   St_TerminalModeSep = { fg = "#FF1CF3" },
   St_NTerminalMode = { bg = "#E27D00" },
   St_NTerminalModeSep = { fg = "#FF1CF3" },
-
-  --   Cursor = { bg = "white", fg = "black2" },
-  --   CursorLine = { bg = "black2" },
-  --   Visual = { bg = "black2" },
-  --   Comment = { italic = true },
-  --
-  --   -- Statusline highlights
-  --   ["St_cwd"] = { bg = "statusline_bg", fg = "#ffae00" },
-  --
-  --   -- Diff highlights
-  --   ["DiffAdd"] = { bg = "#22863a", fg = "none" },
-  --   ["DiffDelete"] = { bg = "none", fg = "#b31d28" },
-  --   ["DiffChange"] = { bg = "#1f2231", fg = "none" },
-  --   ["DiffText"] = { bg = "#394b70", fg = "none" },
 }
 
 return M

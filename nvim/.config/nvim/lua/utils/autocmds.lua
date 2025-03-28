@@ -1,3 +1,5 @@
+require "../configs/lsp_on_attach"
+
 local helper = require "utils.functions"
 local completion = require "utils.completion"
 
@@ -25,11 +27,14 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
----- LSP
--- Attach my keymappins for all LSPs
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = require("utils.lspkeymaps").setkeys,
+-- Lint
+-- https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#usage
+local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+  group = lint_augroup,
+  callback = function()
+    require("lint").try_lint()
+  end,
 })
 
 -- Mini explorer / split

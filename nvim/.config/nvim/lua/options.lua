@@ -14,3 +14,5 @@ g.markdown_folding = 1
 require("luasnip.loaders.from_vscode").lazy_load {
   paths = vim.g.vscode_snippets_path or vim.fn.stdpath "config" .. "/snippets",
 }
+
+g.root_spec = { "cwd" }

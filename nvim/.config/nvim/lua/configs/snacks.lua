@@ -158,7 +158,7 @@ M.opts = {
   },
   picker = {
     enabled = true,
-    filter = { filter = filter_fn }, -- applies to smart pickers (buffers/recent/files)
+    filter = { filter = filter_fn, cwd = true }, -- applies to smart pickers (buffers/recent/files)
     ignored = true,
     hidden = true,
     debug = { scores = false }, -- show scores in the list

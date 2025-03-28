@@ -58,15 +58,7 @@ M.setkeys = function(ev)
     return false
   end
 
-  local is_md = function(filetype)
-    if filetype == "markdown" or filetype == "markdown_inline" then
-      return true
-    end
-    return false
-  end
-
   local hasgonvim, _ = pcall(require, "go")
-  local hasobsidian, _ = pcall(require, "obsidian")
   if is_go(ft) and hasgonvim then -- map all the especialized go cmds:
     local go_k = require("utils.custom_bindings").go
     local subcategory_key = "gonvim"
@@ -87,7 +79,8 @@ M.setkeys = function(ev)
     map("n", k.toggle_inlay_hints, "<cmd>GoToggleInlay<cr><cmd>redrawstatus<cr>", silent_bufnr "Toggle 'inlay hints'")
     map("n", k.toggle_test_imp, "<cmd>GoAlt<cr>", silent_bufnr "Toggle 'test/implementation'")
     map("n", k.toggle_outline, "<cmd>GoPkgOutline<cr>", silent_bufnr "Toggle 'package outline'")
-  elseif is_md(ft) and hasobsidian then
+
+    -- Obsidiann workflow:
     for key, value in pairs(ob_k) do
       local command, description = value[1], value[2]
       map("n", "<leader>" .. key, command, silent_bufnr(description))

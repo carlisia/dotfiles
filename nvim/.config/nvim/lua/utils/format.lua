@@ -32,13 +32,16 @@ function M.format()
   local have_conform, conform = pcall(require, "conform")
   if have_conform then
     conform.format {
+      bufnr = buf,
       lsp_fallback = true,
       async = false,
       timeout_ms = 1000,
     }
+
     return
   end
 
+  -- Fallback to native LSP formatting if conform isn't available
   vim.lsp.buf.format {
     bufnr = buf,
   }

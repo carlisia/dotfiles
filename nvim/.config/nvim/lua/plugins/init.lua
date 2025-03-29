@@ -279,14 +279,38 @@ return {
   },
   {
     "anasinnyk/nvim-k8s-crd",
-    event = { "BufEnter *.yaml" },
     dependencies = { "neovim/nvim-lspconfig" },
-    opts = {
-      cache_dir = "~/.cache/k8s-schemas/",
-      k8s = {
-        file_mask = "*.yaml",
-      },
+    config = function()
+      require("k8s-crd").setup {
+        cache_dir = "~/.cache/k8s-schemas/", -- Local directory relative to the current working directory
+        k8s = {
+          file_mask = nil,
+        },
+      }
+    end,
+  },
+  {
+    "someone-stole-my-name/yaml-companion.nvim",
+    ft = { "yaml" },
+    dependencies = {
+      { "neovim/nvim-lspconfig" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
     },
+    config = function()
+      require("yaml-companion").setup {
+        lspconfig = {
+          capabilities = {
+            textDocument = {
+              foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+              },
+            },
+          },
+        },
+      }
+    end,
   },
   {
     "hedyhli/outline.nvim",

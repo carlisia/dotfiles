@@ -26,6 +26,16 @@ local sqlls = {
 servers["gopls"] = gopls
 servers["sqlls"] = sqlls
 servers["marksman"] = {}
+servers["yamlls"] = {
+  settings = {
+    yaml = {
+      schemas = {
+        ["https://raw.githubusercontent.com/kedro-org/kedro/develop/static/jsonschema/kedro-catalog-0.17.json"] = "conf/**/*catalog*",
+        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+      },
+    },
+  },
+}
 
 servers["jsonls"] = {
   settings = {
@@ -44,6 +54,11 @@ servers["jsonls"] = {
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init
   opts.capabilities = configs.capabilities
+
+  opts.capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
 
   require("lspconfig")[name].setup(opts)
 end

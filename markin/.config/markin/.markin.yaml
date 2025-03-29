@@ -1,0 +1,7 @@
+project_dir: $VAULT_MAIN
+daily_note_path: "Flows/Daily Notes"
+daily_note_name: "daily.md"
+section: "## 💡 🧠 🔥 Fleeting Ideas"
+line: "- New item"
+position: after-heading
+create_section_if_missing: true

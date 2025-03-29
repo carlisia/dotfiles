@@ -85,3 +85,4 @@ brew install stylua
 # brew install pngpaste (for obsidian) / kubectl / tmux + tmp plugin manager
 #
 # Note to self: look at research in "MacOs install scripts research" note.
+# Font: CodeNewRoman Nerd Font Propo

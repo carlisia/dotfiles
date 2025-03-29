@@ -23,6 +23,18 @@ M.base46 = {
     -- "solarized_light",
   },
 
+  changed_themes = {
+    solarized_osaka = {
+      -- base_16 = { base08 = "#ab4642" },
+      base_30 = {
+        -- red = "#mycol",
+        -- black2 = "#mycol",
+      },
+    },
+
+    onedark = { ... },
+  },
+
   hl_override = highlights.overrides,
 }
 

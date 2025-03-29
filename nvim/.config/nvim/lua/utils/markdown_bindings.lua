@@ -46,6 +46,5 @@ M.obsidian_workflow = {
     "📥 Inbox",
   },
 }
--- DiffRemoved   xxx guifg=#db302d guibg=#16151b
 
 return M

@@ -45,11 +45,17 @@ return {
       local lint = require "lint"
       lint.linters_by_ft = {
         markdown = { "markdownlint" },
+        yaml = { "yamllint" },
       }
 
       local markdownlint = require("lint").linters.markdownlint
       markdownlint.args = {
         "--config=" .. linterConfig .. "/.markdownlint.yaml",
+        "--stdin",
+      }
+      local yamllint = require("lint").linters.yamllint
+      yamllint.args = {
+        "-c" .. linterConfig .. "/.yamllint.yaml",
         "--stdin",
       }
     end,

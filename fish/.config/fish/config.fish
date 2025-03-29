@@ -1,6 +1,8 @@
 set -x SHELL /opt/homebrew/bin/fish
 set -gx PATH /opt/homebrew/bin $PATH
 
+set fish_greeting
+
 starship init fish | source
 set -x XDG_CONFIG_HOME $HOME/.config
 set -x CDPATH ~/.config # magic!
@@ -32,6 +34,9 @@ set -x PATH $PATH ~/.local/share/nvim/lsp_servers/yamlls/node_modules/yaml-langu
 set -gx PATH /opt/homebrew/bin $PATH
 set -gx PATH /opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 
+set -gx PATH $HOME//.tmuxifier/bin $PATH
+eval (tmuxifier init - fish)
+
 set -x GOPATH $HOME/code
 set -x GOBIN $GOPATH/bin
 set -x PATH $GOBIN $PATH
@@ -48,7 +53,6 @@ end
 alias p=peco
 
 alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
-alias c="code ."
 
 alias k kubectl
 alias gp "k get pods"

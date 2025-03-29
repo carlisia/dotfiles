@@ -82,4 +82,6 @@ brew install stylua
 # Install omf and install themes, or use starship
 # Install a Nerd Font
 # Install richgo, eza, peco, ripgrep
-# brew install pngpaste (for obsidian) / kubectl
+# brew install pngpaste (for obsidian) / kubectl / tmux + tmp plugin manager
+#
+# Note to self: look at research in "MacOs install scripts research" note.

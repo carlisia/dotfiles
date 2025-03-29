@@ -7,6 +7,8 @@ M.overrides = {
   Search = { fg = "#86c1b9", bg = "#570f0e", standout = true },
   DiagnosticVirtualTextWarn = { bg = "one_bg", fg = "#a48cf2", standout = false },
 
+  DiffRemoved = { "#c94c16", bg = "#fff7a2" },
+
   -- statusline
   St_NormalMode = { bg = "#66ff00" },
   St_NormalModeSep = { fg = "#FF160C" },

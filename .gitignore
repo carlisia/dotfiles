@@ -1,4 +1,4 @@
-nvim/.config/nvim/tmp
+./nvim/.config/nvim/tmp
 
 *.so
 *.swo
@@ -6,12 +6,15 @@ nvim/.config/nvim/tmp
 
 google-cloud-sdk
 
-gh/.config/gh/hosts.yml
+/gh/.config/gh/hosts.yml
 
-other-configs/scripts/*.*.txt
+/other-configs/scripts/*.*.txt
 
 yaml-language-server
 
 newchad.sh
 
-lazygit/.config/lazygit/state.yml
+/lazygit/.config/lazygit/state.yml
+
+/tmp
+

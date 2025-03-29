@@ -18,6 +18,11 @@ unmap("n", "gcc")
 map({ "n", "v" }, "<Tab>", "za")
 map({ "n", "v" }, "U", "<C-r>")
 
+---- nvchad theme switcher
+map("n", "<leader>v", function()
+  require("nvchad.themes").open()
+end, { desc = "telescope nvchad themes" })
+
 ---- nvchad tabufline
 map("n", "<leader>x", function()
   require("nvchad.tabufline").close_buffer()

@@ -10,7 +10,7 @@ M.base46 = {
   theme_toggle = {
     "solarized_osaka", -- high contrast, heavy on the red
     -- "oxocarbon", -- same as above, low red
-    -- "bearded-arc",
+    -- "solarized_osaka",
     -- "oceanic-next",
     --- for when tired:
     -- "neofusion",

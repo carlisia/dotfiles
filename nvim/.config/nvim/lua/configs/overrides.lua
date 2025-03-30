@@ -17,6 +17,7 @@ M.conform = {
     markdown = { "prettierd" },
     sql = { "sqlint" },
     sh = { "shfmt" },
+    toml = { "taplo" },
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
     yaml = { "prettierd" },

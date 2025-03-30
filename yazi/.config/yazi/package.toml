@@ -1,0 +1,89 @@
+[[plugin.deps]]
+use = "Reledia/glow"
+rev = "c76bf4f"
+hash = "a6b78bf9af5390e3a85a6951fbb7b93"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "2730199"
+hash = "e0d2c8d7e7afe5b82270367098d1a821"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-filter"
+rev = "2730199"
+hash = "f0c4b41b5d19a3144958383333eff6e7"
+
+[[plugin.deps]]
+use = "imsi32/yatline"
+rev = "6b0fc1e"
+hash = "ab115c6cc77f5710c27f39dfa2f3d4d"
+
+[[plugin.deps]]
+use = "imsi32/yatline-githead"
+rev = "3b0eb7c"
+hash = "bfd30c396bbe2af526cb949d97ce3dcf"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "2730199"
+hash = "2f1053f89d1a301a648ab181d0948e38"
+
+[[plugin.deps]]
+use = "lpanebr/yazi-plugins:yatline-symlink"
+rev = "ca18a2c"
+hash = "32939ad5b4738c2595a904997fd30ea6"
+
+[[plugin.deps]]
+use = "wekauwau/yatline-tokyo-night"
+rev = "19dbd25"
+hash = "5f00a80a79b9f7fd8e24d6fa5dbb3ae"
+
+[[plugin.deps]]
+use = "wakaka6/yatline-dracula"
+rev = "82dde5a"
+hash = "bc0f8b6847f57a3519050b18ab85ae8"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "2730199"
+hash = "1f3dad061209081a6b04dd6ff2cb06c7"
+
+[[plugin.deps]]
+use = "hankertrix/augment-command"
+rev = "926b1d1"
+hash = "a8a1927e911080120847e813dbc39bad"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "2730199"
+hash = "5c9dda1a587b8f5b6f63e3d5375bda88"
+
+[[plugin.deps]]
+use = "AnirudhG07/custom-shell"
+rev = "6b4550a"
+hash = "43019cca17a4d7b41746c2e0a6b8f33f"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "68326b4"
+hash = "2ac87e1b3a61f5887472899e86535d29"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:dracula"
+rev = "68326b4"
+hash = "53e1f10ae0f6abd406e463fceca8622a"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-macchiato"
+rev = "68326b4"
+hash = "3ec21bcfd2735cfcbab61faaf43e59e4"
+
+[[flavor.deps]]
+use = "tkapias/nightfly"
+rev = "599b8ad"
+hash = "d1a9e05ecbbd63bc5bb85a54e7f1e33a"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-latte"
+rev = "68326b4"
+hash = "5dffea1e87c50b18b8bb1599f6d4881a"

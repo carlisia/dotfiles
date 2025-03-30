@@ -1,0 +1,83 @@
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+# Since Yazi selects **the first matching key** to run, prepend always 
+# has a higher priority than default, and append always has a lower priority than default.
+
+
+
+
+[manager]
+prepend_keymap = [
+# custom
+  { on = ["e", "c"], run = "cd ~/.dotfiles/yazi", desc = "Edit the Yazi config" },
+  { on = ["g", "c"], run = "cd ~/.config", desc = "Go to the config dir" },
+  { on = ["g", "v"], run = "cd ~/.dotfiles/tilde/dot_config", desc = "Go to dotfiles" },
+
+## augument-command - plugin
+# For the default descriptions of the commands, 
+# you can refer to 
+# [Yazi's default keymap.toml](https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/keymap-default.toml) 
+# file.
+
+# Essentially, all you need to do to use this plugin is to add plugin 
+# augment-command --, with a space at the end, in front of a Yazi command, 
+# such as enter, which results in plugin augment-command -- enter'.
+# [[manager.prepend_keymap]]
+# on = "l"
+# run = "plugin augment-command -- enter"
+# desc = "Enter a directory and skip directories with only a single subdirectory"
+  { on = ["<Left>"], run = "plugin augment-command -- leave --no-skip", desc = "Go back to the parent directory" },
+  { on = "<Enter>", run = "plugin augment-command -- enter", desc = "Enter the child directory, or open the file" },
+  { on = "<S-Enter>", run = "plugin augment-command -- enter --interactive", desc = "Enter the child directory, or open the file interactively" },
+  { on = "<Right>", run = "plugin augment-command -- enter --no-skip", desc = "Enter the child directory, or open the file" },
+  { on = "<Space>", run = ["toggle", "plugin augment-command -- arrow 1"], desc = "Toggle the current selection state" },
+  { on = "k", run = "plugin augment-command -- arrow -1", desc = "Move cursor up" },
+  { on = "j", run = "plugin augment-command -- arrow 1", desc = "Move cursor down" },
+  { on = "K", run = "plugin augment-command -- parent_arrow -1", desc = "Move cursor up in the parent directory" },
+  { on = "J", run = "plugin augment-command -- parent_arrow 1", desc = "Move cursor down in the parent directory" },
+  { on = "l", run = "plugin augment-command -- enter", desc = "Enter the child directory, or open the file" },
+  { on = "h", run = "plugin augment-command -- leave", desc = "Go back to the parent directory" },
+  { on = "t", run = "plugin augment-command -- tab_create --current", desc = "Create a new tab with CWD" },
+  { on = "O", run = "plugin augment-command -- open --interactive", desc = "Open selected files interactively" },
+  { on = "p", run = "plugin augment-command -- paste", desc = "Paste the files" },
+  { on = "P", run = "plugin augment-command -- paste --force", desc = "Paste the files (overwrite if the destination exists)" },
+  { on = "_", run = "plugin augment-command -- create", desc = "Create a file or directory" },
+  { on = "+", run = "plugin augment-command -- create", desc = "Create a file or directory" },
+  { on = "x", run = "plugin augment-command -- remove", desc = "Move the files to the trash" },
+  { on = "X", run = "plugin augment-command -- remove --permanently", desc = "Permanently delete the files" },
+  { on = "o", run = "plugin augment-command -- editor", desc = "Open files with the default editor" },
+  { on = "i", run = "plugin augment-command -- pager", desc = "Open files with the default pager" },
+  { on = "r", run = "plugin augment-command -- rename --cursor=before_ext", desc = "Rename a file or directory" },
+  { on = "R", run = "plugin augment-command -- rename --empty=all", desc = "Rename file and remove the whole file name" },
+  { on = "I", run = "plugin augment-command -- rename --cursor=start", desc = "Rename file at the start of the file name" },
+  { on = "A", run = "plugin augment-command -- rename --cursor=end", desc = "Rename file with the cursor at the end of the file name" },
+  { on = "C", run = "plugin augment-command -- rename --empty=all", desc = "Rename file and remove the whole file name" },
+  # { on = ["c", "m"], run = "plugin augment-command -- rename --empty=stem --cursor=start", desc = "Rename file and remove the file name" },
+
+# relative-motion - plugin
+  { on = "1", run = "plugin relative-motions -- 1", desc = "Move in relative steps" },
+  { on = "2", run = "plugin relative-motions -- 2", desc = "Move in relative steps" },
+  { on = "3", run = "plugin relative-motions -- 3", desc = "Move in relative steps" },
+  { on = "4", run = "plugin relative-motions -- 4", desc = "Move in relative steps" },
+  { on = "5", run = "plugin relative-motions -- 5", desc = "Move in relative steps" },
+  { on = "6", run = "plugin relative-motions -- 6", desc = "Move in relative steps" },
+  { on = "7", run = "plugin relative-motions -- 7", desc = "Move in relative steps" },
+  { on = "8", run = "plugin relative-motions -- 8", desc = "Move in relative steps" },
+  { on = "9", run = "plugin relative-motions -- 9", desc = "Move in relative steps" }, 
+
+# yank - plugin
+  { on = "=", run = "hardlink", desc = "Hardlink yanked files" },
+  { on = "u", run = ["toggle_all --state=off", "unyank"], desc = "Unselect all files and also unyank cut files" },
+  { on = "d", run = "yank --cut", desc = "Cut the selected files" },
+
+  { on = "z", run = "plugin fzf", desc = "Jump to a directory, or reveal a file using fzf" },
+
+  { on = "f", run = "plugin smart-filter", desc = "Smart filter" },
+
+  { on = "c", run = "plugin chmod", desc = "Chmod on selected files" },
+
+  { on = [ "'", "1" ], run = "plugin custom-shell -- custom fish 'cd' --wait", desc = "Open $SHELL here" },
+]
+
+[input]
+prepend_keymap = [{ on = ["<Esc>"], run = "close", desc = "Cancel input" }]

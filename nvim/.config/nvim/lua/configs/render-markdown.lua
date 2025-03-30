@@ -29,7 +29,7 @@ M.opts = {
   render_modes = true,
   indent = {
     -- Turn on / off org-indent-mode.
-    enabled = true,
+    enabled = false,
     -- Additional modes to render indents.
     render_modes = true,
     -- Amount of additional padding added for each heading level.

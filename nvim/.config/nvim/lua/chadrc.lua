@@ -6,11 +6,11 @@ local ui = require "custom_ui.statusline"
 
 -- Powerful Collection of 68 beautifully crafted themes, extensible and compiled to bytecode
 M.base46 = {
-  theme = "solarized_osaka",
+  theme = "catppuccin",
   theme_toggle = {
-    "solarized_osaka", -- high contrast, heavy on the red
+    "catppuccin", -- high contrast, heavy on the red
     -- "oxocarbon", -- same as above, low red
-    -- "solarized_osaka",
+    -- "catppuccin",
     -- "oceanic-next",
     --- for when tired:
     -- "neofusion",
@@ -23,17 +23,17 @@ M.base46 = {
     -- "solarized_light",
   },
 
-  changed_themes = {
-    solarized_osaka = {
-      -- base_16 = { base08 = "#ab4642" },
-      base_30 = {
-        -- red = "#mycol",
-        -- black2 = "#mycol",
-      },
-    },
+  -- changed_themes = {
+  --   solarized_osaka = {
+  --     -- base_16 = { base08 = "#ab4642" },
+  --     base_30 = {
+  --       -- red = "#mycol",
+  --       -- black2 = "#mycol",
+  --     },
+  --   },
 
-    onedark = { ... },
-  },
+  --   onedark = { ... },
+  -- },
 
   hl_override = highlights.overrides,
 }

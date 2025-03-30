@@ -1,0 +1,5 @@
+fish -c 'll;exit'
+fish -c 'la;exit'
+fish -c ';exit'
+fish -c 'cd;read'
+fish -c 'cd;exit'

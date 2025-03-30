@@ -1,0 +1,12 @@
+# "$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+[flavor]
+# light = "catppuccin-latte"
+light = "nightfly"
+# dark = "nightfly"
+# dark = "catppuccin-macchiato"
+dark = "catppuccin-mocha"
+# dark = "dracula"
+
+# border_style  = { fg = "#1d3b53" }
+# border_style = { fg = "#8087a2" }

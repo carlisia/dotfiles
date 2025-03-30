@@ -1,3 +1,5 @@
+-- [nvim-lspconfig/doc/configs.md at master · neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md)
+
 local configs = require "nvchad.configs.lspconfig"
 
 local servers = {}
@@ -26,6 +28,7 @@ local sqlls = {
 servers["gopls"] = gopls
 servers["sqlls"] = sqlls
 servers["marksman"] = {}
+servers["taplo"] = {}
 servers["yamlls"] = {
   settings = {
     yaml = {

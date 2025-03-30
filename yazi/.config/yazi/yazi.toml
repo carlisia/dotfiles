@@ -1,0 +1,29 @@
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[manager]
+linemode = "size_and_mtime"
+ratio = [1, 2, 3]
+sort_by = "natural"
+sort_reverse = false
+sort_dir_first = true
+show_hidden = true
+show_symlink = true
+scrolloff = 8               # Set the scroll offset to 8 from the bottom and top
+
+[preview] # Configuration for the file previewer
+wrap = "yes"      # Wrap long lines for text previews
+max_width = 3000  # Make the maximum size of the images larger
+max_height = 3000
+
+[plugin]
+prepend_previewers = [{ name = "*.md", run = "glow" }]
+
+[[plugin.prepend_fetchers]]
+id = "git"
+name = "*"
+run = "git"
+
+[[plugin.prepend_fetchers]]
+id = "git"
+name = "*/"
+run = "git"

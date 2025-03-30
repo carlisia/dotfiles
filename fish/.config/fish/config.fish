@@ -7,6 +7,14 @@ starship init fish | source
 set -x XDG_CONFIG_HOME $HOME/.config
 set -x CDPATH ~/.config # magic!
 
+# set -U fish_key_bindings fish_vi_key_bindings
+# set -eU fish_key_bindings
+# fish_default_key_bindings
+function fish_user_key_bindings
+    fish_vi_key_bindings
+    commandline -f forward-char  # Enters insert mode by default
+end
+
 set -x VAULT_MAIN ~/Documents/02-Areas/vaults/second_brain
 
 # Use same preset as nvim/nvchad:

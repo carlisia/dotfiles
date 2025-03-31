@@ -45,6 +45,20 @@ fish_add_path $GOPATH $GOBIN
 fish_add_path ~/.tmuxifier/bin
 eval (tmuxifier init - fish)
 
+# Other tools
+# # Yazi shell wrapper:
+# 'y' to enter
+# 'q' to change and quit
+# 'Q' to quit wo change
+function y
+	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+	yazi $argv --cwd-file="$tmp"
+	if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+		builtin cd -- "$cwd"
+	end
+	rm -f -- "$tmp"
+end
+
 # ----- alaliases
 
 alias g="git status -sb"

@@ -6,34 +6,11 @@ local ui = require "custom_ui.statusline"
 
 -- Powerful Collection of 68 beautifully crafted themes, extensible and compiled to bytecode
 M.base46 = {
-  theme = "catppuccin",
+  theme = "bearded-arc",
   theme_toggle = {
-    "catppuccin", -- high contrast, heavy on the red
-    -- "oxocarbon", -- same as above, low red
-    -- "catppuccin",
-    -- "oceanic-next",
-    --- for when tired:
-    -- "neofusion",
-    -- "nightowl",
-    -- "onedark",
-    ------ light themes
-    -- "ayu_light",
+    "bearded-arc",
     "default-light",
-    -- "one_light",
-    -- "solarized_light",
   },
-
-  -- changed_themes = {
-  --   solarized_osaka = {
-  --     -- base_16 = { base08 = "#ab4642" },
-  --     base_30 = {
-  --       -- red = "#mycol",
-  --       -- black2 = "#mycol",
-  --     },
-  --   },
-
-  --   onedark = { ... },
-  -- },
 
   hl_override = highlights.overrides,
 }

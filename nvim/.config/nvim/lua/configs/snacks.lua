@@ -33,7 +33,7 @@ end
 
 M.opts = {
   dashboard = {
-    enabled = true,
+    enabled = false,
     pane_gap = 20,
     preset = {
       -- Defaults to a picker that supports `fzf-lua`, `telescope.nvim` and `mini.pick`

@@ -1,0 +1,68 @@
+# Fonts
+font-family = "Fira Code"
+font-family-bold = "Fira Code"
+font-family-italic = "Maple Mono"
+font-family-bold-italic = "Maple Mono"
+font-family = "Symbols Nerd Font Mono"
+font-size = 13
+adjust-underline-position = 4
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Theme
+# theme = catppuccin-frappe
+# theme = breeze
+# theme = nord
+theme = tokyonight_moon
+cursor-invert-fg-bg = true
+bold-is-bright = true
+background-opacity = 0.95
+
+# keybindings
+keybind = clear
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+j=goto_split:bottom
+keybind = ctrl+shift+k=goto_split:top
+keybind = ctrl+shift+l=goto_split:right
+keybind = super+shift+t=new_tab
+keybind = super+shift+h=previous_tab
+keybind = super+shift+l=next_tab
+keybind = super+shift+comma=move_tab:-1
+keybind = super+shift+period=move_tab:1
+keybind = super+shift+c=copy_to_clipboard
+keybind = super+shift+v=paste_from_clipboard
+keybind = super+shift+enter=new_split:auto
+keybind = super+shift+i=inspector:toggle
+keybind = super+shift+m=toggle_split_zoom
+keybind = super+shift+r=reload_config
+keybind = super+shift+c=open_config
+keybind = super+shift+s=write_screen_file:open
+keybind = super+shift+w=close_surface
+keybind = ctrl+shift+q+=quit
+
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
+
+## Global:
+## "p" for "peak"
+keybind = global:ctrl+shift+p=toggle_quick_terminal
+
+# Window
+window-padding-y = 2,0
+window-padding-balance = true
+window-decoration = auto
+window-save-state = always
+initial-window = true
+quit-after-last-window-closed = true
+quick-terminal-autohide = false
+macos-icon = holographic
+
+# Tabs
+gtk-single-instance = true
+gtk-wide-tabs = false
+macos-titlebar-style = tabs
+adw-toolbar-style = raised-border
+
+# Other
+ shell-integration-features = cursor,sudo,title

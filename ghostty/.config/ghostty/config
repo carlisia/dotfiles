@@ -65,4 +65,4 @@ macos-titlebar-style = tabs
 adw-toolbar-style = raised-border
 
 # Other
- shell-integration-features = cursor,sudo,title
+shell-integration-features = cursor,sudo,title

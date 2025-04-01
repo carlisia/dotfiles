@@ -64,7 +64,7 @@ function y
 	rm -f -- "$tmp"
 end
 
-# ----- alaliases
+# ----- aliases
 
 alias g="git status -sb"
 
@@ -78,7 +78,7 @@ alias pip="pip3"
 alias vl="nvim leetcode.nvim"
 
 # Tools
-alias j="z" #zelda (jump to projects)
+alias j="z" #jethrokuan/z (jump to projects)
 
 alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
 

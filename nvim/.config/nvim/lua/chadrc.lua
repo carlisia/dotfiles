@@ -6,9 +6,9 @@ local ui = require "custom_ui.statusline"
 
 -- Powerful Collection of 68 beautifully crafted themes, extensible and compiled to bytecode
 M.base46 = {
-  theme = "bearded-arc",
+  theme = "catppuccin",
   theme_toggle = {
-    "bearded-arc",
+    "catppuccin",
     "default-light",
   },
 

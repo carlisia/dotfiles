@@ -7,6 +7,11 @@ require "nvchad.options"
 local option = vim.o
 local g = vim.g
 
+vim.api.nvim_set_hl(0, "SnacksPickerDir", { link = "Text" })
+vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { link = "Text" })
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20" -- just in case
+
+vim.opt.termguicolors = true
 option.cursorlineopt = "both"
 g.markdown_folding = 1
 

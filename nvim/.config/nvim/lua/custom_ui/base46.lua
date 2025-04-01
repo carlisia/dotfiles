@@ -19,7 +19,7 @@ M.overrides = {
   St_NTerminalMode = { bg = "#E27D00" },
   St_NTerminalModeSep = { fg = "#FF1CF3" },
 
-  Visual = { bg = "#e97a78", fg = "NONE", bold = false },
+  Visual = { bg = "#5a5e63", fg = "NONE", bold = false },
 }
 
 return M

@@ -19,7 +19,13 @@ M.overrides = {
   St_NTerminalMode = { bg = "#E27D00" },
   St_NTerminalModeSep = { fg = "#FF1CF3" },
 
-  Visual = { bg = "#5a5e63", fg = "NONE", bold = false },
+  Visual = { bg = "#5a5e63" },
+
+  TbBufOn = { fg = "#FF1CF3", bold = true },
+  TbBufOnModified = { fg = "#FF160C" },
+  TbBufOffModified = { fg = "#FF160C" },
+
+  DiagnosticInfo = { fg = "#a48cf2" },
 }
 
 return M

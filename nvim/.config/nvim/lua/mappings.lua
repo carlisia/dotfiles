@@ -31,22 +31,51 @@ map("n", "<leader>v", function()
   require("nvchad.themes").open()
 end, { desc = "telescope nvchad themes" })
 
----- nvchad tabufline
+---- nvchad tabufline ------ buffers --------
 map("n", "<leader>x", function()
   require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
 
--- TODO: this needs fixing
--- see above, now I map tab to 'za'
 map("n", "<M-Tab>", function()
   require("nvchad.tabufline").next()
 end, { desc = "buffer goto next", noremap = true })
--- tabufline
--- unmap("n", "<leader>b")
-map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "buffer new" })
 
----- buffers
-map("n", "<leader>bb", ":b#<CR>", { desc = "Toggle buffers" })
+map("n", "<leader>bh", function()
+  local current_win = vim.api.nvim_get_current_win()
+  local buf = vim.api.nvim_get_current_buf()
+
+  -- Try to move left; if fails, create the split
+  vim.cmd "wincmd h"
+  local new_win = vim.api.nvim_get_current_win()
+
+  if new_win == current_win then
+    vim.cmd "leftabove vsplit"
+  end
+
+  vim.cmd "wincmd h"
+  vim.cmd("buffer " .. buf)
+end, { desc = "Send to <-- " })
+
+map("n", "<leader>bl", function()
+  local current_win = vim.api.nvim_get_current_win()
+  local buf = vim.api.nvim_get_current_buf()
+
+  -- Try to move right; if fails, create the split
+  vim.cmd "wincmd l"
+  local new_win = vim.api.nvim_get_current_win()
+
+  if new_win == current_win then
+    -- No right split existed, so create one
+    vim.cmd "vsplit"
+  end
+
+  -- Now go to the right (new or existing) and load buffer
+  vim.cmd "wincmd l"
+  vim.cmd("buffer " .. buf)
+end, { desc = "Send to -->)" })
+
+map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "buffer new" })
+map("n", "<leader>bt", ":b#<CR>", { desc = "Toggle buffers" })
 
 ---- Terminal
 map({ "n", "t" }, "tt", helper.toggle_floating_term, { desc = "Toggle floating term" })

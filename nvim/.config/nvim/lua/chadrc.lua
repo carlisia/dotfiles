@@ -9,7 +9,7 @@ M.base46 = {
   theme = "catppuccin",
   theme_toggle = {
     "catppuccin",
-    "default-light",
+    "one_light",
   },
 
   hl_override = highlights.overrides,

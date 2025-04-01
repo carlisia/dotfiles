@@ -497,21 +497,21 @@ M.keys = {
 
   ---- Buffers (wip)
   {
-    "<leader>sb",
+    "<leader>bb",
     function()
       Snacks.picker.lines()
     end,
     desc = "Buffer Lines",
   },
   {
-    "<leader>sB",
+    "<leader>bB",
     function()
       Snacks.picker.grep_buffers()
     end,
     desc = "Grep Open Buffers",
   },
   {
-    "<leader>bl",
+    "<leader>bs",
     function()
       Snacks.picker.buffers()
     end,

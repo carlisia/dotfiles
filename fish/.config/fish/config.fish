@@ -33,6 +33,11 @@ function fish_user_key_bindings
     commandline -f forward-char  # Enters insert mode by default
 end
 
+# shortcut s/command rm/\rm
+function \rm --wraps=command
+    command rm $argv
+end
+
 # Startship prompt
 starship init fish | source
 
@@ -74,6 +79,8 @@ alias vl="nvim leetcode.nvim"
 
 # Tools
 alias j="z" #zelda (jump to projects)
+
+alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
 
 # ----- abbr
 

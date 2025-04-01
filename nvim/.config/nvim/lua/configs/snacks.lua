@@ -185,6 +185,27 @@ M.opts = {
           cycle = false,
         },
         exclude = excluded,
+        ---
+        actions = {
+          safe_delete = function(picker)
+            local selected = picker:selected { fallback = true }
+            local has_root = vim.iter(selected):any(function(s)
+              return not s.parent
+            end)
+            if has_root then
+              vim.print "This is root! 🧨"
+              return
+            end
+            picker:action "explorer_del"
+          end,
+        },
+        win = {
+          list = {
+            keys = {
+              ["d"] = "safe_delete",
+            },
+          },
+        },
       },
       projects = {
         -- confirm = "picker",

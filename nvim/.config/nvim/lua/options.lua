@@ -6,12 +6,13 @@ require "nvchad.options"
 -- Using vim.opt for all options is not an error, but vim.o is a more reliable interface.
 local option = vim.o
 local g = vim.g
+local opt = vim.opt
 
 vim.api.nvim_set_hl(0, "SnacksPickerDir", { link = "Text" })
 vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { link = "Text" })
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20" -- just in case
 
-vim.opt.termguicolors = true
+opt.termguicolors = true
 option.cursorlineopt = "both"
 g.markdown_folding = 1
 
@@ -21,3 +22,4 @@ require("luasnip.loaders.from_vscode").lazy_load {
 }
 
 g.root_spec = { "cwd" }
+opt.clipboard:append { "unnamed", "unnamedplus" }

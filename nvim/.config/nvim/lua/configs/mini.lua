@@ -136,6 +136,10 @@ M.clue = {
   },
 }
 
+vim.cmd [[
+hi! MiniHipatternsCustDone guifg=#000000 guibg=#00CC00 gui=bold
+hi! MiniHipatternsCustNote guifg=#FF4000 guibg=#FFFF00 gui=bold
+]]
 M.hipatterns = {
   highlighters = {
     done = { pattern = "%f[%w]()DONE()%f[%W]", group = "MiniHipatternsCustDone" },

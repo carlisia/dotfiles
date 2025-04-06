@@ -1,5 +1,4 @@
-local helper = require "utils.functions"
-local completion = require "utils.completion"
+local toggles = require "utils.toggles"
 
 local map = vim.keymap.set
 local unmap = vim.keymap.del
@@ -16,9 +15,10 @@ map("n", "<leader>;", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 map("i", "kj", "<ESC>")
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
-map({ "n", "v" }, "\\a", completion.toggle, { desc = "Toggle 'autocomplete'" })
+map({ "n", "v" }, "\\a", toggles.autocomplete, { desc = "Toggle 'autocomplete'" })
 map({ "n", "v" }, "\\u", "<Cmd>DBUIToggle<CR>", { desc = "Toggle 'DB ui'" })
-map({ "n", "v" }, "\\q", helper.toggle_quickfix, { desc = "Toggle 'quickfix'" })
+map({ "n", "v" }, "\\q", toggles.loclist, { desc = "Toggle 'loclist'" })
+map({ "n", "v" }, "\\Q", toggles.quickfix, { desc = "Toggle 'quickfix'" })
 
 unmap({ "n", "v", "o" }, "gc")
 unmap("n", "gcc")
@@ -54,7 +54,7 @@ map("n", "<leader>bh", function()
 
   vim.cmd "wincmd h"
   vim.cmd("buffer " .. buf)
-end, { desc = "Send to <-- " })
+end, { desc = "Send to <--" })
 
 map("n", "<leader>bl", function()
   local current_win = vim.api.nvim_get_current_win()
@@ -72,24 +72,57 @@ map("n", "<leader>bl", function()
   -- Now go to the right (new or existing) and load buffer
   vim.cmd "wincmd l"
   vim.cmd("buffer " .. buf)
-end, { desc = "Send to -->)" })
+end, { desc = "Send to -->" })
 
 map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "buffer new" })
 map("n", "<leader>bt", ":b#<CR>", { desc = "Toggle buffers" })
+map("n", "<leader>fs", "<cmd>normal! ggVG<CR>", { desc = "Select all" })
+map("n", "<leader>fy", ":%y+<CR>", { desc = "Yank all" })
+map("n", "<leader>fp", 'gg"_dG"+P', { desc = "Replace all" })
+map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
+
+map("n", "<leader>f%", function()
+  local pattern
+  vim.ui.input({ prompt = "Substitute pattern: " }, function(input1)
+    if not input1 or input1 == "" then
+      return
+    end
+    pattern = input1
+
+    local match_id = vim.fn.matchadd("IncSearch", pattern)
+
+    vim.ui.input({ prompt = "Replace with: " }, function(input2)
+      if not input2 or input2 == "" then
+        vim.notify("Substitution cancelled", vim.log.levels.INFO)
+        vim.fn.matchdelete(match_id)
+        return
+      end
+
+      vim.cmd(string.format("%%s/%s/%s/g", pattern, input2))
+      vim.defer_fn(function()
+        vim.fn.matchdelete(match_id)
+      end, 300)
+    end)
+  end)
+end, { desc = "Substitute in file" })
 
 ---- Terminal
-map({ "n", "t" }, "tt", helper.toggle_floating_term, { desc = "Toggle floating term" })
-map({ "n", "t" }, "tj", helper.tggle_horizontal_term, { desc = "Toggle horizontal term" })
-map({ "n", "t" }, "tl", helper.toggle_vertical_term, { desc = "Toggle vertical term" })
+local term = require "nvchad.term"
+map({ "n", "t" }, "<M-f>", function() -- float
+  term.toggle { pos = "float", id = "floatTerm" }
+end, { desc = "Toggle floating term" })
+map({ "n", "t" }, "<M-b>", function() -- bottom
+  term.toggle { pos = "sp", id = "htoggleTerm" }
+end, { desc = "Toggle horizontal term" })
+map({ "n", "t" }, "<M-s>", function() -- side
+  term.toggle { pos = "vsp", id = "vtoggleTerm" }
+end, { desc = "Toggle vertical term" })
 
 ---- mini
-map("n", "\\e", helper.toggle_mini_explorer, { desc = "Toggle 'mini explorer'" })
+map("n", "\\e", toggles.mini_explorer, { desc = "Toggle 'mini explorer'" })
 
 map("n", "<leader>-a", "<Cmd>lua MiniSessions.write(vim.fn.input('Session Name > '))<CR>", { desc = "Add a session" })
 map("n", "<leader>-d", "<Cmd>lua MiniSessions.select('delete')<CR>", { desc = "Delete a session" })
 map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })
 map("n", "<leader>-u", "<Cmd>lua MiniSessions.select('write')<CR>", { desc = "Update a session" })
 map("n", "<leader>-p", "<Cmd>lua MiniSessions.read(MiniSessions.get_latest())<CR>", { desc = "Pop the latest session" })
-
-vim.keymap.set("n", "<leader>fa", ":%y+<CR>", { desc = "Select all" })
-vim.keymap.set("n", "<leader>fp", 'gg"_dG"+P', { desc = "Replace all" })

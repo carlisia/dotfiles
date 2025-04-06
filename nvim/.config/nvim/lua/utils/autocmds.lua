@@ -1,7 +1,4 @@
-require "../configs/lsp_on_attach"
-
 local helper = require "utils.functions"
-local completion = require "utils.completion"
 
 MiniFiles = MiniFiles
 
@@ -16,7 +13,6 @@ vim.api.nvim_create_autocmd("User", {
       Snacks.debug.backtrace()
     end
     vim.print = _G.dd -- Override print to use snacks for `:=` command
-
     Snacks.toggle.diagnostics():map "\\p"
     -- Markdown and other filetypes use conceallevel to make text easier to read:
     Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 1 }):map "\\v"
@@ -49,14 +45,6 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    if type(completion.toggle) == "function" then
-      completion.toggle()
-    end
-  end,
-})
-
 local set_mark = function(id, path, desc)
   MiniFiles.set_bookmark(id, path, { desc = desc })
 end
@@ -74,5 +62,16 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "sql", "mysql", "plsql" },
   callback = function()
     vim.bo.commentstring = "-- %s"
+  end,
+})
+
+--- LSP
+--- reacts to all LSP attaches
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    local bufnr = ev.buf
+    require("configs.lspconfig_on_attach").on_attach(client, bufnr)
   end,
 })

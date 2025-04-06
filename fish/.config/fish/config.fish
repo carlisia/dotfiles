@@ -6,7 +6,7 @@ set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx CDPATH $XDG_CONFIG_HOME  # magic!
 
 # Editor
-set -gx EDITOR (which nvim)
+set -gx EDITOR nvim
 set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
 
@@ -23,8 +23,16 @@ fish_add_path $HOME
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/dotfiles
 fish_add_path /opt/homebrew/bin
-fish_add_path /usr/local/bin
 fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+fish_add_path /usr/local/bin
+
+# Go
+set -x GOPATH ~/go
+set -x GOBIN $GOPATH/bin
+fish_add_path $GOPATH $GOBIN
+
+# Rust
+fish_add_path $HOME/.cargo/bin
 
 # Fish
 set fish_greeting
@@ -40,11 +48,6 @@ end
 
 # Startship prompt
 starship init fish | source
-
-# Go
-set -x GOPATH ~/go
-set -x GOBIN $GOPATH/bin
-fish_add_path $GOPATH $GOBIN
 
 # Tmuxifier
 fish_add_path ~/.tmuxifier/bin

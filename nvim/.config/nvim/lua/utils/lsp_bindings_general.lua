@@ -2,7 +2,6 @@ local M = {}
 
 M.vim = {
   { "<leader>la", "vim.lsp.buf.code_action", "Code action" },
-  { "<leader>lb", "vim.diagnostic.setloclist", "Buffer diagnostics" },
   { "K", "vim.lsp.buf.hover", "Hover" },
   { "<leader>ln", "require('nvchad.lsp.renamer')", "Rename identifier under cursor" },
   { "<leader>lg", "vim.lsp.buf.signature_help", "Signature" },

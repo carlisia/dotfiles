@@ -90,6 +90,15 @@ M.clue = {
     { mode = "n", keys = "]w", postkeys = "]" },
     { mode = "n", keys = "[b", postkeys = "[" },
     { mode = "n", keys = "[w", postkeys = "[" },
+
+    { mode = "n", keys = "<leader>b", desc = "Buffers..." },
+    { mode = "n", keys = "<leader>g", desc = "Git..." },
+    { mode = "n", keys = "<leader>f", desc = "Files..." },
+    { mode = "n", keys = "<leader>l", desc = "LSP..." },
+    { mode = "n", keys = "<leader>n", desc = "Notifications..." },
+    { mode = "n", keys = "<leader>p", desc = "Proj/Todos..." },
+    { mode = "n", keys = "<leader>s", desc = "Snacks..." },
+    { mode = "n", keys = "<leader>-", desc = "Sessions..." },
   },
   triggers = {
     -- Built-in completion

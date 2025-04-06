@@ -138,6 +138,11 @@ M.opts = {
   -- bigfile adds a new filetype bigfile to Neovim that triggers when the file is larger than the configured size
   -- This automatically prevents things like LSP and Treesitter attaching to the buffer:
   bigfile = { enabled = true },
+  image = {
+    enabled = true,
+    force = true, -- try displaying the image, even if the terminal does not support it
+    img_dirs = { "img", "images", "assets", "static", "public", "media", "attachments" },
+  },
   input = { enabled = true },
   notifier = {
     enabled = true,

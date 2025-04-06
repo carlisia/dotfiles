@@ -98,7 +98,19 @@ M.clue = {
     { mode = "n", keys = "<leader>n", desc = "Notifications..." },
     { mode = "n", keys = "<leader>p", desc = "Proj/Todos..." },
     { mode = "n", keys = "<leader>s", desc = "Snacks..." },
+    { mode = "n", keys = "<leader>w", desc = "Dashboards..." },
     { mode = "n", keys = "<leader>-", desc = "Sessions..." },
+
+    -- These are language dependent - adding here for namespacing
+    -- Go
+    { mode = "n", keys = "<leader>d", desc = "-- Code debug..." },
+    { mode = "n", keys = "<leader>m", desc = "-- Go mod..." },
+    { mode = "n", keys = "<leader>r", desc = "-- Code run..." },
+    { mode = "n", keys = "<leader>t", desc = "-- Code test..." },
+    { mode = "n", keys = "<leader>u", desc = "-- Code utils..." },
+    -- Images/markdown
+    { mode = "n", keys = "<leader>o", desc = "-- Obsidian..." },
+    { mode = "n", keys = "<leader>i", desc = "-- Images..." },
   },
   triggers = {
     -- Built-in completion

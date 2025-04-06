@@ -1,6 +1,30 @@
+local helper = require "utils.functions"
+
 local M = {}
 
-M.obsidian_workflow = {
+--- Dashboards
+M.notes_dashboards = {
+  wf = {
+    function()
+      require "pickers.fleeting_notes"()
+    end,
+    "🌀 Fleeting notes",
+  },
+  wg = {
+    function()
+      require "pickers.gratitude"()
+    end,
+    "🌼 Gratitude logs",
+  },
+  wi = {
+    function()
+      require "pickers.inbox"()
+    end,
+    "📥 Inbox",
+  },
+}
+
+M.obsidian_workflows = {
   on = { ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>", "Convert to note template" },
   of = { ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>", "clean up title" },
   om = {
@@ -25,26 +49,13 @@ M.obsidian_workflow = {
     end,
     "Move to...",
   },
+}
 
-  --- Dashboards
-  df = {
-    function()
-      require "pickers.fleeting_notes"()
-    end,
-    "🌀 Fleeting notes",
-  },
-  dg = {
-    function()
-      require "pickers.gratitude"()
-    end,
-    "🌼 Gratitude logs",
-  },
-  di = {
-    function()
-      require "pickers.inbox"()
-    end,
-    "📥 Inbox",
-  },
+M.images = {
+  is = { helper.select_image, "Select an image to insert" },
+  ip = { "<cmd>PasteImage<cr>", "Paste an image" },
+  ir = { helper.rename_image_under_cursor, "Rename an image" },
+  id = { helper.delete_image_under_cursor, "Delete an image" },
 }
 
 return M

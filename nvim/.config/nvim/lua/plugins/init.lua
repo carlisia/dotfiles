@@ -360,6 +360,41 @@ return {
   },
   --- Markdown
   {
+    "HakonHarnes/img-clip.nvim",
+    event = "BufEnter",
+    ft = { "markdown", "md", "mdx" },
+    cmd = "PasteImage",
+    config = function()
+      require("img-clip").setup {
+        default = {
+          dir_path = "assets",
+          template = "![$FILE_NAME_NO_EXT]($FILE_PATH)",
+          show_dir_path_in_prompt = true,
+          use_cursor_in_template = false,
+          insert_mode_after_paste = false,
+          copy_images = true,
+          download_images = true,
+          drag_and_drop = {
+            enabled = true,
+            insert_mode = true,
+          },
+        },
+        filetypes = {
+          markdown = {
+            url_encode_path = true,
+            template = "![$FILE_NAME_NO_EXT]($FILE_PATH)",
+            download_images = true,
+            copy_images = true,
+            drag_and_drop = {
+              enabled = true,
+              insert_mode = true,
+            },
+          },
+        },
+      }
+    end,
+  },
+  {
     "epwalsh/obsidian.nvim",
     version = "*", -- latest release instead of latest commit
     cmd = "Obsidian",

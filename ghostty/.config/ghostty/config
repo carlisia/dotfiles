@@ -9,7 +9,7 @@ font-size = 14
 adjust-underline-position = 4
 
 # Mouse
-mouse-hide-while-typing = true
+mouse-hide-while-typing = false 
 
 # Theme
 # theme = catppuccin-frappe

@@ -1,0 +1,37 @@
+// daily
+layout {
+  default_tab_template {
+    pane size=1 {
+      plugin location="zjstatus"
+    }
+    children
+    pane size=4 {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  tab name="Daily" {
+    pane split_direction="vertical" {
+      pane name="Files" command="yazi" {
+        args "~/Documents"
+      }
+      pane name="Today" command="nvim" {
+        cwd "${VAULT_MAIN}"
+      }
+    }
+  }
+
+  tab name="Dashboard" {
+    pane split_direction="vertical" {
+      pane split_directifn="horizontal" {
+        pane name="Gratitudes"
+        pane name="ToDos"
+
+      }
+      pane split_direction="horizontal" {
+        pane name="Achievements"
+        pane name="Fleeting Notes"
+      }
+    }
+  }
+}

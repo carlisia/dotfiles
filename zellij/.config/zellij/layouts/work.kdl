@@ -1,0 +1,41 @@
+// work
+layout {
+  default_tab_template {
+    pane size=1 borderless=true {
+      plugin location="zjstatus"
+    }
+    children
+    pane size=2 borderless=true {
+      plugin location="status-bar" {
+        classic true
+      }
+    }
+  }
+  tab name="Work" hide_floating_panes=false {
+    // pane name="Code" cwd="${PROJECTS}"
+    pane split_direction="vertical" {
+      pane name="Code" command="nvim"
+      pane name="Daily Notes" cwd="${VAULT_MAIN}" size="20%"
+    }
+    floating_panes {
+      pane name="Working Pad" command="git" {
+        args "log" "--pretty=oneline" "-n 20" "--graph" "--abbrev-commit"
+        x "10%"
+        y "10%"
+        width 130
+      }
+    }
+  }
+  tab name="Dashboard" {
+    pane split_direction="vertical" {
+      pane split_direction="horizontal" {
+        pane name="Gratitudes"
+        pane name="ToDos"
+      }
+      pane split_direction="horizontal" {
+        pane name="Achievements"
+        pane name="Fleeting Notes"
+      }
+    }
+  }
+}

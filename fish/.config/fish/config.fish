@@ -69,7 +69,10 @@ end
 
 # ----- aliases
 
+# Git
 alias g="git status -sb"
+alias ggl "git log --pretty=oneline -n 20 --graph --abbrev-commit"
+alias ggsl "git shortlog --summary --numbered"
 
 # Visual Studio Code – path escape
 alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
@@ -82,6 +85,7 @@ alias vl="nvim leetcode.nvim"
 
 # Tools
 alias j="z" #jethrokuan/z (jump to projects)
+alias zz="zellij"
 
 alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
 
@@ -91,10 +95,6 @@ alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`.
 abbr vim nvim
 abbr vi nvim
 abbr v nvim
-
-# Git
-abbr ggl "git log --pretty=oneline -n 20 --graph --abbrev-commit"
-abbr ggsl "git shortlog --summary --numbered"
 
 # Kubernetes
 abbr kk kubectl

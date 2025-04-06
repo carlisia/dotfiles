@@ -1,10 +1,11 @@
+# https://github.com/ghostty-org/ghostty/blob/d6e76858164d52cff460fedc61ddf2e560912d71/src/input/key.zig#L255
 # Fonts
 font-family = "Fira Code"
 font-family-bold = "Fira Code"
 font-family-italic = "Maple Mono"
 font-family-bold-italic = "Maple Mono"
 font-family = "Symbols Nerd Font Mono"
-font-size = 13
+font-size = 14
 adjust-underline-position = 4
 
 # Mouse
@@ -25,24 +26,27 @@ keybind = ctrl+shift+h=goto_split:left
 keybind = ctrl+shift+j=goto_split:bottom
 keybind = ctrl+shift+k=goto_split:top
 keybind = ctrl+shift+l=goto_split:right
-keybind = super+shift+t=new_tab
+keybind = super+t=new_tab
 keybind = super+shift+h=previous_tab
 keybind = super+shift+l=next_tab
 keybind = super+shift+comma=move_tab:-1
 keybind = super+shift+period=move_tab:1
-keybind = super+shift+c=copy_to_clipboard
-keybind = super+shift+v=paste_from_clipboard
 keybind = super+shift+enter=new_split:auto
-keybind = super+shift+i=inspector:toggle
-keybind = super+shift+m=toggle_split_zoom
 keybind = super+shift+r=reload_config
 keybind = super+shift+c=open_config
 keybind = super+shift+s=write_screen_file:open
-keybind = super+shift+w=close_surface
+keybind = super+w=close_surface
 keybind = ctrl+shift+q+=quit
-
+keybind = super+n=new_window
 keybind = super+c=copy_to_clipboard
 keybind = super+v=paste_from_clipboard
+
+# toggles
+keybind = super+shift+i=inspector:toggle
+# zoom in on the current tab:
+keybind = super+shift+m=toggle_split_zoom 
+keybind = super+shift+t=toggle_tab_overview
+#keybind = super+shift+v=toggle_visibility
 
 ## Global:
 ## "p" for "peak"
@@ -66,3 +70,4 @@ adw-toolbar-style = raised-border
 
 # Other
 shell-integration-features = cursor,sudo,title
+copy-on-select = false

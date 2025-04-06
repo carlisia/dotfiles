@@ -1,6 +1,4 @@
 -- Adapted from: https://github.com/desdic/neovim/blob/e22e397238bc8a53e2bbff885992756e99067014/lua/core/format.lua
-local helper = require "utils.functions"
-
 local toggle_states = {
   autocomplete = {
     [true] = "🔠 ",
@@ -67,6 +65,33 @@ M.loclist = function()
   end)
 end
 
+M.quickfix = function()
+  vim.schedule(function()
+    local is_open = false
+    for _, win in ipairs(vim.fn.getwininfo()) do
+      if win.quickfix == 1 then
+        is_open = true
+        break
+      end
+    end
+
+    if is_open then
+      vim.cmd "cclose"
+    else
+      -- Populate quickfix list from diagnostics
+      vim.diagnostic.setqflist { open = false } -- don't open yet
+
+      -- Check if we have items
+      local qflist = vim.fn.getqflist()
+      if not vim.tbl_isempty(qflist) then
+        vim.cmd "copen"
+      else
+        vim.notify("No workspace diagnostics", vim.log.levels.WARN)
+      end
+    end
+  end)
+end
+
 -- Manually enable/disable
 vim.g.cmptoggle = true
 M.autocomplete = function()
@@ -119,19 +144,13 @@ function M.inlay_emoji()
 end
 
 M.mini_explorer = function()
-  local ok, minifiles = pcall(require, "mini.files")
-  if not ok then
-    vim.notify("mini.files not found", vim.log.levels.ERROR)
-    return
-  end
-
   if vim.bo.ft == "minifiles" then
-    minifiles.close()
+    MiniFiles.close()
   else
     local file = vim.api.nvim_buf_get_name(0)
     local file_exists = vim.fn.filereadable(file) ~= 0
-    minifiles.open(file_exists and file or nil)
-    minifiles.reveal_cwd()
+    MiniFiles.open(file_exists and file or nil)
+    MiniFiles.reveal_cwd()
   end
 end
 

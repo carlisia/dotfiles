@@ -10,6 +10,9 @@ local opt = vim.opt
 
 vim.api.nvim_set_hl(0, "SnacksPickerDir", { link = "Text" })
 vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { link = "Text" })
+vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { link = "Comment" })
+vim.api.nvim_set_hl(0, "SnacksPickerGitStatusUntracked", { link = "Special" })
+
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20" -- just in case
 
 opt.termguicolors = true

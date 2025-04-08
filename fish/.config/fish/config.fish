@@ -49,10 +49,6 @@ end
 # Startship prompt
 starship init fish | source
 
-# Tmuxifier
-fish_add_path ~/.tmuxifier/bin
-eval (tmuxifier init - fish)
-
 # Other tools
 # # Yazi shell wrapper:
 # 'y' to enter

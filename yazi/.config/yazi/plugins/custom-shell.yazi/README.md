@@ -170,8 +170,8 @@ desc = "Run echo hi"
 ```toml
 [[manager.prepend_keymap]]
 on = [ "'", "2" ]
-run = "plugin custom-shell -- custom nu 'tmux'"
-desc = "Run tmux"
+run = "plugin custom-shell -- custom nu 'zellij'"
+desc = "Run Zellij"
 ```
 
 To make the shell wait for your `ls` command, you can set the keymappings as:

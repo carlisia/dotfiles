@@ -1,0 +1,31 @@
+# https://github.com/sharkdp/bat
+
+#--theme="TwoDark"
+--theme="Catppuccin Macchiato"
+# when adding a new theme, must update the binary cache: bat cache --build
+
+# Show line numbers, git changes, and syntax highlight
+--style=full
+
+# Always use color
+--color=always
+
+# Disable paging for short files
+--paging=auto
+
+# Don’t wrap lines by default
+--wrap=never
+
+# Use tabs instead of spaces (or tweak if you want soft tabs)
+--tabs=4
+
+# Include Git changes in gutter (modified lines, etc)
+--decorations=always
+
+# Allow less to handle mouse/scrolling (optional, if using pager)
+--pager="less -FR"
+
+# Show non-printable characters like tabs and trailing whitespace
+# (Optional — useful for debugging code formatting)
+# --show-nonprintable
+

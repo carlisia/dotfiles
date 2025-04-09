@@ -85,6 +85,16 @@ alias zz="zellij"
 
 alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
 
+# bat
+alias cat='bat'
+alias less='bat'
+alias head='bat --line-range :10'
+alias tail='bat --line-range -10:'
+alias batdiff='git diff --name-only | xargs bat'
+
+#previewer for fzf:
+set -x FZF_DEFAULT_OPTS '--preview "bat --style=numbers --color=always --line-range :500 {}"'
+
 # ----- abbr
 
 # Editor

@@ -6,6 +6,10 @@ This is a terminal file manager built in Rust.
 
 [Shell wrapper | Yazi](https://yazi-rs.github.io/docs/quick-start#shell-wrapper)
 
+> [!TIP]
+> To reload settings:
+> `yazi --clear-cache`
+
 ## Theme flavors
 
 [yazi-rs/flavors: Some Yazi flavors maintained by community.](https://github.com/yazi-rs/flavors)

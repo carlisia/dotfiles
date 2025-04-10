@@ -2,8 +2,8 @@
 
 [manager]
 linemode = "size_and_mtime"
-ratio = [1, 2, 3]
-sort_by = "natural"
+ratio = [2, 3, 4]
+sort_by = "alphabetical"
 sort_reverse = false
 sort_dir_first = true
 show_hidden = true

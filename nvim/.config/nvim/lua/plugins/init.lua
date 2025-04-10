@@ -283,11 +283,40 @@ return {
     },
     config = function()
       require("leetcode").setup {
-        lang = "go",
+        lang = "golang",
       }
     end,
   },
   --- Tools
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "folke/snacks.nvim",
+    },
+    keys = {
+      {
+        "<leader>yo",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        -- Open in the current working directory
+        "<leader>yw",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        "\\,",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
+      },
+    },
+    configs = function()
+      require("yazi").setup()
+    end,
+  },
   {
     "ramilito/kubectl.nvim",
     config = function()

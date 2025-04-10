@@ -80,7 +80,7 @@ M.lsp = {
 
 M.go_keys = {
   -- debug
-  da = "\\d",
+  da = "\\g",
   db = "<leader>db",
   dc = "<leader>dc",
   de = "<leader>de",

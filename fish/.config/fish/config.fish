@@ -14,14 +14,13 @@ set -gx SUDO_EDITOR $EDITOR
 set -gx GPG_TTY (tty)
 
 # Projects
-set -gx PROJECTS $HOME/code/src/github.com/
+set -gx PROJECTS $HOME/code/src/github.com
 set -gx VAULT_MAIN ~/Documents/02-Areas/vaults/second_brain
 
 # Path
 set -x fish_user_paths
 fish_add_path $HOME
 fish_add_path $HOME/.local/bin
-fish_add_path $HOME/dotfiles
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
 fish_add_path /usr/local/bin
@@ -49,23 +48,7 @@ end
 # Startship prompt
 starship init fish | source
 
-# Other tools
-# # Yazi shell wrapper:
-# 'y' to enter
-# 'q' to change and quit
-# 'Q' to quit wo change
-function y
-	set tmp (mktemp -t "yazi-cwd.XXXXXX")
-	yazi $argv --cwd-file="$tmp"
-	if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-		builtin cd -- "$cwd"
-	end
-	rm -f -- "$tmp"
-end
-
-# ----- aliases
-
-# Git
+# ----- aliases# Git
 alias g="git status -sb"
 alias ggl "git log --pretty=oneline -n 20 --graph --abbrev-commit"
 alias ggsl "git shortlog --summary --numbered"

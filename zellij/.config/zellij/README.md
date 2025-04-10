@@ -12,13 +12,13 @@
 
 I love how this terminal emulator is very visually oriented out of the box, and makes it easy/easier to expand on the defaults. In particular, I am loving being able to swap layouts on the fly. It took me a bit of thinking to figure out how layouts and swap work so I could build my own just following the documentation, but that was because it took me a while to find out that they had examples/defaults on their repo. I go over how I use them here:
 
-    [feat(ui): swap layouts and stacked panes by imsnif · Pull Request #2167 · zellij-org/zellij](https://github.com/zellij-org/zellij/pull/2167)
+[feat(ui): swap layouts and stacked panes by imsnif · Pull Request #2167 · zellij-org/zellij](https://github.com/zellij-org/zellij/pull/2167)
 
 ## Status/tab bar styling plugin
 
 You can see what my tab bar looks like and how I implemented it by looking at this:
 
-    [🎨 Community Showcase · dj95/zjstatus · Discussion #44](https://github.com/dj95/zjstatus/discussions/44#discussioncomment-12770553)
+[🎨 Community Showcase · dj95/zjstatus · Discussion #44](https://github.com/dj95/zjstatus/discussions/44#discussioncomment-12770553)
 
 ## Other awesome plugins I'm using
 

@@ -63,7 +63,7 @@ quick-terminal-autohide = false
 macos-icon = holographic
 
 # Tabs
-gtk-single-instance = true
+gtk-single-instance = false 
 gtk-wide-tabs = false
 macos-titlebar-style = tabs
 adw-toolbar-style = raised-border

@@ -4,6 +4,8 @@ local M = {}
 
 local vault_main = vim.env.VAULT_MAIN or ""
 vault_main = vim.fs.normalize(vault_main):gsub("/$", "")
+local gh_projects = vim.env.PROJECTS or ""
+gh_projects = vim.fs.normalize(gh_projects):gsub("/$", "")
 
 local excluded = require("configs.obsidian").exclude
 
@@ -12,6 +14,9 @@ local root_patterns = {
   "go.mod",
   "package.json",
   ".obsidian",
+  "init.lua",
+  "package.json",
+  "Makefile",
 }
 vim.g.root_spec = { root_patterns, "lsp", "cwd" }
 
@@ -103,7 +108,7 @@ M.opts = {
       { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
       {
         pane = 2,
-        icon = " ",
+        icon = "🪐 ",
         title = "Leet",
         -- section = "",
         indent = 2,
@@ -111,7 +116,7 @@ M.opts = {
         key = "l",
         action = ":Leet",
       },
-      -- { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 }, -- not working :(
+      { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
       {
         pane = 2,
         icon = " ",
@@ -213,7 +218,7 @@ M.opts = {
         },
       },
       projects = {
-        -- confirm = "picker",
+        -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#projects
         recent = true,
         matcher = {
           frecency = true, -- use frecency boosting
@@ -222,8 +227,19 @@ M.opts = {
         },
         dev = { "~/.config/", "~/code/src/github.com/" },
         projects = {
-          "~/.config/nvim",
           vault_main,
+          gh_projects,
+          gh_projects .. "/exploring",
+          gh_projects .. "/learning",
+          gh_projects .. "/collaborating",
+          gh_projects .. "/contributing",
+          gh_projects .. "/carlisia/dotfiles",
+          "~/.config/nvim",
+          "~/Documents/01-Projects/",
+          "~/Documents/01-Projects/Learning",
+          "~/Documents/02-Areas/",
+          "~/Documents/03-Resources/",
+          "~/Documents/04-Archive/",
         },
         patterns = root_patterns,
       },
@@ -515,11 +531,11 @@ M.keys = {
 
   ---- Buffers
   {
-    "<leader>y",
+    "<leader>c",
     function()
       Snacks.bufdelete()
     end,
-    desc = "Buffer close y",
+    desc = "Buffer close c",
   },
   {
     "<leader>br",

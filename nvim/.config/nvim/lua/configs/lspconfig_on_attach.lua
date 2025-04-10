@@ -52,6 +52,14 @@ M.on_attach = function(_, bufnr)
     map("n", keybind, command, silent_bufnr(description))
   end
 
+  local md_keys = require "utils.lsp_bindings_markdown"
+
+  local nd_k = md_keys.notes_dashboards
+  for key, value in pairs(nd_k) do
+    local command, description = value[1], value[2]
+    map("n", "<leader>" .. key, command, silent_bufnr(description))
+  end
+
   -- Language-specific handing
   local ft = vim.bo[bufnr].filetype
 
@@ -79,12 +87,6 @@ M.on_attach = function(_, bufnr)
 
   if is_md() then
     local md_keys = require "utils.lsp_bindings_markdown"
-
-    local nd_k = md_keys.notes_dashboards
-    for key, value in pairs(nd_k) do
-      local command, description = value[1], value[2]
-      map("n", "<leader>" .. key, command, silent_bufnr(description))
-    end
 
     -- Obsidiann workflow:
     local ob_k = md_keys.obsidian_workflows

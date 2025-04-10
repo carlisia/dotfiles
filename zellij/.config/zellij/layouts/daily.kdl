@@ -1,15 +1,16 @@
 // daily
 layout {
   default_tab_template {
-    pane size=1 {
+    pane size=1 borderless=true {
       plugin location="zjstatus"
     }
     children
-    pane size=4 {
-      plugin location="zellij:status-bar"
+    pane size=2 borderless=true {
+      plugin location="status-bar" {
+        classic false
+      }
     }
   }
-
   tab name="Daily" {
     pane split_direction="vertical" {
       pane name="Files" command="yazi" {
@@ -20,13 +21,11 @@ layout {
       }
     }
   }
-
   tab name="Dashboard" {
     pane split_direction="vertical" {
-      pane split_directifn="horizontal" {
+      pane split_direction="horizontal" {
         pane name="Gratitudes"
         pane name="ToDos"
-
       }
       pane split_direction="horizontal" {
         pane name="Achievements"
@@ -34,4 +33,4 @@ layout {
       }
     }
   }
-}
+ c

@@ -7,7 +7,7 @@ layout {
     children
     pane size=2 borderless=true {
       plugin location="status-bar" {
-        classic true
+        classic false
       }
     }
   }
@@ -36,6 +36,20 @@ layout {
         pane name="Achievements"
         pane name="Fleeting Notes"
       }
+    }
+  }
+  tab name="Learning" hide_floating_panes=false {
+    // pane name="Code" cwd="${PROJECTS}"
+    pane split_direction="vertical" {
+      pane name="Code" cwd="${PROJECTS}/learning" command="nvim"
+      pane name="Notes" cwd="${VAULT_MAIN}" size="40%"
+    }
+  }
+  tab name="Exploring" hide_floating_panes=false {
+    // pane name="Code" cwd="${PROJECTS}"
+    pane split_direction="vertical" {
+      pane name="Code" cwd="${PROJECTS}/exploring" command="nvim"
+      pane name="Notes" cwd="${VAULT_MAIN}" size="40%"
     }
   }
 }

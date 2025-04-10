@@ -5,7 +5,7 @@ tab_template name="ui" {
   children
   pane size=2 borderless=true {
     plugin location="status-bar" {
-      classic true
+      classic false
     }
   }
 }

@@ -1,4 +1,6 @@
 # https://github.com/ghostty-org/ghostty/blob/d6e76858164d52cff460fedc61ddf2e560912d71/src/input/key.zig#L255
+# https://ghostty.org/docs/config/keybind
+
 # Fonts
 font-family = "Fira Code"
 font-family-bold = "Fira Code"
@@ -22,16 +24,6 @@ background-opacity = 0.95
 
 # keybindings
 keybind = clear
-keybind = ctrl+shift+h=goto_split:left
-keybind = ctrl+shift+j=goto_split:bottom
-keybind = ctrl+shift+k=goto_split:top
-keybind = ctrl+shift+l=goto_split:right
-keybind = super+t=new_tab
-keybind = super+shift+h=previous_tab
-keybind = super+shift+l=next_tab
-keybind = super+shift+comma=move_tab:-1
-keybind = super+shift+period=move_tab:1
-keybind = super+shift+enter=new_split:auto
 keybind = super+shift+r=reload_config
 keybind = super+shift+c=open_config
 keybind = super+shift+s=write_screen_file:open
@@ -44,9 +36,8 @@ keybind = super+v=paste_from_clipboard
 # toggles
 keybind = super+shift+i=inspector:toggle
 # zoom in on the current tab:
-keybind = super+shift+m=toggle_split_zoom 
-keybind = super+shift+t=toggle_tab_overview
-#keybind = super+shift+v=toggle_visibility
+keybind = cmd+shift+t=toggle_tab_overview
+keybind = cmd+shift+v=toggle_visibility
 
 ## Global:
 ## "p" for "peak"
@@ -61,12 +52,28 @@ initial-window = true
 quit-after-last-window-closed = true
 quick-terminal-autohide = false
 macos-icon = holographic
-
-# Tabs
 gtk-single-instance = false 
-gtk-wide-tabs = false
 macos-titlebar-style = tabs
 adw-toolbar-style = raised-border
+
+# Tabs
+keybind = super+t=new_tab
+keybind = super+shift+h=previous_tab
+keybind = super+shift+l=next_tab
+keybind = super+shift+comma=move_tab:-1
+keybind = super+shift+period=move_tab:1
+
+gtk-wide-tabs = false
+
+# Splits
+keybind = alt+shift+h=goto_split:left
+keybind = alt+shift+j=goto_split:bottom
+keybind = alt+shift+k=goto_split:top
+keybind = alt+shift+l=goto_split:right
+keybind = super+shift+enter=new_split:auto
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+keybind = cmd+shift+m=toggle_split_zoom 
 
 # Other
 shell-integration-features = cursor,sudo,title

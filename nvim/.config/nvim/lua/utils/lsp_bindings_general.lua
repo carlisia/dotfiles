@@ -26,7 +26,7 @@ M.lsp_keys = {
 local toggles = require "utils.toggles"
 local _, snacks = pcall(require, "snacks")
 M.lsp = {
-  toggle_outline = { "<cmd>Outline<cr>", "Toggle 'outline'" },
+  toggle_outline = { "<cmd>Outline!<cr>", "Toggle 'outline'" },
   toggle_format_os = { toggles.autoformat_on_save, "Toggle 'format on save'" },
   diagnostics = {
     function()

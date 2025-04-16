@@ -25,30 +25,36 @@ M.notes_dashboards = {
 }
 
 M.obsidian_workflows = {
-  on = { ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>", "Convert to note template" },
-  of = { ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>", "clean up title" },
-  om = {
-    function()
-      local full_path = vim.fn.expand "%:p" -- full path to current file
-      local file_name = vim.fn.expand "%:t" -- just the file name
-      local input = vim.fn.input {
-        prompt = "Move this file to...  > ",
-        completion = "dir", -- force directory completion
-      }
+  -- General note actions
+  oae = { "<cmd>ObsidianExtractNote<cr>", "Extract selection to new note" },
+  oar = { "<cmd>ObsidianRename<cr>", "Rename note and update backlinks" },
 
-      if input == nil or input == "" then
-        return -- user canceled
-      end
+  -- Daily note commands
+  odt = { "<cmd>ObsidianToday<cr>", "Open/create today's note" },
+  odd = { "<cmd>ObsidianDailies<cr>", "List daily notes" },
+  odm = { "<cmd>ObsidianTomorrow<cr>", "Open/create tomorrow's note" },
+  ody = { "<cmd>ObsidianYesterday<cr>", "Open/create yesterday's note" },
 
-      local target_dir = vim.fn.fnamemodify(input, ":p") -- ensure absolute path
-      local target_path = target_dir .. "/" .. file_name
+  -- Links
+  olh = { "<cmd>ObsidianFollowLink hsplit<cr>", "Open link horizontal" },
+  olv = { "<cmd>ObsidianFollowLink vsplit<cr>", "Open link vertical" },
 
-      vim.cmd("saveas " .. vim.fn.fnameescape(target_path))
-      vim.fn.delete(full_path)
-      vim.cmd "bd#"
-    end,
-    "Move to...",
-  },
+  olb = { "<cmd>ObsidianBacklinks<cr>", "Show backlinks to current note" },
+  oll = { "<cmd>ObsidianLinks<cr>", "List links in current buffer" },
+  oln = { "<cmd>ObsidianLinkNew<cr>", "New linked note from selection" },
+  ols = { "<cmd>ObsidianLink<cr>", "Link visual selection to note" },
+
+  -- Template-related
+  otc = { ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>", "Convert to note template" },
+  oti = { "<cmd>ObsidianTemplate<cr>", "Insert template" },
+  otn = { "<cmd>ObsidianNewFromTemplate<cr>", "New note from template" },
+
+  -- Others
+  og = { "<cmd>ObsidianTags<cr>", "Show all tags in vault" },
+  on = { ":CreateOrOpenNote ", "Create or open note" },
+  op = { "<cmd>MarkdownPreview<cr>", "Preview on browser" },
+  os = { "<cmd>ObsidianSearch<cr>", "Search/create note with picker" },
+  ox = { "<cmd>ObsidianToggleCheckbox<cr>", "Toggle checkbox" },
 }
 
 M.images = {

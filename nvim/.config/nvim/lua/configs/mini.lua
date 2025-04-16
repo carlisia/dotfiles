@@ -110,6 +110,11 @@ M.clue = {
     { mode = "n", keys = "<leader>u", desc = "-- Code utils..." },
     -- Images/markdown
     { mode = "n", keys = "<leader>o", desc = "-- Obsidian..." },
+    { mode = "n", keys = "<leader>oa", desc = "Actions..." },
+    { mode = "n", keys = "<leader>od", desc = "Dailies..." },
+    { mode = "n", keys = "<leader>ol", desc = "Links..." },
+    { mode = "n", keys = "<leader>ot", desc = "Templates..." },
+
     { mode = "n", keys = "<leader>i", desc = "-- Images..." },
   },
   triggers = {
@@ -189,6 +194,37 @@ M.files = {
 
   content = {
     filter = filter_fn,
+  },
+}
+
+M.sessions = {
+  hooks = {
+    pre = {
+      write = function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype == "Outline" then
+            pcall(vim.api.nvim_win_close, win, true)
+          end
+        end
+      end,
+    },
+    post = {
+      read = function()
+        -- Wait until everything's restored before cleaning up
+        vim.schedule(function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            local name = vim.api.nvim_buf_get_name(buf)
+            local bt = vim.api.nvim_buf_get_option(buf, "buftype")
+
+            if name == "" and bt == "" then
+              pcall(vim.api.nvim_win_close, win, true)
+            end
+          end
+        end)
+      end,
+    },
   },
 }
 

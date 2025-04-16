@@ -1,5 +1,58 @@
 local helper = require "utils.functions"
 
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  callback = function()
+    vim.api.nvim_create_user_command("CreateOrOpenNote", function(opts)
+      local title = opts.args
+      if title == "" then
+        vim.notify("Please provide a title.", vim.log.levels.WARN)
+        return
+      end
+
+      local vault_main = vim.env.VAULT_MAIN or ""
+      local inbox_dir = vault_main .. "/§ Inbox/"
+      local filename = title:gsub("[^A-Za-z0-9 ]", "") .. ".md"
+      local path = vim.fn.expand(inbox_dir .. filename)
+
+      if vim.fn.filereadable(path) == 1 then
+        vim.notify("Note exists: " .. filename, vim.log.levels.INFO)
+        vim.cmd("edit " .. path)
+        return
+      end
+
+      -- Generate random ID
+      local charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      local id = ""
+      for _ = 1, 8 do
+        local rand = math.random(#charset)
+        id = id .. charset:sub(rand, rand)
+      end
+      local full_id = "nvm-" .. id
+
+      -- Make sure inbox directory exists
+      vim.fn.mkdir(inbox_dir, "p")
+
+      -- Write frontmatter and title
+      local lines = {
+        "---",
+        "id: " .. full_id,
+        "aliases: " .. title,
+        "tags: []",
+        "---",
+        "",
+        "# " .. title,
+        "",
+      }
+      vim.fn.writefile(lines, path)
+
+      vim.notify("New note created: " .. filename, vim.log.levels.INFO)
+      vim.cmd("edit " .. path)
+    end, { nargs = "*" })
+  end,
+})
+
+-- Mini files
 MiniFiles = MiniFiles
 
 vim.api.nvim_create_autocmd("User", {

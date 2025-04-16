@@ -137,7 +137,7 @@ M.opts = {
   },
 
   toggle = { enabled = true },
-  scroll = { enabled = false }, -- handles scrolloff and mouse scrolling
+  scroll = { enabled = true }, -- handles scrolloff and mouse scrolling
   indent = { enabled = true, chunk = { enabled = true, only_current = true } },
 
   -- bigfile adds a new filetype bigfile to Neovim that triggers when the file is larger than the configured size

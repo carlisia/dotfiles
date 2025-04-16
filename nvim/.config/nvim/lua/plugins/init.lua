@@ -241,7 +241,7 @@ return {
       require("mini.move").setup(require("configs.mini").move)
       require("mini.notify").setup()
       require("mini.operators").setup()
-      require("mini.sessions").setup()
+      require("mini.sessions").setup(require("configs.mini").sessions)
       require("mini.splitjoin").setup {
         mappings = {
           toggle = "\\k",
@@ -402,22 +402,13 @@ return {
     end,
   },
   {
-    "epwalsh/obsidian.nvim",
+    "obsidian-nvim/obsidian.nvim",
     version = "*", -- latest release instead of latest commit
     cmd = "Obsidian",
     ft = "markdown",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("obsidian").setup(require("configs.obsidian").opts)
-    end,
-    wiki_link_func = function(opts)
-      if opts.id == nil then
-        return string.format("[[%s]]", opts.label)
-      elseif opts.label ~= opts.id then
-        return string.format("[[%s|%s]]", opts.id, opts.label)
-      else
-        return string.format("[[%s]]", opts.id)
-      end
     end,
   },
   {
@@ -430,6 +421,13 @@ return {
     },
     config = function()
       require("render-markdown").setup(require("configs.render-markdown").opts)
+    end,
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    config = function()
+      vim.fn["mkdp#util#install"]()
     end,
   },
 }

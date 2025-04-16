@@ -1,5 +1,33 @@
 local M = {}
 
+M.current_backlink_count = 0
+
+M.show_obsidian_backlinks = function()
+  vim.cmd "ObsidianBacklinks"
+end
+
+-- Called from enter_note callback
+M.set_backlink_count = function(client, note)
+  if not client or not note then
+    M.current_backlink_count = 0
+    return
+  end
+
+  local ok, backlinks = pcall(function()
+    return client:find_backlinks(note)
+  end)
+
+  if ok and backlinks then
+    M.current_backlink_count = #backlinks
+  else
+    M.current_backlink_count = 0
+  end
+end
+
+M.get_backlink_count = function()
+  return M.current_backlink_count
+end
+
 -- MiniFiles split mapping
 M.map_split = function(buf_id, lhs, direction)
   local ok, MiniFiles = pcall(require, "mini.files")
@@ -159,7 +187,7 @@ M.delete_image_under_cursor = function()
   local project_relative_path = absolute_image_path:sub(#project_root + 2)
 
   vim.ui.select({ "No", "Yes" }, {
-    prompt = "Delete file:\n" .. project_relative_path .. "\n\nAre you sure?",
+    prompt = "Deleting file:\n" .. project_relative_path .. "\n\n- Are you sure?",
   }, function(choice)
     if choice ~= "Yes" then
       vim.notify("Deletion cancelled", vim.log.levels.INFO)

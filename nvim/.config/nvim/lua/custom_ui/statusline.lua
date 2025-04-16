@@ -39,6 +39,7 @@ M.statusline = {
     "format_on_save",
     "inlay_enabled",
     "filetype",
+    "backlinks",
     "lsp_msg",
     "%=",
     "lsp",
@@ -153,6 +154,19 @@ M.statusline = {
 
     inlay_enabled = function()
       return " %#St_lspError#" .. toggles.inlay_emoji() .. " | "
+    end,
+
+    backlinks = function()
+      local count = require("utils.functions").get_backlink_count()
+      if count == 0 then
+        return ""
+      end
+
+      return "%@v:lua.require'utils.functions'.show_obsidian_backlinks@"
+        .. "%#St_lspError#"
+        .. "📎 "
+        .. tostring(count)
+        .. " backlinks"
     end,
   },
 }

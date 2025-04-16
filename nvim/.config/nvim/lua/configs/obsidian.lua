@@ -1,3 +1,5 @@
+local helper = require "utils.functions"
+
 local M = {}
 
 local vault_main = vim.env.VAULT_MAIN or ""
@@ -131,7 +133,9 @@ M.opts = {
   end,
 
   callbacks = {
-    enter_note = function(_, _)
+    enter_note = function(client, note)
+      helper.set_backlink_count(client, note)
+
       vim.defer_fn(function()
         local outline_open = false
 

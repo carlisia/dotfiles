@@ -106,6 +106,32 @@ map("n", "<leader>f%", function()
   end)
 end, { desc = "Substitute in file" })
 
+vim.keymap.set("n", "<leader>fd", function()
+  local file = vim.api.nvim_buf_get_name(0)
+  if file == "" then
+    vim.notify("No file to trash", vim.log.levels.INFO)
+    return
+  end
+
+  local project_relative_path = vim.fn.fnamemodify(file, ":~:.")
+  vim.ui.select({ "No", "Yes" }, {
+    prompt = "Moving to Trash:\n" .. project_relative_path .. "\n\n- Are you sure?",
+  }, function(choice)
+    if choice ~= "Yes" then
+      vim.notify("Move to trash cancelled", vim.log.levels.INFO)
+      return
+    end
+
+    vim.fn.jobstart({ "trash", file }, {
+      on_exit = function()
+        vim.notify("Moved to trash: " .. project_relative_path, vim.log.levels.INFO)
+        vim.cmd "OutlineClose"
+        vim.cmd "bd!"
+      end,
+    })
+  end)
+end, { desc = "Delete file" })
+
 ---- Terminal
 local term = require "nvchad.term"
 map({ "n", "t" }, "<M-f>", function() -- float

@@ -6,9 +6,9 @@ local ui = require "custom_ui.statusline"
 
 -- Powerful Collection of 68 beautifully crafted themes, extensible and compiled to bytecode
 M.base46 = {
-  theme = "oceanic-next",
+  theme = "bearded-arc",
   theme_toggle = {
-    "oceanic-next",
+    "bearded-arc",
     "one_light",
   },
 

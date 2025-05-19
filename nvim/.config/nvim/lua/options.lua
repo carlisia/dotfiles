@@ -24,5 +24,9 @@ require("luasnip.loaders.from_vscode").lazy_load {
   paths = vim.g.vscode_snippets_path or vim.fn.stdpath "config" .. "/snippets",
 }
 
+require("luasnip.loaders.from_lua").load {
+  paths = vim.g.lua_snippets_path or vim.fn.stdpath "config" .. "/lua/lua_snippets",
+}
+
 g.root_spec = { "cwd" }
 opt.clipboard:append { "unnamed", "unnamedplus" }

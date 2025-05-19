@@ -6,9 +6,10 @@ local linterConfig = vim.fn.stdpath "config" .. "/lint"
 return {
   -- Overrides of native plugins
   { "lukas-reineke/indent-blankline.nvim", enabled = false },
-  { "nvim-telescope/telescope.nvim", enabled = false },
+  { "nvim-telescope/telescope.nvim", enabled = true },
   { "nvim-tree/nvim-tree.lua", enabled = false },
   { "folke/which-key.nvim", enabled = false },
+  { "windwp/nvim-autopairs", enabled = false },
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
@@ -69,6 +70,7 @@ return {
     opts = require("configs.completion").cmp,
     require("configs.completion").config(),
   },
+
   -----END NATIVE PLUGINS----
   {
     "folke/noice.nvim",
@@ -238,9 +240,12 @@ return {
       require("mini.icons").setup()
       require("mini.indentscope").setup()
       require("mini.files").setup(require("configs.mini").files)
+      require("mini.jump").setup()
+      require("mini.jump2d").setup()
       require("mini.move").setup(require("configs.mini").move)
       require("mini.notify").setup()
       require("mini.operators").setup()
+      require("mini.pairs").setup()
       require("mini.sessions").setup(require("configs.mini").sessions)
       require("mini.splitjoin").setup {
         mappings = {
@@ -284,6 +289,7 @@ return {
     config = function()
       require("leetcode").setup {
         lang = "golang",
+        picker = { provider = "telescope" },
       }
     end,
   },
@@ -375,6 +381,7 @@ return {
       require("img-clip").setup {
         default = {
           dir_path = "assets",
+          relative_to_current_file = true,
           template = "![$FILE_NAME_NO_EXT]($FILE_PATH)",
           show_dir_path_in_prompt = true,
           use_cursor_in_template = false,

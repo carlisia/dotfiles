@@ -24,29 +24,24 @@ return function()
       fd:close()
     end
 
-    local gratitude = nil
+    local mtime = get_modified_time(path)
+    local name = Path:new(path):shorten():match "([^/]+)$"
+
     for _, line in ipairs(lines) do
-      local raw_match = line:match "^Gratitude:%s*(.*)"
+      local raw_match = line:match "^%s*>?%s*[Gg]ratitude::%s*(.+)"
       if raw_match then
-        -- Trim whitespace from both ends
         local trimmed = raw_match:gsub("^%s+", ""):gsub("%s+$", "")
         if trimmed ~= "" and trimmed ~= ":" then
-          gratitude = trimmed
-          break
+          table.insert(gratitude_logs, {
+            text = trimmed,
+            log = trimmed,
+            path = path,
+            name = name,
+            modified = mtime,
+          })
+          longest_log = math.max(longest_log, #trimmed)
         end
       end
-    end
-    if gratitude then
-      local mtime = get_modified_time(path)
-      local name = Path:new(path):shorten():match "([^/]+)$"
-      table.insert(gratitude_logs, {
-        text = gratitude, -- required for fuzzy search
-        log = gratitude,
-        path = path,
-        name = name,
-        modified = mtime,
-      })
-      longest_log = math.max(longest_log, #gratitude)
     end
   end
 

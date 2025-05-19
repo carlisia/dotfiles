@@ -47,7 +47,7 @@ M.opts = {
 
   -- These are the colors for the eldritch colorscheme
   heading = {
-    width = { "full", "full", "block" },
+    width = { "full", "block" },
     min_width = 30,
     backgrounds = {
       "Headline1Bg",

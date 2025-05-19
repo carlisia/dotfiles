@@ -50,6 +50,7 @@ M.obsidian_workflows = {
   otn = { "<cmd>ObsidianNewFromTemplate<cr>", "New note from template" },
 
   -- Others
+  of = { "<cmd>ObsidianFollowLink<cr>", "Open link" },
   og = { "<cmd>ObsidianTags<cr>", "Show all tags in vault" },
   on = { ":CreateOrOpenNote ", "Create or open note" },
   op = { "<cmd>MarkdownPreview<cr>", "Preview on browser" },

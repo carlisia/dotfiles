@@ -23,5 +23,20 @@
     "prefix": "link",
     "body": ["[$1]($2)"],
     "description": "Create a new link"
+  },
+  "today's date": {
+    "prefix": "today",
+    "body": ["[[${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}]]"],
+    "description": "Link to today's date"
+  },
+  "today's date log": {
+    "prefix": "log today",
+    "body": ["- [[${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}]]: "],
+    "description": "Log with link to today's date"
+  },
+  "gratitude": {
+    "prefix": "gratitude",
+    "body": ["Gratitude:: "],
+    "description": "Log a gratitude"
   }
 }

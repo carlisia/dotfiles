@@ -1,5 +1,8 @@
 local M = {}
 
+local vault_main = vim.env.VAULT_MAIN or ""
+local daily_notes = "Flows/Daily Notes"
+
 M.current_backlink_count = 0
 
 M.show_obsidian_backlinks = function()
@@ -26,6 +29,28 @@ end
 
 M.get_backlink_count = function()
   return M.current_backlink_count
+end
+
+M.search_project_logs = function(project_name)
+  local log_dir = string.format("%s/%s", vault_main, daily_notes)
+  local rg_cmd = string.format("rg -l 'project:: %s' '%s'", project_name, log_dir)
+
+  local files = vim.fn.systemlist(rg_cmd)
+
+  if vim.tbl_isempty(files) then
+    print("❌ No logs found for project: " .. project_name)
+    return
+  end
+
+  for _, file in ipairs(files) do
+    print("🗂 " .. file)
+    local lines = vim.fn.readfile(file)
+    for _, line in ipairs(lines) do
+      if line:match "^date::" or line:match "^action::" then
+        print("   " .. line)
+      end
+    end
+  end
 end
 
 -- MiniFiles split mapping

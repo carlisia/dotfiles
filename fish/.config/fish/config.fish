@@ -26,7 +26,7 @@ fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
 fish_add_path /usr/local/bin
 
 # Go
-set -x GOPATH ~/go
+set -x GOPATH ~/code
 set -x GOBIN $GOPATH/bin
 fish_add_path $GOPATH $GOBIN
 

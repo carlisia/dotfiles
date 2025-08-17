@@ -15,7 +15,7 @@ set -gx GPG_TTY (tty)
 
 # Projects
 set -gx PROJECTS $HOME/code/src/github.com
-set -gx VAULT_MAIN ~/Documents/02-Areas/vaults/second_brain
+set -gx VAULT_MAIN $SECOND_BRAIN 
 
 # Path
 set -x fish_user_paths

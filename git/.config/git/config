@@ -36,7 +36,7 @@
 [core]
     pager = diff-so-fancy | less --tabs=4 -RFX
 	editor = nvim
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.config/git/ignore
 [interactive]
 	diffFilter = diff-so-fancy --patch
 [init]
@@ -82,4 +82,4 @@
 
 # Conditional includes - work config for Teleport repos
 [includeIf "gitdir:~/code/src/github.com/gravitational/"]
-    path = ~/.gitconfig-work
+    path = ~/.config/git/config-work

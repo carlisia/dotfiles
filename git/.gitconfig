@@ -79,3 +79,7 @@
 	gpgsign = true
 [gpg]
 	program = /opt/homebrew/bin/gpg
+
+# Conditional includes - work config for Teleport repos
+[includeIf "gitdir:~/code/src/github.com/gravitational/"]
+    path = ~/.gitconfig-work

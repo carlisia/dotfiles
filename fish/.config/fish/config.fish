@@ -75,6 +75,15 @@ alias head='bat --line-range :10'
 alias tail='bat --line-range -10:'
 alias batdiff='git diff --name-only | xargs bat'
 
+# ----- aliases teleport
+ alias dteleport '~/code/src/github.com/gravitational/teleport/build/teleport'
+ alias dtsh '~/code/src/github.com/gravitational/teleport/build/tsh'
+ alias dtctl '~/code/src/github.com/gravitational/teleport/build/tctl'
+ alias dtbot '~/code/src/github.com/gravitational/teleport/build/tbot'
+
+ # Quick version check (fish syntax)
+ alias dversions 'echo "Dev:" && ~/code/src/github.com/gravitational/teleport/build/teleport version && echo "" && echo "Release:" && teleport version 2>/dev/null; or echo "No release version installed"'
+
 #previewer for fzf:
 set -x FZF_DEFAULT_OPTS '--preview "bat --style=numbers --color=always --line-range :500 {}"'
 

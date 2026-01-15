@@ -1,0 +1,7 @@
+[user]
+    name = Carlisia Campos
+    email = carlisia@goteleport.com
+    signingkey = AEC68FFF9ED7F05AFB3FF05E1F956D6B12EB7D9B
+
+[commit]
+    gpgsign = true

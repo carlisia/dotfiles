@@ -26,36 +26,36 @@ M.notes_dashboards = {
 
 M.obsidian_workflows = {
   -- General note actions
-  oae = { "<cmd>ObsidianExtractNote<cr>", "Extract selection to new note" },
-  oar = { "<cmd>ObsidianRename<cr>", "Rename note and update backlinks" },
+  oae = { "<cmd>Obsidian extract note<cr>", "Extract selection to new note" },
+  oar = { "<cmd>Obsidian rename<cr>", "Rename note and update backlinks" },
 
   -- Daily note commands
-  odt = { "<cmd>ObsidianToday<cr>", "Open/create today's note" },
-  odd = { "<cmd>ObsidianDailies<cr>", "List daily notes" },
-  odm = { "<cmd>ObsidianTomorrow<cr>", "Open/create tomorrow's note" },
-  ody = { "<cmd>ObsidianYesterday<cr>", "Open/create yesterday's note" },
+  odt = { "<cmd>Obsidian today<cr>", "Open/create today's note" },
+  odd = { "<cmd>Obsidian dailies<cr>", "List daily notes" },
+  odm = { "<cmd>Obsidian tomorrow<cr>", "Open/create tomorrow's note" },
+  ody = { "<cmd>Obsidian yesterday<cr>", "Open/create yesterday's note" },
 
   -- Links
-  olh = { "<cmd>ObsidianFollowLink hsplit<cr>", "Open link horizontal" },
-  olv = { "<cmd>ObsidianFollowLink vsplit<cr>", "Open link vertical" },
+  olh = { "<cmd>Obsidian follow link hsplit<cr>", "Open link horizontal" },
+  olv = { "<cmd>Obsidian follow link vsplit<cr>", "Open link vertical" },
 
-  olb = { "<cmd>ObsidianBacklinks<cr>", "Show backlinks to current note" },
-  oll = { "<cmd>ObsidianLinks<cr>", "List links in current buffer" },
-  oln = { "<cmd>ObsidianLinkNew<cr>", "New linked note from selection" },
-  ols = { "<cmd>ObsidianLink<cr>", "Link visual selection to note" },
+  olb = { "<cmd>Obsidian backlinks<cr>", "Show backlinks to current note" },
+  oll = { "<cmd>Obsidian links<cr>", "List links in current buffer" },
+  oln = { "<cmd>Obsidian link new<cr>", "New linked note from selection" },
+  ols = { "<cmd>Obsidian link<cr>", "Link visual selection to note" },
 
   -- Template-related
-  otc = { ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>", "Convert to note template" },
-  oti = { "<cmd>ObsidianTemplate<cr>", "Insert template" },
-  otn = { "<cmd>ObsidianNewFromTemplate<cr>", "New note from template" },
+  otc = { ":Obsidian template note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>", "Convert to note template" },
+  oti = { "<cmd>Obsidian template<cr>", "Insert template" },
+  otn = { "<cmd>Obsidian new from template<cr>", "New note from template" },
 
   -- Others
-  of = { "<cmd>ObsidianFollowLink<cr>", "Open link" },
-  og = { "<cmd>ObsidianTags<cr>", "Show all tags in vault" },
+  of = { "<cmd>Obsidian follow link<cr>", "Open link" },
+  og = { "<cmd>Obsidian tags<cr>", "Show all tags in vault" },
   on = { ":CreateOrOpenNote ", "Create or open note" },
   op = { "<cmd>MarkdownPreview<cr>", "Preview on browser" },
-  os = { "<cmd>ObsidianSearch<cr>", "Search/create note with picker" },
-  ox = { "<cmd>ObsidianToggleCheckbox<cr>", "Toggle checkbox" },
+  os = { "<cmd>Obsidian search<cr>", "Search/create note with picker" },
+  ox = { "<cmd>Obsidian toggle checkbox<cr>", "Toggle checkbox" },
 }
 
 M.images = {

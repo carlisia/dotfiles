@@ -63,7 +63,7 @@ servers["marksman"] = {
 
 servers["taplo"] = {}
 
-require("lspconfig").lua_ls.setup {
+servers["lua_ls"] = {
   settings = {
     Lua = {
       hint = {
@@ -78,9 +78,17 @@ require("lspconfig").lua_ls.setup {
   },
 }
 
+-- Use new vim.lsp.config API for Neovim 0.11+
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init
   opts.capabilities = opts.capabilities or base_capabilities
 
-  require("lspconfig")[name].setup(opts)
+  local ok, err = pcall(function()
+    vim.lsp.config(name, opts)
+    vim.lsp.enable(name)
+  end)
+
+  if not ok then
+    vim.notify("Failed to setup LSP '" .. name .. "': " .. tostring(err), vim.log.levels.WARN)
+  end
 end

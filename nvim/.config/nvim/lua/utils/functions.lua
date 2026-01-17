@@ -6,21 +6,27 @@ local daily_notes = "Flows/Daily Notes"
 M.current_backlink_count = 0
 
 M.show_obsidian_backlinks = function()
-  vim.cmd "ObsidianBacklinks"
+  vim.cmd "Obsidian backlinks"
 end
 
 -- Called from enter_note callback
 M.set_backlink_count = function(client, note)
-  if not client or not note then
+  if not note then
     M.current_backlink_count = 0
     return
   end
 
-  local ok, backlinks = pcall(function()
-    return client:find_backlinks(note)
+  local ok, obsidian = pcall(require, "obsidian")
+  if not ok then
+    M.current_backlink_count = 0
+    return
+  end
+
+  local ok_backlinks, backlinks = pcall(function()
+    return obsidian.get_client():find_backlinks(note)
   end)
 
-  if ok and backlinks then
+  if ok_backlinks and backlinks then
     M.current_backlink_count = #backlinks
   else
     M.current_backlink_count = 0

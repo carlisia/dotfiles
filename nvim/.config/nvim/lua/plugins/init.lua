@@ -42,6 +42,7 @@ return {
   },
   {
     "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       local lint = require "lint"
       lint.linters_by_ft = {
@@ -68,7 +69,10 @@ return {
       "hrsh7th/cmp-cmdline",
     },
     opts = require("configs.completion").cmp,
-    require("configs.completion").config(),
+    config = function(_, opts)
+      require("cmp").setup(opts)
+      require("configs.completion").config()
+    end,
   },
 
   -----END NATIVE PLUGINS----

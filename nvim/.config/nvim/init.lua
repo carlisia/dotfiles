@@ -1,6 +1,12 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
+-- Add LuaRocks path for jsregexp (needed by LuaSnip)
+-- Neovim uses LuaJIT which is Lua 5.1 compatible
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
+package.cpath = package.cpath .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/lib/lua/5.1/?.so"
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
@@ -18,7 +24,7 @@ require("lazy").setup({
   {
     "NvChad/NvChad",
     lazy = false,
-    branch = "v2.5",
+    commit = "d93752928184d9196a27dd4374fd6df236a16a8a",
     import = "nvchad.plugins",
   },
 

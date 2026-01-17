@@ -202,6 +202,7 @@ stow ghostty -t $HOME
 stow gh -t $HOME
 stow git -t $HOME
 stow nvim -t $HOME
+stow markdownlint -t $HOME
 
 # CLI utilities
 stow bat -t $HOME

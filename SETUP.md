@@ -83,6 +83,7 @@ git lfs install
 brew install gh
 brew install starship
 brew install neovim
+brew install pngpaste
 brew install stow
 brew install tree-sitter tree-sitter-cli
 brew install ghostty

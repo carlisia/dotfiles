@@ -17,3 +17,6 @@ newchad.sh
 /lazygit/.config/lazygit/state.yml
 
 /.tmp
+
+fish/.config/fish/fish_variables
+*.backup

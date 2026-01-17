@@ -1,18 +1,115 @@
-# New Mac Setup Guide
+# New mac setup guide
 
-Complete setup guide for a new machine based on these dotfiles.
+Setup guide for a new machine based on these dotfiles.
 
-## Phase 1: Bootstrap (Before Anything Else)
+## Bootstrap (before anything else)
 
-### 1. Xcode Command Line Tools
+### Xcode command line tools
 
 ```bash
 xcode-select --install
 ```
 
-This gives you `git` and other essential build tools.
+This provides `git` and other essential build tools.
 
-### 2. SSH Keys for GitHub
+### Show hidden files in Finder
+
+```bash
+defaults write com.apple.finder AppleShowAllFiles YES && killall Finder
+```
+
+## Package manager and core tools
+
+### Homebrew
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+For this session only (until Fish is set up):
+
+```bash
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
+
+Once Fish is installed and stowed, your `config.fish` handles the PATH automatically.
+
+### Fish shell
+
+```bash
+brew install fish
+# Add to allowed shells
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+# Set as default
+chsh -s /opt/homebrew/bin/fish
+```
+
+### Fisher (fish plugin manager)
+
+```bash
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+```
+
+Fish plugins to install:
+
+```bash
+fisher install jethrokuan/z          # Directory jumping (the 'j' alias)
+fisher install PatrickF1/fzf.fish    # FZF integration
+```
+
+### Cli power tools
+
+```bash
+# Essential CLI upgrades
+brew install bat          # Better cat
+brew install eza          # Better ls
+brew install fzf          # Fuzzy finder
+brew install ripgrep      # Better grep (rg)
+brew install fd           # Better find
+brew install trash        # Safe rm alternative
+brew install yazi         # Terminal file manager
+brew install zellij       # Terminal multiplexer
+brew install lazygit      # Git TUI
+brew install diff-so-fancy # Pretty git diffs
+brew install delta        # Even prettier diffs
+```
+
+### Tools
+
+```bash
+brew install git # note: check if xcode-select already installed git
+brew install git-lfs
+git lfs install
+brew install gh
+brew install starship
+brew install neovim
+brew install stow
+brew install tree-sitter tree-sitter-cli
+brew install ghostty
+rm -rf ~/Library/Application\ Support/com.mitchellh.ghostty # to remove default config file
+```
+
+### Kubernetes tools
+
+```bash
+brew install kubectl
+brew install k9s
+brew install lens
+```
+
+### Karabiner
+
+Download from: <https://karabiner-elements.pqrs.org/>
+
+After stowing or making changes to the config, restart Karabiner:
+
+```bash
+killall karabiner_console_user_server && open -a "Karabiner-Elements"
+```
+
+## Github config
+
+### Ssh keys
 
 Generate a new SSH key using Ed25519 (modern, fast, secure):
 
@@ -28,7 +125,7 @@ Start the SSH agent and add your key:
 eval "$(ssh-agent -s)"
 ```
 
-Create or edit `~/.ssh/config`:
+Create or edit `~/.ssh/config` (replace `id_ed25519` with your key filename if different):
 
 ```bash
 mkdir -p ~/.ssh
@@ -40,7 +137,7 @@ Host github.com
 EOF
 ```
 
-Add the key to your macOS keychain:
+Add the key to your macOS keychain (replace `id_ed25519` if you used a different name):
 
 ```bash
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
@@ -66,7 +163,15 @@ ssh -T git@github.com
 
 You should see: "Hi carlisia! You've successfully authenticated..."
 
-### 3. Clone Your Dotfiles
+### Github cli
+
+```bash
+gh auth login
+```
+
+## Dotfiles
+
+### Clone the dotfiles
 
 ```bash
 mkdir -p ~/code/src/github.com/carlisia
@@ -74,92 +179,46 @@ cd ~/code/src/github.com/carlisia
 git clone git@github.com:carlisia/dotfiles.git
 ```
 
-## Phase 2: Package Manager and Core Tools
+### My tools
 
-### 4. Homebrew
+Install `markin`
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+### Stow dotfiles
 
-For this session only (until Fish is set up):
+After cloning the dotfiles, create symlinks for all configurations.
 
-```bash
-eval "$(/opt/homebrew/bin/brew shellenv)"
-```
-
-Once Fish is installed and stowed, your `config.fish` handles the PATH automatically.
-
-- <https://brew.sh>
-
-### 5. Git (Homebrew version + LFS)
-
-```bash
-brew install git
-brew install git-lfs
-git lfs install
-```
-
-### 6. GNU Stow (Dotfile Symlinking)
-
-```bash
-brew install stow
-```
-
-## Phase 3: Shell and Terminal
-
-### 7. Fish Shell
-
-```bash
-brew install fish
-# Add to allowed shells
-echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
-# Set as default
-chsh -s /opt/homebrew/bin/fish
-```
-
-- <https://fishshell.com>
-
-Then stow it:
+> This can be done before installing the actual tools - the configs will be ready when you install each tool.
 
 ```bash
 cd ~/code/src/github.com/carlisia/dotfiles
+
+# Shell and terminal
 stow fish -t $HOME
-```
-
-### 8. Fisher (Fish Plugin Manager)
-
-```bash
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
-```
-
-Fish plugins to install:
-
-```bash
-fisher install jethrokuan/z          # Directory jumping (the 'j' alias)
-fisher install PatrickF1/fzf.fish    # FZF integration
-```
-
-### 9. Ghostty Terminal
-
-Download from: <https://ghostty.org/download>
-
-Then stow config:
-
-```bash
-stow ghostty -t $HOME
-```
-
-### 10. Starship Prompt
-
-```bash
-brew install starship
 stow starship -t $HOME
+stow ghostty -t $HOME
+
+# Development tools
+stow gh -t $HOME
+stow git -t $HOME
+stow nvim -t $HOME
+
+# CLI utilities
+stow bat -t $HOME
+stow eza -t $HOME
+stow yazi -t $HOME
+stow zellij -t $HOME
+stow lazygit -t $HOME
+
+# Kubernetes tools
+stow k9s -t $HOME
+
+# macOS apps
+stow karabiner -t $HOME
+
+stow markin -t $HOME
 ```
 
-- <https://starship.rs>
-
-## Phase 4: Fonts
+### Fonts
 
 ```bash
 brew install --cask font-fira-code
@@ -170,75 +229,76 @@ brew install --cask font-maple-mono
 
 Ghostty config uses: Fira Code, Maple Mono, Symbols Nerd Font
 
-## Phase 5: Neovim
+## Essential apps
 
-```bash
-brew install neovim
-```
+### Macos accessibility permissions
 
-- <https://neovim.io>
+For global keybindings to work (like `ctrl+shift+p` for the quick terminal), Ghostty needs Accessibility permissions. Ensure this is set:
 
-Then stow your config:
+1. Open **System Settings** → **Privacy & Security** → **Accessibility**
+2. Look for **Ghostty** in the list and enable it
+3. If Ghostty isn't listed, click the `+` button and add it from `/Applications/`
+4. Restart Ghostty after granting permissions
 
-```bash
-stow nvim -t $HOME
-```
+### Shared apps
 
-First launch will auto-install plugins via Lazy.nvim.
+#### Alfred
 
-## Phase 6: CLI Power Tools
+Download from: <https://www.alfredapp.com/>
 
-```bash
-# Essential CLI upgrades
-brew install bat          # Better cat
-brew install eza          # Better ls
-brew install fzf          # Fuzzy finder
-brew install ripgrep      # Better grep (rg)
-brew install fd           # Better find
-brew install trash        # Safe rm alternative
-brew install yazi         # Terminal file manager
-brew install zellij       # Terminal multiplexer
-brew install lazygit      # Git TUI
-brew install diff-so-fancy # Pretty git diffs
-brew install delta        # Even prettier diffs
-```
+1. Install and enter Powerpack license
+2. Set up syncing: Go to Advanced tab → Syncing section → "Set preferences folder..."
+3. Enable automatic snippet expansion: Features → Snippets → Automatically expand snippets by keyword (if not already set)
+4. Check clipboard settings: Features → Clipboard History → Configure history limits and preferences
 
-Stow their configs:
+#### Moom
 
-```bash
-cd ~/code/src/github.com/carlisia/dotfiles
-stow bat -t $HOME
-stow eza -t $HOME
-stow yazi -t $HOME
-stow zellij -t $HOME
-stow lazygit -t $HOME
-```
+Download from: <https://manytricks.com/moom/>
 
-## Phase 7: Git Configuration
+1. Install and enter license
+2. Import custom actions: Preferences → Custom → Import → Select `Actions.moom` file
 
-```bash
-stow git -t $HOME
-```
+#### Dash
 
-For GPG commit signing:
+Download from: <https://kapeli.com/dash>
 
-```bash
-brew install gnupg
-brew install pinentry-mac
-# Import your GPG key, then:
-echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
-gpgconf --kill gpg-agent
-```
+Enable Alfred integration: Preferences → Integration → Alfred
 
-## Phase 8: GitHub CLI
+#### Bartender
 
-```bash
-brew install gh
-gh auth login
-stow gh -t $HOME
-```
+Download from: <https://www.macbartender.com/>
 
-## Phase 9: Development Languages
+1. Install and enter license
+2. Configure menu bar items as desired
+
+**Sharing config between machines:**
+
+Bartender stores settings in `~/Library/Preferences/com.surteesstudios.Bartender.plist`.
+
+#### Keyboard Maestro
+
+### Not shared by config files
+
+- cleanshot
+- steer mouse
+- el gato control center
+
+- apptorium
+  - sidenotes
+  - fivenotes
+  - cursor teleporter
+
+## Other apps
+
+- **Textastic** - Text and code editor
+- **AppZapper** - App uninstaller
+- **Flacbox** - FLAC audio player
+- PDF Explorer
+- Zotero
+- Stream Deck
+- ecamm/OBS
+
+## Development languages
 
 ### Go
 
@@ -254,78 +314,127 @@ Config expects: `GOPATH=~/code` and `GOBIN=~/code/bin`
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-- <https://rustup.rs>
-
 ### Python
 
 ```bash
 brew install python
 ```
 
-### Node.js (for LSPs and prettierd)
+### Node.js
 
 ```bash
 brew install node
 ```
 
-## Phase 10: LSP and Dev Tools (For Neovim)
+Required for various LSP servers and formatters.
+
+### Environment variables
 
 ```bash
-# Lua
+set --Ugx SECOND_BRAIN (using Obsidian remote, this path will be the local vault, not the remote)
+```
+
+### Additional dependencies
+
+Install shell-color-scripts for nvim/nvchad/snack dashboard:
+
+```bash
+curl -L https://gitlab.com/dwt1/shell-color-scripts/-/archive/master/shell-color-scripts-master.tar.gz | tar xz -C /tmp
+mkdir -p ~/.local/bin ~/.local/share/shell-color-scripts
+cp -rf /tmp/shell-color-scripts-master/colorscripts ~/.local/share/shell-color-scripts/
+cp /tmp/shell-color-scripts-master/colorscript.sh ~/.local/bin/colorscript
+chmod +x ~/.local/bin/colorscript
+```
+
+Install Lua 5.1 for compatibility:
+
+```bash
+cd /tmp
+curl -L https://www.lua.org/ftp/lua-5.1.5.tar.gz | tar xz
+cd lua-5.1.5/src && make macosx
+mkdir -p ~/.local/lua51/bin
+cp lua luac ~/.local/lua51/bin/
+ln -sf ~/.local/lua51/bin/lua ~/.local/bin/lua5.1
+```
+
+Install jsregexp for LuaSnip (needed for LSP snippet transformations):
+
+```bash
+luarocks --local --lua-version 5.1 install jsregexp
+```
+
+### Lsp servers and tools
+
+Install Lua tools:
+
+```bash
 brew install lua-language-server
 brew install stylua
 brew install luarocks
 luarocks install luacheck
+```
 
-# Bash
+Install Bash tools:
+
+```bash
 npm install -g bash-language-server
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
+```
 
-# Prettier
+Install Prettier:
+
+```bash
 npm install -g @fsouza/prettierd
+```
 
-# Markdown
+Install Markdown tools:
+
+```bash
 brew install markdownlint-cli
 ```
 
-## Phase 11: Kubernetes Tools
+## Git commits - gpg commit signing
+
+Install GPG tools:
 
 ```bash
-brew install kubectl
-brew install k9s
-stow k9s -t $HOME
+brew install gnupg
+brew install pinentry-mac
 ```
 
-## Phase 12: Optional
+Generate GPG keys (one for personal, one for work):
+
+```bash
+# Personal key
+gpg --quick-generate-key "Your Name <personal@email.com>" rsa4096 default 0
+
+# Work key
+gpg --quick-generate-key "Your Name (Work) <work@email.com>" rsa4096 default 0
+```
+
+List your keys to get the key IDs:
+
+```bash
+gpg --list-secret-keys --keyid-format=long
+```
+
+Update the signing keys in:
+
+- `~/.config/git/config` - personal key ID
+- `~/.config/git/config-work` - work key ID
+
+Configure pinentry for macOS Keychain integration:
+
+```bash
+echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+gpgconf --kill gpg-agent
+```
+
+This enables GPG passphrase caching via macOS Keychain. On your first commit with each key, you'll be prompted for the passphrase with an option to save it to Keychain. After that, commits won't require re-entering the passphrase.
+
+## Optional
 
 ```bash
 brew install --cask visual-studio-code  # Git difftool
-brew install coreutils                   # GNU coreutils
-```
-
-## Quick Install Script
-
-After SSH keys are set up and dotfiles are cloned:
-
-```bash
-# Homebrew (run first, then restart terminal)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Core tools
-brew install git git-lfs stow fish starship neovim
-
-# CLI upgrades
-brew install bat eza fzf ripgrep fd trash yazi zellij lazygit diff-so-fancy delta
-
-# Languages
-brew install go python node
-
-# Fonts
-brew install --cask font-fira-code font-jetbrains-mono font-symbols-only-nerd-font font-maple-mono
-
-# Kubernetes
-brew install kubectl k9s
-
-# GitHub
-brew install gh
+brew install coreutils                  # GNU coreutils
 ```

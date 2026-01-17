@@ -28,3 +28,4 @@ aliases:
   live: "api --hostname github.tools.sap graphql -f query='\n  mutation {\n    changeUserStatus(input:{\n      message: \"$1\",\n      emoji: \"\U0001F4FA\"\n    }) {\n      status { message, emoji }\n    }\n  }'\n"
   assigned: issue list --assignee @me
   authswitch: '!bash -c "pass show $1/$2/pat | gh auth login --with-token && gh auth status 2> >(grep \"Logged in to $1\")"'
+version: "1"

@@ -8,6 +8,7 @@ local vault_main = vim.env.VAULT_MAIN or ""
 --
 M.opts = {
   ui = { enable = false },
+  legacy_commands = false,
   workspaces = {
     {
       name = "Second Brain",
@@ -87,8 +88,6 @@ M.opts = {
     },
   },
 
-  mappings = {},
-
   note_id_func = function(title)
     local obsidian = require "obsidian"
 
@@ -133,8 +132,8 @@ M.opts = {
   end,
 
   callbacks = {
-    enter_note = function(client, note)
-      helper.set_backlink_count(client, note)
+    enter_note = function(note)
+      helper.set_backlink_count(nil, note)
 
       vim.defer_fn(function()
         local outline_open = false

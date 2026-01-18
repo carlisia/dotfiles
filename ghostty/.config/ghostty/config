@@ -71,7 +71,9 @@ keybind = alt+shift+j=goto_split:bottom
 keybind = alt+shift+k=goto_split:top
 keybind = alt+shift+l=goto_split:right
 keybind = super+shift+enter=new_split:auto
+keybind = cmd+l=new_split:left
 keybind = cmd+d=new_split:right
+keybind = cmd+shift+u=new_split:up
 keybind = cmd+shift+d=new_split:down
 keybind = cmd+shift+m=toggle_split_zoom 
 

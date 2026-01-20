@@ -21,3 +21,4 @@ newchad.sh
 fish/.config/fish/fish_variables
 *.backup
 .DS_Store
+karabiner/.config/karabiner/automatic_backups/

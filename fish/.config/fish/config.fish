@@ -49,6 +49,11 @@ end
 # Startship prompt
 starship init fish | source
 
+# Editor
+alias vim nvim
+alias vi nvim
+alias v nvim
+
 # ----- aliases# Git
 alias g="git status -sb"
 alias ggl "git log --pretty=oneline -n 20 --graph --abbrev-commit"
@@ -89,11 +94,6 @@ alias batdiff='git diff --name-only | xargs bat'
 set -x FZF_DEFAULT_OPTS '--preview "bat --style=numbers --color=always --line-range :500 {}"'
 
 # ----- abbr
-
-# Editor
-abbr vim nvim
-abbr vi nvim
-abbr v nvim
 
 # Kubernetes
 abbr kk kubectl

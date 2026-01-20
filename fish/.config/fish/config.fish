@@ -1,3 +1,5 @@
+# Theme: run `fish_config theme save dracula` to set Dracula colors
+
 # Shell
 set -gx SHELL /opt/homebrew/bin/fish
 # XDG

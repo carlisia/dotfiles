@@ -9,23 +9,23 @@ pager: delta -s
 # Aliases allow you to create nicknames for gh commands
 browser: ""
 aliases:
-  a: "!git status --short | peco | awk '{print $2}' | xargs git add"
-  co: '!id="$(gh pr list -L100 | fzf | cut -f1)"; [ -n "$id" ] && gh pr checkout "$id"'
-  zen: api zen
-  #  triage - source: https://github.com/cli/cli/discussions/2618#discussioncomment-211346
-  il: issue list
-  isearch: |
-    !gh issue list -L300 | ag $1 | cut -f1,3
-  iv: issue view
-  label: |
-    !jq -n "{\"labels\":[\"$2\"]}" | gh api "repos/:owner/:repo/issues/$1/labels" --input -
-  triage: |
-    !gh api graphql --paginate -Fquery='query($endCursor:String){repository(owner:"cli",name:"cli"){issues(first:100,states:OPEN,after:$endCursor){pageInfo{hasNextPage endCursor}edges{node{number title labels(first:10){totalCount edges{node{name}}}}}}}}' | jq -r '.data.repository.issues.edges|map(.node)|map(select(any(.labels.edges[]; .node.name | test("p1|p2|p3|core|docs|help wanted|tracking issue|needs-design|blocked|needs-user-input")) | not))|map("\(.number)\t\(.title)")|.[]'
-  # workflow
-  job: '!gh run list -w "$1" -L1 | awk "{print \$13}" | xargs -I% gh run view % -v'
-  # use: gh job ci
-  ###
-  live: "api --hostname github.tools.sap graphql -f query='\n  mutation {\n    changeUserStatus(input:{\n      message: \"$1\",\n      emoji: \"\U0001F4FA\"\n    }) {\n      status { message, emoji }\n    }\n  }'\n"
-  assigned: issue list --assignee @me
-  authswitch: '!bash -c "pass show $1/$2/pat | gh auth login --with-token && gh auth status 2> >(grep \"Logged in to $1\")"'
+    a: "!git status --short | peco | awk '{print $2}' | xargs git add"
+    co: '!id="$(gh pr list -L100 | fzf | cut -f1)"; [ -n "$id" ] && gh pr checkout "$id"'
+    zen: api zen
+    #  triage - source: https://github.com/cli/cli/discussions/2618#discussioncomment-211346
+    il: issue list
+    isearch: |
+        !gh issue list -L300 | ag $1 | cut -f1,3
+    iv: issue view
+    label: |
+        !jq -n "{\"labels\":[\"$2\"]}" | gh api "repos/:owner/:repo/issues/$1/labels" --input -
+    triage: |
+        !gh api graphql --paginate -Fquery='query($endCursor:String){repository(owner:"cli",name:"cli"){issues(first:100,states:OPEN,after:$endCursor){pageInfo{hasNextPage endCursor}edges{node{number title labels(first:10){totalCount edges{node{name}}}}}}}}' | jq -r '.data.repository.issues.edges|map(.node)|map(select(any(.labels.edges[]; .node.name | test("p1|p2|p3|core|docs|help wanted|tracking issue|needs-design|blocked|needs-user-input")) | not))|map("\(.number)\t\(.title)")|.[]'
+    # workflow
+    job: '!gh run list -w "$1" -L1 | awk "{print \$13}" | xargs -I% gh run view % -v'
+    # use: gh job ci
+    ###
+    live: "api --hostname github.tools.sap graphql -f query='\n  mutation {\n    changeUserStatus(input:{\n      message: \"$1\",\n      emoji: \"\U0001F4FA\"\n    }) {\n      status { message, emoji }\n    }\n  }'\n"
+    assigned: issue list --assignee @me
+    authswitch: '!bash -c "pass show $1/$2/pat | gh auth login --with-token && gh auth status 2> >(grep \"Logged in to $1\")"'
 version: "1"

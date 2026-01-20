@@ -138,7 +138,7 @@ Host github.com
 EOF
 ```
 
-Add the key to your macOS keychain (replace `id_ed25519` if you used a different name):
+Add the key to your Mac OS keychain (replace `id_ed25519` if you used a different name):
 
 ```bash
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
@@ -214,7 +214,7 @@ stow lazygit -t $HOME
 # Kubernetes tools
 stow k9s -t $HOME
 
-# macOS apps
+# Mac apps
 stow karabiner -t $HOME
 
 stow markin -t $HOME
@@ -233,7 +233,7 @@ Ghostty config uses: Fira Code, Maple Mono, Symbols Nerd Font
 
 ## Essential apps
 
-### Macos accessibility permissions
+### OS accessibility permissions
 
 For global keybindings to work (like `ctrl+shift+p` for the quick terminal), Ghostty needs Accessibility permissions. Ensure this is set:
 
@@ -279,10 +279,11 @@ Bartender stores settings in `~/Library/Preferences/com.surteesstudios.Bartender
 
 #### Keyboard Maestro
 
+#### Steer Mouse
+
 ### Not shared by config files
 
 - cleanshot
-- steer mouse
 - el gato control center
 
 - apptorium
@@ -292,6 +293,7 @@ Bartender stores settings in `~/Library/Preferences/com.surteesstudios.Bartender
 
 ## Other apps
 
+- iStat Menus
 - **Textastic** - Text and code editor
 - **AppZapper** - App uninstaller
 - **Flacbox** - FLAC audio player
@@ -299,6 +301,7 @@ Bartender stores settings in `~/Library/Preferences/com.surteesstudios.Bartender
 - Zotero
 - Stream Deck
 - ecamm/OBS
+- [waydabber/BetterDisplay: Unlock your displays on your Mac! Flexible HiDPI scaling, XDR/HDR extra brightness, virtual screens, DDC control, extra dimming, PIP/streaming, EDID override and lots more!](https://github.com/waydabber/BetterDisplay)
 
 ## Development languages
 
@@ -425,14 +428,14 @@ Update the signing keys in:
 - `~/.config/git/config` - personal key ID
 - `~/.config/git/config-work` - work key ID
 
-Configure pinentry for macOS Keychain integration:
+Configure pinentry for Mac Keychain integration:
 
 ```bash
 echo "pinentry-program /opt/homebrew/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
 gpgconf --kill gpg-agent
 ```
 
-This enables GPG passphrase caching via macOS Keychain. On your first commit with each key, you'll be prompted for the passphrase with an option to save it to Keychain. After that, commits won't require re-entering the passphrase.
+This enables GPG passphrase caching via Mac OS Keychain. On your first commit with each key, you'll be prompted for the passphrase with an option to save it to Keychain. After that, commits won't require re-entering the passphrase.
 
 ## Optional
 

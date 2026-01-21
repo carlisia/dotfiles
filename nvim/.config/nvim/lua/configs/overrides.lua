@@ -11,7 +11,7 @@ M.conform = {
     bash = { "shfmt" },
     lua = { "stylua" },
     python = { "isort", "black" },
-    go = { "gofmt", "goimports", lsp_format = "fallback" },
+    go = { "gofmt", "goimports", "gci", lsp_format = "fallback" },
     json = { "prettierd" },
     jsonc = { "prettierd" },
     markdown = { "prettierd" },
@@ -21,6 +21,22 @@ M.conform = {
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
     yaml = { "prettierd" },
+  },
+
+  formatters = {
+    gci = {
+      args = {
+        "write",
+        "--section",
+        "standard",
+        "--section",
+        "default",
+        "--section",
+        "prefix(github.com/gravitational/teleport)",
+        "--custom-order",
+        "$FILENAME",
+      },
+    },
   },
 }
 

@@ -72,6 +72,7 @@ brew install zellij       # Terminal multiplexer
 brew install lazygit      # Git TUI
 brew install diff-so-fancy # Pretty git diffs
 brew install delta        # Even prettier diffs
+brew install shellcheck   # Shell script linter
 ```
 
 ### Tools
@@ -203,6 +204,7 @@ stow gh -t $HOME
 stow git -t $HOME
 stow nvim -t $HOME
 stow markdownlint -t $HOME
+stow shellcheck -t $HOME
 
 # CLI utilities
 stow bat -t $HOME

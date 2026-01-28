@@ -12,6 +12,8 @@ $git_state\
 $git_status\
 $cmd_duration\
 $line_break\
+$kubernetes\
+$line_break\
 $golang\
 $python\
 $character"""
@@ -40,7 +42,7 @@ disabled = false
 [character]
 success_symbol = "[➜](bold green) "
 error_symbol = "[✗](bold red) "
-vicmd_symbol = "[➜ V](bold purple) "
+vimcmd_symbol = "[➜ V](bold purple) "
 
 [directory]
 # disabled = true
@@ -53,7 +55,7 @@ format = "took [$duration](bold purple)"
 
 [hostname]
 ssh_only = true
-format =  "[$hostname](red) "
+format = "[$hostname](red) "
 trim_at = ".companyname.com"
 disabled = false
 
@@ -106,8 +108,8 @@ renamed = "👅"
 deleted = "🗑"
 
 [kubernetes]
-# format = '[$context \($namespace\)](dimmed green) '
-format = '[>$context](dimmed red) [$namespace](dimmed green) '
+format = '[$context \($namespace\)](dimmed green) '
+# format = '[>$context](dimmed red) [$namespace](dimmed green) '
 disabled = false
 [kubernetes.context_aliases]
 "dev.local.cluster.k8s" = "dev"
@@ -123,4 +125,3 @@ format = '[🐍 $version](bold green) '
 
 [container]
 format = '[$symbol \[$name\]]($style) '
-

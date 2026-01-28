@@ -1,12 +1,13 @@
 [push]
 	default = simple
+	autoSetupRemote = true
 [pull]
   ff = only
 
 [user]
 	name = Carlisia Campos
 	email = carlisia@gmail.com
-	signingkey = 6707B608DD1E41DDDF8A7FCEC23690E728F56717
+	signingkey = AEC68FFF9ED7F05AFB3FF05E1F956D6B12EB7D9B
 
 [credential]
 	helper = osxkeychain

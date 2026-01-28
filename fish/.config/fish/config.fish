@@ -2,6 +2,7 @@
 
 # Shell
 set -gx SHELL /opt/homebrew/bin/fish
+ulimit -n 2560  # 10x default - more file descriptors for heavy tooling
 # XDG
 set -gx XDG_CONFIG_HOME $HOME/.config
 # CDPATH
@@ -20,6 +21,9 @@ set -gx PROJECTS $HOME/code/src/github.com
 set -gx VAULT_MAIN $SECOND_BRAIN
 set -gx VAULT_DEV $SECOND_BRAIN/DEV
 
+set -gx TELEPORT_CDN_BASE_URL "https://cdn.teleport.dev"
+set -gx TELEPORT_USER "carlisia.campos@goteleport.com"
+
 # Path
 set -x fish_user_paths
 fish_add_path $HOME
@@ -35,6 +39,9 @@ fish_add_path $GOPATH $GOBIN
 
 # Rust
 fish_add_path $HOME/.cargo/bin
+
+# Teleport
+fish_add_path ~/code/src/github.com/gravitational/cloud/tc/cmd/tc
 
 # Fish
 set fish_greeting
@@ -73,13 +80,22 @@ alias vl="nvim leetcode.nvim"
 # Tools
 alias j="z" #jethrokuan/z (jump to projects)
 alias zz="zellij"
-
 alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
+alias hh="history"
+
+# LLM
+alias c='claude --disallowedTools "Write" "Bash(git commit *)"'
+
+# Kubernetes
+alias k="kubectl"
 
 # bat
 alias cat='bat'
 alias less='bat'
-alias head='bat --line-range :10'
+# alias head='bat --line-range :10'
+function head --wraps='bat'
+    bat --line-range :$argv[1]
+end
 alias tail='bat --line-range -10:'
 alias batdiff='git diff --name-only | xargs bat'
 
@@ -94,6 +110,10 @@ alias batdiff='git diff --name-only | xargs bat'
 
 #previewer for fzf:
 set -x FZF_DEFAULT_OPTS '--preview "bat --style=numbers --color=always --line-range :500 {}"'
+# fzf keybindings (all right-hand friendly)
+# Ctrl+H = history, Ctrl+O = files, Ctrl+L = git log
+# Ctrl+S = git status, Ctrl+V = variables, Ctrl+P = processes
+fzf_configure_bindings --history=\ch --directory=\co --git_log=\cl --git_status=\cs --variables=\cv --processes=\cp
 
 # ----- abbr
 

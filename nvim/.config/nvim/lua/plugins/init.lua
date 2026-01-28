@@ -246,6 +246,7 @@ return {
       require("mini.files").setup(require("configs.mini").files)
       require("mini.jump").setup()
       require("mini.jump2d").setup()
+      require("mini.map").setup()
       require("mini.move").setup(require("configs.mini").move)
       require("mini.notify").setup()
       require("mini.operators").setup()

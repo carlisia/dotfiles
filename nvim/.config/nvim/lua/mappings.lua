@@ -147,6 +147,9 @@ end, { desc = "Toggle vertical term" })
 ---- mini
 map("n", "\\e", toggles.mini_explorer, { desc = "Toggle 'mini explorer'" })
 
+map("n", "\\m", toggles.mini_map, { desc = "Toggle 'mini map'" })
+map("n", "\\M", toggles.mini_map_focus, { desc = "Focus 'mini map'" })
+
 map("n", "<leader>-a", "<Cmd>lua MiniSessions.write(vim.fn.input('Session Name > '))<CR>", { desc = "Add a session" })
 map("n", "<leader>-d", "<Cmd>lua MiniSessions.select('delete')<CR>", { desc = "Delete a session" })
 map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })

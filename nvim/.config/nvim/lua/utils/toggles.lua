@@ -154,4 +154,12 @@ M.mini_explorer = function()
   end
 end
 
+M.mini_map = function()
+  require("mini.map").toggle()
+end
+
+M.mini_map_focus = function()
+  require("mini.map").toggle_focus()
+end
+
 return M

@@ -60,7 +60,7 @@ fisher install PatrickF1/fzf.fish    # FZF integration
 ### Cli power tools
 
 ```bash
-# Essential CLI upgrades
+# Essential CLI tools
 brew install bat          # Better cat
 brew install eza          # Better ls
 brew install fzf          # Fuzzy finder
@@ -69,10 +69,8 @@ brew install fd           # Better find
 brew install trash        # Safe rm alternative
 brew install yazi         # Terminal file manager
 brew install zellij       # Terminal multiplexer
-brew install lazygit      # Git TUI
-brew install diff-so-fancy # Pretty git diffs
 brew install delta        # Even prettier diffs
-brew install shellcheck   # Shell script linter
+brew install jq
 ```
 
 ### Tools
@@ -82,6 +80,8 @@ brew install git # note: check if xcode-select already installed git
 brew install git-lfs
 git lfs install
 brew install gh
+brew install diff-so-fancy # Pretty git diffs
+brew install lazygit      # Git TUI
 brew install starship
 brew install neovim
 brew install pngpaste
@@ -89,6 +89,9 @@ brew install stow
 brew install tree-sitter tree-sitter-cli
 brew install ghostty
 rm -rf ~/Library/Application\ Support/com.mitchellh.ghostty # to remove default config file
+brew install shellcheck   # Shell script linter
+brew install helm
+brew install terraform
 ```
 
 ### Kubernetes tools

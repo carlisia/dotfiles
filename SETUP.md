@@ -92,6 +92,8 @@ rm -rf ~/Library/Application\ Support/com.mitchellh.ghostty # to remove default 
 brew install shellcheck   # Shell script linter
 brew install helm
 brew install terraform
+brew install zig         # Cross-compiler
+brew install direnv      # Auto-load .envrc files (used by tu for Terraform)
 ```
 
 ### Kubernetes tools

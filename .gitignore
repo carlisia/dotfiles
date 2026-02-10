@@ -19,6 +19,7 @@ newchad.sh
 /.tmp
 
 fish/.config/fish/fish_variables
+fish/.config/fish/conf.d/work-private.fish
 *.backup
 .DS_Store
 karabiner/.config/karabiner/automatic_backups/

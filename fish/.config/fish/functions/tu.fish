@@ -2,8 +2,14 @@
 # Handles AWS auth and Teleport login
 
 function tu --description "Switch or create TELEPORT_HOME profile with auth setup"
+    # Requires work-private.fish (conf.d) — see work-private.fish.example
+    if not set -q WORK_TELEPORT_CLUSTER_DOMAIN
+        echo "🚫 Missing work-private config. Copy conf.d/work-private.fish.example → conf.d/work-private.fish"
+        return 1
+    end
+
     set -l base ~/tsh_profiles
-    set -l teleport_repo ~/code/src/github.com/gravitational/teleport/e
+    set -l teleport_repo $WORK_TELEPORT_REPO_E
 
     set -l target
     set -l profile_name
@@ -91,8 +97,9 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
     echo "🔐 Step 1/4: AWS Authentication (deploy-cloud-login)"
     set_color normal
 
-    set -gx AWS_PROFILE tc-stage-ecr
-    echo "   AWS_PROFILE → tc-stage-ecr (for deploy-cloud-login)"
+    set -l saved_aws_profile "$AWS_PROFILE"
+    set -gx AWS_PROFILE $WORK_AWS_PROFILE_ECR
+    echo "   AWS_PROFILE → $WORK_AWS_PROFILE_ECR (for deploy-cloud-login)"
 
     if test -d "$teleport_repo"
         # Ensure envtest.mk stub exists — e/Makefile includes it unconditionally
@@ -123,8 +130,8 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
     echo "🔐 Step 2/4: AWS SSO (teleport-dev-admin for Terraform)"
     set_color normal
 
-    set -gx AWS_PROFILE teleport-dev-admin
-    echo "   AWS_PROFILE → teleport-dev-admin"
+    set -gx AWS_PROFILE $saved_aws_profile
+    echo "   AWS_PROFILE → $saved_aws_profile"
 
     aws sso login
     if test $status -ne 0
@@ -141,7 +148,7 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
     echo "🔐 Step 3/4: Teleport Authentication"
     set_color normal
 
-    set -l cluster_addr "$profile_name.cloud.gravitational.io:443"
+    set -l cluster_addr "$profile_name.$WORK_TELEPORT_CLUSTER_DOMAIN:443"
     echo "   Logging into $cluster_addr..."
 
     tsh login --proxy="$cluster_addr"
@@ -164,7 +171,7 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
     echo "📝 Step 4/4: Terraform"
     set_color normal
 
-    set -l staging_dir ~/code/src/github.com/gravitational/teleport-dev-infra/aws/staging
+    set -l staging_dir $WORK_TELEPORT_STAGING_DIR
     set -l locals_file "$staging_dir/locals.tf"
 
     if test -f "$locals_file"

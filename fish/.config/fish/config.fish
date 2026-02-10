@@ -21,9 +21,8 @@ set -gx PROJECTS $HOME/code/src/github.com
 set -gx VAULT_MAIN $SECOND_BRAIN
 set -gx VAULT_DEV $SECOND_BRAIN/DEV
 
-set -gx TELEPORT_CDN_BASE_URL "https://cdn.teleport.dev"
-set -gx TELEPORT_USER "carlisia.campos@goteleport.com"
-set -gx AWS_PROFILE teleport-dev-admin
+# Work-specific env vars (TELEPORT_USER, AWS_PROFILE, etc.)
+# loaded from conf.d/work-private.fish (not tracked by git)
 
 # Path
 set -x fish_user_paths

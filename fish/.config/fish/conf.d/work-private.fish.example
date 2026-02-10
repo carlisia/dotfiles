@@ -1,0 +1,18 @@
+# Work-private configuration template
+# Copy to work-private.fish and fill in your values
+# Fish auto-sources conf.d/ files — no manual source needed
+
+# Identity
+set -gx TELEPORT_USER "you@example.com"
+
+# AWS profiles
+set -gx AWS_PROFILE "your-default-aws-profile"
+set -g WORK_AWS_PROFILE_ECR "your-ecr-profile"
+
+# Teleport CDN
+set -gx TELEPORT_CDN_BASE_URL "https://cdn.teleport.dev"
+
+# Teleport infrastructure paths
+set -g WORK_TELEPORT_REPO_E "$HOME/path/to/teleport/e"
+set -g WORK_TELEPORT_CLUSTER_DOMAIN "your.cluster.domain"
+set -g WORK_TELEPORT_STAGING_DIR "$HOME/path/to/staging"

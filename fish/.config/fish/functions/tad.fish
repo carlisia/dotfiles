@@ -18,13 +18,77 @@ function tad --description "Remove Teleport agent config from EC2 instance via S
         set i (math $i + 1)
     end
 
-    # If no instance ID provided, prompt for it
+    # If no instance ID provided, list tagged instances via fzf
     if test -z "$instance_id"
-        read -P "🖥️  EC2 Instance ID> " instance_id
-        if test -z "$instance_id"
-            echo "❌ No instance ID provided"
+        echo "🔍 Fetching your EC2 instances in $region..."
+
+        # Query EC2 instances filtered by creator tag, output as flat TSV to avoid JSON/fish splitting issues
+        set -l ec2_lines (aws ec2 describe-instances \
+            --region $region \
+            --filters \
+                "Name=tag:teleport.dev/creator,Values=carlisia.campos@goteleport.com" \
+                "Name=instance-state-name,Values=running,stopped" \
+            --query "Reservations[].Instances[].[InstanceId, State.Name, PrivateIpAddress, Tags[?Key=='Name']|[0].Value]" \
+            --output text 2>&1)
+
+        if test $status -ne 0
+            echo "❌ Failed to query EC2 instances: $ec2_lines"
             return 1
         end
+
+        if test -z "$ec2_lines"
+            echo "❌ No instances found with your creator tag in $region"
+            return 1
+        end
+
+        # Get SSM status for all instances in one call (flat TSV)
+        set -l ssm_lines (aws ssm describe-instance-information \
+            --region $region \
+            --query "InstanceInformationList[].[InstanceId, PingStatus]" \
+            --output text 2>&1)
+
+        # Build fzf-friendly list from the TSV output
+        set -l lines
+        for row in $ec2_lines
+            set -l fields (string split \t -- $row)
+            set -l id $fields[1]
+            set -l state $fields[2]
+            set -l ip $fields[3]
+            set -l name $fields[4]
+
+            # Default values for missing fields
+            test -z "$ip" -o "$ip" = "None"; and set ip "no-ip"
+            test -z "$name" -o "$name" = "None"; and set name "unnamed"
+
+            # Look up SSM ping status
+            set -l ping "No SSM"
+            for ssm_row in $ssm_lines
+                set -l ssm_fields (string split \t -- $ssm_row)
+                if test "$ssm_fields[1]" = "$id"
+                    set ping $ssm_fields[2]
+                    break
+                end
+            end
+
+            set -a lines (printf "%-22s │ %-30s │ %-10s │ %-12s │ %s" "$id" "$name" "$state" "$ping" "$ip")
+        end
+
+        if test (count $lines) -eq 0
+            echo "❌ No instances found with your creator tag in $region"
+            return 1
+        end
+
+        set -l header (printf "%-22s │ %-30s │ %-10s │ %-12s │ %s" "INSTANCE ID" "NAME" "STATE" "SSM PING" "IP")
+        set -l selection (printf '%s\n' $lines | fzf --header="$header" --height=40% --reverse)
+
+        if test -z "$selection"
+            echo "❌ No instance selected"
+            return 1
+        end
+
+        # Extract instance ID (first field before the │)
+        set instance_id (string split "│" -- $selection)[1]
+        set instance_id (string trim -- $instance_id)
     end
 
     # Confirm before proceeding

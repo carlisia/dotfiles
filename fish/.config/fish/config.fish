@@ -23,6 +23,7 @@ set -gx VAULT_DEV $SECOND_BRAIN/DEV
 
 set -gx TELEPORT_CDN_BASE_URL "https://cdn.teleport.dev"
 set -gx TELEPORT_USER "carlisia.campos@goteleport.com"
+set -gx AWS_PROFILE teleport-dev-admin
 
 # Path
 set -x fish_user_paths
@@ -58,6 +59,11 @@ end
 # Startship prompt
 starship init fish | source
 
+# direnv - auto-load .envrc files
+if type -q direnv
+    direnv hook fish | source
+end
+
 # Editor
 alias vim nvim
 alias vi nvim
@@ -65,6 +71,7 @@ alias v nvim
 
 # ----- aliases# Git
 alias g="git status -sb"
+alias s="git add . && git stash"
 alias ggl "git log --pretty=oneline -n 20 --graph --abbrev-commit"
 alias ggsl "git shortlog --summary --numbered"
 
@@ -82,6 +89,12 @@ alias j="z" #jethrokuan/z (jump to projects)
 alias zz="zellij"
 alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
 alias hh="history"
+alias sc="source ~/.config/fish/config.fish"
+alias ta="terraform apply"
+alias td="terraform destroy"
+alias tp="terraform plan"
+alias ti="terraform init"
+alias te='eval "$(tctl terraform env)"'
 
 # LLM
 alias c='claude --disallowedTools "Write" "Bash(git commit *)"'
@@ -105,8 +118,27 @@ alias batdiff='git diff --name-only | xargs bat'
  alias dtctl '~/code/src/github.com/gravitational/teleport/build/tctl'
  alias dtbot '~/code/src/github.com/gravitational/teleport/build/tbot'
 
- # Quick version check (fish syntax)
- alias dversions 'echo "Dev:" && ~/code/src/github.com/gravitational/teleport/build/teleport version && echo "" && echo "Release:" && teleport version 2>/dev/null; or echo "No release version installed"'
+ # Quick version check - all dev binaries
+ function dversions
+     set -l build_dir ~/code/src/github.com/gravitational/teleport/build
+     echo "=== Dev Builds ==="
+     for bin in teleport tsh tctl tbot
+         if test -f "$build_dir/$bin"
+             printf "%-10s %s\n" "$bin:" ("$build_dir/$bin" version 2>/dev/null | command head -1)
+         else
+             printf "%-10s %s\n" "$bin:" "(not built)"
+         end
+     end
+     echo ""
+     echo "=== Release Versions ==="
+     for bin in teleport tsh tctl tbot
+         if type -q $bin
+             printf "%-10s %s\n" "$bin:" ($bin version 2>/dev/null | command head -1)
+         else
+             printf "%-10s %s\n" "$bin:" "(not installed)"
+         end
+     end
+ end
 
 #previewer for fzf:
 set -x FZF_DEFAULT_OPTS '--preview "bat --style=numbers --color=always --line-range :500 {}"'

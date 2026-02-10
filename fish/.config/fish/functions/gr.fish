@@ -43,6 +43,10 @@ function gr --description "Rebase a carlisia/ branch on master"
         return 1
     end
 
+    # Sync submodules (fixes stale references)
+    echo "🔗 Syncing submodules..."
+    git submodule sync
+
     # Pull latest
     echo "⬇️  Pulling master..."
     git pull || begin

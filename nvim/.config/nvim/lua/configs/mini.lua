@@ -93,6 +93,7 @@ M.clue = {
 
     { mode = "n", keys = "<leader>b", desc = "Buffers..." },
     { mode = "n", keys = "<leader>g", desc = "Git..." },
+    { mode = "n", keys = "<leader>G", desc = "Gitsigns..." },
     { mode = "n", keys = "<leader>f", desc = "Files..." },
     { mode = "n", keys = "<leader>l", desc = "LSP..." },
     { mode = "n", keys = "<leader>n", desc = "Notifications..." },

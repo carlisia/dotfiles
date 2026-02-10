@@ -155,3 +155,15 @@ map("n", "<leader>-d", "<Cmd>lua MiniSessions.select('delete')<CR>", { desc = "D
 map("n", "<leader>-s", "<Cmd>lua MiniSessions.select()<CR>", { desc = "Select a session" })
 map("n", "<leader>-u", "<Cmd>lua MiniSessions.select('write')<CR>", { desc = "Update a session" })
 map("n", "<leader>-p", "<Cmd>lua MiniSessions.read(MiniSessions.get_latest())<CR>", { desc = "Pop the latest session" })
+
+---- Gitsigns
+map("n", "<leader>Gr", "<Cmd>Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
+map("n", "<leader>Gp", "<Cmd>Gitsigns prev_hunk<CR>", { desc = "Previous hunk" })
+map("n", "<leader>Gb", "<Cmd>Gitsigns reset_base true<CR>", { desc = "Reset base to HEAD" })
+map("n", "<leader>Gc", function()
+  vim.ui.input({ prompt = "Commits back: " }, function(num)
+    if num and num ~= "" then
+      require("gitsigns").change_base("~" .. num, true)
+    end
+  end)
+end, { desc = "Change base ~N" })

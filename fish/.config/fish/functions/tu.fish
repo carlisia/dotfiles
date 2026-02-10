@@ -4,8 +4,14 @@
 function tu --description "Switch or create TELEPORT_HOME profile with auth setup"
     # Requires work-private.fish (conf.d) — see work-private.fish.example
     if not set -q WORK_TELEPORT_CLUSTER_DOMAIN
-        echo "🚫 Missing work-private config. Copy conf.d/work-private.fish.example → conf.d/work-private.fish"
-        return 1
+        set -l private_conf ~/.config/fish/conf.d/work-private.fish
+        if test -f "$private_conf"
+            source "$private_conf"
+        end
+        if not set -q WORK_TELEPORT_CLUSTER_DOMAIN
+            echo "🚫 Missing work-private config. Copy conf.d/work-private.fish.example → conf.d/work-private.fish"
+            return 1
+        end
     end
 
     set -l base ~/tsh_profiles

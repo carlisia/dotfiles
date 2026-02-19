@@ -94,6 +94,7 @@ brew install helm
 brew install terraform
 brew install zig         # Cross-compiler
 brew install direnv      # Auto-load .envrc files (used by tu for Terraform)
+brew install --cask session-manager-plugin # for aws ssm connection
 ```
 
 ### Kubernetes tools

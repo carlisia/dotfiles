@@ -18,6 +18,8 @@ Source: `dotfiles/fish/` — functions live in `functions/`, aliases in `config.
 | `md`                | Deploy to cloud tenant                     |   prompts    |
 | `tdb`               | Build Teleport binaries from source        |  fzf or arg  |
 | `tad`               | Remove Teleport agent from EC2 via SSM     |   prompts    |
+| `ec2d`              | Clean agent + terminate EC2 instance       |  fzf or arg  |
+| `ec2c`              | Create staging EC2 instance via Terraform  |      no      |
 | `gr`                | Rebase branch on master + init submodules  |     fzf      |
 | `te`                | Load short-lived Terraform provider creds  |      no      |
 | `ta` `tp` `ti` `td` | Terraform apply/plan/init/destroy          |      no      |
@@ -182,6 +184,54 @@ tad                              # prompts for instance ID
 
 ---
 
+### `ec2d [instance-id]` — Destroy EC2 Instance
+
+Runs `tad` to clean the Teleport agent and remove discovery configs, then terminates the EC2 instance. Use this when you want a completely fresh instance for re-enrollment testing.
+
+```bash
+ec2d i-0eb21f1663a769f4e
+ec2d --region us-east-1 i-0eb21f1663a769f4e
+ec2d                     # interactive — fzf picker
+```
+
+**What it does:**
+
+1. Runs `tad` on the selected instance (cleans agent + removes discovery configs)
+2. Terminates the EC2 instance via `aws ec2 terminate-instances`
+
+**Side effects:**
+
+- **Destructive** — removes all Teleport state AND terminates the instance
+- Has confirmation prompt before executing
+- Default region: `us-west-2`
+
+**After destroy:** Run `ec2c` to create a fresh EC2 instance.
+
+---
+
+### `ec2c` — Create Staging EC2 Instance
+
+Runs `terraform apply` on the parent staging directory to create (or restore) the EC2 instance, security group, SSH key, and discovery integration.
+
+```bash
+tec2
+```
+
+**What it does:**
+
+1. Refreshes Teleport provider creds and AWS SSO session
+2. Runs `terraform init` + `terraform apply` on the staging directory
+3. Shows the new instance's public IP
+
+**Side effects:**
+
+- Creates or updates AWS infrastructure (EC2, security group, SSH key, discovery integration)
+- Prompts for Terraform apply confirmation
+
+**After creation:** Run `ttc` to apply a test case.
+
+---
+
 ## Git Workflow
 
 ### `gr` — Rebase Branch on Master
@@ -235,6 +285,14 @@ ta          # apply
 4. ti && tp && ta         # init, plan, apply infra
 5. tdb tsh                # build dev binary if needed
 6. dtsh ...               # use dev binary
-7. tad i-xxx       # clean up EC2 if re-enrolling
+7. tad i-xxx              # clean up EC2 if re-enrolling
 8. tud carlisia-disc      # delete profile when done
+```
+
+**Fresh instance for re-enrollment testing:**
+
+```text
+1. ec2d                   # clean agent + terminate instance (fzf picker)
+2. ec2c                   # create fresh EC2 instance
+3. ttc                    # apply a test case
 ```

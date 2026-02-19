@@ -173,7 +173,7 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
         end
 
         # Update kube namespace to match the tenant
-        set -l kube_ns "cloud-gravitational-io-$profile_name"
+        set -l kube_ns (string replace -a '.' '-' $WORK_TELEPORT_CLUSTER_DOMAIN)"-$profile_name"
         kubectl config set-context --current --namespace="$kube_ns" 2>/dev/null
         and echo "   ✅ Kube namespace → $kube_ns"
     end

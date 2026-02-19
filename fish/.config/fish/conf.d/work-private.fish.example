@@ -16,3 +16,11 @@ set -gx TELEPORT_CDN_BASE_URL "https://cdn.teleport.dev"
 set -g WORK_TELEPORT_REPO_E "$HOME/path/to/teleport/e"
 set -g WORK_TELEPORT_CLUSTER_DOMAIN "your.cluster.domain"
 set -g WORK_TELEPORT_STAGING_DIR "$HOME/path/to/staging"
+
+# Teleport repo (base, without /e suffix)
+set -g WORK_TELEPORT_REPO "$HOME/path/to/teleport"
+
+# mdbin: deploy custom binary to EC2
+set -g WORK_S3_BUCKET "your-s3-bucket"
+set -g WORK_PROXY_ADDR "your-proxy.cluster.domain:443"
+set -g WORK_TOKEN_NAME "your-token-name"

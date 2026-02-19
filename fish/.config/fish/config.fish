@@ -89,11 +89,8 @@ alias zz="zellij"
 alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
 alias hh="history"
 alias sc="source ~/.config/fish/config.fish"
-alias ta="terraform apply"
-alias td="terraform destroy"
-alias tp="terraform plan"
 alias ti="terraform init"
-alias te='eval "$(tctl terraform env)"'
+alias te='eval "$(dtctl terraform env)"'
 
 # LLM
 alias c='claude --disallowedTools "Write" "Bash(git commit *)"'

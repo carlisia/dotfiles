@@ -3,7 +3,7 @@
 # the EC2 instance, security group, SSH key, and discovery integration.
 
 function ec2c --description "Create staging EC2 instance via Terraform"
-    set -l staging_dir ~/code/src/github.com/gravitational/teleport-dev-infra/aws/staging
+    set -l staging_dir $WORK_TELEPORT_STAGING_DIR
 
     # Pre-flight: ensure tsh session is valid
     if not dtsh status &>/dev/null

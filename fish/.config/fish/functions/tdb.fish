@@ -1,7 +1,7 @@
 # Teleport dev build - compile teleport binaries from source
 
 function tdb --description "Build Teleport binaries from source"
-    set -l teleport_repo ~/code/src/github.com/gravitational/teleport
+    set -l teleport_repo $WORK_TELEPORT_REPO
 
     if not test -d "$teleport_repo"
         set_color red

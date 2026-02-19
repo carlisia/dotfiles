@@ -1,5 +1,5 @@
 function ttr --description 'Reset staging after a discovery test case'
-    set -l staging_dir ~/code/src/github.com/gravitational/teleport-dev-infra/aws/staging
+    set -l staging_dir $WORK_TELEPORT_STAGING_DIR
 
     # Pre-flight: ensure tsh session is valid
     if not dtsh status &>/dev/null

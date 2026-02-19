@@ -33,7 +33,7 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
         set -l ec2_lines (aws ec2 describe-instances \
             --region $region \
             --filters \
-                "Name=tag:teleport.dev/creator,Values=carlisia.campos@goteleport.com" \
+                "Name=tag:teleport.dev/creator,Values=$TELEPORT_USER" \
                 "Name=instance-state-name,Values=running,stopped" \
             --query "Reservations[].Instances[].[InstanceId, State.Name, PrivateIpAddress, Tags[?Key=='Name']|[0].Value]" \
             --output text 2>&1)

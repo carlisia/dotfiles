@@ -86,9 +86,11 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
     set -l abs (pwd -P)
     cd "$cwd"
 
-    # Export TELEPORT_HOME globally
+    # Export TELEPORT_HOME and TENANT globally
     set -gx TELEPORT_HOME "$abs"
+    set -gx TENANT "$profile_name"
     echo "✅ TELEPORT_HOME → "(string replace $HOME '~' $TELEPORT_HOME)
+    echo "✅ TENANT → $TENANT"
 
     # Show current session info if available
     if test -f "$TELEPORT_HOME/current-profile"
@@ -169,6 +171,11 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
             echo "   📡 Profile: "(command cat "$TELEPORT_HOME/current-profile")
             set_color normal
         end
+
+        # Update kube namespace to match the tenant
+        set -l kube_ns "cloud-gravitational-io-$profile_name"
+        kubectl config set-context --current --namespace="$kube_ns" 2>/dev/null
+        and echo "   ✅ Kube namespace → $kube_ns"
     end
 
     # --- Step 4: Update Terraform staging config ---

@@ -7,23 +7,29 @@ Source: `dotfiles/fish/` — functions live in `functions/`, aliases in `config.
 
 ---
 
-## Quick Reference
+## Quick reference
 
-| Command             | Purpose                                    | Interactive? |
-| ------------------- | ------------------------------------------ | :----------: |
-| `tu`                | Switch/create Teleport profile + full auth |  fzf or arg  |
-| `tui`               | Show current profile & session status      |      no      |
-| `tud`               | Delete a Teleport profile                  |  fzf or arg  |
-| `mc`                | Create cloud tenant                        |   prompts    |
-| `md`                | Deploy to cloud tenant                     |   prompts    |
-| `tdb`               | Build Teleport binaries from source        |  fzf or arg  |
-| `tad`               | Remove Teleport agent from EC2 via SSM     |   prompts    |
-| `ec2d`              | Clean agent + terminate EC2 instance       |  fzf or arg  |
-| `ec2c`              | Create staging EC2 instance via Terraform  |      no      |
-| `gr`                | Rebase branch on master + init submodules  |     fzf      |
-| `te`                | Load short-lived Terraform provider creds  |      no      |
-| `ta` `tp` `ti` `td` | Terraform apply/plan/init/destroy          |      no      |
-| `dversions`         | Show all dev + release binary versions     |      no      |
+| Command        | Purpose                                      | Requires | Interactive? |
+| -------------- | -------------------------------------------- | :------: | :----------: |
+| `tu`           | Switch/create Teleport profile + full auth   |    —     |  fzf or arg  |
+| `tui`          | Show current profile & session status        |    —     |      no      |
+| `tud`          | Delete a Teleport profile                    |    —     |  fzf or arg  |
+| `mc`           | Create cloud tenant                          |   AWS    |   prompts    |
+| `md`           | Deploy to cloud tenant                       |   AWS    |   prompts    |
+| `mdbin`        | Deploy custom binary to EC2 via S3 + SSM     |   AWS    |  fzf or arg  |
+| `tdb`          | Build Teleport binaries from source          |    —     |  fzf or arg  |
+| `tad`          | Remove Teleport agent from EC2 + del configs |   `tu`   |  fzf or arg  |
+| `ec2d`         | Clean agent + terminate EC2 instance         |   `tu`   |  fzf or arg  |
+| `ec2c`         | Create staging EC2 instance via Terraform    |   `tu`   |      no      |
+| `ttc`          | Prep staging + run a discovery test case     |   `tu`   |     fzf      |
+| `ttr`          | Reset staging after a test case              |   `tu`   |     fzf      |
+| `gr`           | Rebase branch on master + init submodules    |    —     |     fzf      |
+| `te`           | Load short-lived Terraform provider creds    |   `tu`   |      no      |
+| `ta` `tp` `td` | Terraform apply/plan/destroy (auto-refresh)  |   `tu`   |      no      |
+| `ti`           | Terraform init                               |    —     |      no      |
+| `dversions`    | Show all dev + release binary versions       |    —     |      no      |
+
+**Requires column:** `tu` = needs an active tsh session (run `tu` first). AWS = needs AWS creds (auto-refreshes, offers login if expired). — = no auth needed.
 
 ---
 
@@ -42,13 +48,15 @@ tu                   # interactive — fzf picker with "+ Create new"
 
 1. Sets `AWS_PROFILE` to ECR profile, runs `make deploy-cloud-login` in teleport/e
 2. Restores `AWS_PROFILE` to default, runs `aws sso login`
-3. Runs `tsh login --proxy=<profile>.<cluster-domain>:443`
+3. Runs `tsh login --proxy=<profile>.<cluster-domain>:443`, then sets kube namespace to match the tenant
 4. Updates `teleport_proxy_public_addr` in staging `locals.tf` via sed
 
 **Side effects:**
 
 - Sets `TELEPORT_HOME` globally to `~/tsh_profiles/<name>`
+- Sets `TENANT` globally to the profile name
 - Toggles `AWS_PROFILE` between ECR and default profiles
+- Updates kube namespace to `<cluster-domain>-<profile-name>`
 - Modifies `locals.tf` in the teleport-dev-infra staging dir
 - Creates `envtest.mk` stub if missing (harmless — needed by e/Makefile)
 
@@ -88,7 +96,7 @@ tud                  # interactive — fzf picker
 
 ### `mc` — Create Cloud Tenant
 
-Prompts for tenant name and release version, then runs `make create-cloud` in teleport/e.
+Checks AWS creds (offers `deploy-cloud-login` if expired), prompts for tenant name and release version, then runs `make create-cloud` in teleport/e.
 
 ```bash
 mc
@@ -96,13 +104,13 @@ mc
 # prompts: RELEASE> 17.1.0
 ```
 
-**Side effects:** Creates a cloud tenant in staging.
+**Side effects:** Creates a cloud tenant in staging. Does not require a tsh dev session — uses platform auth (`~/.tsh_platform`) via the `tc` tool.
 
 ---
 
 ### `md` — Deploy to Cloud Tenant
 
-Checks AWS login, prompts for tenant + version, cross-compiles with zig, deploys.
+Checks AWS login (offers `deploy-cloud-login` if expired), prompts for tenant + version, cross-compiles with zig, deploys.
 
 ```bash
 md
@@ -115,6 +123,7 @@ md
 - Runs `make setver` to update version files
 - Cross-compiles for linux/amd64 using zig
 - Deploys to the specified cloud tenant
+- Does not require a tsh dev session — uses platform auth via `deploy-cloud`
 
 ---
 
@@ -156,28 +165,38 @@ dversions
 
 ---
 
-## EC2 Cleanup
+## EC2 operations
 
 ### `tad [instance-id]` — Teleport Agent Delete
 
-Removes Teleport agent from an EC2 instance via AWS SSM.
+Two-phase cleanup: removes Teleport agent from an EC2 instance via SSM, then offers to delete discovery configs from the cluster.
 
 ```bash
 tad i-07a65cb983d6bd40f
 tad --region us-east-1 i-07a65cb983d6bd40f
-tad                              # prompts for instance ID
+tad                              # interactive — fzf instance picker
 ```
 
 **What it does:**
 
-1. Sends SSM command to stop + disable teleport service
-2. Removes `/etc/teleport.yaml`, `/var/lib/teleport/`, `/etc/teleport-update.yaml`, `/etc/teleport.d/`
-3. Sends verification command to confirm cleanup
+Phase 1 — EC2 agent cleanup (optional, ESC to skip):
+
+1. Lists your EC2 instances via fzf (filtered by `teleport.dev/creator` tag, shows SSM status)
+2. Sends SSM command to stop + disable teleport service
+3. Removes `/etc/teleport.yaml`, `/var/lib/teleport/`, `/etc/teleport-update.yaml`, `/etc/teleport.d/`
+4. Sends verification command to confirm cleanup
+
+Phase 2 — Discovery config cleanup (always offered):
+
+5. Lists discovery configs via `dtctl get discovery_config`
+6. Prompts to delete selected config
 
 **Side effects:**
 
 - **Destructive on the EC2 instance** — removes all Teleport state
-- Has confirmation prompt before executing
+- Deletes selected discovery config from the cluster
+- Has confirmation prompts before each phase
+- Instance selection is optional — ESC to skip to discovery config cleanup only
 - Default region: `us-west-2`
 
 **After cleanup:** Discovery will re-enroll the instance with the correct cluster.
@@ -186,7 +205,7 @@ tad                              # prompts for instance ID
 
 ### `ec2d [instance-id]` — Destroy EC2 Instance
 
-Runs `tad` to clean the Teleport agent and remove discovery configs, then terminates the EC2 instance. Use this when you want a completely fresh instance for re-enrollment testing.
+Use this when you want to decomission an instance.
 
 ```bash
 ec2d i-0eb21f1663a769f4e
@@ -214,7 +233,7 @@ ec2d                     # interactive — fzf picker
 Runs `terraform apply` on the parent staging directory to create (or restore) the EC2 instance, security group, SSH key, and discovery integration.
 
 ```bash
-tec2
+ec2c
 ```
 
 **What it does:**
@@ -228,11 +247,113 @@ tec2
 - Creates or updates AWS infrastructure (EC2, security group, SSH key, discovery integration)
 - Prompts for Terraform apply confirmation
 
-**After creation:** Run `ttc` to apply a test case.
+**After creation:** Run `ttc` to apply (create) a test case.
 
 ---
 
-## Git Workflow
+### `mdbin [instance-id]` — Deploy Custom Binary to EC2
+
+Builds a custom `teleport` binary for linux/amd64 with zig cross-compiler, uploads it to S3, then deploys to an EC2 instance via SSM and runs `teleport install autodiscover-node`. Bypasses the CDN installer flow entirely — `teleport-update` re-downloads from CDN, so this sends the binary directly.
+
+```bash
+mdbin i-041eb85bba1e9e581   # direct — pass instance ID
+mdbin                        # interactive — fzf instance picker
+```
+
+**What it does:**
+
+1. Checks AWS creds (auto-refreshes via `aws sso login` if expired)
+2. Lists your EC2 instances via fzf if no instance ID given
+3. Cross-compiles `teleport` for linux/amd64 using zig
+4. Uploads binary to S3 (`$WORK_S3_BUCKET`)
+5. Generates a pre-signed S3 URL (5 min expiry)
+6. Sends SSM command to download binary, run `autodiscover-node` with proxy and token
+
+**Side effects:**
+
+- Writes a temporary binary to `/tmp/teleport-custom`
+- Uploads to S3 (overwrites `teleport-custom` key each time)
+- Runs `teleport install autodiscover-node` on the EC2 instance
+- Target cluster is determined by `WORK_PROXY_ADDR` in `work-private.fish`, not by your current `tu` profile
+- Does not require a tsh dev session — AWS-only
+
+**Required env vars (from `work-private.fish`):** `WORK_S3_BUCKET`, `WORK_PROXY_ADDR`, `WORK_TOKEN_NAME`, `WORK_TELEPORT_REPO`, `TELEPORT_USER`
+
+---
+
+## Discovery test cycle
+
+### `ttc` — Teleport Test Case - Create
+
+Preps the staging environment and runs a discovery test case. Automates the multi-step process required to test a specific discovery failure scenario.
+
+```bash
+ttc     # interactive — walks through all steps
+```
+
+**What it does (4 steps):**
+
+1. Destroys the main staging discovery config (`terraform destroy -target`), keeping the integration, IAM role, and provision token intact
+2. Removes the enrolled node from the cluster (auto-selects if only one, fzf if multiple)
+3. Removes the teleport agent from the EC2 instance via SSM (`tad`) — stops service, deletes config and identity certs
+4. Prompts (via fzf) to select and apply a test case from `aws/staging/<issue>/<test>`
+
+**Why all three removal steps are needed:**
+
+- Destroying the discovery config stops scanning, but the node stays registered.
+- Removing the node (`tctl rm`) clears the cluster-side registration, but the teleport agent on the instance still holds valid identity certs from the previous join and will immediately re-register itself.
+- Removing the agent via SSM (`tad`) wipes the certs and config, making the instance truly unenrolled so discovery treats it as a fresh target.
+
+**Side effects:**
+
+- Destroys one Teleport `discovery_config` resource (re-created by `ta` in staging dir)
+- Removes one node from the Teleport cluster
+- Wipes Teleport agent state from the EC2 instance (service, config, data dir)
+- Deletes selected discovery configs from the cluster (via `tad` phase 2)
+- Applies Terraform in the selected test directory
+- Auto-refreshes Teleport provider creds and AWS SSO before starting
+
+**After testing, to restore:** Run `ttr` to destroy the test case, clean up the agent, and restore the main staging config.
+
+---
+
+### `ttr` — Teleport Test Case - Reset
+
+Resets the staging environment after a discovery test case. The inverse of `ttc`.
+
+```bash
+ttr     # interactive — walks through all steps
+```
+
+**What it does (3 steps):**
+
+1. Finds active test cases (tc\* dirs with terraform state) and destroys the selected one
+2. Cleans up the agent and discovery configs via `tad` (instance optional, discovery config deletion always offered)
+3. Applies the main staging config to restore the valid discovery config, integration, and token
+
+**When to use:** After a test case has produced the expected result (e.g., a join failure user task appeared) and you want to return to the happy-path staging config.
+
+**Side effects:**
+
+- Destroys Terraform resources in the selected test directory
+- Wipes Teleport agent state from the EC2 instance (via `tad`)
+- Deletes discovery configs from the cluster (via `tad`)
+- Re-applies the main staging Terraform config
+- Auto-refreshes Teleport provider creds and AWS SSO before starting
+
+---
+
+### `ttc` + `ttr` workflow
+
+```text
+1. ttc                # tear down main config, prep instance, apply test case
+2. (verify result)    # check UI for expected user task / behavior
+3. ttr                # destroy test case, clean up, restore main config
+```
+
+---
+
+## Git workflow
 
 ### `gr` — Rebase Branch on Master
 
@@ -254,39 +375,50 @@ gr                   # fzf picks from carlisia/* branches
 
 ---
 
-## Terraform Aliases
+## Terraform commands
 
-| Alias | Expands to                     | Notes                                    |
-| ----- | ------------------------------ | ---------------------------------------- |
-| `ti`  | `terraform init`               | Run first in a new workspace             |
-| `tp`  | `terraform plan`               | Preview changes                          |
-| `ta`  | `terraform apply`              | Apply changes                            |
-| `td`  | `terraform destroy`            | Tear down resources                      |
-| `te`  | `eval "$(tctl terraform env)"` | Load short-lived Teleport provider creds |
+Note: favor the `ttc` + `ttr` workflow described above.
+
+| Command | Type     | Notes                                                 |
+| ------- | -------- | ----------------------------------------------------- |
+| `ti`    | alias    | `terraform init` — run first in a new workspace       |
+| `tp`    | function | Session check + cred refresh + `terraform plan`       |
+| `ta`    | function | Session check + cred refresh + `terraform apply`      |
+| `td`    | function | Session check + cred refresh + `terraform destroy`    |
+| `te`    | alias    | `eval "$(dtctl terraform env)"` — manual cred refresh |
+
+`ta`, `tp`, `td` auto-refresh Teleport provider creds before running. No need to run `te` first — creds are always fresh. `te` is still available for manual refresh (e.g., before `ti` or raw `terraform` commands).
 
 **Typical flow after `tu`:**
 
 ```bash
 cd ~/code/.../teleport-dev-infra/aws/staging
-te          # get creds (short-lived, re-run if expired)
 ti          # init
 tp          # plan — review changes
-ta          # apply
+ta          # apply (creds auto-refresh)
 ```
 
 ---
 
-## Typical Full Workflow
+## Typical full workflow
 
 ```text
 1. tu carlisia-disc       # auth into profile (4-step flow)
 2. cd into staging dir    # printed by tu at the end
-3. te                     # get Terraform provider creds
-4. ti && tp && ta         # init, plan, apply infra
-5. tdb tsh                # build dev binary if needed
-6. dtsh ...               # use dev binary
-7. tad i-xxx              # clean up EC2 if re-enrolling
-8. tud carlisia-disc      # delete profile when done
+3. ti && tp && ta         # init, plan, apply infra (creds auto-refresh)
+4. tdb tsh                # build dev binary if needed
+5. dtsh ...               # use dev binary
+6. tad                    # clean up EC2 + discovery configs if re-enrolling
+7. tud carlisia-disc      # delete profile when done
+```
+
+**Discovery test cycle:**
+
+```text
+1. tu carlisia-disc       # auth
+2. ttc                    # tear down, prep, apply test case
+3. (verify in UI)         # check for expected user task / behavior
+4. ttr                    # reset — destroy test, clean up, restore main config
 ```
 
 **Fresh instance for re-enrollment testing:**
@@ -295,4 +427,10 @@ ta          # apply
 1. ec2d                   # clean agent + terminate instance (fzf picker)
 2. ec2c                   # create fresh EC2 instance
 3. ttc                    # apply a test case
+```
+
+**Deploy custom binary (no tsh session needed):**
+
+```text
+1. mdbin                  # build, upload to S3, deploy via SSM
 ```

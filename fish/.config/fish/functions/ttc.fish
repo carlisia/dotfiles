@@ -15,7 +15,8 @@ function ttc --description 'Prep and run a staging discovery test case'
         return 1
     end
 
-    # Refresh AWS SSO session if expired (needed for terraform AWS provider)
+    # Clear cached role creds so the check exercises the full SSO token path
+    command find ~/.aws/cli/cache -maxdepth 1 -name '*.json' -delete 2>/dev/null
     if not aws sts get-caller-identity &>/dev/null
         echo "── Refreshing AWS credentials ──"
         aws sso login
@@ -28,42 +29,15 @@ function ttc --description 'Prep and run a staging discovery test case'
     terraform -chdir=$staging_dir destroy -target='module.aws_discovery.teleport_discovery_config.aws[0]'
     or return 1
 
-    # Step 2: List nodes and select one to remove
-    # The instance stays registered as a node from earlier enrollment.
-    # If not removed, discovery will see it as already enrolled and skip it.
+    # Step 2: Clean up agent, nodes, and discovery configs
     echo ""
-    echo "── Step 2: Select node to remove ──"
-    set -l node_lines (dtctl get nodes --format=json 2>/dev/null | jq -r '.[] | "\(.metadata.name)\t\(.spec.hostname // "")\t\(.metadata.labels["aws/teleport.dev/creator"] // "")"')
-
-    if test (count $node_lines) -eq 0
-        echo "No nodes found, skipping removal."
-    else if test (count $node_lines) -eq 1
-        set -l node_name (string split \t $node_lines[1])[1]
-        echo "Removing node: $node_name"
-        dtctl rm "node/$node_name"
-    else
-        set -l selected (printf '%s\n' $node_lines | fzf --prompt="Remove node> " --header="name  hostname  creator (ESC to skip)" --delimiter='\t')
-        if test -n "$selected"
-            set -l node_name (string split \t $selected)[1]
-            echo "Removing node: $node_name"
-            dtctl rm "node/$node_name"
-        else
-            echo "Skipped node removal."
-        end
-    end
-
-    # Step 3: Remove teleport agent from EC2 instance
-    # The agent holds valid identity certs from the previous join. Even after
-    # removing the node, the running agent will re-register itself immediately.
-    # Cleaning up via SSM ensures the instance is truly unenrolled.
-    echo ""
-    echo "── Step 3: Remove teleport agent from EC2 instance ──"
-    tad
+    echo "── Step 2: Clean up agent, nodes + discovery configs ──"
+    tad --yes
     or return 1
 
-    # Step 4: Select and apply test case
+    # Step 3: Select and apply test case
     echo ""
-    echo "── Step 4: Select test case to apply ──"
+    echo "── Step 3: Select test case to apply ──"
     set -l tests (find $staging_dir -mindepth 2 -maxdepth 2 -type d -name 'tc*' 2>/dev/null | sort | string replace "$staging_dir/" '')
 
     if test (count $tests) -eq 0
@@ -74,8 +48,19 @@ function ttc --description 'Prep and run a staging discovery test case'
     set -l selected_test (printf '%s\n' $tests | fzf --prompt="Apply test> " --header="Select test case to create")
     if test -n "$selected_test"
         echo "Applying test: $selected_test"
+
+        set -l extra_vars
+        read -P "🔧 Use custom binary from S3? [y/N] " use_custom
+        if test "$use_custom" = "y" -o "$use_custom" = "Y"
+            read -P "🔨 Rebuild + upload first? [y/N] " rebuild
+            if test "$rebuild" = "y" -o "$rebuild" = "Y"
+                mdbin; or return 1
+            end
+            set extra_vars -var use_custom_binary=true
+        end
+
         terraform -chdir=$staging_dir/$selected_test init -input=false
-        terraform -chdir=$staging_dir/$selected_test apply
+        terraform -chdir=$staging_dir/$selected_test apply $extra_vars
     else
         echo "No test selected."
     end

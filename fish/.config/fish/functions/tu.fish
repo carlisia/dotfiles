@@ -191,6 +191,12 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
         # Update teleport_proxy_public_addr to match the new profile
         sed -i '' "s|teleport_proxy_public_addr = \".*\"|teleport_proxy_public_addr = \"$cluster_addr\"|" "$locals_file"
         echo "   ✅ Updated locals.tf → $cluster_addr"
+
+        set -l tfvars_file "$staging_dir/terraform.tfvars"
+        if test -f "$tfvars_file"
+            sed -i '' "s|teleport_proxy_public_addr = .*|teleport_proxy_public_addr = \"$cluster_addr\"|" "$tfvars_file"
+            echo "   ✅ Updated terraform.tfvars → $cluster_addr"
+        end
     else
         set_color red
         echo "   ⚠️  locals.tf not found at "(string replace $HOME '~' $locals_file)

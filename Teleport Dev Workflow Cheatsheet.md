@@ -16,12 +16,12 @@ Source: `dotfiles/fish/` — functions live in `functions/`, aliases in `config.
 | `tud`          | Delete a Teleport profile                    |    —     |  fzf or arg  |
 | `mc`           | Create cloud tenant                          |   AWS    |   prompts    |
 | `md`           | Deploy to cloud tenant                       |   AWS    |   prompts    |
-| `mdbin`        | Deploy custom binary to EC2 via S3 + SSM     |   AWS    |  fzf or arg  |
+| `mdbin`        | Build custom binary + upload to S3            |   AWS    |      no      |
 | `tdb`          | Build Teleport binaries from source          |    —     |  fzf or arg  |
 | `tad`          | Remove Teleport agent from EC2 + del configs |   `tu`   |  fzf or arg  |
 | `ec2d`         | Clean agent + terminate EC2 instance         |   `tu`   |  fzf or arg  |
 | `ec2c`         | Create staging EC2 instance via Terraform    |   `tu`   |      no      |
-| `ttc`          | Prep staging + run a discovery test case     |   `tu`   |     fzf      |
+| `ttc`          | Prep staging + run a discovery test case     |   `tu`   | fzf + prompt |
 | `ttr`          | Reset staging after a test case              |   `tu`   |     fzf      |
 | `gr`           | Rebase branch on master + init submodules    |    —     |     fzf      |
 | `te`           | Load short-lived Terraform provider creds    |   `tu`   |      no      |
@@ -251,33 +251,29 @@ ec2c
 
 ---
 
-### `mdbin [instance-id]` — Deploy Custom Binary to EC2
+### `mdbin` — Build Custom Binary and Upload to S3
 
-Builds a custom `teleport` binary for linux/amd64 with zig cross-compiler, uploads it to S3, then deploys to an EC2 instance via SSM and runs `teleport install autodiscover-node`. Bypasses the CDN installer flow entirely — `teleport-update` re-downloads from CDN, so this sends the binary directly.
+Cross-compiles a `teleport` binary for linux/amd64 using zig and uploads it to S3. The binary is used by the `custom-s3-installer` when `ttc` is run with the custom binary option.
 
 ```bash
-mdbin i-041eb85bba1e9e581   # direct — pass instance ID
-mdbin                        # interactive — fzf instance picker
+mdbin
 ```
 
 **What it does:**
 
 1. Checks AWS creds (auto-refreshes via `aws sso login` if expired)
-2. Lists your EC2 instances via fzf if no instance ID given
-3. Cross-compiles `teleport` for linux/amd64 using zig
-4. Uploads binary to S3 (`$WORK_S3_BUCKET`)
-5. Generates a pre-signed S3 URL (5 min expiry)
-6. Sends SSM command to download binary, run `autodiscover-node` with proxy and token
+2. Cross-compiles `teleport` for linux/amd64 using zig
+3. Uploads binary to S3 (`$WORK_S3_BUCKET/teleport-custom`)
 
 **Side effects:**
 
 - Writes a temporary binary to `/tmp/teleport-custom`
 - Uploads to S3 (overwrites `teleport-custom` key each time)
-- Runs `teleport install autodiscover-node` on the EC2 instance
-- Target cluster is determined by `WORK_PROXY_ADDR` in `work-private.fish`, not by your current `tu` profile
 - Does not require a tsh dev session — AWS-only
 
-**Required env vars (from `work-private.fish`):** `WORK_S3_BUCKET`, `WORK_PROXY_ADDR`, `WORK_TOKEN_NAME`, `WORK_TELEPORT_REPO`, `TELEPORT_USER`
+**Required env vars (from `work-private.fish`):** `WORK_S3_BUCKET`, `WORK_TELEPORT_REPO`
+
+**Note:** You don't usually call `mdbin` directly. `ttc` calls it automatically when you choose to use a custom binary.
 
 ---
 
@@ -285,7 +281,7 @@ mdbin                        # interactive — fzf instance picker
 
 ### `ttc` — Teleport Test Case - Create
 
-Preps the staging environment and runs a discovery test case. Automates the multi-step process required to test a specific discovery failure scenario.
+Preps the staging environment and runs a discovery test case. Automates the multi-step process required to test a specific discovery failure scenario. Optionally builds and deploys a custom binary from your branch.
 
 ```bash
 ttc     # interactive — walks through all steps
@@ -296,7 +292,10 @@ ttc     # interactive — walks through all steps
 1. Destroys the main staging discovery config (`terraform destroy -target`), keeping the integration, IAM role, and provision token intact
 2. Removes the enrolled node from the cluster (auto-selects if only one, fzf if multiple)
 3. Removes the teleport agent from the EC2 instance via SSM (`tad`) — stops service, deletes config and identity certs
-4. Prompts (via fzf) to select and apply a test case from `aws/staging/<issue>/<test>`
+4. Prompts (via fzf) to select a test case from `aws/staging/<issue>/<test>`
+5. Asks whether to use a custom binary from S3:
+   - **Yes:** calls `mdbin` (build + upload), then applies with `-var use_custom_binary=true` — discovery uses `custom-s3-installer` which downloads your binary from S3
+   - **No:** applies normally — discovery uses `default-installer` which installs the official CDN binary
 
 **Why all three removal steps are needed:**
 
@@ -311,6 +310,7 @@ ttc     # interactive — walks through all steps
 - Wipes Teleport agent state from the EC2 instance (service, config, data dir)
 - Deletes selected discovery configs from the cluster (via `tad` phase 2)
 - Applies Terraform in the selected test directory
+- If custom binary: builds and uploads binary to S3 via `mdbin`
 - Auto-refreshes Teleport provider creds and AWS SSO before starting
 
 **After testing, to restore:** Run `ttr` to destroy the test case, clean up the agent, and restore the main staging config.
@@ -345,10 +345,30 @@ ttr     # interactive — walks through all steps
 
 ### `ttc` + `ttr` workflow
 
+**With official binary (CDN):**
+
 ```text
-1. ttc                # tear down main config, prep instance, apply test case
+1. ttc                # tear down, prep, select test, answer N to custom binary
 2. (verify result)    # check UI for expected user task / behavior
 3. ttr                # destroy test case, clean up, restore main config
+```
+
+**With custom binary (your branch):**
+
+```text
+1. ttc                # tear down, prep, select test, answer Y to custom binary
+                      # (auto-builds + uploads to S3 via mdbin)
+2. (verify result)    # check UI for expected user task / behavior
+3. ttr                # destroy test case, clean up, restore main config
+```
+
+**Iterating on code changes:**
+
+```text
+1. (edit code)
+2. ttc                # answer Y — rebuilds + re-uploads automatically
+3. (verify result)
+4. ttr
 ```
 
 ---
@@ -429,8 +449,9 @@ ta          # apply (creds auto-refresh)
 3. ttc                    # apply a test case
 ```
 
-**Deploy custom binary (no tsh session needed):**
+**Deploy custom binary (standalone, no tsh session needed):**
 
 ```text
-1. mdbin                  # build, upload to S3, deploy via SSM
+1. mdbin                  # build + upload to S3 only
+2. ttc                    # answer Y to use custom binary
 ```

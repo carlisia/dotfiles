@@ -12,7 +12,8 @@ function ttr --description 'Reset staging after a discovery test case'
     eval "$(dtctl terraform env)"
     or begin; echo "Failed to load Teleport provider creds."; return 1; end
 
-    # Refresh AWS SSO session if expired (needed for terraform AWS provider)
+    # Clear cached role creds so the check exercises the full SSO token path
+    command find ~/.aws/cli/cache -maxdepth 1 -name '*.json' -delete 2>/dev/null
     if not aws sts get-caller-identity &>/dev/null
         echo "── Refreshing AWS credentials ──"
         aws sso login

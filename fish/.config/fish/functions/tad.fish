@@ -5,11 +5,14 @@
 function tad --description "Remove Teleport agent from EC2 and/or delete discovery configs"
     set -l region "us-west-2"
     set -l instance_id ""
+    set -l auto_yes false
 
     # Parse arguments
     set -l i 1
     while test $i -le (count $argv)
         switch $argv[$i]
+            case --yes -y
+                set auto_yes true
             case --region -r
                 set i (math $i + 1)
                 set region $argv[$i]
@@ -23,6 +26,14 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
     if not dtsh status &>/dev/null
         echo "❌ tsh session expired. Run 'tu' first."
         return 1
+    end
+
+    # Pre-flight: ensure AWS SSO session is valid (needed for EC2 + SSM)
+    command find ~/.aws/cli/cache -maxdepth 1 -name '*.json' -delete 2>/dev/null
+    if not aws sts get-caller-identity &>/dev/null
+        echo "🔐 AWS SSO session expired, logging in..."
+        aws sso login
+        or begin; echo "AWS SSO login failed."; return 1; end
     end
 
     # If no instance ID provided, list tagged instances via fzf
@@ -107,7 +118,10 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
         echo "   • Remove /etc/teleport-update.yaml"
         echo "   • Remove /etc/teleport.d/"
         echo ""
-        read -P "🗑️  Proceed? [y/N] " answer
+        set -l answer "y"
+        if not $auto_yes
+            read -P "🗑️  Proceed? [y/N] " answer
+        end
         if test "$answer" != "Y" -a "$answer" != "y"
             echo "   Skipped agent cleanup."
         else
@@ -265,6 +279,43 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
         end
     end
 
+    # --- Remove Teleport node(s) from the cluster ---
+    # The node stays registered from earlier enrollment; if not removed,
+    # discovery sees it as already enrolled and skips re-enrollment.
+    echo ""
+    set_color cyan
+    echo "🔍 Checking for nodes to remove..."
+    set_color normal
+
+    set -l node_lines (dtctl get nodes --format=json 2>/dev/null | jq -r '.[] | "\(.metadata.name)\t\(.spec.hostname // "")\t\(.metadata.labels["aws/teleport.dev/creator"] // "")"')
+
+    if test (count $node_lines) -eq 0
+        echo "   No nodes found, skipping."
+    else if test (count $node_lines) -eq 1
+        set -l node_name (string split \t $node_lines[1])[1]
+        set -l node_answer "y"
+        if not $auto_yes
+            read -P "🗑️  Remove node '$node_name'? [y/N] " node_answer
+        end
+        if test "$node_answer" = "Y" -o "$node_answer" = "y"
+            dtctl rm "node/$node_name"
+            and echo "   ✅ Removed node: $node_name"
+            or echo "   ❌ Failed to remove node: $node_name"
+        else
+            echo "   Skipped node removal."
+        end
+    else
+        set -l selected_node (printf '%s\n' $node_lines | fzf --prompt="Remove node> " --header="name  hostname  creator (ESC to skip)" --delimiter='\t')
+        if test -n "$selected_node"
+            set -l node_name (string split \t $selected_node)[1]
+            dtctl rm "node/$node_name"
+            and echo "   ✅ Removed node: $node_name"
+            or echo "   ❌ Failed to remove node: $node_name"
+        else
+            echo "   Skipped node removal."
+        end
+    end
+
     # --- Delete discovery config(s) from the Teleport cluster ---
     echo ""
     set_color cyan
@@ -277,7 +328,10 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
         echo "   No discovery configs found, skipping."
     else if test (count $dc_lines) -eq 1
         set -l dc_name $dc_lines[1]
-        read -P "🗑️  Remove discovery config '$dc_name'? [y/N] " dc_answer
+        set -l dc_answer "y"
+        if not $auto_yes
+            read -P "🗑️  Remove discovery config '$dc_name'? [y/N] " dc_answer
+        end
         if test "$dc_answer" = "Y" -o "$dc_answer" = "y"
             dtctl rm "discovery_config/$dc_name"
             and echo "   ✅ Removed discovery config: $dc_name"

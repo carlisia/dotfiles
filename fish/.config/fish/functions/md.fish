@@ -4,8 +4,15 @@ function md --description "Set version and deploy to cloud tenant"
     set -l teleport_repo $WORK_TELEPORT_REPO
     set -l teleport_repo_e $WORK_TELEPORT_REPO_E
 
+    if not test -d "$teleport_repo"
+        echo "❌ Teleport repo not found at $teleport_repo"
+        echo "   Set WORK_TELEPORT_REPO to your teleport repo path"
+        return 1
+    end
+
     if not test -d "$teleport_repo_e"
         echo "❌ Teleport e/ repo not found at $teleport_repo_e"
+        echo "   Set WORK_TELEPORT_REPO_E to your teleport e/ repo path"
         return 1
     end
 

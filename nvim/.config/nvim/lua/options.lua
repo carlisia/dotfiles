@@ -16,6 +16,7 @@ vim.api.nvim_set_hl(0, "SnacksPickerGitStatusUntracked", { link = "Special" })
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20" -- just in case
 
 opt.termguicolors = true
+option.cursorline = true
 option.cursorlineopt = "both"
 g.markdown_folding = 1
 

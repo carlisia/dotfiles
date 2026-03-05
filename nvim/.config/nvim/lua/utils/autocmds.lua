@@ -128,6 +128,30 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Folded lines get a distinct bg; CursorLine shows through when cursor is on one.
+local hl_folded_bg = "#262e3d"
+
+local function apply_hl_overrides()
+  vim.api.nvim_set_hl(0, "Folded", { bg = hl_folded_bg })
+  vim.api.nvim_set_hl(0, "Visual", { bg = "#1e3a5f" })
+end
+
+vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
+  callback = function()
+    vim.schedule(apply_hl_overrides)
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter", "WinEnter" }, {
+  callback = function()
+    if vim.fn.foldclosed(vim.fn.line ".") ~= -1 then
+      vim.api.nvim_set_hl(0, "Folded", { bg = "NONE" })
+    else
+      vim.api.nvim_set_hl(0, "Folded", { bg = hl_folded_bg })
+    end
+  end,
+})
+
 --- LSP
 --- reacts to all LSP attaches
 vim.api.nvim_create_autocmd("LspAttach", {

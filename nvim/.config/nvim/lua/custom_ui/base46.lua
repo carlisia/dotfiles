@@ -19,13 +19,17 @@ M.overrides = {
   St_NTerminalMode = { bg = "#E27D00" },
   St_NTerminalModeSep = { fg = "#FF1CF3" },
 
-  Visual = { bg = "#5a5e63" },
+  Visual = { bg = "#1e3a5f" },
 
   TbBufOn = { fg = "#FF1CF3", bold = true },
   TbBufOnModified = { fg = "#FF160C" },
   TbBufOffModified = { fg = "#FF160C" },
 
   DiagnosticInfo = { fg = "#a48cf2" },
+
+  CursorLine = { bg = "#1e2d3e" },
+  Comment = { fg = "#4e5665", bg = "NONE" },
+  ["@comment"] = { fg = "#4e5665", bg = "NONE" },
 }
 
 return M

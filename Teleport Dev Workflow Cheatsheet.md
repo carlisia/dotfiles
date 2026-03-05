@@ -329,9 +329,11 @@ ttr     # interactive — walks through all steps
 
 1. Finds active test cases (tc\* dirs with terraform state) and destroys the selected one
 2. Cleans up the agent and discovery configs via `tad` (instance optional, discovery config deletion always offered)
-3. Applies the main staging config to restore the valid discovery config, integration, and token
+3. Prompts whether to use a custom binary, then restores the main staging config:
+   - **Yes:** optionally rebuilds + uploads via `mdbin`, then applies with `-var use_custom_binary=true`
+   - **No:** applies normally with the official CDN binary
 
-**When to use:** After a test case has produced the expected result (e.g., a join failure user task appeared) and you want to return to the happy-path staging config.
+**When to use:** After a test case has produced the expected result (e.g., a join failure user task appeared) and you want to return to the happy-path staging config — optionally already prepped for the next iteration with a custom binary.
 
 **Side effects:**
 
@@ -339,6 +341,7 @@ ttr     # interactive — walks through all steps
 - Wipes Teleport agent state from the EC2 instance (via `tad`)
 - Deletes discovery configs from the cluster (via `tad`)
 - Re-applies the main staging Terraform config
+- If custom binary: builds and uploads binary to S3 via `mdbin`
 - Auto-refreshes Teleport provider creds and AWS SSO before starting
 
 ---
@@ -358,17 +361,23 @@ ttr     # interactive — walks through all steps
 ```text
 1. ttc                # tear down, prep, select test, answer Y to custom binary
                       # (auto-builds + uploads to S3 via mdbin)
-2. (verify result)    # check UI for expected user task / behavior
-3. ttr                # destroy test case, clean up, restore main config
+2. md                 # redeploy — restarts the service to pick up the new binary
+3. (verify result)    # check UI for expected user task / behavior
+4. ttr                # destroy test case, clean up; answer Y to keep custom binary
+                      # for restored main config, or N to revert to CDN binary
 ```
+
+Discovery config changes are independent — they apply on the cluster side and can happen at any point in the flow.
 
 **Iterating on code changes:**
 
 ```text
 1. (edit code)
 2. ttc                # answer Y — rebuilds + re-uploads automatically
-3. (verify result)
-4. ttr
+3. md                 # redeploy to pick up the new binary
+4. (verify result)
+5. ttr                # answer Y to rebuild + carry custom binary into next iteration
+                      # (or N to restore with CDN binary)
 ```
 
 ---

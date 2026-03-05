@@ -5,13 +5,52 @@
 # set in conf.d/work-private.fish.
 #
 # Usage:
-#   mdbin
+#   mdbin           # interactive source selection
+#   mdbin --main    # skip prompt, use main repo
 
 function mdbin --description "Build custom teleport binary and upload to S3"
-    set -l repo $WORK_TELEPORT_REPO
     set -l bucket $WORK_S3_BUCKET
     set -l s3key "teleport-custom"
     set -l bin /tmp/teleport-custom
+    set -l main_repo $WORK_TELEPORT_REPO
+    set -l worktree_dir "$main_repo/.claude/worktrees"
+
+    # Allow --main flag to skip the prompt
+    if contains -- --main $argv
+        set repo $main_repo
+    else
+        # Build menu: main repo + any worktrees
+        set -l choices "main repo ($main_repo)"
+        set -l paths $main_repo
+
+        if test -d "$worktree_dir"
+            for wt in $worktree_dir/*/
+                set -l name (basename $wt)
+                set -a choices "worktree: $name"
+                set -a paths $wt
+            end
+        end
+
+        if test (count $choices) -eq 1
+            set repo $main_repo
+        else
+            echo "Select build source:"
+            for i in (seq (count $choices))
+                echo "  $i) $choices[$i]"
+            end
+            read -P "Choice [1]: " pick
+            test -z "$pick"; and set pick 1
+
+            if test "$pick" -ge 1 -a "$pick" -le (count $paths) 2>/dev/null
+                set repo $paths[$pick]
+            else
+                echo "Invalid selection."; return 1
+            end
+        end
+    end
+
+    echo ""
+    echo "📂 Source: $repo"
 
     # Refresh AWS SSO session if expired
     if not aws sts get-caller-identity &>/dev/null

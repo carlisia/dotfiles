@@ -117,6 +117,7 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
         echo "   • Remove /var/lib/teleport/"
         echo "   • Remove /etc/teleport-update.yaml"
         echo "   • Remove /etc/teleport.d/"
+        echo "   • Remove /var/lock/teleport_install.lock"
         echo ""
         set -l answer "y"
         if not $auto_yes
@@ -134,7 +135,7 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
             set -l command_id (aws ssm send-command \
                 --document-name "AWS-RunShellScript" \
                 --targets "Key=instanceids,Values=$instance_id" \
-                --parameters 'commands=["echo Starting Teleport cleanup...","sudo systemctl stop teleport || true","sudo systemctl disable teleport || true","sudo rm -f /etc/teleport.yaml","sudo rm -rf /var/lib/teleport","sudo rm -f /etc/teleport-update.yaml","sudo rm -rf /etc/teleport.d","echo Teleport cleanup complete!"]' \
+                --parameters 'commands=["echo Starting Teleport cleanup...","sudo systemctl stop teleport || true","sudo systemctl disable teleport || true","sudo rm -f /etc/teleport.yaml","sudo rm -rf /var/lib/teleport","sudo rm -f /etc/teleport-update.yaml","sudo rm -rf /etc/teleport.d","sudo rm -f /var/lock/teleport_install.lock","echo Teleport cleanup complete!"]' \
                 --region $region \
                 --query "Command.CommandId" \
                 --output text 2>&1)
@@ -186,7 +187,7 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
                 set -l verify_id (aws ssm send-command \
                     --document-name "AWS-RunShellScript" \
                     --targets "Key=instanceids,Values=$instance_id" \
-                    --parameters 'commands=["echo SERVICE_STATUS","systemctl is-active teleport 2>/dev/null || echo NOT_RUNNING","systemctl is-enabled teleport 2>/dev/null || echo NOT_ENABLED","echo CONFIG_CHECK","test -f /etc/teleport.yaml && echo FOUND_CONFIG || echo CLEAN_CONFIG","test -d /var/lib/teleport && echo FOUND_DATA || echo CLEAN_DATA","test -f /etc/teleport-update.yaml && echo FOUND_UPDATE || echo CLEAN_UPDATE"]' \
+                    --parameters 'commands=["echo SERVICE_STATUS","systemctl is-active teleport 2>/dev/null || echo NOT_RUNNING","systemctl is-enabled teleport 2>/dev/null || echo NOT_ENABLED","echo CONFIG_CHECK","test -f /etc/teleport.yaml && echo FOUND_CONFIG || echo CLEAN_CONFIG","test -d /var/lib/teleport && echo FOUND_DATA || echo CLEAN_DATA","test -f /etc/teleport-update.yaml && echo FOUND_UPDATE || echo CLEAN_UPDATE","test -f /var/lock/teleport_install.lock && echo FOUND_LOCK || echo CLEAN_LOCK"]' \
                     --region $region \
                     --query "Command.CommandId" \
                     --output text 2>&1)
@@ -271,6 +272,16 @@ function tad --description "Remove Teleport agent from EC2 and/or delete discove
                         else
                             set_color red
                             echo "   ❌ /etc/teleport-update.yaml still exists"
+                            set_color normal
+                        end
+
+                        if string match -q "*CLEAN_LOCK*" -- $verify_output
+                            set_color green
+                            echo "   ✅ /var/lock/teleport_install.lock removed"
+                            set_color normal
+                        else
+                            set_color red
+                            echo "   ❌ /var/lock/teleport_install.lock still exists"
                             set_color normal
                         end
                     end

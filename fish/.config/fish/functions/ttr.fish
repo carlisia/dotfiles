@@ -58,6 +58,17 @@ function ttr --description 'Reset staging after a discovery test case'
     # Step 3: Restore main staging config
     echo ""
     echo "── Step 3: Restore main staging config ──"
+
+    set -l extra_vars
+    read -P "🔧 Use custom binary from S3? [y/N] " use_custom
+    if test "$use_custom" = "y" -o "$use_custom" = "Y"
+        read -P "🔨 Rebuild + upload first? [y/N] " rebuild
+        if test "$rebuild" = "y" -o "$rebuild" = "Y"
+            mdbin; or return 1
+        end
+        set extra_vars -var use_custom_binary=true
+    end
+
     terraform -chdir=$staging_dir init -input=false >/dev/null
-    terraform -chdir=$staging_dir apply
+    terraform -chdir=$staging_dir apply $extra_vars
 end

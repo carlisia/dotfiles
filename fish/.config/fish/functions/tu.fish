@@ -31,6 +31,14 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
             if test "$answer" = "Y" -o "$answer" = "y"
                 mkdir -p "$target"
                 echo "✅ Created profile: $profile_name"
+                # Ask for the actual proxy address
+                set -l default_addr "$profile_name.$WORK_TELEPORT_CLUSTER_DOMAIN:443"
+                read -P "🌐 Proxy address [$default_addr]> " proxy_input
+                if test -n "$proxy_input"
+                    echo "$proxy_input" >"$target/proxy-addr"
+                else
+                    echo "$default_addr" >"$target/proxy-addr"
+                end
             else
                 return 1
             end
@@ -74,6 +82,14 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
             set target "$base/$profile_name"
             mkdir -p "$target"
             echo "✅ Created profile: $profile_name"
+            # Ask for the actual proxy address
+            set -l default_addr "$profile_name.$WORK_TELEPORT_CLUSTER_DOMAIN:443"
+            read -P "🌐 Proxy address [$default_addr]> " proxy_input
+            if test -n "$proxy_input"
+                echo "$proxy_input" >"$target/proxy-addr"
+            else
+                echo "$default_addr" >"$target/proxy-addr"
+            end
         else
             set profile_name $sel
             set target "$base/$sel"
@@ -156,7 +172,13 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
     echo "🔐 Step 3/4: Teleport Authentication"
     set_color normal
 
-    set -l cluster_addr "$profile_name.$WORK_TELEPORT_CLUSTER_DOMAIN:443"
+    # Read proxy address from profile file, or construct default
+    set -l cluster_addr
+    if test -f "$TELEPORT_HOME/proxy-addr"
+        set cluster_addr (string trim (command cat "$TELEPORT_HOME/proxy-addr"))
+    else
+        set cluster_addr "$profile_name.$WORK_TELEPORT_CLUSTER_DOMAIN:443"
+    end
     echo "   Logging into $cluster_addr..."
 
     tsh login --proxy="$cluster_addr"

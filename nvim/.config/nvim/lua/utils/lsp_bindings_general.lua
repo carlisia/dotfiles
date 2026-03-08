@@ -10,7 +10,7 @@ M.vim = {
 }
 
 M.lsp_keys = {
-  toggle_format_os = "\\f",
+  toggle_format_os = "\\F",
   toggle_inlay_hints = "\\y",
   toggle_outline = "\\o",
   diagnostics = "<leader>lp",

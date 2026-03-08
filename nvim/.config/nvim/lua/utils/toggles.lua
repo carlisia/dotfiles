@@ -162,4 +162,16 @@ M.mini_map_focus = function()
   require("mini.map").toggle_focus()
 end
 
+vim.g.folds_open = true
+M.folds = function()
+  if vim.g.folds_open then
+    vim.cmd "normal! zM"
+    vim.notify("Folds closed", vim.log.levels.INFO)
+  else
+    vim.cmd "normal! zR"
+    vim.notify("Folds opened", vim.log.levels.INFO)
+  end
+  vim.g.folds_open = not vim.g.folds_open
+end
+
 return M

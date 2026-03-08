@@ -120,6 +120,18 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+-- Open mini.map on startup (toggle with <leader>mm or \m)
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.schedule(function()
+      local ok, minimap = pcall(require, "mini.map")
+      if ok then
+        minimap.open()
+      end
+    end)
+  end,
+})
+
 -- Needed to add comments to sql files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "sql", "mysql", "plsql" },

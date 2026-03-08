@@ -198,6 +198,23 @@ M.files = {
   },
 }
 
+local minimap = require "mini.map"
+M.map = {
+  integrations = {
+    minimap.gen_integration.gitsigns(),
+    minimap.gen_integration.diagnostic(),
+    minimap.gen_integration.builtin_search(),
+  },
+  symbols = {
+    encode = minimap.gen_encode_symbols.dot "4x2",
+  },
+  window = {
+    width = 10,
+    winblend = 25,
+    show_integration_count = false,
+  },
+}
+
 M.sessions = {
   hooks = {
     pre = {

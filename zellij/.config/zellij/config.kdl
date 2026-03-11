@@ -388,12 +388,14 @@ plugins {
 on_force_close "detach"
 copy_on_select true 
 copy_command "pbcopy"
+// Ghostty + Neovim + Karabiner are more reliable with legacy key handling.
+support_kitty_keyboard_protocol false
 // Whether sessions should be serialized to the cache folder (including their tabs/panes, cwds and running commands) so that they can later be resurrected
 // (Requires restart)
-session_serialization true
+session_serialization false
 // Whether pane viewports are serialized along with the session, default is false
 // (Requires restart)
-serialize_pane_viewport true
+serialize_pane_viewport false
 // Whether to show release notes on first version run
 show_release_notes true
 show_startup_tips false

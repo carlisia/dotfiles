@@ -2,11 +2,11 @@
 
 # Shell
 set -gx SHELL /opt/homebrew/bin/fish
-ulimit -n 2560  # 10x default - more file descriptors for heavy tooling
+ulimit -n 2560 # 10x default - more file descriptors for heavy tooling
 # XDG
 set -gx XDG_CONFIG_HOME $HOME/.config
 # CDPATH
-set -gx CDPATH $XDG_CONFIG_HOME  # magic!
+set -gx CDPATH $XDG_CONFIG_HOME # magic!
 
 # Editor
 set -gx EDITOR nvim
@@ -40,6 +40,8 @@ fish_add_path $GOPATH $GOBIN
 # Rust
 fish_add_path $HOME/.cargo/bin
 
+fish_add_path /Applications/Obsidian.app/Contents/MacOS
+
 # Teleport
 fish_add_path ~/code/src/github.com/gravitational/cloud/tc/cmd/tc
 
@@ -47,7 +49,7 @@ fish_add_path ~/code/src/github.com/gravitational/cloud/tc/cmd/tc
 set fish_greeting
 function fish_user_key_bindings
     fish_vi_key_bindings
-    commandline -f forward-char  # Enters insert mode by default
+    commandline -f forward-char # Enters insert mode by default
 end
 
 # shortcut s/command rm/\rm
@@ -105,36 +107,36 @@ alias less='bat'
 function head --wraps='bat'
     bat --line-range :$argv[1]
 end
-alias tail='bat --line-range -10:'
+alias btail='bat --line-range -10:'
 alias batdiff='git diff --name-only | xargs bat'
 
 # ----- aliases teleport
- alias dteleport '~/code/src/github.com/gravitational/teleport/build/teleport'
- alias dtsh '~/code/src/github.com/gravitational/teleport/build/tsh'
- alias dtctl '~/code/src/github.com/gravitational/teleport/build/tctl'
- alias dtbot '~/code/src/github.com/gravitational/teleport/build/tbot'
+alias dteleport '~/code/src/github.com/gravitational/teleport/build/teleport'
+alias dtsh '~/code/src/github.com/gravitational/teleport/build/tsh'
+alias dtctl '~/code/src/github.com/gravitational/teleport/build/tctl'
+alias dtbot '~/code/src/github.com/gravitational/teleport/build/tbot'
 
- # Quick version check - all dev binaries
- function dversions
-     set -l build_dir ~/code/src/github.com/gravitational/teleport/build
-     echo "=== Dev Builds ==="
-     for bin in teleport tsh tctl tbot
-         if test -f "$build_dir/$bin"
-             printf "%-10s %s\n" "$bin:" ("$build_dir/$bin" version 2>/dev/null | command head -1)
-         else
-             printf "%-10s %s\n" "$bin:" "(not built)"
-         end
-     end
-     echo ""
-     echo "=== Release Versions ==="
-     for bin in teleport tsh tctl tbot
-         if type -q $bin
-             printf "%-10s %s\n" "$bin:" ($bin version 2>/dev/null | command head -1)
-         else
-             printf "%-10s %s\n" "$bin:" "(not installed)"
-         end
-     end
- end
+# Quick version check - all dev binaries
+function dversions
+    set -l build_dir ~/code/src/github.com/gravitational/teleport/build
+    echo "=== Dev Builds ==="
+    for bin in teleport tsh tctl tbot
+        if test -f "$build_dir/$bin"
+            printf "%-10s %s\n" "$bin:" ("$build_dir/$bin" version 2>/dev/null | command head -1)
+        else
+            printf "%-10s %s\n" "$bin:" "(not built)"
+        end
+    end
+    echo ""
+    echo "=== Release Versions ==="
+    for bin in teleport tsh tctl tbot
+        if type -q $bin
+            printf "%-10s %s\n" "$bin:" ($bin version 2>/dev/null | command head -1)
+        else
+            printf "%-10s %s\n" "$bin:" "(not installed)"
+        end
+    end
+end
 
 #previewer for fzf:
 set -x FZF_DEFAULT_OPTS '--preview "bat --style=numbers --color=always --line-range :500 {}"'
@@ -158,6 +160,6 @@ abbr kkpkr "pbpaste | kubectl delete -f-"
 
 # Eza – enhanced ls alternatives
 if type -q eza
-  abbr ll "eza -l -a --icons"
-  abbr llt "eza -l -a --icons --tree"
+    abbr ll "eza -l -a --icons"
+    abbr llt "eza -l -a --icons --tree"
 end

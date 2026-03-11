@@ -278,6 +278,12 @@ return {
   },
   {
     "bezhermoso/tree-sitter-ghostty",
+    -- DISABLED: ftplugin calls vim.treesitter.start() without pcall,
+    -- breaking :w and :qa on nvim 0.11.6 when the parser can't build.
+    -- Our FileType autocmd in autocmds.lua handles ghostty with pcall.
+    -- @TODO: Re-enable once the plugin adds pcall upstream.
+    -- Related: https://github.com/NvChad/NvChad/commit/6a0715d
+    enabled = false,
     lazy = false,
     build = "make nvim_install",
   },

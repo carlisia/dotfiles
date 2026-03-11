@@ -121,9 +121,56 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 -- Open mini.map on startup (toggle with <leader>mm or \m)
+-- Skip opening on snacks dashboard; it will open when you navigate to a real buffer.
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     vim.schedule(function()
+      if vim.bo.filetype == "snacks_dashboard" then
+        return
+      end
+      local ok, minimap = pcall(require, "mini.map")
+      if ok then
+        minimap.open()
+      end
+    end)
+  end,
+})
+
+-- Close mini.map on dashboard, reopen when leaving it
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "snacks_dashboard",
+  callback = function()
+    local ok, minimap = pcall(require, "mini.map")
+    if ok then
+      minimap.close()
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    if vim.bo.filetype ~= "snacks_dashboard" then
+      return
+    end
+    local ok, minimap = pcall(require, "mini.map")
+    if ok then
+      minimap.close()
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufLeave", {
+  callback = function()
+    if vim.bo.filetype ~= "snacks_dashboard" then
+      return
+    end
+    vim.schedule(function()
+      if vim.v.exiting ~= vim.NIL then
+        return
+      end
+      if vim.bo.filetype == "snacks_dashboard" then
+        return
+      end
       local ok, minimap = pcall(require, "mini.map")
       if ok then
         minimap.open()
@@ -137,6 +184,17 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "sql", "mysql", "plsql" },
   callback = function()
     vim.bo.commentstring = "-- %s"
+  end,
+})
+
+-- Ghostty ftplugin replacement: wraps vim.treesitter.start() in pcall
+-- so it fails gracefully when the parser isn't available.
+-- TODO: Remove once bezhermoso/tree-sitter-ghostty adds pcall upstream.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "ghostty",
+  callback = function()
+    vim.bo.commentstring = "# %s"
+    pcall(vim.treesitter.start)
   end,
 })
 

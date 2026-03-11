@@ -387,6 +387,12 @@ brew install luarocks
 luarocks install luacheck
 ```
 
+Install Fish tools:
+
+```bash
+brew install fish-lsp
+```
+
 Install Bash tools:
 
 ```bash

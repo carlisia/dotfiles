@@ -21,6 +21,7 @@ M.conform = {
     typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
     yaml = { "prettierd" },
+    fish = { "fish_indent" },
   },
 
   formatters = {

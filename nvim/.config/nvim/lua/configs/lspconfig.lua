@@ -63,6 +63,10 @@ servers["marksman"] = {
 
 servers["taplo"] = {}
 
+servers["fish_lsp"] = {
+  filetypes = { "fish" },
+}
+
 servers["lua_ls"] = {
   settings = {
     Lua = {

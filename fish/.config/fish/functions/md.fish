@@ -110,7 +110,7 @@ function md --description "Set version and deploy to cloud tenant"
 
     echo ""
     echo "🚀 Deploying $ver to $tenant (using zig cross-compiler)..."
-    env CC="zig cc -target x86_64-linux-gnu" CXX="zig c++ -target x86_64-linux-gnu" make -C "$teleport_repo_e" TENANT=$tenant BASE_IMAGE_TAG=$ver deploy-cloud
+    env CC="$HOME/.local/bin/zig-cc-linux" CXX="$HOME/.local/bin/zig-cxx-linux" make -C "$teleport_repo_e" TENANT=$tenant BASE_IMAGE_TAG=$ver deploy-cloud
 end
 
 # Completions for md

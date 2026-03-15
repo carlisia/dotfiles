@@ -60,8 +60,8 @@ function mdbin --description "Build custom teleport binary and upload to S3"
 
     echo ""
     echo "🔨 Building teleport for linux/amd64..."
-    env CC="zig cc -target x86_64-linux-gnu" \
-        CXX="zig c++ -target x86_64-linux-gnu" \
+    env CC="$HOME/.local/bin/zig-cc-linux" \
+        CXX="$HOME/.local/bin/zig-cxx-linux" \
         GOOS=linux GOARCH=amd64 CGO_ENABLED=1 \
         go build -C $repo -buildvcs=false \
         -o $bin ./tool/teleport; or return 1

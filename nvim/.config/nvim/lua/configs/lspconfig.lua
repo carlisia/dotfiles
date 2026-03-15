@@ -13,7 +13,16 @@ end
 -- https://github.com/golang/tools/blob/3e76cae71578160dca62d1cab42a715ef960c892/gopls/doc/settings.md
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md
 require("go").setup(require("configs.go_plugins").govim)
-servers["gopls"] = require("go.lsp").config()
+servers["gopls"] = vim.tbl_deep_extend("force", require("go.lsp").config(), {
+  settings = {
+    gopls = {
+      directoryFilters = {
+        "-node_modules",
+      },
+      expandWorkspaceToModule = true,
+    },
+  },
+})
 
 servers["sqlls"] = {
   filetypes = { "sql", "mysql", "plsql" },

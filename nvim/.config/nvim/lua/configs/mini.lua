@@ -199,9 +199,64 @@ M.files = {
 }
 
 local minimap = require "mini.map"
+
+-- Custom integration: show staged git changes on the minimap.
+-- The built-in gitsigns integration only shows unstaged hunks.
+-- This reads hunks_staged from gitsigns' cache to fill the gap.
+-- Only active when gitsigns signs_staged_enable = true, since
+-- that's the setting that tells gitsigns to compute staged hunks.
+local function gitsigns_staged_integration()
+  local hl_groups = {
+    add = "GitSignsAdd",
+    change = "GitSignsChange",
+    delete = "GitSignsDelete",
+  }
+
+  local augroup = vim.api.nvim_create_augroup("MiniMapGitsignsStaged", {})
+  vim.api.nvim_create_autocmd("User", {
+    group = augroup,
+    pattern = "GitSignsUpdate",
+    callback = function()
+      pcall(MiniMap.refresh, {}, { lines = false, scrollbar = false })
+    end,
+    desc = "Refresh mini.map on GitSignsUpdate (staged)",
+  })
+
+  return function()
+    -- Check at refresh time so gitsigns is guaranteed to be loaded.
+    local cfg_ok, gs_config = pcall(require, "gitsigns.config")
+    if not cfg_ok or not gs_config or not gs_config.config.signs_staged_enable then
+      return {}
+    end
+
+    local ok, gs_cache = pcall(require, "gitsigns.cache")
+    if not ok or gs_cache == nil then
+      return {}
+    end
+
+    local buf = MiniMap.current.buf_data.source
+    local bcache = gs_cache.cache[buf]
+    if bcache == nil or bcache.hunks_staged == nil then
+      return {}
+    end
+
+    local result = {}
+    for _, h in ipairs(bcache.hunks_staged) do
+      local hl = hl_groups[h.type] or hl_groups.change
+      local start = h.added.start
+      local count = math.max(h.added.count, 1)
+      for line = start, start + count - 1 do
+        table.insert(result, { line = line, hl_group = hl })
+      end
+    end
+    return result
+  end
+end
+
 M.map = {
   integrations = {
     minimap.gen_integration.gitsigns(),
+    gitsigns_staged_integration(),
     minimap.gen_integration.diagnostic(),
     minimap.gen_integration.builtin_search(),
   },

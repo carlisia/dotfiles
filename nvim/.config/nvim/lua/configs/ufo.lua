@@ -28,6 +28,14 @@ M.keys = {
 }
 
 M.config = {
+  provider_selector = function(_, filetype, _)
+    -- Markdown: use vim's built-in fold expr (set by g.markdown_folding)
+    if filetype == "markdown" then
+      return ""
+    end
+    -- Everything else: LSP with treesitter fallback
+    return { "lsp", "treesitter" }
+  end,
   close_fold_kinds_for_ft = {
     default = { "imports", "comment" },
     json = { "array" },

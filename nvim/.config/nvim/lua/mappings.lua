@@ -79,6 +79,15 @@ map("n", "<leader>bt", ":b#<CR>", { desc = "Toggle buffers" })
 map("n", "<leader>fs", "<cmd>normal! ggVG<CR>", { desc = "Select all" })
 map("n", "<leader>fy", ":%y+<CR>", { desc = "Yank all" })
 map("n", "<leader>fp", 'gg"_dG"+P', { desc = "Replace all" })
+map("n", "<leader>fP", function()
+  local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~:.")
+  if path == "" then
+    vim.notify("No file path to copy", vim.log.levels.INFO)
+    return
+  end
+  vim.fn.setreg("+", path)
+  vim.notify("Copied: " .. path, vim.log.levels.INFO)
+end, { desc = "Copy relative file path" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 
 map("n", "<leader>f%", function()

@@ -13,6 +13,8 @@ set -gx EDITOR nvim
 set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
 
+set -gx CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS 1
+
 # GPG
 set -gx GPG_TTY (tty)
 
@@ -57,7 +59,7 @@ function \rm --wraps=command
     command rm $argv
 end
 
-# Startship prompt
+# Starship prompt
 starship init fish | source
 
 # direnv - auto-load .envrc files
@@ -70,7 +72,8 @@ alias vim nvim
 alias vi nvim
 alias v nvim
 
-# ----- aliases# Git
+# ----- aliases
+# Git
 alias g="git status -sb"
 alias s="git add . && git stash"
 alias ggl "git log --pretty=oneline -n 20 --graph --abbrev-commit"
@@ -115,28 +118,6 @@ alias dteleport '~/code/src/github.com/gravitational/teleport/build/teleport'
 alias dtsh '~/code/src/github.com/gravitational/teleport/build/tsh'
 alias dtctl '~/code/src/github.com/gravitational/teleport/build/tctl'
 alias dtbot '~/code/src/github.com/gravitational/teleport/build/tbot'
-
-# Quick version check - all dev binaries
-function dversions
-    set -l build_dir ~/code/src/github.com/gravitational/teleport/build
-    echo "=== Dev Builds ==="
-    for bin in teleport tsh tctl tbot
-        if test -f "$build_dir/$bin"
-            printf "%-10s %s\n" "$bin:" ("$build_dir/$bin" version 2>/dev/null | command head -1)
-        else
-            printf "%-10s %s\n" "$bin:" "(not built)"
-        end
-    end
-    echo ""
-    echo "=== Release Versions ==="
-    for bin in teleport tsh tctl tbot
-        if type -q $bin
-            printf "%-10s %s\n" "$bin:" ($bin version 2>/dev/null | command head -1)
-        else
-            printf "%-10s %s\n" "$bin:" "(not installed)"
-        end
-    end
-end
 
 #previewer for fzf:
 set -x FZF_DEFAULT_OPTS '--preview "bat --style=numbers --color=always --line-range :500 {}"'

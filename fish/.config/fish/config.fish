@@ -76,7 +76,8 @@ alias v nvim
 # Git
 alias g="git status -sb"
 alias s="git add . && git stash"
-alias ggl "git log --pretty=oneline -n 20 --graph --abbrev-commit"
+alias ggl "git log --pretty=format:'%C(auto)%h %C(blue)%an%C(reset) %s%C(auto)%d' -n 20 --graph --abbrev-commit"
+alias gga "git log --pretty=format:'%C(auto)%h %C(blue)%an%C(reset) %s%C(auto)%d' -n 20 --graph --abbrev-commit --all"
 alias ggsl "git shortlog --summary --numbered"
 
 # Visual Studio Code – path escape
@@ -144,3 +145,6 @@ if type -q eza
     abbr ll "eza -l -a --icons"
     abbr llt "eza -l -a --icons --tree"
 end
+
+# Added by Antigravity
+fish_add_path /Users/carlisiacampos/.antigravity/antigravity/bin

@@ -37,9 +37,7 @@ M.config = {
     return { "lsp", "treesitter" }
   end,
   close_fold_kinds_for_ft = {
-    default = { "imports", "comment" },
-    json = { "array" },
-    c = { "comment", "region" },
+    default = {},
   },
   preview = {
     win_config = {

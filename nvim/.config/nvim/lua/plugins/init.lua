@@ -48,6 +48,7 @@ return {
       lint.linters_by_ft = {
         markdown = { "markdownlint" },
         yaml = { "yamllint" },
+        go = { "golangcilint" },
       }
 
       local markdownlint = require("lint").linters.markdownlint
@@ -60,6 +61,22 @@ return {
         "-c" .. linterConfig .. "/.yamllint.yaml",
         "--stdin",
       }
+      -- Preserve nvim-lint's default golangcilint args (they include the
+      -- output flags its parser needs).  Only append --config when the
+      -- project has no config of its own.
+      local golangcilint = require("lint").linters.golangcilint
+      local has_project_config = false
+      for _, name in ipairs { ".golangci.yml", ".golangci.yaml", ".golangci.toml", ".golangci.json" } do
+        if vim.uv.fs_stat(vim.fn.getcwd() .. "/" .. name) then
+          has_project_config = true
+          break
+        end
+      end
+      if not has_project_config then
+        local args = vim.deepcopy(golangcilint.args)
+        table.insert(args, "--config=" .. linterConfig .. "/.golangci.yaml")
+        golangcilint.args = args
+      end
     end,
   },
   { ---- my own config:
@@ -381,6 +398,19 @@ return {
     config = function()
       require("outline").setup()
     end,
+  },
+  --- Lean 4
+  {
+    "Julian/lean.nvim",
+    event = { "BufReadPre *.lean", "BufNewFile *.lean" },
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      lsp = {},
+      mappings = true,
+    },
   },
   --- Markdown
   {

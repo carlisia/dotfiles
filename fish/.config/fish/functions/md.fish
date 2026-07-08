@@ -97,20 +97,31 @@ function md --description "Set version and deploy to cloud tenant"
         return 1
     end
 
-    read -P "🏷️  BASE_IMAGE_TAG> " ver
+    # Go binary version — what teleport reports and what the
+    # downgrade check compares against.  Defaults to whatever
+    # api/version.go already contains.
+    set -l current_ver (sed -n 's/.*Version = "\(.*\)"/\1/p' "$teleport_repo/api/version.go" 2>/dev/null)
+    read -P "🏷️  Go version [$current_ver]> " go_ver
+    test -z "$go_ver"; and set go_ver "$current_ver"
 
-    if test -z "$ver"
+    # Docker base image tag — must be a published image on ECR.
+    # Can differ from Go version when the branch is ahead of
+    # the latest published release.
+    read -P "🐳 BASE_IMAGE_TAG [$go_ver]> " base_tag
+    test -z "$base_tag"; and set base_tag "$go_ver"
+
+    if test -z "$go_ver"
         echo "❌ No version entered"
         return 1
     end
 
     echo ""
-    echo "🔨 Setting version to $ver..."
-    make -C "$teleport_repo" -f version.mk setver VERSION=$ver || return 1
+    echo "🔨 Setting version to $go_ver..."
+    make -C "$teleport_repo" -f version.mk setver VERSION=$go_ver || return 1
 
     echo ""
-    echo "🚀 Deploying $ver to $tenant (using zig cross-compiler)..."
-    env CC="$HOME/.local/bin/zig-cc-linux" CXX="$HOME/.local/bin/zig-cxx-linux" make -C "$teleport_repo_e" TENANT=$tenant BASE_IMAGE_TAG=$ver deploy-cloud
+    echo "🚀 Deploying to $tenant (go=$go_ver, base=$base_tag, zig cross-compiler)..."
+    env CC="$HOME/.local/bin/zig-cc-linux" CXX="$HOME/.local/bin/zig-cxx-linux" make -C "$teleport_repo_e" TENANT=$tenant BASE_IMAGE_TAG=$base_tag deploy-cloud
 end
 
 # Completions for md

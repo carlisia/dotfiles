@@ -207,9 +207,9 @@ local minimap = require "mini.map"
 -- that's the setting that tells gitsigns to compute staged hunks.
 local function gitsigns_staged_integration()
   local hl_groups = {
-    add = "GitSignsAdd",
-    change = "GitSignsChange",
-    delete = "GitSignsDelete",
+    add = "GitSignsStagedAdd",
+    change = "GitSignsStagedChange",
+    delete = "GitSignsStagedDelete",
   }
 
   local augroup = vim.api.nvim_create_augroup("MiniMapGitsignsStaged", {})
@@ -253,10 +253,29 @@ local function gitsigns_staged_integration()
   end
 end
 
+-- Custom integration: show committed-history changes (HEAD~N vs HEAD) on the
+-- minimap, in the muted GitSignsCommitted* colors. The overlay itself is
+-- computed in utils/git_committed.lua, which also refreshes the map when its
+-- async recompute lands; this integration just reads the cached result.
+local function gitsigns_committed_integration()
+  return function()
+    local ok, gc = pcall(require, "utils.git_committed")
+    if not ok then
+      return {}
+    end
+    local buf = MiniMap.current.buf_data.source
+    if not buf then
+      return {}
+    end
+    return gc.committed_lines(buf)
+  end
+end
+
 M.map = {
   integrations = {
     minimap.gen_integration.gitsigns(),
     gitsigns_staged_integration(),
+    gitsigns_committed_integration(),
     minimap.gen_integration.diagnostic(),
     minimap.gen_integration.builtin_search(),
   },

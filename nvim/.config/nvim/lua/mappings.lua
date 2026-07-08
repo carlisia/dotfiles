@@ -170,11 +170,16 @@ map("n", "<leader>-p", "<Cmd>lua MiniSessions.read(MiniSessions.get_latest())<CR
 ---- Gitsigns
 map("n", "<leader>Gr", "<Cmd>Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
 map("n", "<leader>Gp", "<Cmd>Gitsigns prev_hunk<CR>", { desc = "Previous hunk" })
-map("n", "<leader>Gb", "<Cmd>Gitsigns reset_base true<CR>", { desc = "Reset base to HEAD" })
+map("n", "<leader>Gb", function()
+  require("utils.git_committed").reset(true)
+end, { desc = "Clear committed-history overlay" })
 map("n", "<leader>Gc", function()
   vim.ui.input({ prompt = "Commits back: " }, function(num)
     if num and num ~= "" then
-      require("gitsigns").change_base("~" .. num, true)
+      -- Overlay committed history (HEAD~N vs HEAD) instead of change_base:
+      -- moving the base to a commit disables gitsigns' staged layer, which
+      -- would collapse committed and uncommitted changes into one color.
+      require("utils.git_committed").set_depth(num, true)
     end
   end)
-end, { desc = "Change base ~N" })
+end, { desc = "Show committed history ~N" })

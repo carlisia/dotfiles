@@ -120,12 +120,19 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- Open mini.map on startup (toggle with <leader>mm or \m)
--- Skip opening on snacks dashboard; it will open when you navigate to a real buffer.
+-- Mini.map: auto open/close based on filetype.
+-- Filetypes listed here will never show the minimap; all others will.
+local minimap_excluded_ft = { "snacks_dashboard", "markdown" }
+
+local function is_minimap_excluded(ft)
+  return vim.tbl_contains(minimap_excluded_ft, ft)
+end
+
+-- Open mini.map on startup unless the buffer's filetype is excluded.
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     vim.schedule(function()
-      if vim.bo.filetype == "snacks_dashboard" then
+      if is_minimap_excluded(vim.bo.filetype) then
         return
       end
       local ok, minimap = pcall(require, "mini.map")
@@ -136,9 +143,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
--- Close mini.map on dashboard, reopen when leaving it
+-- Close mini.map when entering an excluded filetype.
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "snacks_dashboard",
+  pattern = minimap_excluded_ft,
   callback = function()
     local ok, minimap = pcall(require, "mini.map")
     if ok then
@@ -149,33 +156,15 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
-    if vim.bo.filetype ~= "snacks_dashboard" then
-      return
-    end
     local ok, minimap = pcall(require, "mini.map")
-    if ok then
-      minimap.close()
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufLeave", {
-  callback = function()
-    if vim.bo.filetype ~= "snacks_dashboard" then
+    if not ok then
       return
     end
-    vim.schedule(function()
-      if vim.v.exiting ~= vim.NIL then
-        return
-      end
-      if vim.bo.filetype == "snacks_dashboard" then
-        return
-      end
-      local ok, minimap = pcall(require, "mini.map")
-      if ok then
-        minimap.open()
-      end
-    end)
+    if is_minimap_excluded(vim.bo.filetype) then
+      minimap.close()
+    else
+      minimap.open()
+    end
   end,
 })
 
@@ -201,12 +190,38 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Folded lines get a distinct bg; CursorLine shows through when cursor is on one.
 local hl_folded_bg = "#262e3d"
 
+-- Three-way git sign coloring, applied here (not via base46 hl_add) because
+-- base46 compiles hl_add at module-load time and can snapshot an empty
+-- nvconfig before chadrc merges in, silently dropping the fg. Setting the
+-- groups directly after each ColorScheme/theme reload is order-independent
+-- and survives theme toggles. See utils/git_committed.lua for the committed
+-- layer (HEAD~N vs HEAD); unstaged/staged are gitsigns-native.
+--   unstaged  (working vs index) = theme default green / grey / red (warm, bright)
+--   staged    (index vs HEAD)    = teal / blue / purple             (cool, bright)
+--   committed (HEAD~N vs HEAD)   = muted green / slate / rose        (dim, recedes)
 local function apply_hl_overrides()
   vim.api.nvim_set_hl(0, "Folded", { bg = hl_folded_bg })
   vim.api.nvim_set_hl(0, "Visual", { bg = "#1e3a5f" })
+
+  vim.api.nvim_set_hl(0, "GitSignsStagedAdd", { fg = "#2bb0a3" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedChange", { fg = "#5aa2f0" })
+  vim.api.nvim_set_hl(0, "GitSignsStagedDelete", { fg = "#b57edc" })
+
+  vim.api.nvim_set_hl(0, "GitSignsCommittedAdd", { fg = "#5f7a5f" })
+  vim.api.nvim_set_hl(0, "GitSignsCommittedChange", { fg = "#6a6f8a" })
+  vim.api.nvim_set_hl(0, "GitSignsCommittedDelete", { fg = "#8a6a6a" })
 end
 
 vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
+  callback = function()
+    vim.schedule(apply_hl_overrides)
+  end,
+})
+
+-- NvChad theme toggle (base46) does not fire ColorScheme; it emits this User
+-- event after recompiling highlights, so re-apply on it too.
+vim.api.nvim_create_autocmd("User", {
+  pattern = "NvThemeReload",
   callback = function()
     vim.schedule(apply_hl_overrides)
   end,

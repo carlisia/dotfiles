@@ -32,4 +32,8 @@ M.overrides = {
   ["@comment"] = { fg = "#4e5665", bg = "NONE" },
 }
 
+-- Note: git sign colors (staged/committed) are NOT set here. base46 hl_add
+-- compiles at module-load time and can drop the fg if nvconfig has not merged
+-- chadrc yet. They live in utils/autocmds.lua (apply_hl_overrides) instead.
+
 return M

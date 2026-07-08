@@ -4,8 +4,6 @@ local M = {}
 
 local vault_main = vim.env.VAULT_MAIN or ""
 
--- The config options 'completion.prepend_note_id', 'completion.prepend_note_path', and 'completion.use_path_only' are deprecated. Please use 'wiki_link_func' instead.
---
 M.opts = {
   ui = { enable = false },
   legacy_commands = false,
@@ -121,15 +119,8 @@ M.opts = {
     return (spec.dir / filename):with_suffix ".md"
   end,
 
-  wiki_link_func = function(opts)
-    if opts.id == nil then
-      return string.format("[[%s]]", opts.label)
-    elseif opts.label ~= opts.id then
-      return string.format("[[%s|%s]]", opts.id, opts.label)
-    else
-      return string.format("[[%s]]", opts.id)
-    end
-  end,
+  -- Replaces deprecated wiki_link_func (removed in obsidian.nvim 3.18).
+  link = { style = "wiki" },
 
   callbacks = {
     enter_note = function(note)

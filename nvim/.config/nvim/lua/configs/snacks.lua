@@ -2,6 +2,10 @@ Snacks = Snacks
 
 local M = {}
 
+-- Double-click tracker for explorer (LeftRelease works, 2-LeftMouse doesn't)
+local last_click_time = 0
+local DOUBLE_CLICK_MS = 400
+
 local vault_main = vim.env.VAULT_MAIN or ""
 vault_main = vim.fs.normalize(vault_main):gsub("/$", "")
 local gh_projects = vim.env.PROJECTS or ""
@@ -208,11 +212,21 @@ M.opts = {
             end
             picker:action "explorer_del"
           end,
+          double_click_confirm = function(picker)
+            local now = vim.uv.hrtime() / 1e6
+            if (now - last_click_time) < DOUBLE_CLICK_MS then
+              last_click_time = 0
+              picker:action("confirm")
+            else
+              last_click_time = now
+            end
+          end,
         },
         win = {
           list = {
             keys = {
               ["d"] = "safe_delete",
+              ["<LeftRelease>"] = "double_click_confirm",
             },
           },
         },

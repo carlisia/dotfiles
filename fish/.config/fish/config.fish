@@ -42,6 +42,9 @@ fish_add_path $GOPATH $GOBIN
 # Rust
 fish_add_path $HOME/.cargo/bin
 
+# Lean 4
+fish_add_path $HOME/.elan/bin
+
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
 # Teleport
@@ -114,7 +117,7 @@ alias batdiff='git diff --name-only | xargs bat'
 
 # ----- aliases teleport
 alias dteleport '~/code/src/github.com/gravitational/teleport/build/teleport'
-alias dtsh '~/code/src/github.com/gravitational/teleport/build/tsh'
+alias dtsh 'TELEPORT_TOOLS_VERSION=off ~/code/src/github.com/gravitational/teleport/build/tsh'
 alias dtctl '~/code/src/github.com/gravitational/teleport/build/tctl'
 alias dtbot '~/code/src/github.com/gravitational/teleport/build/tbot'
 

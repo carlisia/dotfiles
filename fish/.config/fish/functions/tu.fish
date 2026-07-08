@@ -115,37 +115,51 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
         set_color normal
     end
 
-    # --- Step 1: AWS Authentication ---
+    # --- Step 1: Docker + Kube access (optional) ---
     echo ""
-    set_color yellow
-    echo "🔐 Step 1/4: AWS Authentication (deploy-cloud-login)"
+    set_color magenta
+    echo "🐳 Step 1/4: Need Docker/ECR or kubectl into pods?"
+    echo "             (Say yes if you're deploying binaries or debugging pods."
+    echo "              Say no for plain Terraform work.)"
     set_color normal
+    read -P "   Deploy-cloud-login? [y/N] " dcl_answer
 
     set -l saved_aws_profile "$AWS_PROFILE"
-    set -gx AWS_PROFILE $WORK_AWS_PROFILE_ECR
-    echo "   AWS_PROFILE → $WORK_AWS_PROFILE_ECR (for deploy-cloud-login)"
 
-    if test -d "$teleport_repo"
-        # Ensure envtest.mk stub exists — e/Makefile includes it unconditionally
-        # but it's only needed for the test-operator target, not deploy-cloud-login.
-        set -l envtest_mk "$teleport_repo/../integrations/operator/envtest.mk"
-        if not test -f "$envtest_mk"
-            touch "$envtest_mk"
-        end
-        echo "   Running deploy-cloud-login..."
-        make -C "$teleport_repo" deploy-cloud-login
-        if test $status -ne 0
-            set_color red
-            echo "   ⚠️  AWS login failed - you may need to retry manually"
-            set_color normal
+    if test "$dcl_answer" = "Y" -o "$dcl_answer" = "y"
+        set -gx AWS_PROFILE $WORK_AWS_PROFILE_ECR
+        echo "   AWS_PROFILE → $WORK_AWS_PROFILE_ECR"
+
+        # Refresh platform kube contexts first
+        echo "   Logging into platform proxy..."
+        tsh login --proxy=platform.teleport.sh
+        and tsh kube login --proxy=platform.teleport.sh:443 --all
+        and echo "   ✅ Platform kube contexts refreshed"
+        or echo "   ⚠️  Platform kube refresh failed (continuing anyway)"
+
+        if test -d "$teleport_repo"
+            # Ensure envtest.mk stub exists — e/Makefile includes it unconditionally
+            # but it's only needed for the test-operator target, not deploy-cloud-login.
+            set -l envtest_mk "$teleport_repo/../integrations/operator/envtest.mk"
+            if not test -f "$envtest_mk"
+                touch "$envtest_mk"
+            end
+            echo "   Running deploy-cloud-login..."
+            make -C "$teleport_repo" deploy-cloud-login
+            if test $status -ne 0
+                set_color red
+                echo "   ⚠️  deploy-cloud-login failed - retry manually if needed"
+                set_color normal
+            else
+                echo "   ✅ Docker + kube authenticated"
+            end
         else
-            echo "   ✅ AWS deploy-cloud-login authenticated"
+            set_color red
+            echo "   ⚠️  Teleport repo not found at "(string replace $HOME '~' $teleport_repo)
+            set_color normal
         end
     else
-        set_color red
-        echo "   ⚠️  Teleport repo not found at "(string replace $HOME '~' $teleport_repo)
-        echo "   Run manually: make -C <teleport-e-dir> deploy-cloud-login"
-        set_color normal
+        echo "   ⏭️  Skipped — just Terraform today"
     end
 
     # --- Step 2: AWS SSO for Terraform (IAM permissions) ---
@@ -179,6 +193,8 @@ function tu --description "Switch or create TELEPORT_HOME profile with auth setu
     else
         set cluster_addr "$profile_name.$WORK_TELEPORT_CLUSTER_DOMAIN:443"
     end
+    set -gx TELEPORT_PROXY "$cluster_addr"
+    echo "   TELEPORT_PROXY → $cluster_addr"
     echo "   Logging into $cluster_addr..."
 
     tsh login --proxy="$cluster_addr"

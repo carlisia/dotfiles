@@ -1,0 +1,34 @@
+# treehouse user-level config
+# https://github.com/kunchenguid/treehouse#configuration
+#
+# This file is user-level: it applies to every repo. A repo-level
+# treehouse.toml in a repository root wins for repo-safe settings.
+# `treehouse prune --all` runs without a repo, so it reads ONLY this
+# file and ignores per-repo treehouse.toml.
+
+# Maximum number of worktrees in the pool. Default is 16 when unset.
+max_trees = 16
+
+# Worktree pool root. Empty uses $HOME/.treehouse.
+# Relative paths resolve from the repo root for repo-scoped commands.
+# Use "." to keep the pool inside the project.
+# An absolute user-level root is what `treehouse prune --all` sweeps.
+# root = "$HOME/worktrees"
+
+# Branch worktrees are cut from. Unset infers it: origin/HEAD, then the
+# checked-out branch, then init.defaultBranch. Branch names only, no
+# "origin/" prefix, no tags, no SHAs. Fails closed if unresolvable.
+# Override per acquisition with `treehouse get --base <branch>`.
+# base_branch = "develop"
+
+# Version-control backend. Git is the default everywhere, including in
+# colocated repos. Set "jj" for the EXPERIMENTAL Jujutsu backend; it is
+# ignored in repos with no .jj directory. Precedence, highest first:
+# $TREEHOUSE_VCS, repo-level treehouse.toml, then this file.
+# vcs = "jj"
+
+# Hooks run around worktree lifecycle. These are user-level only:
+# hooks in a repo-level treehouse.toml are ignored for safety.
+# [hooks]
+# post_create = ["./scripts/setup-venv.sh"]
+# pre_destroy = ["./scripts/teardown.sh"]

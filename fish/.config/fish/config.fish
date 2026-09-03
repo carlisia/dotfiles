@@ -93,6 +93,7 @@ alias vl="nvim leetcode.nvim"
 # Tools
 alias j="z" #jethrokuan/z (jump to projects)
 alias zz="zellij"
+alias th="treehouse" # pooled git worktrees
 alias rm='echo "🧨 NOT REMOVED! Use `trash` or, for permanent deletion, `\rm`."; false'
 alias hh="history"
 alias sc="source ~/.config/fish/config.fish"

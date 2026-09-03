@@ -121,6 +121,18 @@ Download from: <https://github.com/manaflow-ai/cmux>
 
 After stowing, cmux picks up `~/.config/cmux/cmux.json` on next launch.
 
+### treehouse
+
+Pooled, reusable git worktrees so each agent session gets an isolated tree without re-cloning: <https://github.com/kunchenguid/treehouse>
+
+```bash
+curl -fsSL https://kunchenguid.github.io/treehouse/install.sh | sh
+```
+
+After stowing, treehouse reads `~/.config/treehouse/config.toml` as the user-level config. A repo-level `treehouse.toml` (created by `treehouse init`) overrides it per repository, except for hooks, which are user-level only for safety.
+
+The `th` alias in `config.fish` drops you into a pooled worktree; `exit` returns it to the pool.
+
 ## Github config
 
 ### Ssh keys
@@ -224,6 +236,7 @@ stow eza -t $HOME
 stow yazi -t $HOME
 stow zellij -t $HOME
 stow lazygit -t $HOME
+stow treehouse -t $HOME
 
 # Kubernetes tools
 stow k9s -t $HOME

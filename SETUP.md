@@ -115,6 +115,12 @@ After stowing or making changes to the config, restart Karabiner:
 killall karabiner_console_user_server && open -a "Karabiner-Elements"
 ```
 
+### cmux
+
+Download from: <https://github.com/manaflow-ai/cmux>
+
+After stowing, cmux picks up `~/.config/cmux/cmux.json` on next launch.
+
 ## Github config
 
 ### Ssh keys
@@ -224,6 +230,7 @@ stow k9s -t $HOME
 
 # Mac apps
 stow karabiner -t $HOME
+stow cmux -t $HOME
 
 stow markin -t $HOME
 ```

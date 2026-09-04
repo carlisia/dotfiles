@@ -74,9 +74,6 @@ M.treesitter = {
     "vim",
     "vimdoc",
     "yaml",
-
-    -- Lean
-    "lean",
   },
   ignore_install = {
     "c",

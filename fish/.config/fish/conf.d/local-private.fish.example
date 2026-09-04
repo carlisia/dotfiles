@@ -1,0 +1,11 @@
+# Personal-private configuration template
+# Copy to local-private.fish and fill in your values
+# Fish auto-sources conf.d/ files before config.fish - no manual source needed
+#
+# Keep personal values here and work values in work-private.fish, so the two
+# can be set up independently on a new machine.
+
+# Vaults
+# config.fish derives VAULT_MAIN and VAULT_DEV from this, so it must be set
+# here or those stay empty and obsidian.nvim fails to resolve its workspace.
+set -gx SECOND_BRAIN "$HOME/path/to/vault"

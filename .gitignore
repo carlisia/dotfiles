@@ -20,6 +20,7 @@ newchad.sh
 
 fish/.config/fish/fish_variables
 fish/.config/fish/conf.d/work-private.fish
+fish/.config/fish/conf.d/local-private.fish
 *.backup
 *.bak
 .DS_Store

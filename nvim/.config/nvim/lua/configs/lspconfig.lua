@@ -91,14 +91,23 @@ servers["lua_ls"] = {
   },
 }
 
+-- Neovim 0.10 ships neither vim.lsp.config nor vim.lsp.enable, so calling
+-- them there fails with "attempt to call field 'config' (a nil value)" and
+-- every server is skipped. Fall back to the older nvim-lspconfig setup call.
+local has_lsp_config = vim.fn.has "nvim-0.11" == 1
+
 -- Use new vim.lsp.config API for Neovim 0.11+
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init
   opts.capabilities = opts.capabilities or base_capabilities
 
   local ok, err = pcall(function()
-    vim.lsp.config(name, opts)
-    vim.lsp.enable(name)
+    if has_lsp_config then
+      vim.lsp.config(name, opts)
+      vim.lsp.enable(name)
+    else
+      require("lspconfig")[name].setup(opts)
+    end
   end)
 
   if not ok then

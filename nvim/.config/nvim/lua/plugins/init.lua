@@ -456,7 +456,18 @@ return {
     ft = "markdown",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("obsidian").setup(require("configs.obsidian").opts)
+      local opts = require("configs.obsidian").opts
+      local vault = opts.workspaces[1] and opts.workspaces[1].path or ""
+      -- An unset $SECOND_BRAIN leaves this empty and obsidian.nvim then
+      -- raises FileNotFoundError from inside lazy.nvim's config runner.
+      if vault == "" or vim.fn.isdirectory(vault) == 0 then
+        vim.notify(
+          "obsidian.nvim: vault path is unset or missing, skipping setup. Check $SECOND_BRAIN.",
+          vim.log.levels.WARN
+        )
+        return
+      end
+      require("obsidian").setup(opts)
     end,
   },
   {

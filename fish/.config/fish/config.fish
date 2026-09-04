@@ -31,7 +31,15 @@ set -x fish_user_paths
 fish_add_path $HOME
 fish_add_path $HOME/.local/bin
 fish_add_path /opt/homebrew/bin
-fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+# GNU coreutils, deliberately AFTER /usr/bin so BSD tools win by default.
+# --append --path appends to $PATH itself; plain --append only appends within
+# $fish_user_paths, which is prepended to $PATH wholesale and would still shadow
+# /usr/bin. Reason: firstmate branches on `uname = Darwin` and then calls BSD
+# `stat -f`; with GNU stat ahead on PATH that reads -f as --file-system and
+# returns filesystem text instead of an mtime. GNU versions stay available under
+# their g-prefixed names in /opt/homebrew/bin: gdate, gstat, gls, gsort, etc.
+# So GNU date math is `gdate -d ...`, not `date -d ...`.
+fish_add_path --append --path /opt/homebrew/opt/coreutils/libexec/gnubin
 fish_add_path /usr/local/bin
 
 # Go

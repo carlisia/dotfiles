@@ -2,6 +2,30 @@
   "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
   "schemaVersion": 1,
 
+  // Managed here on purpose. cmux's default socket control mode, "cmuxOnly",
+  // admits only processes descended from the cmux app. Firstmate controls cmux
+  // from external processes, so any of them that gets reparented loses socket
+  // access and task dispatch starts refusing with a confusing error.
+  // "automation" is the same-user, owner-only (0600) socket boundary.
+  "automation": {
+    "socketControlMode": "automation"
+  },
+
+  // Pinned off on purpose. Routine Agent Hibernation KILLS idle background
+  // agent processes once the live-terminal count passes its limit. Its trigger
+  // profile - restorable agent reporting idle, off-screen terminal, unchanged
+  // output through the idle and confirmation windows - is exactly a firstmate
+  // worker parked waiting on a captain decision. Pinning it here means a UI
+  // click or a fresh machine cannot turn it on by accident.
+  // Note: under CRITICAL memory pressure cmux may still hibernate a bounded
+  // batch of safe idle background agents even with this false. No setting
+  // removes that floor.
+  "terminal": {
+    "agentHibernation": {
+      "enabled": false
+    }
+  },
+
   // This file uses JSON with comments (JSONC).
   // Uncomment and edit any setting to make it file-managed.
   // Remove a setting to fall back to the value saved in Settings.

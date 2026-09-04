@@ -21,6 +21,7 @@ newchad.sh
 fish/.config/fish/fish_variables
 fish/.config/fish/conf.d/work-private.fish
 *.backup
+*.bak
 .DS_Store
 karabiner/.config/karabiner/automatic_backups/
 envtest.mk

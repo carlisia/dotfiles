@@ -195,6 +195,42 @@ You should see: "Hi carlisia! You've successfully authenticated..."
 gh auth login
 ```
 
+## Agent tooling (AXI)
+
+Agent-ergonomic CLIs built on the [AXI](https://axi.md) principles. Both install as global Agent Skills rather than npm packages: the skill is a small discovery stub and the CLI is fetched fresh via `npx`, so there is nothing to keep updated. Skills land in `~/.agents/skills/` and are symlinked into `~/.claude/skills/`. Restart the agent session after installing one.
+
+### gh-axi
+
+Agent-ergonomic wrapper around `gh` that emits [TOON](https://toonformat.dev/) instead of JSON, so agents spend fewer tokens on GitHub work: <https://github.com/kunchenguid/gh-axi>
+
+```bash
+npx -y skills add kunchenguid/gh-axi --skill gh-axi -g
+```
+
+This writes `~/.agents/skills/gh-axi/` and symlinks it into `~/.claude/skills/`. Requires Node 20+ and an authenticated `gh` (see above). Verify with `npx -y gh-axi` inside any repo.
+
+Two optional capabilities have extra prerequisites:
+
+- Stacked PR commands (`gh-axi stack ...`) need `gh extension install github/gh-stack`.
+- `--attach` on issue/PR create, edit, and comment needs `gh` >= 2.99.0. Older `gh` returns a structured error before any mutation runs, so it fails safely.
+
+### lavish-axi
+
+Opens agent-generated HTML artifacts in a local browser so you can annotate elements and text, edit Mermaid diagrams as whiteboards, and send the feedback straight back to the agent: <https://github.com/kunchenguid/lavish-axi>
+
+```bash
+npx -y skills add kunchenguid/lavish-axi --skill lavish -g
+```
+
+Unlike gh-axi this one is user-invocable, so `/lavish <what to show>` works as a slash command in Claude Code. It also loads on its own when a response would land better as a page than as prose.
+
+Runtime notes worth knowing:
+
+- It runs a local server on port `4387` (`LAVISH_AXI_PORT` to change). `npx -y lavish-axi stop` shuts it down; it also self-stops after 30 idle minutes.
+- Session state lives in `~/.lavish-axi/` (`LAVISH_AXI_STATE_DIR` to relocate). Artifacts default to `.lavish/` in the working directory.
+- Binding is loopback-only unless Tailscale is running, in which case it also binds this machine's tailnet address so you can review from a phone. That server is unauthenticated and can serve local files, so only enable it on a tailnet you trust. Tailscale is not installed here, so it is loopback-only today.
+- `lavish-axi share` publishes to ht-ml.app, a third-party host, and is public by default. It has no delete endpoint and a password cannot be removed once set, so treat every share as permanent and use `--private` deliberately.
+
 ## Dotfiles
 
 ### Clone the dotfiles

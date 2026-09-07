@@ -19,6 +19,10 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy_config = require "configs.lazy"
 
+-- Must load before lazy.setup(): it fixes up `vim.t.bufs` ahead of NvChad's
+-- own tabufline autocmd, and autocmds run in registration order.
+require "utils.nvchad_bufs_guard"
+
 -- load plugins
 require("lazy").setup({
   {

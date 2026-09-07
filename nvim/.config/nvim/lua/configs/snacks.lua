@@ -2,9 +2,20 @@ Snacks = Snacks
 
 local M = {}
 
--- Double-click tracker for explorer (LeftRelease works, 2-LeftMouse doesn't)
-local last_click_time = 0
-local DOUBLE_CLICK_MS = 400
+-- Double-click tracker for the explorer. This terminal never delivers
+-- <2-LeftMouse>: Neovim only synthesizes that when two presses land within
+-- 'mousetime' (500ms), and measured clicks here arrive ~700ms apart, so snacks'
+-- own <2-LeftMouse> -> confirm mapping never fires. That leaves <LeftRelease>
+-- as the only usable signal, and the gap between two of them was never below
+-- 648ms in a 15 click sample, so a 400ms window never matched either and
+-- double clicking did nothing at all, silently.
+--
+-- The window is therefore wide enough to cover the observed gaps. To keep a
+-- window that wide from turning two unrelated single clicks into a confirm,
+-- both clicks must also land on the same row of the same window; clicking the
+-- same entry twice is unambiguous intent no matter how slow the second click.
+local DOUBLE_CLICK_MS = 1000
+local last_click = { time = 0, row = -1, win = -1 }
 
 local vault_main = vim.env.VAULT_MAIN or ""
 vault_main = vim.fs.normalize(vault_main):gsub("/$", "")
@@ -214,11 +225,15 @@ M.opts = {
           end,
           double_click_confirm = function(picker)
             local now = vim.uv.hrtime() / 1e6
-            if (now - last_click_time) < DOUBLE_CLICK_MS then
-              last_click_time = 0
-              picker:action("confirm")
+            local win = vim.api.nvim_get_current_win()
+            local ok, cursor = pcall(vim.api.nvim_win_get_cursor, win)
+            local row = ok and cursor[1] or -1
+
+            if row == last_click.row and win == last_click.win and (now - last_click.time) < DOUBLE_CLICK_MS then
+              last_click = { time = 0, row = -1, win = -1 }
+              picker:action "confirm"
             else
-              last_click_time = now
+              last_click = { time = now, row = row, win = win }
             end
           end,
         },

@@ -120,54 +120,6 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- Mini.map: auto open/close based on filetype.
--- Filetypes listed here will never show the minimap; all others will.
-local minimap_excluded_ft = { "snacks_dashboard", "markdown" }
-
-local function is_minimap_excluded(ft)
-  return vim.tbl_contains(minimap_excluded_ft, ft)
-end
-
--- Open mini.map on startup unless the buffer's filetype is excluded.
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    vim.schedule(function()
-      if is_minimap_excluded(vim.bo.filetype) then
-        return
-      end
-      local ok, minimap = pcall(require, "mini.map")
-      if ok then
-        minimap.open()
-      end
-    end)
-  end,
-})
-
--- Close mini.map when entering an excluded filetype.
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = minimap_excluded_ft,
-  callback = function()
-    local ok, minimap = pcall(require, "mini.map")
-    if ok then
-      minimap.close()
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    local ok, minimap = pcall(require, "mini.map")
-    if not ok then
-      return
-    end
-    if is_minimap_excluded(vim.bo.filetype) then
-      minimap.close()
-    else
-      minimap.open()
-    end
-  end,
-})
-
 -- Needed to add comments to sql files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "sql", "mysql", "plsql" },

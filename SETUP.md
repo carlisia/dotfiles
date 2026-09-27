@@ -449,6 +449,12 @@ Install Fish tools:
 brew install fish-lsp
 ```
 
+Install Python tools:
+
+```bash
+brew install basedpyright
+```
+
 Install Bash tools:
 
 ```bash

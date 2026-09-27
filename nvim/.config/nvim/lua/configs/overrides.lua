@@ -68,6 +68,7 @@ M.treesitter = {
     "json5",
     "lua",
     "luadoc",
+    "python",
     "regex",
     "sql",
     "toml",

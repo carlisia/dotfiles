@@ -72,6 +72,23 @@ servers["marksman"] = {
 
 servers["taplo"] = {}
 
+-- https://docs.basedpyright.com/latest/configuration/language-server-settings/
+servers["basedpyright"] = {
+  settings = {
+    basedpyright = {
+      analysis = {
+        typeCheckingMode = "standard",
+        inlayHints = {
+          variableTypes = true,
+          callArgumentNames = true,
+          functionReturnTypes = true,
+          genericTypes = false,
+        },
+      },
+    },
+  },
+}
+
 servers["fish_lsp"] = {
   filetypes = { "fish" },
 }

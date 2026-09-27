@@ -160,6 +160,7 @@ map("n", "\\m", toggles.mini_map, { desc = "Toggle 'mini map'" })
 map("n", "<leader>mm", toggles.mini_map, { desc = "Toggle 'mini map'" })
 map("n", "\\M", toggles.mini_map_focus, { desc = "Focus 'mini map'" })
 map("n", "\\f", toggles.folds, { desc = "Toggle 'folds'" })
+map("n", "\\o", "<cmd>Outline!<cr>", { desc = "Toggle 'outline'" })
 
 map("n", "<leader>-a", "<Cmd>lua MiniSessions.write(vim.fn.input('Session Name > '))<CR>", { desc = "Add a session" })
 map("n", "<leader>-d", "<Cmd>lua MiniSessions.select('delete')<CR>", { desc = "Delete a session" })

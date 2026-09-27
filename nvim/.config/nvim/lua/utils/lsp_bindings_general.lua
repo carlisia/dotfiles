@@ -12,7 +12,6 @@ M.vim = {
 M.lsp_keys = {
   toggle_format_os = "\\F",
   toggle_inlay_hints = "\\y",
-  toggle_outline = "\\o",
   diagnostics = "<leader>lp",
   declaration = "<leader>lc",
   definition = "<leader>ld",
@@ -26,7 +25,6 @@ M.lsp_keys = {
 local toggles = require "utils.toggles"
 local _, snacks = pcall(require, "snacks")
 M.lsp = {
-  toggle_outline = { "<cmd>Outline!<cr>", "Toggle 'outline'" },
   toggle_format_os = { toggles.autoformat_on_save, "Toggle 'format on save'" },
   diagnostics = {
     function()

@@ -10,6 +10,7 @@ $directory\
 $git_branch\
 $git_state\
 $git_status\
+$git_metrics\
 $cmd_duration\
 $line_break\
 $kubernetes\
@@ -106,6 +107,13 @@ modified = "📝"
 staged = '[++\($count\)](green)'
 renamed = "👅"
 deleted = "🗑"
+
+[git_metrics]
+disabled = false
+added_style = "bold green"
+deleted_style = "bold red"
+only_nonzero_diffs = false
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
 
 [kubernetes]
 format = '[$context \($namespace\)](dimmed green) '

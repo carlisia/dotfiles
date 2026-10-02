@@ -10,7 +10,7 @@ $directory\
 $git_branch\
 $git_state\
 $git_status\
-$git_metrics\
+${custom.git_metrics_unstaged}\
 $cmd_duration\
 $line_break\
 $kubernetes\
@@ -108,12 +108,15 @@ staged = '[++\($count\)](green)'
 renamed = "👅"
 deleted = "🗑"
 
-[git_metrics]
-disabled = false
-added_style = "bold green"
-deleted_style = "bold red"
-only_nonzero_diffs = false
-format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+# Built-in git_metrics diffs against HEAD (staged + unstaged) with no option to change
+# that, so count unstaged lines (`git diff`) plus untracked files vs /dev/null.
+[custom.git_metrics_unstaged]
+description = "Added/deleted lines in unstaged changes and untracked files"
+require_repo = true
+when = true
+shell = ["sh"]
+command = '''{ git diff --numstat; git ls-files -z -o --exclude-standard | xargs -0 -n1 git diff --no-index --numstat /dev/null 2>/dev/null; } | awk '{a += $1; d += $2} END {if (NR) printf "\033[1;32m+%d\033[0m \033[1;31m-%d\033[0m", a, d}' '''
+format = '($output )'
 
 [kubernetes]
 format = '[$context \($namespace\)](dimmed green) '

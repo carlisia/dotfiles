@@ -7,7 +7,6 @@ linters:
     - ineffassign
     - staticcheck
     - revive
-    - gosimple
     - unused
   settings:
     govet:

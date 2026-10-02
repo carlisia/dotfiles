@@ -147,20 +147,20 @@ ssh-keygen -t ed25519 -C "email address"
 
 Start the SSH agent and add your key:
 
-```bash
-eval "$(ssh-agent -s)"
+```fish
+eval (ssh-agent -c)
 ```
 
 Create or edit `~/.ssh/config` (replace `id_ed25519` with your key filename if different):
 
-```bash
+```fish
 mkdir -p ~/.ssh
-cat >> ~/.ssh/config << 'EOF'
-Host github.com
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_ed25519
-EOF
+printf '%s\n' \
+  'Host github.com' \
+  '  AddKeysToAgent yes' \
+  '  UseKeychain yes' \
+  '  IdentityFile ~/.ssh/id_ed25519' \
+  >> ~/.ssh/config
 ```
 
 Add the key to your Mac OS keychain (replace `id_ed25519` if you used a different name):

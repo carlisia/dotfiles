@@ -28,13 +28,35 @@ M.keys = {
 }
 
 M.config = {
-  provider_selector = function(_, filetype, _)
+  provider_selector = function(_, filetype, buftype)
+    -- Special buffers (Outline sidebar, floats): the treesitter provider throws
+    -- UfoFallbackException on buftype=nofile, and nothing after it catches that.
+    if buftype ~= "" then
+      return ""
+    end
     -- Markdown: use vim's built-in fold expr (set by g.markdown_folding)
     if filetype == "markdown" then
       return ""
     end
-    -- Everything else: LSP with treesitter fallback
-    return { "lsp", "treesitter" }
+    -- Everything else: lsp -> treesitter -> indent. A two-provider list ends at
+    -- treesitter, which throws UfoFallbackException when the language has no
+    -- parser (e.g. lean); the chain from nvim-ufo's doc/example.lua catches it.
+    return function(bufnr)
+      local function fallback(err, provider)
+        if type(err) == "string" and err:match "UfoFallbackException" then
+          return require("ufo").getFolds(bufnr, provider)
+        end
+        return require("promise").reject(err)
+      end
+      return require("ufo")
+        .getFolds(bufnr, "lsp")
+        :catch(function(err)
+          return fallback(err, "treesitter")
+        end)
+        :catch(function(err)
+          return fallback(err, "indent")
+        end)
+    end
   end,
   close_fold_kinds_for_ft = {
     default = {},

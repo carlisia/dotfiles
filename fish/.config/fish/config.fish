@@ -90,6 +90,18 @@ alias v nvim
 # ----- aliases
 # Git
 alias g="git status -sb"
+# ga/gu with no args act on the whole tree (.), otherwise on the given paths
+function ga --wraps='git add'
+    set -q argv[1]; or set argv .
+    git add $argv
+end
+alias gc="git commit -m"
+alias gac="git add . && git commit -m"
+function gu --wraps='git restore --staged'
+    set -q argv[1]; or set argv .
+    git restore --staged $argv
+end
+alias lg="lazygit"
 alias s="git add . && git stash"
 alias ggsl "git shortlog --summary --numbered"
 
@@ -113,7 +125,7 @@ alias ti="terraform init"
 alias te='eval "$(dtctl terraform env)"'
 
 # LLM
-alias c='claude --disallowedTools "Write" "Bash(git commit *)"'
+alias c='claude --disallowedTools "Bash(git commit *)"'
 
 # Kubernetes
 alias k="kubectl"

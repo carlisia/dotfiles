@@ -21,6 +21,7 @@ newrelic_agent.log
 .claude/
 .claude_reports/
 .lavish/
+.jev
 PROJECT_INDEX.json
 .project-index-scope
 envtest.mk

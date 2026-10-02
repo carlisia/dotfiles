@@ -88,10 +88,13 @@ vim.api.nvim_create_autocmd("User", {
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
   group = lint_augroup,
-  callback = function()
+  callback = function(args)
     local ok, lint = pcall(require, "lint")
     if ok then
-      lint.try_lint()
+      -- golangci-lint resolves imports from the module, so run it from the
+      -- go.mod dir; nvim's cwd may be a repo root with the module in a subdir.
+      local cwd = vim.bo[args.buf].filetype == "go" and vim.fs.root(args.buf, "go.mod") or nil
+      lint.try_lint(nil, { cwd = cwd })
     end
   end,
 })
@@ -136,6 +139,17 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     vim.bo.commentstring = "# %s"
     pcall(vim.treesitter.start)
+  end,
+})
+
+-- Treesitter indent: nvim-treesitter main dropped `indent = { enable = true }`.
+-- Only set it where a parser exists, so other filetypes keep their own indentexpr.
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function(args)
+    local lang = vim.treesitter.language.get_lang(args.match)
+    if lang and vim.treesitter.language.add(lang) then
+      vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
   end,
 })
 

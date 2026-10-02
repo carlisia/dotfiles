@@ -10,8 +10,11 @@ return {
   { "nvim-tree/nvim-tree.lua", enabled = false },
   { "folke/which-key.nvim", enabled = false },
   { "windwp/nvim-autopairs", enabled = false },
+  -- NvChad's spec has no build step; without it LuaSnip runs without jsregexp.
+  { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-context", -- Show code context
@@ -23,9 +26,8 @@ return {
         },
       },
     },
-    opts = function()
-      return overrides.treesitter
-    end,
+    -- A table, not a function: NvChad's :TSInstallAll ignores function opts.
+    opts = overrides.treesitter,
   },
   {
     "stevearc/conform.nvim",
@@ -62,21 +64,29 @@ return {
         "--stdin",
       }
       -- Preserve nvim-lint's default golangcilint args (they include the
-      -- output flags its parser needs).  Only append --config when the
-      -- project has no config of its own.
+      -- output flags its parser needs). Its target arg is fixed at load time
+      -- from nvim's cwd, so decide per buffer instead; the lint autocmd in
+      -- utils/autocmds.lua runs Go linting from the module root.
       local golangcilint = require("lint").linters.golangcilint
-      local has_project_config = false
-      for _, name in ipairs { ".golangci.yml", ".golangci.yaml", ".golangci.toml", ".golangci.json" } do
-        if vim.uv.fs_stat(vim.fn.getcwd() .. "/" .. name) then
-          has_project_config = true
-          break
+      local golangci_configs = { ".golangci.yml", ".golangci.yaml", ".golangci.toml", ".golangci.json" }
+      local args = vim.deepcopy(golangcilint.args)
+      for i, arg in ipairs(args) do
+        if type(arg) == "function" then
+          -- Lint the whole package when the file is in a module, else the file alone.
+          args[i] = function()
+            local file = vim.api.nvim_buf_get_name(0)
+            return vim.fs.root(0, "go.mod") and vim.fn.fnamemodify(file, ":h") or file
+          end
         end
       end
-      if not has_project_config then
-        local args = vim.deepcopy(golangcilint.args)
-        table.insert(args, "--config=" .. linterConfig .. "/.golangci.yaml")
-        golangcilint.args = args
-      end
+      -- The project's own config wins, found upward from the file the way
+      -- golangci-lint searches; otherwise fall back to ours.
+      table.insert(args, function()
+        local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+        local found = vim.fs.find(golangci_configs, { upward = true, path = dir })[1]
+        return "--config=" .. (found or linterConfig .. "/.golangci.yaml")
+      end)
+      golangcilint.args = args
     end,
   },
   { ---- my own config:
@@ -265,7 +275,8 @@ return {
       require("mini.jump2d").setup()
       require("mini.map").setup(require("configs.mini").map)
       require("mini.move").setup(require("configs.mini").move)
-      require("mini.notify").setup()
+      -- DISABLED mini.notify: its setup() overwrites vim.notify after snacks hooks it,
+      -- so Snacks.notifier history (<leader>nn) stays empty. LSP progress is in noice.
       require("mini.operators").setup()
       require("mini.pairs").setup()
       require("mini.sessions").setup(require("configs.mini").sessions)
@@ -353,6 +364,9 @@ return {
   },
   {
     "ramilito/kubectl.nvim",
+    -- The Rust core ships only with release tags; blink.download fetches it.
+    version = "2.*",
+    dependencies = "saghen/blink.download",
     config = function()
       require("kubectl").setup()
     end,
@@ -361,7 +375,7 @@ return {
     "anasinnyk/nvim-k8s-crd",
     dependencies = { "neovim/nvim-lspconfig" },
     config = function()
-      require("k8s-crd").setup {
+      require("nvim-k8s-crd").setup {
         cache_dir = "~/.cache/k8s-schemas/", -- Local directory relative to the current working directory
         k8s = {
           file_mask = nil,
@@ -407,10 +421,14 @@ return {
       "neovim/nvim-lspconfig",
       "nvim-lua/plenary.nvim",
     },
-    opts = {
-      lsp = {},
-      mappings = true,
-    },
+    -- lean.nvim reads vim.g.lean_config; `opts` would make lazy call the
+    -- deprecated require("lean").setup().
+    init = function()
+      vim.g.lean_config = {
+        lsp = {},
+        mappings = true,
+      }
+    end,
   },
   --- Markdown
   {

@@ -15,7 +15,8 @@ M.conform = {
     json = { "prettierd" },
     jsonc = { "prettierd" },
     markdown = { "prettierd" },
-    sql = { "sqlint" },
+    sql = { "sql_formatter" },
+    mysql = { "sql_formatter" },
     sh = { "shfmt" },
     toml = { "taplo" },
     typescript = { "prettierd" },
@@ -38,11 +39,32 @@ M.conform = {
         "$FILENAME",
       },
     },
+    -- Dialect per buffer: the dadbod connection URL (b:db) when there is one,
+    -- then the mysql filetype, else sqlite (what the dadbod connections mostly are).
+    sql_formatter = {
+      prepend_args = function(_, ctx)
+        local dialects = {
+          postgres = "postgresql",
+          postgresql = "postgresql",
+          mysql = "mysql",
+          mariadb = "mariadb",
+          sqlite = "sqlite",
+        }
+        local db = vim.b[ctx.buf].db
+        local url = type(db) == "table" and db.db_url or db
+        local scheme = type(url) == "string" and url:match "^(%a+):" or nil
+        local lang = dialects[scheme]
+          or (vim.bo[ctx.buf].filetype == "mysql" and "mysql")
+          or "sqlite"
+        return { "--language", lang }
+      end,
+    },
   },
 }
 
+-- nvim-treesitter main branch: only ensure_installed is read, by NvChad's :TSInstallAll.
+-- Highlighting starts from NvChad's FileType autocmd; indent from utils/autocmds.lua.
 M.treesitter = {
-  auto_install = true,
   ensure_installed = {
     -- Go
     "go",
@@ -54,124 +76,46 @@ M.treesitter = {
     -- Git
     "gitcommit",
     "git_config",
+    "git_rebase",
+    "gitignore",
     "diff",
 
     -- Markdown
     "markdown",
     "markdown_inline",
 
+    -- Web
+    "css",
+    "html",
+    "scss",
+    "tsx",
+    "typescript",
+
     "bash",
+    "csv",
     "dockerfile",
     "fish",
     "jq",
     "json",
     "json5",
+    "kdl",
     "lua",
     "luadoc",
+    "make",
+    "pem",
+    "printf",
+    "proto",
     "python",
+    "query",
     "regex",
+    "rust",
     "sql",
+    "terraform",
     "toml",
     "vim",
     "vimdoc",
+    "xml",
     "yaml",
-  },
-  ignore_install = {
-    "c",
-    "javascript",
-  },
-  autopairs = { enable = true },
-  highlight = { enable = true },
-  indent = { enable = true },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      -- mappings for incremental selection (visual mappings)
-      init_selection = "gnn", -- maps in normal mode to init the node/scope selection
-      node_incremental = "grn", -- increment to the upper named parent
-      scope_incremental = "grc", -- increment to the upper scope (as defined in locals.scm)
-      node_decremental = "grm", -- decrement to the previous node
-    },
-  },
-  textobjects = {
-    -- syntax-aware textobjects
-    enable = true,
-    lsp_interop = {
-      enable = true,
-      peek_definition_code = {
-        ["DF"] = "@function.outer",
-        ["DF"] = "@class.outer",
-      },
-    },
-    keymaps = {
-      ["iL"] = {
-        -- you can define your own textobjects directly here
-        go = "(function_definition) @function",
-      },
-      -- or you use the queries from supported languages with textobjects.scm
-      ["af"] = "@function.outer",
-      ["if"] = "@function.inner",
-      ["aC"] = "@class.outer",
-      ["iC"] = "@class.inner",
-      ["ac"] = "@conditional.outer",
-      ["ic"] = "@conditional.inner",
-      ["ae"] = "@block.outer",
-      ["ie"] = "@block.inner",
-      ["al"] = "@loop.outer",
-      ["il"] = "@loop.inner",
-      ["is"] = "@statement.inner",
-      ["as"] = "@statement.outer",
-      ["ad"] = "@comment.outer",
-      ["am"] = "@call.outer",
-      ["im"] = "@call.inner",
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-    select = {
-      enable = true,
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        -- Or you can define your own textobjects like this
-        ["iF"] = {
-          python = "(function_definition) @function",
-          cpp = "(function_definition) @function",
-          c = "(function_definition) @function",
-          java = "(method_declaration) @function",
-          go = "(method_declaration) @function",
-        },
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ["<leader>a"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["<leader>A"] = "@parameter.inner",
-      },
-    },
   },
 }
 

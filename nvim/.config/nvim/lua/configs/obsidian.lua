@@ -30,14 +30,12 @@ M.opts = {
   },
 
   completion = {
-    -- Set to false to disable completion.
-    nvim_cmp = true, -- the markdown plugin covers this
     -- Trigger completion at 2 chars.
     min_chars = 2,
   },
 
   templates = {
-    subdir = "/_meta/Templates",
+    folder = "_meta/Templates", -- relative to the vault; a leading "/" means filesystem root
     date_format = "%Y-%m-%d-%a",
     time_format = "%H:%M",
     substitutions = {
@@ -68,8 +66,8 @@ M.opts = {
   },
 
   picker = {
-    -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', 'mini.pick' or 'snacks.pick'.
-    name = "snacks.pick",
+    -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', 'mini.pick' or 'snacks.picker'.
+    name = "snacks.picker",
     -- Optional, configure key mappings for the picker. These are the defaults.
     -- Not all pickers support all mappings.
     note_mappings = {

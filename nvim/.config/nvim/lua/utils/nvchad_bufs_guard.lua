@@ -22,7 +22,7 @@
 -- Autocmds for one event run in registration order, and NvChad registers its
 -- handler while lazy.setup() loads nvchad/ui. So this module must be required
 -- from init.lua BEFORE lazy.setup() to run first; requiring it later leaves
--- NvChad reading the stale list. Still unfixed upstream as of ui@c448a23.
+-- NvChad reading the stale list. Still unfixed upstream as of ui@6ced113.
 --
 -- The list is also kept non-empty: NvChad's bufs[1] dereference has no nil
 -- check either, so pruning to {} would swap one crash for another.

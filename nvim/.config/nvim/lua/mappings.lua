@@ -170,7 +170,7 @@ map("n", "<leader>-p", "<Cmd>lua MiniSessions.read(MiniSessions.get_latest())<CR
 
 ---- Gitsigns
 map("n", "<leader>Gr", "<Cmd>Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
-map("n", "<leader>Gp", "<Cmd>Gitsigns prev_hunk<CR>", { desc = "Previous hunk" })
+map("n", "<leader>Gp", "<Cmd>Gitsigns nav_hunk prev<CR>", { desc = "Previous hunk" })
 map("n", "<leader>Gb", function()
   require("utils.git_committed").reset(true)
 end, { desc = "Clear committed-history overlay" })

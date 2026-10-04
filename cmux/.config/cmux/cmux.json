@@ -26,18 +26,16 @@
     }
   },
 
-  // Mirrors the Ghostty split keybinds (ghostty/.config/ghostty/config), which
-  // cmux stopped honoring after a 0.64.2x update. Not ported: split left/up
-  // (cmux has no such action), and zoom (cmd+shift+m) plus auto split
-  // (cmd+shift+return), kept on cmux defaults so Copy Mode keeps cmd+shift+m.
+  // Split keys live in the Ghostty config (ghostty/.config/ghostty/config).
+  // cmux 0.64.2x added default resize-pane shortcuts on ctrl+shift+h/j/k/l;
+  // cmux's shortcut router runs before the terminal, so they swallowed the
+  // Ghostty new_split binds. Unbinding them (null) lets the keys reach Ghostty.
   "shortcuts": {
     "bindings": {
-      "splitRight": "ctrl+shift+l",
-      "splitDown": "ctrl+shift+j",
-      "focusLeft": "opt+shift+h",
-      "focusDown": "opt+shift+j",
-      "focusUp": "opt+shift+k",
-      "focusRight": "opt+shift+l"
+      "resize-pane-left": null,
+      "resize-pane-down": null,
+      "resize-pane-up": null,
+      "resize-pane-right": null
     }
   },
 

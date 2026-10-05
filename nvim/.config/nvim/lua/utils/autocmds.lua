@@ -99,6 +99,34 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
   end,
 })
 
+-- go.nvim test floats (guihua): mini.basics starts every terminal in Terminal mode, so
+-- once the job exits the first key typed closes the float and the rest of `:q` lands in
+-- the code buffer; while it runs, `:q<CR>` goes to the process. Drop to Normal mode on
+-- exit so `:q` works once, and let `q` close the float.
+local guihua_term_augroup = vim.api.nvim_create_augroup("guihua_term", { clear = true })
+vim.api.nvim_create_autocmd("TermOpen", {
+  group = guihua_term_augroup,
+  callback = function(args)
+    if vim.bo[args.buf].filetype ~= "guihua" then
+      return
+    end
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = args.buf, desc = "Close test output" })
+  end,
+})
+vim.api.nvim_create_autocmd("TermClose", {
+  group = guihua_term_augroup,
+  callback = function(args)
+    if vim.bo[args.buf].filetype ~= "guihua" then
+      return
+    end
+    vim.schedule(function()
+      if vim.api.nvim_get_current_buf() == args.buf and vim.api.nvim_get_mode().mode == "t" then
+        vim.cmd.stopinsert()
+      end
+    end)
+  end,
+})
+
 -- Mini explorer / split
 -- Create mappings to modify target window via (custom) split
 vim.api.nvim_create_autocmd("User", {
@@ -153,8 +181,19 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Folded lines get a distinct bg; CursorLine shows through when cursor is on one.
-local hl_folded_bg = "#262e3d"
+-- Selection/cursor backgrounds per theme type: the dark navies are unreadable on a light
+-- theme. Folded lines get a distinct bg; CursorLine shows through when cursor is on one.
+local hl_bgs = {
+  dark = { CursorLine = "#1e2d3e", Visual = "#1e3a5f", Folded = "#262e3d" },
+  light = { CursorLine = "#eef1f7", Visual = "#cfe0f5", Folded = "#e6e9f0" },
+}
+
+local function theme_bgs()
+  local ok, ttype = pcall(function()
+    return require("base46").get_theme_tb "type"
+  end)
+  return hl_bgs[ok and ttype or "dark"] or hl_bgs.dark
+end
 
 -- Three-way git sign coloring, applied here (not via base46 hl_add) because
 -- base46 compiles hl_add at module-load time and can snapshot an empty
@@ -166,8 +205,10 @@ local hl_folded_bg = "#262e3d"
 --   staged    (index vs HEAD)    = teal / blue / purple             (cool, bright)
 --   committed (HEAD~N vs HEAD)   = muted green / slate / rose        (dim, recedes)
 local function apply_hl_overrides()
-  vim.api.nvim_set_hl(0, "Folded", { bg = hl_folded_bg })
-  vim.api.nvim_set_hl(0, "Visual", { bg = "#1e3a5f" })
+  local bgs = theme_bgs()
+  vim.api.nvim_set_hl(0, "CursorLine", { bg = bgs.CursorLine })
+  vim.api.nvim_set_hl(0, "Folded", { bg = bgs.Folded })
+  vim.api.nvim_set_hl(0, "Visual", { bg = bgs.Visual })
 
   vim.api.nvim_set_hl(0, "GitSignsStagedAdd", { fg = "#2bb0a3" })
   vim.api.nvim_set_hl(0, "GitSignsStagedChange", { fg = "#5aa2f0" })
@@ -198,7 +239,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter", "WinEnt
     if vim.fn.foldclosed(vim.fn.line ".") ~= -1 then
       vim.api.nvim_set_hl(0, "Folded", { bg = "NONE" })
     else
-      vim.api.nvim_set_hl(0, "Folded", { bg = hl_folded_bg })
+      vim.api.nvim_set_hl(0, "Folded", { bg = theme_bgs().Folded })
     end
   end,
 })

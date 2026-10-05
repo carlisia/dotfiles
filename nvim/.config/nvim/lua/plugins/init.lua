@@ -262,6 +262,17 @@ return {
     config = function()
       require("mini.ai").setup(require("configs.mini").ai)
       require("mini.basics").setup(require("configs.mini").basics)
+      -- mini.basics' \b flips 'background', which base46 ignores: Nvim then falls back to
+      -- its built-in default scheme. Flip the theme's light/dark variant instead.
+      vim.keymap.set("n", [[\b]], function()
+        require("utils.theme").toggle()
+      end, { desc = "Toggle theme (light/dark)" })
+      vim.keymap.set("n", "<leader>V", function()
+        require("utils.theme").reset()
+      end, { desc = "Reset theme to default" })
+      vim.api.nvim_create_user_command("ThemeReset", function()
+        require("utils.theme").reset()
+      end, { desc = "Reset theme to default" })
       require("mini.bracketed").setup()
       require("mini.clue").setup(require("configs.mini").clue)
       require("mini.comment").setup(require("configs.mini").comment)

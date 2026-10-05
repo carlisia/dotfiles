@@ -19,18 +19,18 @@ M.overrides = {
   St_NTerminalMode = { bg = "#E27D00" },
   St_NTerminalModeSep = { fg = "#FF1CF3" },
 
-  Visual = { bg = "#1e3a5f" },
-
   TbBufOn = { fg = "#FF1CF3", bold = true },
   TbBufOnModified = { fg = "#FF160C" },
   TbBufOffModified = { fg = "#FF160C" },
 
   DiagnosticInfo = { fg = "#a48cf2" },
 
-  CursorLine = { bg = "#1e2d3e" },
   Comment = { fg = "#4e5665", bg = "NONE" },
   ["@comment"] = { fg = "#4e5665", bg = "NONE" },
 }
+
+-- Note: CursorLine, Visual, and Folded backgrounds depend on the theme's light/dark type,
+-- so they live in utils/autocmds.lua (apply_hl_overrides) instead.
 
 -- Note: git sign colors (staged/committed) are NOT set here. base46 hl_add
 -- compiles at module-load time and can drop the fg if nvconfig has not merged

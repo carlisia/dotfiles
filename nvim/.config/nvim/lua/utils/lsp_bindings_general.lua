@@ -24,6 +24,22 @@ M.lsp_keys = {
 
 local toggles = require "utils.toggles"
 local _, snacks = pcall(require, "snacks")
+
+-- Runs a go.nvim command from the buffer's go.mod dir, then restores the cwd. go.nvim
+-- spawns `go test` in nvim's cwd, which may be a repo root with the module in a subdir.
+local function in_go_module(cmd)
+  local root = vim.fs.root(0, "go.mod")
+  if not root then
+    return vim.cmd(cmd)
+  end
+  local prev = vim.fn.getcwd(-1, -1)
+  vim.cmd.cd(root)
+  local ok, err = pcall(vim.cmd, cmd)
+  vim.cmd.cd(prev)
+  if not ok then
+    error(err)
+  end
+end
 M.lsp = {
   toggle_format_os = { toggles.autoformat_on_save, "Toggle 'format on save'" },
   diagnostics = {
@@ -196,12 +212,12 @@ M.go = {
     },
 
     ta = { "<cmd>GoAddTest<cr>", "Add unit test for function" },
-    tc = { "<cmd>GoCoverage<cr>", "Run test coverage" },
+    tc = { function() in_go_module "GoCoverage" end, "Run test coverage" },
     ti = { "<cmd>GoAlt<cr>", "Toggle 'test/implementation'" },
-    tF = { "<cmd>GoTestFunc<cr>", "Test current function" },
-    tf = { "<cmd>GoTestFile<cr>", "Test current file" },
+    tF = { function() in_go_module "GoTestFile" end, "Test current file" },
+    tf = { function() in_go_module "GoTestFunc" end, "Test current function" },
     tm = { "<cmd>GoMockGen<cr>", "Generate mocks" },
-    ts = { "<cmd>GoTestSum<cr>", "Run tests with summary" },
+    ts = { function() in_go_module "GoTestSum" end, "Run tests with summary" },
     tt = {
       function()
         local choices = {
@@ -218,7 +234,7 @@ M.go = {
           if not choice then
             return
           end
-          vim.cmd(choice.cmd)
+          in_go_module(choice.cmd)
         end)
       end,
       "Run Go tests",

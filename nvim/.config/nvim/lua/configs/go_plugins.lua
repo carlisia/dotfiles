@@ -2,7 +2,7 @@ local M = {}
 
 M.govim = {
   go = "go", -- go command, can be go[default] or e.g. go1.18beta1
-  test_runner = "gotestsum",
+  test_runner = "go", -- gotestsum + run_in_floaterm builds `gotestsum test ...`; use :GoTestSum
   lsp_cfg = false,
   lsp_keymaps = false,
   dap_debug = true,

@@ -123,6 +123,7 @@ alias hh="history"
 alias sc="source ~/.config/fish/config.fish"
 alias ti="terraform init"
 alias te='eval "$(dtctl terraform env)"'
+alias ts="tailscale"
 
 # LLM
 alias c='claude --disallowedTools "Bash(git commit *)"'
